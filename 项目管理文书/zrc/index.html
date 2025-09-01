@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>可爱甜美风网页</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="sakura-left"></div>
+    <div class="sakura-right"></div>
+    <div class="container">
+        <header>
+            <h1>欢迎来到我的可爱甜美小天地！</h1>
+        </header>
+        <main>
+            <img src="https://www.bing.com/images/search?view=detailV2&ccid=vvJs0ypl&id=B4B1DF93D5B43385C7CA510C233BCB98CEB8EC06&thid=OIP.vvJs0yplN9CZx7xRIKgMBQAAAA&mediaurl=https%3a%2f%2fbpic.588ku.com%2felement_pic%2f23%2f04%2f23%2fddbb674366250fc1ab190cfaceb61e5c.png!%2ffw%2f300%2funsharp%2ftrue&cdnurl=https%3a%2f%2fth.bing.com%2fth%2fid%2fR.bef26cd32a6537d099c7bc5120a80c05%3frik%3dBuy4zpjLOyMMUQ%26pid%3dImgRaw%26r%3d0&exph=301&expw=300&q=%e5%93%ad%e6%b3%a3%e8%90%9d%e8%8e%89&FORM=IRPRST&ck=A26DEF7F4B93B9BFD36F9C1C8CA9FFB0&selectedIndex=15&itb=0" alt="可爱图标" class="cute-img">
+            <p>这里是一个充满爱心和甜美气息的网页，希望你每天都能开心快乐！</p>
+            <section class="profile-section">
+                <div class="photo-frame">
+                    <img src="赵润初.jpg" alt="我的照片" class="my-photo">
+                    <div class="skirt-decoration"></div>
+                </div>
+                <div class="intro-box">
+                    <h2>关于我</h2>
+                    <p>我是赵润初，是数据科学与大数据技术全英班的大二同学，也是基因重组的组员之一，在《The Echo of Hammer》游戏创作中是一个编剧
+                        和程序员的角色，我很享受编程世界带来的美好，就像我的可爱甜美小天地一样！！！！希望你能喜欢我们的游戏，也能喜欢我的可爱甜美
+                        小天地！！！！
+                    </p>
+                </div>
+            </section>
+            <button class="sweet-btn">点我一下</button>
+        </main>
+        <footer>
+            <div class="back-section">
+                <button class="back-btn" onmouseover="showCryTip()" onmouseout="hideCryTip()" onclick="window.history.back()">返回</button>
+                <div class="cry-tip" id="cryTip">
+                    <img src="https://www.bing.com/images/search?view=detailV2&ccid=R3QS7wJg&id=8817657AB059979258C6F0DAF06B2A6C5E19317A&thid=OIP.R3QS7wJg5H2Qjdhw52MdNAHaHa&mediaurl=https%3a%2f%2fth.bing.com%2fth%2fid%2fR.477412ef0260e47d908dd870e7631d34%3frik%3dejEZXmwqa%252fDa8A%26riu%3dhttp%253a%252f%252fimgs.laipeitu.com%252fupload%252f2021%252f1112%252f114420_94701.jpg%26ehk%3d9a3yPlXc%252ftTomLBc8zNwwDkDEYnoWsjFtv94cIVo0Dw%253d%26risl%3d%26pid%3dImgRaw%26r%3d0&exph=640&expw=640&q=%e5%93%ad%e6%b3%a3%e8%90%9d%e8%8e%89&FORM=IRPRST&ck=3717BB94AD3FE3D9C87519599644F185&selectedIndex=18&itb=0" alt="哭泣萝莉" class="cry-img">
+                    <span class="cry-text">你要离开甜美的我吗</span>
+                </div>
+            </div>
+            <script>
+            function showCryTip() {
+                document.getElementById('cryTip').style.display = 'flex';
+            }
+            function hideCryTip() {
+                document.getElementById('cryTip').style.display = 'none';
+            }
+            </script>
+            <p>© 2025 可爱甜美 | 由你眼里最可爱的我制作</p>
+        </footer>
+    </div>
+</body>
+</html>
