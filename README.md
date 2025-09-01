@@ -1,1 +1,1 @@
-practical semester program -- by 基因重·组
+practical semester program by 基因重·组
