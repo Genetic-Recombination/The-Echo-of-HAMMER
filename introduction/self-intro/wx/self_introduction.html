@@ -154,6 +154,26 @@ h1 {
   background: #fff7f0;
 }
 
+/* 返回按钮样式 */
+.back-btn {
+  display: inline-block;
+  margin-top: 30px;
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #2a589c, #1a4080);
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(42, 88, 156, 0.3);
+}
+
+.back-btn:hover {
+  background: linear-gradient(135deg, #1a4080, #2a589c);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(42, 88, 156, 0.4);
+}
+
 /* 响应式 */
 @media (max-width: 768px) {
   .container { padding: 20px; }
@@ -210,6 +230,10 @@ h1 {
         <div class="card">QQ: 3531184693</div>
       </div>
     </div>
+  </div>
+  
+  <div style="text-align: center;">
+    <a href="../../intro-index/关于我们.html" class="back-btn">返回团队页面</a>
   </div>
 </div>
 </body>

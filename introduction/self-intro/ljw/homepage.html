@@ -71,22 +71,32 @@
     }
 
     .btn {
-      display: inline-block;
-      margin-top: 30px;
-      padding: 12px 30px;
-      font-size: 1.1em;
+      background: linear-gradient(135deg, #00ff80, #00cc66);
       color: #000;
-      background: linear-gradient(45deg, #00ff80, #006644); /* 荧光绿 → 深墨绿 */
+      padding: 12px 24px;
+      border: none;
       border-radius: 8px;
       text-decoration: none;
       font-weight: bold;
+      display: inline-block;
+      margin: 10px;
       transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0,255,128,0.3);
     }
 
     .btn:hover {
-      box-shadow: 0 0 20px #00ff80, 0 0 40px #006644;
-      transform: scale(1.05);
+      background: linear-gradient(135deg, #00cc66, #00ff80);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,255,128,0.4);
+    }
+
+    .btn-secondary {
+      background: linear-gradient(135deg, #666, #888);
       color: #fff;
+    }
+
+    .btn-secondary:hover {
+      background: linear-gradient(135deg, #888, #aaa);
     }
   </style>
 </head>
@@ -118,7 +128,10 @@
       </ul>
     </section>
 
-    <a class="btn" href="https://github.com/Raven061205" target="_blank">GitHub</a>
+    <div style="margin-top: 30px;">
+      <a class="btn" href="https://github.com/Raven061205" target="_blank">GitHub</a>
+      <a class="btn btn-secondary" href="../../intro-index/关于我们.html">返回团队页面</a>
+    </div>
   </div>
 </body>
 </html>
