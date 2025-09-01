@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The Echo of Hammer</title>
+  <meta name="description" content="悬疑风格单页：新游戏 / 存档 / 成就" />
+  <style>
+    :root{
+      --bg:#0b0b0d;
+      --fg:#e6e6e6;
+      --muted:#9a9aaa;
+      --accent:#b30017; /* 血色 */
+      --accent-d:#7a0010;
+      --glow:#ff2d2d;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-serif, "Noto Serif CJK SC", "Songti SC", "STSong", Georgia, serif;
+      color:var(--fg);
+      background:
+        url('https://www.transparenttextures.com/patterns/asfalt-dark.png') repeat,
+        radial-gradient(1200px 700px at 70% -10%, #1a1a22 0%, transparent 60%),
+        radial-gradient(600px 400px at 30% 110%, #111116 0%, transparent 60%),
+        linear-gradient(#0a0a0c, #0b0b0d 40%, #060607 100%);
+      background-blend-mode: overlay;
+      overflow:hidden;
+    }
+
+    .noise::before{
+      content:""; position:fixed; inset:0; pointer-events:none; mix-blend-mode:overlay;
+      background:
+        repeating-linear-gradient(0deg, rgba(255,255,255,.015) 0 2px, rgba(0,0,0,.02) 2px 4px),
+        radial-gradient(2000px 1200px at 50% 0%, rgba(255,255,255,.03), transparent 60%);
+      animation: flicker 6s infinite linear;
+    }
+    @keyframes flicker{0%,100%{opacity:.35}50%{opacity:.6}}
+
+    .fog, .fog::after{
+      content:""; position:fixed; inset:-20%; pointer-events:none;
+      background: radial-gradient(60% 40% at 30% 30%, rgba(200,200,220,.06), transparent 60%),
+                  radial-gradient(40% 30% at 70% 60%, rgba(200,200,220,.05), transparent 70%);
+      filter: blur(18px);
+      animation: drift 40s linear infinite;
+    }
+    .fog::after{animation-duration:65s; opacity:.7}
+    @keyframes drift{0%{transform:translateX(-5%) translateY(0)} 50%{transform:translateX(5%) translateY(-2%)} 100%{transform:translateX(-5%) translateY(0)}}
+
+    .wrap{position:relative; z-index:2; height:100%; display:grid; place-items:center; padding:24px}
+    .panel{width:min(680px, 92vw); text-align:center; padding:48px 28px; border-radius:18px;
+      background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+      border:1px solid rgba(255,255,255,.08);
+      box-shadow: 0 20px 60px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.04);
+      position:relative; overflow:hidden;
+    }
+
+    .panel::before{
+      content:""; position:absolute; left:0; right:0; top:-8px; height:42px; pointer-events:none;
+      background:
+        radial-gradient(16px 20px at 8% 70%, var(--accent) 0 60%, transparent 61%),
+        radial-gradient(12px 14px at 22% 60%, var(--accent) 0 60%, transparent 61%),
+        radial-gradient(18px 24px at 38% 70%, var(--accent) 0 60%, transparent 61%),
+        radial-gradient(14px 18px at 56% 65%, var(--accent) 0 60%, transparent 61%),
+        radial-gradient(12px 16px at 74% 68%, var(--accent) 0 60%, transparent 61%),
+        radial-gradient(10px 14px at 88% 66%, var(--accent) 0 60%, transparent 61%),
+        linear-gradient(180deg, var(--accent) 0 24px, transparent 25px);
+      filter: drop-shadow(0 2px 0 rgba(0,0,0,.45));
+      opacity:.9;
+    }
+
+    h1{
+      margin:0 0 6px; font-weight:700; letter-spacing:.2em; font-size: clamp(28px, 4.6vw, 46px);
+      background: linear-gradient(180deg, #fff 0%, #ccc 40%, #555 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 10px rgba(179,0,23,.5), 0 0 20px rgba(255,0,0,.3), 2px 2px 4px rgba(0,0,0,.7);
+    }
+    .subtitle{color:var(--muted); font-size:clamp(12px, 2.8vw, 14px); letter-spacing:.36em; text-transform:uppercase}
+
+    .glitch{position:relative; display:inline-block}
+    .glitch::before, .glitch::after{
+      content:attr(data-text); position:absolute; inset:0; pointer-events:none; opacity:.15
+    }
+    .glitch::before{transform:translate(2px, -1px); color:#ff3b3b}
+    .glitch::after{transform:translate(-1px, 1px); color:#3b8bff}
+
+    .menu{margin:28px auto 0; display:grid; gap:14px; width:min(360px, 88%)}
+    .btn{
+      appearance:none; border:none; cursor:pointer; padding:16px 20px; border-radius:14px; font-weight:700; letter-spacing:.24em;
+      background: linear-gradient(180deg, rgba(179,0,23,.9), rgba(122,0,16,.95)),
+                  url('https://www.transparenttextures.com/patterns/blood.png');
+      background-size: cover;
+      background-blend-mode: multiply;
+      color:#fff; text-transform:uppercase; font-size:clamp(14px, 2.8vw, 16px);
+      box-shadow: inset 0 -2px 0 rgba(0,0,0,.5), 0 8px 22px rgba(179,0,23,.18);
+      position:relative; overflow:hidden;
+      transition: transform .06s ease, box-shadow .2s ease, filter .2s ease;
+    }
+    .btn:focus{outline:2px solid rgba(255,255,255,.22); outline-offset:2px}
+    .btn:hover{
+      filter:brightness(1.2) saturate(130%);
+      box-shadow:0 0 12px rgba(255,0,0,.6), 0 0 22px rgba(179,0,23,.4);
+      transform: scale(1.02);
+    }
+    .btn:active{transform:translateY(1px)}
+
+    .btn::after{
+      content:""; position:absolute; left:10%; right:10%; top:0; height:8px; background:linear-gradient(180deg, rgba(255,80,80,.9), rgba(179,0,23,0));
+      filter:blur(.4px); opacity:.7;
+    }
+    .btn .drip{
+      position:absolute; top:8px; width:8px; height:14px; background:var(--accent);
+      left:calc(50% - 4px); border-bottom-left-radius:6px; border-bottom-right-radius:6px;
+      animation: drop 2.8s ease-in infinite;
+      box-shadow: 0 2px 0 rgba(0,0,0,.35);
+    }
+    .btn .drip:nth-child(2){left:22%; animation-delay:1s}
+    .btn .drip:nth-child(3){left:78%; animation-delay:2s}
+    @keyframes drop{0%{transform: translateY(0); opacity:0}40%{opacity:1}90%{transform: translateY(18px); opacity:1}100%{transform: translateY(28px); opacity:0}}
+
+    .hint{margin-top:26px; color:var(--muted); font-size:12px; opacity:.8}
+
+    @media (max-height:640px){
+      .panel{padding:32px 20px}
+      .menu{gap:10px}
+    }
+  </style>
+</head>
+<body>
+  <div class="noise"></div>
+  <div class="fog"></div>
+  <main class="wrap" role="main">
+    <section class="panel" aria-labelledby="title">
+      <h1 id="title" class="glitch" data-text="The Echo of Hammer">The Echo of Hammer</h1>
+      <div class="subtitle" aria-hidden="true">SHADOWS WHISPER · BLOOD REMEMBERS</div>
+
+      <nav class="menu" aria-label="主菜单">
+        <button class="btn" id="newGameBtn" aria-label="开始新游戏">
+          New Game
+          <i class="drip" aria-hidden="true"></i>
+          <i class="drip" aria-hidden="true"></i>
+          <i class="drip" aria-hidden="true"></i>
+        </button>
+        <button class="btn" id="saveBtn" aria-label="打开存档">
+          Load Game
+          <i class="drip" aria-hidden="true"></i>
+          <i class="drip" aria-hidden="true"></i>
+          <i class="drip" aria-hidden="true"></i>
+        </button>
+        <button class="btn" id="achieveBtn" aria-label="查看成就">
+          Achievements
+          <i class="drip" aria-hidden="true"></i>
+          <i class="drip" aria-hidden="true"></i>
+          <i class="drip" aria-hidden="true"></i>
+        </button>
+      </nav>
+
+      <p class="hint">Enter = New Game · S = Load Game · A = Achievements</p>
+    </section>
+  </main>
+
+  <script>
+    const toast = (msg)=>{
+      const n = document.createElement('div');
+      n.textContent = msg;
+      n.style.position='fixed';
+      n.style.left='50%'; n.style.top='8%';
+      n.style.transform='translateX(-50%)';
+      n.style.padding='12px 16px';
+      n.style.borderRadius='12px';
+      n.style.background='rgba(0,0,0,.7)';
+      n.style.color='#fff';
+      n.style.boxShadow='0 6px 22px rgba(0,0,0,.4)';
+      n.style.zIndex=9999;
+      document.body.appendChild(n);
+      setTimeout(()=>n.remove(), 1200);
+    };
+
+    document.getElementById('newGameBtn').addEventListener('click',()=>{
+      toast('▶ Start Game…');
+    });
+    document.getElementById('saveBtn').addEventListener('click',()=>{
+      toast('💾 Start loading…');
+    });
+    document.getElementById('achieveBtn').addEventListener('click',()=>{
+      // 跳转到成就页面
+      window.location.href = "achievement.html"; // ✅ 修改文件名
+    });
+
+    window.addEventListener('keydown', (e)=>{
+      if(e.key==='Enter') document.getElementById('newGameBtn').click();
+      if(e.key.toLowerCase()==='s') document.getElementById('saveBtn').click();
+      if(e.key.toLowerCase()==='a') document.getElementById('achieveBtn').click();
+    });
+  </script>
+</body>
+</html>
