@@ -38,9 +38,11 @@
         }
 
         .logo-container {
-            position: absolute;
-            top: 50px;
-            left: 50px;
+            position: static; /* 取消绝对定位 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 0px;      /* logo距离顶部更近 */
             animation: hammerLetterReveal 4s ease-out forwards;
             opacity: 0;
             z-index: 10;
