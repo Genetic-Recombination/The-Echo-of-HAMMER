@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>游戏开始</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, rgba(26,26,26,0.8) 0%, rgba(45,45,45,0.8) 50%, rgba(26,26,26,0.8) 100%), url('./image in the game/black man background.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.7) 100%);
+            pointer-events: none;
+        }
+
+        .logo-container {
+            position: absolute;
+            top: 50px;
+            left: 50px;
+            animation: hammerLetterReveal 4s ease-out forwards;
+            opacity: 0;
+            z-index: 10;
+        }
+
+        .game-logo {
+            width: 400px;
+            height: auto;
+            filter: drop-shadow(0 0 20px rgba(139, 0, 0, 0.8)) drop-shadow(0 0 40px rgba(139, 0, 0, 0.6));
+            animation: hammerLetterReveal 4s ease-out forwards;
+            opacity: 0;
+        }
+
+        .blood-particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: radial-gradient(circle, #ff0000, #8b0000);
+            border-radius: 50%;
+            animation: bloodFlow 3s infinite;
+            box-shadow: 0 0 6px rgba(255, 0, 0, 0.8);
+        }
+
+        .blood-particle:nth-child(1) {
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .blood-particle:nth-child(2) {
+            top: 40%;
+            left: 15%;
+            animation-delay: 0.5s;
+        }
+
+        .blood-particle:nth-child(3) {
+            top: 60%;
+            left: 5%;
+            animation-delay: 1s;
+        }
+
+        .blood-particle:nth-child(4) {
+            top: 30%;
+            left: 20%;
+            animation-delay: 1.5s;
+        }
+
+        .blood-particle:nth-child(5) {
+            top: 70%;
+            left: 12%;
+            animation-delay: 2s;
+        }
+
+        .game-title {
+            position: absolute;
+            top: 200px;
+            left: 50px;
+            color: #8b0000;
+            font-size: 2.8rem;
+            font-weight: bold;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.8), 0 0 20px rgba(139,0,0,0.5);
+            letter-spacing: 3px;
+            animation: titleEntrance 2s ease-out 2s forwards;
+            opacity: 0;
+            transform: translateY(30px);
+            margin: 0;
+        }
+
+        @keyframes hammerLetterReveal {
+            0% {
+                opacity: 0;
+                filter: brightness(0.2) blur(5px) drop-shadow(0 0 20px rgba(139, 0, 0, 0.8)) drop-shadow(0 0 40px rgba(139, 0, 0, 0.6));
+                letter-spacing: -20px;
+            }
+            16.67% {
+                opacity: 0.2;
+                filter: brightness(0.4) blur(4px) drop-shadow(0 0 20px rgba(139, 0, 0, 0.8)) drop-shadow(0 0 40px rgba(139, 0, 0, 0.6));
+                letter-spacing: -15px;
+            }
+            33.33% {
+                opacity: 0.4;
+                filter: brightness(0.6) blur(3px) drop-shadow(0 0 20px rgba(139, 0, 0, 0.8)) drop-shadow(0 0 40px rgba(139, 0, 0, 0.6));
+                letter-spacing: -10px;
+            }
+            50% {
+                opacity: 0.6;
+                filter: brightness(0.8) blur(2px) drop-shadow(0 0 20px rgba(139, 0, 0, 0.8)) drop-shadow(0 0 40px rgba(139, 0, 0, 0.6));
+                letter-spacing: -5px;
+            }
+            66.67% {
+                opacity: 0.8;
+                filter: brightness(0.9) blur(1px) drop-shadow(0 0 20px rgba(139, 0, 0, 0.8)) drop-shadow(0 0 40px rgba(139, 0, 0, 0.6));
+                letter-spacing: -2px;
+            }
+            83.33% {
+                opacity: 0.9;
+                filter: brightness(1) blur(0.5px) drop-shadow(0 0 20px rgba(139, 0, 0, 0.8)) drop-shadow(0 0 40px rgba(139, 0, 0, 0.6));
+                letter-spacing: 0px;
+            }
+            100% {
+                opacity: 1;
+                filter: brightness(1) blur(0px) drop-shadow(0 0 20px rgba(139, 0, 0, 0.8)) drop-shadow(0 0 40px rgba(139, 0, 0, 0.6));
+                letter-spacing: 0px;
+            }
+        }
+
+        @keyframes bloodFlow {
+            0% {
+                transform: translateX(-50px) translateY(0px);
+                opacity: 0;
+            }
+            20% {
+                opacity: 0.8;
+            }
+            80% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateX(200px) translateY(-10px);
+                opacity: 0;
+            }
+        }
+
+        @keyframes titleEntrance {
+            0% {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes titleGlow {
+            from { text-shadow: 3px 3px 6px rgba(0,0,0,0.8), 0 0 20px rgba(139,0,0,0.5); }
+            to { text-shadow: 3px 3px 6px rgba(0,0,0,0.8), 0 0 30px rgba(139,0,0,0.8); }
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            animation: buttonsWaterRise 3s ease-out 4s forwards;
+            opacity: 0;
+            transform: translateY(100px);
+        }
+
+        @keyframes buttonsWaterRise {
+            0% {
+                opacity: 0;
+                transform: translateY(100px) scale(0.8);
+                filter: blur(3px) brightness(0.6);
+            }
+            30% {
+                opacity: 0.3;
+                transform: translateY(60px) scale(0.9);
+                filter: blur(2px) brightness(0.7);
+            }
+            60% {
+                opacity: 0.7;
+                transform: translateY(20px) scale(0.95);
+                filter: blur(1px) brightness(0.85);
+            }
+            80% {
+                opacity: 0.9;
+                transform: translateY(5px) scale(1.02);
+                filter: blur(0px) brightness(0.95);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+                filter: blur(0px) brightness(1);
+            }
+        }
+
+        .start-button {
+            background: linear-gradient(145deg, #4a0000, #8b0000);
+            color: #ffffff;
+            border: 3px solid #660000;
+            padding: 20px 60px;
+            font-size: 1.8rem;
+            font-family: 'Creepster', cursive, serif;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 
+                0 8px 16px rgba(0,0,0,0.6),
+                inset 0 2px 4px rgba(255,255,255,0.1),
+                inset 0 -2px 4px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8), 0 0 10px rgba(255, 0, 0, 0.6);
+        }
+
+        .start-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .start-button::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 10%;
+            right: 10%;
+            height: 3px;
+            background: radial-gradient(ellipse, rgba(0, 100, 200, 0.3), transparent);
+            border-radius: 50%;
+            animation: waterRipple 2s ease-in-out infinite;
+        }
+
+        @keyframes waterRipple {
+            0%, 100% {
+                transform: scaleX(1);
+                opacity: 0.3;
+            }
+            50% {
+                transform: scaleX(1.2);
+                opacity: 0.1;
+            }
+        }
+
+        .start-button:hover {
+            background: linear-gradient(145deg, #660000, #a00000);
+            border-color: #800000;
+            box-shadow: 
+                0 12px 24px rgba(0,0,0,0.8),
+                inset 0 2px 4px rgba(255,255,255,0.2),
+                inset 0 -2px 4px rgba(0,0,0,0.4),
+                0 0 20px rgba(139,0,0,0.6);
+            transform: translateY(-2px);
+        }
+
+        .start-button:hover::before {
+            left: 100%;
+        }
+
+        .start-button:active {
+            transform: translateY(0);
+            box-shadow: 
+                0 4px 8px rgba(0,0,0,0.6),
+                inset 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .about-button {
+            background: linear-gradient(145deg, #2a2a2a, #404040);
+            color: #cccccc;
+            border: 2px solid #555555;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+        }
+
+        .about-button:hover {
+            background: linear-gradient(145deg, #404040, #555555);
+            color: #ffffff;
+            border-color: #777777;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.6);
+            transform: translateY(-1px);
+        }
+
+        .about-button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+        }
+
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(139,0,0,0.3);
+            animation: float 6s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-10vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+    
+    <div class="logo-container">
+        <div style="position: relative; display: inline-block;">
+            <img src="image in the game/logo透明.png" alt="游戏Logo" class="game-logo">
+            <div class="blood-particle"></div>
+            <div class="blood-particle"></div>
+            <div class="blood-particle"></div>
+            <div class="blood-particle"></div>
+            <div class="blood-particle"></div>
+        </div>
+    </div>
+    
+
+    
+    <div class="button-container">
+        <button class="start-button" onclick="startGame()">开始游戏</button>
+        <button class="about-button" onclick="showAbout()">关于我们</button>
+    </div>
+
+    <script>
+        // 创建粒子效果
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.animationDuration = (Math.random() * 3 + 4) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // 开始游戏函数
+        function startGame() {
+            // 这里可以添加页面跳转逻辑
+            window.location.href = './login/Login.html';
+        }
+
+        // 关于我们函数
+        function showAbout() {
+            // 这里可以添加关于我们页面的跳转逻辑
+            window.location.href = './introduction/intro-index/关于我们.html';
+        }
+
+        // 页面加载完成后创建粒子
+        window.addEventListener('load', function() {
+            createParticles();
+        });
+
+        // 添加键盘事件
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                startGame();
+            }
+        });
+    </script>
+</body>
+</html>

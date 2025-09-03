@@ -86,6 +86,26 @@
             box-shadow: 0 1px 4px rgba(76, 110, 245, 0.07);
         }
         
+        /* 返回按钮样式 */
+        .back-btn {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #4c6ef5, #364fc7);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(76, 110, 245, 0.3);
+        }
+        
+        .back-btn:hover {
+            background: linear-gradient(135deg, #364fc7, #4c6ef5);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(76, 110, 245, 0.4);
+        }
+        
         .wave {
             position: absolute;
             left: 0;
@@ -176,6 +196,10 @@
                 <span class="tag">项目日志</span>
                 <span class="tag">美术创作</span>
             </div>
+        </div>
+        
+        <div style="text-align: center;">
+            <a href="../../intro-index/关于我们.html" class="back-btn">返回团队页面</a>
         </div>
     </div>
     <button class="back-btn" onclick="window.history.back()">返回上一页</button>
