@@ -2,7 +2,13 @@
 null,
 null,
 null,
-{"id":3,"expanded":false,"name":"房屋综合体","order":1,"parentId":0,"scrollX":1053,"scrollY":569.5,"quick":false},
-{"id":4,"expanded":true,"name":"小型公寓","order":2,"parentId":0,"scrollX":619,"scrollY":348.5,"quick":false},
-{"id":5,"expanded":false,"name":"客厅","order":3,"parentId":4,"scrollX":619,"scrollY":348.5,"quick":false}
+{"id":3,"expanded":true,"name":"客厅","order":1,"parentId":0,"scrollX":557.3333333333334,"scrollY":314.22222222222223,"quick":false},
+null,
+null,
+null,
+null,
+{"id":8,"expanded":true,"name":"厨房","order":2,"parentId":0,"scrollX":550.2222222222222,"scrollY":309.77777777777777,"quick":false},
+{"id":9,"expanded":true,"name":"卫生间","order":3,"parentId":0,"scrollX":550.2222222222222,"scrollY":314.22222222222223,"quick":false},
+{"id":10,"expanded":true,"name":"阳台","order":4,"parentId":0,"scrollX":550.2222222222222,"scrollY":310.6666666666667,"quick":false},
+{"id":11,"expanded":false,"name":"卧室","order":5,"parentId":0,"scrollX":550.2222222222222,"scrollY":314.22222222222223,"quick":false}
 ]
