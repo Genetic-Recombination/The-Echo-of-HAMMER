@@ -33,7 +33,7 @@
     </div>
     <div class="canvas-wrap">
       <canvas id="c" width="900" height="280"></canvas>
-      <img id="dinoGif" src="minigame-Trex/小恐龙/流汗（大）.gif" style="left:80px;top:200px;">
+      <img id="dinoGif" src="minigame-Trex/trex_normal.gif" style="left:80px;top:200px;">
     </div>
     <div class="controls">
       <button id="startBtn" class="btn">开始 / 重置</button>
@@ -75,10 +75,10 @@ window.addEventListener('resize', resize); resize();
 
 // 恐龙动图路径
 const dinoGifSrcs = {
-  normal: "minigame-Trex/小恐龙/流汗（大）.gif",
-  jump:   "minigame-Trex/小恐龙/起跳动图.gif",
-  duck:   "minigame-Trex/小恐龙/趴下动图.gif",
-  fly:    "minigame-Trex/小恐龙/飞（动图）.gif"
+  normal: "minigame-Trex/images/trex_normal.gif",
+  jump:   "minigame-Trex/images/trex_jump.gif",
+  duck:   "minigame-Trex/images/trex_duck.gif",
+  fly:    "minigame-Trex/images/trex_fly.gif"
 };
 
 class Dino {
@@ -87,6 +87,7 @@ class Dino {
     this.vy=0; this.onGround=true; this.ducking=false;
     this.jumpCount=0; this.maxJumps=5;
     this.groundY = y;
+    this.lastGif = "";
   }
   update(dt){
     if(!this.onGround){
@@ -110,6 +111,15 @@ class Dino {
     } else {
       return dinoGifSrcs.normal;
     }
+  }
+  updateGif(camX){
+    let newGif = this.getGif();
+    if(newGif !== this.lastGif){
+      dinoGif.src = newGif;
+      this.lastGif = newGif;
+    }
+    dinoGif.style.left = (this.x - camX) + "px";
+    dinoGif.style.top  = this.y + "px";
   }
   jump(){
     if(this.jumpCount < this.maxJumps && !this.ducking){
@@ -185,6 +195,7 @@ class Game{
     if(Math.random()<0.02) this.clouds.push(new Cloud(this.dino.x + W,20+Math.random()*60,20+Math.random()*30));
 
     this.dino.update(dt);
+    this.dino.updateGif(this.camX);
     this.clouds.forEach(c=>c.update(dt)); this.clouds=this.clouds.filter(c=>c.x > this.camX - 200);
     this.obstacles.forEach(o=>o.update(dt)); this.obstacles=this.obstacles.filter(o=>o.x+o.w>this.camX-100);
     this.rivers.forEach(r=>r.update(dt)); this.rivers=this.rivers.filter(r=>r.x+r.w>this.camX-100);
@@ -222,11 +233,6 @@ class Game{
     ctx.fillStyle='#7f8c8d';
     ctx.fillRect(-offset,H-40,W,40);
     ctx.fillRect(W-offset,H-40,W,40);
-
-    // 恐龙动图位置
-    dinoGif.src = this.dino.getGif();
-    dinoGif.style.left = (this.dino.x - this.camX) + "px";
-    dinoGif.style.top = this.dino.y + "px";
 
     this.obstacles.forEach(o=>o.draw(ctx,this.camX));
     this.rivers.forEach(r=>r.draw(ctx,this.camX));
