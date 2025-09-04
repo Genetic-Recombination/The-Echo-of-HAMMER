@@ -1,9 +1,0 @@
-[
-null,
-{"id":1,"expanded":true,"name":"卫生间","order":4,"parentId":4,"scrollX":832,"scrollY":640},
-{"id":2,"expanded":true,"name":"民居 1","order":1,"parentId":0,"scrollX":720.8888888888889,"scrollY":450.6666666666667},
-{"id":3,"expanded":true,"name":"客厅","order":2,"parentId":2,"scrollX":832,"scrollY":640},
-{"id":4,"expanded":true,"name":"厨房","order":3,"parentId":3,"scrollX":728,"scrollY":397.3333333333333},
-{"id":5,"expanded":true,"name":"阳台","order":5,"parentId":1,"scrollX":832,"scrollY":640},
-{"id":6,"expanded":true,"name":"卧室","order":6,"parentId":1,"scrollX":832,"scrollY":640}
-]
