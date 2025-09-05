@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>墙体编辑器 - HAMMER</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background: #1a1a1a;
+            color: white;
+        }
+        .container {
+            display: flex;
+            gap: 20px;
+        }
+        .map-container {
+            position: relative;
+            border: 2px solid #444;
+            background: #000;
+        }
+        .map-canvas {
+            display: block;
+            cursor: crosshair;
+        }
+        .controls {
+            width: 300px;
+            background: #2a2a2a;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .control-group {
+            margin-bottom: 20px;
+        }
+        .control-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        select, button {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #555;
+            background: #333;
+            color: white;
+            border-radius: 4px;
+        }
+        button {
+            cursor: pointer;
+            background: #0066cc;
+        }
+        button:hover {
+            background: #0088ff;
+        }
+        .clear-btn {
+            background: #cc3300;
+        }
+        .clear-btn:hover {
+            background: #ff4400;
+        }
+        .coordinates-list {
+            max-height: 200px;
+            overflow-y: auto;
+            background: #1a1a1a;
+            border: 1px solid #555;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        .code-output {
+            max-height: 300px;
+            overflow-y: auto;
+            background: #1a1a1a;
+            border: 1px solid #555;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 12px;
+            white-space: pre-wrap;
+        }
+        .wall-point {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: red;
+            border: 1px solid white;
+            border-radius: 50%;
+            transform: translate(-3px, -3px);
+            pointer-events: none;
+        }
+        .grid-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            opacity: 0.3;
+        }
+    </style>
+</head>
+<body>
+    <h1>墙体编辑器</h1>
+    <div class="container">
+        <div class="map-container">
+            <canvas class="map-canvas" id="mapCanvas"></canvas>
+            <canvas class="grid-overlay" id="gridCanvas"></canvas>
+        </div>
+        <div class="controls">
+            <div class="control-group">
+                <label for="mapSelect">选择地图:</label>
+                <select id="mapSelect">
+                    <option value="LivingRoom">客厅 (LivingRoom)</option>
+                    <option value="Bedroom">卧室 (Bedroom)</option>
+                    <option value="Kitchen">厨房 (Kitchen)</option>
+                    <option value="Toilet">洗手间 (Toilet)</option>
+                    <option value="Balcony">阳台 (Balcony)</option>
+                </select>
+            </div>
+            
+            <div class="control-group">
+                <button id="toggleGrid">显示/隐藏网格</button>
+                <button id="clearWalls" class="clear-btn">清除所有墙体</button>
+            </div>
+            
+            <div class="control-group">
+                <label>已选择的墙体坐标:</label>
+                <div class="coordinates-list" id="coordinatesList"></div>
+            </div>
+            
+            <div class="control-group">
+                <button id="generateCode">生成墙体代码</button>
+                <button id="copyCode">复制代码</button>
+            </div>
+            
+            <div class="control-group">
+                <label>生成的代码:</label>
+                <div class="code-output" id="codeOutput"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class WallEditor {
+            constructor() {
+                this.mapCanvas = document.getElementById('mapCanvas');
+                this.gridCanvas = document.getElementById('gridCanvas');
+                this.mapCtx = this.mapCanvas.getContext('2d');
+                this.gridCtx = this.gridCanvas.getContext('2d');
+                
+                this.currentMap = 'LivingRoom';
+                this.wallPoints = new Set();
+                this.showGrid = true;
+                this.tileSize = 16;
+                this.scale = 2; // 放大倍数
+                
+                this.mapImages = {};
+                this.mapConfigs = {
+                    'LivingRoom': { src: 'image in the game/map/livingroom.png', width: 704, height: 512 },
+                    'Bedroom': { src: 'image in the game/map/bedroom.png', width: 704, height: 512 },
+                    'Kitchen': { src: 'image in the game/map/kitchen.png', width: 704, height: 512 },
+                    'Toilet': { src: 'image in the game/map/toilet.png', width: 704, height: 512 },
+                    'Balcony': { src: 'image in the game/map/balcony.png', width: 704, height: 512 }
+                };
+                
+                this.init();
+            }
+            
+            async init() {
+                await this.loadMapImages();
+                this.setupCanvas();
+                this.bindEvents();
+                this.drawMap();
+                this.drawGrid();
+            }
+            
+            async loadMapImages() {
+                const promises = Object.entries(this.mapConfigs).map(([key, config]) => {
+                    return new Promise((resolve, reject) => {
+                        const img = new Image();
+                        img.onload = () => {
+                            this.mapImages[key] = img;
+                            resolve();
+                        };
+                        img.onerror = reject;
+                        img.src = config.src;
+                    });
+                });
+                
+                try {
+                    await Promise.all(promises);
+                } catch (error) {
+                    console.error('加载地图图片失败:', error);
+                }
+            }
+            
+            setupCanvas() {
+                const config = this.mapConfigs[this.currentMap];
+                const width = config.width * this.scale;
+                const height = config.height * this.scale;
+                
+                this.mapCanvas.width = width;
+                this.mapCanvas.height = height;
+                this.gridCanvas.width = width;
+                this.gridCanvas.height = height;
+                
+                this.mapCanvas.style.width = width + 'px';
+                this.mapCanvas.style.height = height + 'px';
+                this.gridCanvas.style.width = width + 'px';
+                this.gridCanvas.style.height = height + 'px';
+            }
+            
+            bindEvents() {
+                // 地图选择
+                document.getElementById('mapSelect').addEventListener('change', (e) => {
+                    this.currentMap = e.target.value;
+                    this.wallPoints.clear();
+                    this.setupCanvas();
+                    this.drawMap();
+                    this.drawGrid();
+                    this.updateCoordinatesList();
+                    this.updateWallPoints();
+                });
+                
+                // 鼠标点击添加/移除墙体
+                this.mapCanvas.addEventListener('click', (e) => {
+                    const rect = this.mapCanvas.getBoundingClientRect();
+                    const x = Math.floor((e.clientX - rect.left) / this.scale / this.tileSize);
+                    const y = Math.floor((e.clientY - rect.top) / this.scale / this.tileSize);
+                    
+                    const key = `${x},${y}`;
+                    if (this.wallPoints.has(key)) {
+                        this.wallPoints.delete(key);
+                    } else {
+                        this.wallPoints.add(key);
+                    }
+                    
+                    this.updateCoordinatesList();
+                    this.updateWallPoints();
+                });
+                
+                // 切换网格显示
+                document.getElementById('toggleGrid').addEventListener('click', () => {
+                    this.showGrid = !this.showGrid;
+                    this.drawGrid();
+                });
+                
+                // 清除墙体
+                document.getElementById('clearWalls').addEventListener('click', () => {
+                    this.wallPoints.clear();
+                    this.updateCoordinatesList();
+                    this.updateWallPoints();
+                });
+                
+                // 生成代码
+                document.getElementById('generateCode').addEventListener('click', () => {
+                    this.generateCode();
+                });
+                
+                // 复制代码
+                document.getElementById('copyCode').addEventListener('click', () => {
+                    const codeOutput = document.getElementById('codeOutput');
+                    navigator.clipboard.writeText(codeOutput.textContent).then(() => {
+                        alert('代码已复制到剪贴板!');
+                    });
+                });
+            }
+            
+            drawMap() {
+                const img = this.mapImages[this.currentMap];
+                if (img) {
+                    this.mapCtx.clearRect(0, 0, this.mapCanvas.width, this.mapCanvas.height);
+                    this.mapCtx.drawImage(img, 0, 0, this.mapCanvas.width, this.mapCanvas.height);
+                }
+            }
+            
+            drawGrid() {
+                this.gridCtx.clearRect(0, 0, this.gridCanvas.width, this.gridCanvas.height);
+                
+                if (!this.showGrid) return;
+                
+                const config = this.mapConfigs[this.currentMap];
+                const scaledTileSize = this.tileSize * this.scale;
+                
+                this.gridCtx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+                this.gridCtx.lineWidth = 1;
+                
+                // 绘制垂直线
+                for (let x = 0; x <= config.width * this.scale; x += scaledTileSize) {
+                    this.gridCtx.beginPath();
+                    this.gridCtx.moveTo(x, 0);
+                    this.gridCtx.lineTo(x, config.height * this.scale);
+                    this.gridCtx.stroke();
+                }
+                
+                // 绘制水平线
+                for (let y = 0; y <= config.height * this.scale; y += scaledTileSize) {
+                    this.gridCtx.beginPath();
+                    this.gridCtx.moveTo(0, y);
+                    this.gridCtx.lineTo(config.width * this.scale, y);
+                    this.gridCtx.stroke();
+                }
+            }
+            
+            updateCoordinatesList() {
+                const list = document.getElementById('coordinatesList');
+                const points = Array.from(this.wallPoints).sort();
+                list.textContent = points.length > 0 ? points.join('\n') : '暂无选择的坐标';
+            }
+            
+            updateWallPoints() {
+                // 移除现有的墙体点
+                document.querySelectorAll('.wall-point').forEach(point => point.remove());
+                
+                // 添加新的墙体点
+                this.wallPoints.forEach(pointKey => {
+                    const [x, y] = pointKey.split(',').map(Number);
+                    const point = document.createElement('div');
+                    point.className = 'wall-point';
+                    point.style.left = (x * this.tileSize * this.scale) + 'px';
+                    point.style.top = (y * this.tileSize * this.scale) + 'px';
+                    document.querySelector('.map-container').appendChild(point);
+                });
+            }
+            
+            generateCode() {
+                const points = Array.from(this.wallPoints).sort();
+                if (points.length === 0) {
+                    document.getElementById('codeOutput').textContent = '请先选择一些墙体坐标';
+                    return;
+                }
+                
+                let code = `// ${this.currentMap} 地图墙体配置\n`;
+                code += `walls: {\n`;
+                
+                points.forEach(pointKey => {
+                    const [x, y] = pointKey.split(',').map(Number);
+                    code += `  "${x},${y}": true,\n`;
+                });
+                
+                code += `},\n\n`;
+                code += `// 或者使用工具函数批量添加:\n`;
+                code += `// utils.asGridCoord(x, y): true\n`;
+                code += `walls: {\n`;
+                
+                points.forEach(pointKey => {
+                    const [x, y] = pointKey.split(',').map(Number);
+                    code += `  [utils.asGridCoord(${x}, ${y})]: true,\n`;
+                });
+                
+                code += `}`;
+                
+                document.getElementById('codeOutput').textContent = code;
+            }
+        }
+        
+        // 启动编辑器
+        window.addEventListener('DOMContentLoaded', () => {
+            new WallEditor();
+        });
+    </script>
+</body>
+</html>
