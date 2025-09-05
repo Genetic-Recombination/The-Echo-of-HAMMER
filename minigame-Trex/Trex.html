@@ -12,7 +12,7 @@
     .bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
     .score{font-weight:700}
     canvas{display:block;background:linear-gradient(#f7f7f7,#eaf2f5);width:100%;height:280px;border-radius:6px}
-    #dinoGif{position:absolute;z-index:2;width:60px;height:60px;pointer-events:none;}
+    #dinoGif{position:absolute;z-index:2;width:80px;height:80px;pointer-events:none;}
     .controls{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap}
     .btn{padding:6px 10px;border-radius:6px;border:1px solid #d0d7dc;background:#fff;cursor:pointer}
     .hint{font-size:13px;color:#666}
@@ -81,7 +81,7 @@ const dinoGifSrcs = {
 
 class Dino {
   constructor(x,y){
-    this.x=x; this.y=y; this.w=60; this.h=60;
+    this.x=x; this.y=y; this.w=80; this.h=80;
     this.vy=0; this.onGround=true; this.ducking=false;
     this.jumpCount=0; this.maxJumps=3;
     this.groundY=y;
@@ -113,6 +113,7 @@ class Dino {
     }
     dinoGif.style.left = (this.x - camX) + "px";
     dinoGif.style.top = this.y + "px";
+
   }
   jump(){
     if(this.jumpCount < this.maxJumps && !this.ducking){
@@ -168,7 +169,7 @@ class Game{
   reset(){
     this.running=false; this.score=0; this.speed=320;
     this.spawnTimer=0; this.obstacles=[]; this.clouds=[]; this.rivers=[];
-    this.dino=new Dino(80,H-120); this.dino.groundY=H-90
+    this.dino=new Dino(80,H-120); this.dino.groundY=H-120;
     this.last=0; this.day=true; this.nightOverride=false; this.pause=false;
     this.fallInWater=false; this.camX=0;
   }
@@ -199,7 +200,7 @@ class Game{
         this.obstacles.push(new Ptero(spawnX,H-140-Math.random()*40,this.speed,Math.random()*1000));
       }
       else if(rand < 0.3){
-        this.obstacles.push(new LowPtero(spawnX,H-80,this.speed,Math.random()*1000));
+        this.obstacles.push(new LowPtero(spawnX,H-95,this.speed,Math.random()*1000));
       }
       else if(rand < 0.4){
         this.rivers.push(new River(spawnX,H-40,200 + Math.random()*100,this.speed));
@@ -272,18 +273,34 @@ const g=new Game(); game=g;
 document.getElementById('startBtn').addEventListener('click',()=>{g.start();});
 document.getElementById('pauseBtn').addEventListener('click',()=>{g.togglePause(); document.getElementById('pauseBtn').innerText=g.pause?'继续':'暂停';});
 
+// ------------------ 按键处理（必须点三次，长按无效） ------------------
+let jumpKeyPressed = false;
+
 window.addEventListener('keydown',(e)=>{
-  if(e.code==='Space'||e.code==='ArrowUp'){ e.preventDefault(); if(!g.running) g.start(); g.dino.jump(); }
+  if(e.code==='Space'||e.code==='ArrowUp'){
+    e.preventDefault();
+    if(!jumpKeyPressed){
+      jumpKeyPressed = true;
+      if(!g.running) g.start();
+      g.dino.jump();
+    }
+  }
   if(e.code==='ArrowDown'){ g.dino.duck(true); }
   if(e.code==='KeyR'){ g.start(); }
 });
-window.addEventListener('keyup',(e)=>{if(e.code==='ArrowDown'){g.dino.duck(false);}});
 
+window.addEventListener('keyup',(e)=>{
+  if(e.code==='Space'||e.code==='ArrowUp'){ jumpKeyPressed=false; }
+  if(e.code==='ArrowDown'){ g.dino.duck(false); }
+});
+
+// ------------------ 移动端按钮 ------------------
 document.getElementById('touchJump').addEventListener('touchstart',(e)=>{e.preventDefault(); if(!g.running) g.start(); g.dino.jump();});
 document.getElementById('touchDuck').addEventListener('touchstart',(e)=>{e.preventDefault(); g.dino.duck(true);});
 document.getElementById('touchDuck').addEventListener('touchend',(e)=>{e.preventDefault(); g.dino.duck(false);});
 
 document.getElementById('nightToggle').addEventListener('change',(e)=>{g.nightOverride=e.target.checked; g.day=!e.target.checked;});
+
 g.draw();
 </script>
 </body>
