@@ -14,21 +14,28 @@ class Overworld {
       const cameraPerson = this.map.gameObjects.hero;
 
       Object.values(this.map.gameObjects).forEach(object => {
-        object.update({
-          arrow: this.directionInput.direction,
-          map: this.map,
-        });
+        if (object.isMounted) {
+          object.update({
+            arrow: this.directionInput.direction,
+            map: this.map,
+          });
+        }
       });
 
       this.map.drawLowerImage(this.ctx, cameraPerson);
 
-      Object.values(this.map.gameObjects).sort((a, b) => {
+      Object.values(this.map.gameObjects).filter(object => object.isMounted).sort((a, b) => {
         return a.y - b.y;
       }).forEach(object => {
         object.sprite.draw(this.ctx, cameraPerson);
       });
 
       this.map.drawUpperImage(this.ctx, cameraPerson);
+
+      // 更新坐标调试器
+      if (this.coordinateDebugger) {
+        this.coordinateDebugger.update(this);
+      }
 
       if (!this.map.isPaused) {
         requestAnimationFrame(() => {
