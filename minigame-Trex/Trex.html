@@ -83,7 +83,7 @@ class Dino {
   constructor(x,y){
     this.x=x; this.y=y; this.w=60; this.h=60;
     this.vy=0; this.onGround=true; this.ducking=false;
-    this.jumpCount=0; this.maxJumps=5;
+    this.jumpCount=0; this.maxJumps=3;
     this.groundY=y;
     this.lastGif="";
   }
@@ -168,7 +168,7 @@ class Game{
   reset(){
     this.running=false; this.score=0; this.speed=320;
     this.spawnTimer=0; this.obstacles=[]; this.clouds=[]; this.rivers=[];
-    this.dino=new Dino(80,H-80); this.dino.groundY=H-80;
+    this.dino=new Dino(80,H-120); this.dino.groundY=H-90
     this.last=0; this.day=true; this.nightOverride=false; this.pause=false;
     this.fallInWater=false; this.camX=0;
   }
@@ -180,26 +180,48 @@ class Game{
     this.update(dt); this.draw(); requestAnimationFrame(this.loop.bind(this));
   }
   update(dt){
-    this.camX = this.dino.x - 100;
+    this.camX = this.dino.x-100;
+
+    // ---------- 生成障碍物 ----------
     this.spawnTimer -= dt;
-    if(this.spawnTimer<=0){
-      this.spawnTimer = 0.8 + Math.random()*1.2 - Math.min(0.6,this.score/10000);
+    if(this.spawnTimer <= 0){
+      let base = 2.0;   // 初始间隔 (秒)
+      let min  = 0.4;   // 最小间隔
+      let k    = 0.002; // 加速系数
+
+      this.spawnTimer = Math.max(min, base - this.score * k) 
+                        + Math.random() * 0.5;
+
       const rand = Math.random();
       const spawnX = this.dino.x + W;
-      if(rand<0.15){ this.obstacles.push(new Ptero(spawnX,H-140-Math.random()*40,this.speed,Math.random()*1000)); }
-      else if(rand<0.3){ this.obstacles.push(new LowPtero(spawnX,H-80,this.speed,Math.random()*1000)); }
-      else if(rand<0.4){ this.rivers.push(new River(spawnX,H-40,200 + Math.random()*100,this.speed)); }
-      else{ this.obstacles.push(new Cactus(spawnX,H-48,this.speed)); }
+
+      if(rand < 0.15){
+        this.obstacles.push(new Ptero(spawnX,H-140-Math.random()*40,this.speed,Math.random()*1000));
+      }
+      else if(rand < 0.3){
+        this.obstacles.push(new LowPtero(spawnX,H-80,this.speed,Math.random()*1000));
+      }
+      else if(rand < 0.4){
+        this.rivers.push(new River(spawnX,H-40,200 + Math.random()*100,this.speed));
+      }
+      else{
+        this.obstacles.push(new Cactus(spawnX,H-48,this.speed));
+      }
     }
+    // ------------------------------
+
     if(Math.random()<0.02) this.clouds.push(new Cloud(this.dino.x + W,20+Math.random()*60,20+Math.random()*30));
     this.dino.update(dt);
     this.clouds.forEach(c=>c.update(dt)); this.clouds=this.clouds.filter(c=>c.x > this.camX - 200);
     this.obstacles.forEach(o=>o.update(dt)); this.obstacles=this.obstacles.filter(o=>o.x+o.w>this.camX-100);
     this.rivers.forEach(r=>r.update(dt)); this.rivers=this.rivers.filter(r=>r.x+r.w>this.camX-100);
+
     this.obstacles.forEach(o=>{if(!o.passed && o.x + o.w < this.dino.x){o.passed=true; this.score+=1; playSound('scoreSound');}});
     this.rivers.forEach(r=>{if(!r.passed && r.x + r.w < this.dino.x){r.passed=true; this.score+=1; playSound('scoreSound');}});
+
     if(Math.floor(this.score)%1000<50) this.speed+=0.02;
     if(!this.nightOverride) this.day=(Math.floor(this.score/1000)%2===0);
+
     for(let o of this.obstacles){
       const standBox={x:this.dino.x,y:this.dino.y,w:this.dino.w,h:this.dino.h};
       const duckBox={x:this.dino.x,y:this.dino.y+16,w:this.dino.w,h:this.dino.h-16};
