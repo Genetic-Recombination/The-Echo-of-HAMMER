@@ -62,10 +62,6 @@ class OverworldEvent {
       obj.isMounted = false;
     });
 
-    // 重置暂停状态
-    this.map.isPaused = false;
-    this.map.isCutscenePlaying = false;
-
     const sceneTransition = new SceneTransition();
     sceneTransition.init(document.querySelector(".game-container"), () => {
       this.map.overworld.startMap(window.OverworldMaps[this.event.map], {

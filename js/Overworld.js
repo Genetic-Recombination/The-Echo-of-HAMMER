@@ -68,18 +68,42 @@ class Overworld {
   }
 
   startMap(mapConfig, heroInitialState) {
-    this.map = new OverworldMap(mapConfig);
+    // 深拷贝地图配置，避免在mount过程中污染全局的window.OverworldMaps
+    const mapConfigCopy = JSON.parse(JSON.stringify(mapConfig));
+    this.map = new OverworldMap(mapConfigCopy);
     this.map.overworld = this;
     this.map.mountObjects();
 
+    // 若缺失hero，进行兜底创建，避免相机与渲染目标为空
+    if (!this.map.gameObjects.hero) {
+      this.map.gameObjects.hero = new Person({
+        isPlayerControlled: true,
+        x: heroInitialState ? heroInitialState.x : utils.withGrid(5),
+        y: heroInitialState ? heroInitialState.y : utils.withGrid(5),
+        direction: heroInitialState ? heroInitialState.direction : "down",
+        src: "./image in the game/character/detectivewalking.png",
+        walkingSrc: "./image in the game/character/detectivewalking.png",
+        useShadow: true,
+      });
+      this.map.gameObjects.hero.id = "hero";
+      this.map.gameObjects.hero.mount(this.map);
+    }
+
     if (heroInitialState) {
-      const { hero } = this.map.gameObjects;
+      const hero = this.map.gameObjects.hero;
       hero.x = heroInitialState.x;
       hero.y = heroInitialState.y;
       hero.direction = heroInitialState.direction;
+      hero.isPlayerControlled = true;
+      // 确保切换地图后人物立即按正确朝向渲染
+      hero.sprite.setAnimation("idle-" + hero.direction);
     }
 
     // DirectionInput只需要初始化一次，不需要在地图切换时重新初始化
+    // 但需要清空按键状态，避免残留按键导致异常
+    if (this.directionInput) {
+      this.directionInput.heldDirections = [];
+    }
 
     this.progress.mapId = mapConfig.id;
     this.progress.startingHeroX = this.map.gameObjects.hero.x;
