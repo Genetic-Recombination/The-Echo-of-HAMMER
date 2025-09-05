@@ -88,7 +88,7 @@ window.OverworldMaps = {
   // 墙体连接（横向） y=10, x=11 ~ 14
   ...utils.horizontalWall(10, 11, 14),
   //厨房底墙
-  ...utils.horizontalWall(22, 45, 54),
+  ...utils.horizontalWall(21, 45, 54),
   //厨房顶墙
   ...utils.horizontalWall(16, 45, 54),
 
@@ -96,6 +96,22 @@ window.OverworldMaps = {
   ...utils.horizontalWall(12, 28, 48),//顶上方墙体
   ...utils.horizontalWall(17, 38, 39),//两株仙人掌
   ...utils.horizontalWall(17, 46, 48),
+  ...utils.horizontalWall(38, 20, 28),//沙发右侧
+  ...utils.horizontalWall(47, 29, 37),//最下端
+  
+  ...utils.horizontalWall(34, 7, 11),//沙发旁盒子
+  ...utils.horizontalWall(26, 12, 19),//桌子上部
+  ...utils.verticalWall(12, 26, 34),//桌子左侧
+  ...utils.verticalWall(19, 26, 38),//桌子右侧
+  ...utils.horizontalWall(38, 37, 45),//箱子下侧
+  ...utils.horizontalWall(26, 41, 44),//垃圾堆上厕
+  ...utils.horizontalWall(29, 41, 44),//垃圾堆下侧
+  ...utils.verticalWall(41, 26, 29),//垃圾桶左侧
+  ...utils.verticalWall(37, 33, 46),//箱子左侧
+  ...utils.verticalWall(40, 33, 46),//箱子右侧
+  ...utils.verticalWall(42, 35, 40),
+  ...utils.horizontalWall(35, 42, 44),
+  ...utils.horizontalWall(33, 37, 40),
 },
 
     cutsceneSpaces: {
