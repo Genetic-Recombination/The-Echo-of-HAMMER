@@ -211,24 +211,23 @@ window.OverworldMaps = {
       }
     },
     walls: {
-      [utils.asGridCoord(0, 4)]: true,
-      [utils.asGridCoord(0, 5)]: true,
-      [utils.asGridCoord(0, 6)]: true,
-      [utils.asGridCoord(0, 7)]: true,
-      [utils.asGridCoord(0, 8)]: true,
-      [utils.asGridCoord(1, 3)]: true,
-      [utils.asGridCoord(2, 3)]: true,
-      [utils.asGridCoord(3, 3)]: true,
-      [utils.asGridCoord(4, 3)]: true,
-      [utils.asGridCoord(6, 3)]: true,
-      [utils.asGridCoord(7, 3)]: true,
-      [utils.asGridCoord(8, 3)]: true,
-      [utils.asGridCoord(9, 3)]: true,
-      [utils.asGridCoord(10, 4)]: true,
-      [utils.asGridCoord(10, 5)]: true,
-      [utils.asGridCoord(10, 6)]: true,
-      [utils.asGridCoord(10, 7)]: true,
-      [utils.asGridCoord(10, 8)]: true,
+    ...utils.verticalWall(25, 16, 20),//衣柜右侧竖墙
+    ...utils.verticalWall(12, 16, 19),//床右侧边界
+    ...utils.verticalWall(8, 15, 19),//床左侧边界
+    ...utils.verticalWall(4, 15, 30),//床左侧墙壁
+    ...utils.verticalWall(7, 21, 30),//沙发右边界
+    ...utils.verticalWall(29, 0, 100),
+    ...utils.verticalWall(21, 25, 33),//卫生间门右侧墙
+    ...utils.verticalWall(16, 29, 100),
+
+    ...utils.horizontalWall(20, 25, 28),//通往客厅门上厕横墙
+    ...utils.horizontalWall(15, 13, 24),//衣柜下方横墙
+    ...utils.horizontalWall(19, 8, 11),//床下厕边界
+    ...utils.horizontalWall(15, 4, 8),//篮子下边界
+    ...utils.horizontalWall(21, 4, 7),//沙发上边界
+    ...utils.horizontalWall(29, 0, 16),//沙发下横墙
+    ...utils.horizontalWall(25, 21, 30),//沙发下横墙
+    ...utils.horizontalWall(33, 0, 100),
     },
     cutsceneSpaces: {
       //通往客厅
@@ -288,7 +287,7 @@ window.OverworldMaps = {
         isPlayerControlled: true,
         x: utils.withGrid(8),
         y: utils.withGrid(6),
-        src: "./image in the game/character/picture/detective.png",
+        src: "./image in the game/character/detectivewalking.png",
         walkingSrc: "./image in the game/character/detectivewalking.png",
         useShadow: true,
       },
@@ -364,7 +363,7 @@ window.OverworldMaps = {
         isPlayerControlled: true,
         x: utils.withGrid(3),
         y: utils.withGrid(8),
-        src: "./image in the game/character/picture/detective.png",
+        src: "./image in the game/character/detectivewalking.png",
         walkingSrc: "./image in the game/character/detectivewalking.png",
         useShadow: true,
       }
@@ -417,7 +416,7 @@ window.OverworldMaps = {
         isPlayerControlled: true,
         x: utils.withGrid(2),
         y: utils.withGrid(7),
-        src: "./image in the game/character/picture/detective.png",
+        src: "./image in the game/character/detectivewalking.png",
         walkingSrc: "./image in the game/character/detectivewalking.png",
         useShadow: true,
       },
