@@ -14,28 +14,21 @@ class Overworld {
       const cameraPerson = this.map.gameObjects.hero;
 
       Object.values(this.map.gameObjects).forEach(object => {
-        if (object.isMounted) {
-          object.update({
-            arrow: this.directionInput.direction,
-            map: this.map,
-          });
-        }
+        object.update({
+          arrow: this.directionInput.direction,
+          map: this.map,
+        });
       });
 
       this.map.drawLowerImage(this.ctx, cameraPerson);
 
-      Object.values(this.map.gameObjects).filter(object => object.isMounted).sort((a, b) => {
+      Object.values(this.map.gameObjects).sort((a, b) => {
         return a.y - b.y;
       }).forEach(object => {
         object.sprite.draw(this.ctx, cameraPerson);
       });
 
       this.map.drawUpperImage(this.ctx, cameraPerson);
-
-      // 更新坐标调试器
-      if (this.coordinateDebugger) {
-        this.coordinateDebugger.update(this);
-      }
 
       if (!this.map.isPaused) {
         requestAnimationFrame(() => {
@@ -47,10 +40,10 @@ class Overworld {
   }
 
   bindActionInput() {
-    this.enter=new KeyPressListener("Space", () => {
+    new KeyPressListener("Space", () => {
       this.map.checkForActionCutscene();
     });
-    this.escape=new KeyPressListener("Escape", () => {
+    new KeyPressListener("Escape", () => {
       if (!this.map.isCutscenePlaying) {
         this.map.startCutscene([
           { type: "pause" }
@@ -66,13 +59,7 @@ class Overworld {
       }
     });
   }
-  removeHeroPositionCheck() {
-    document.removeEventListener("PersonWalkingComplete", e => {
-      if (e.detail.whoId === "hero") {
-        this.map.checkForFootstepCutscene();
-      }
-    });
-  }
+
   startMap(mapConfig, heroInitialState) {
     this.map = new OverworldMap(mapConfig);
     this.map.overworld = this;
