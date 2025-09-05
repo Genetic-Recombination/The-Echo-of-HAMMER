@@ -80,8 +80,12 @@ class Person extends GameObject {
   updateSprite() {
     if (this.movingProgressRemaining > 0) {
       this.sprite.setAnimation("walk-" + this.direction);
+      this.sprite.pauseAnimation = false; // 行走时正常推进动画
       return;
     }
+
+    // 停下时显示对应方向的 idle（面朝 last direction）
     this.sprite.setAnimation("idle-" + this.direction);
+    this.sprite.pauseAnimation = false;
   }
 }
