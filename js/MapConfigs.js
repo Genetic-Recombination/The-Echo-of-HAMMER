@@ -83,6 +83,7 @@ window.OverworldMaps = {
       [utils.asGridCoord(7, 20)]: [
 >>>>>>> Stashed changes
 =======
+      // 通往卧室的门
       [utils.asGridCoord(7, 20)]: [
 >>>>>>> Stashed changes
 =======
