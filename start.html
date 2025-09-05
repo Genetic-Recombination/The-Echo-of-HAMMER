@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>游戏开始</title>
+    <title>The Echo of Hammer - 完整版</title>
     <style>
+        /* 通用样式 */
         * {
             margin: 0;
             padding: 0;
@@ -13,20 +14,40 @@
 
         body {
             font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, rgba(26,26,26,0.8) 0%, rgba(45,45,45,0.8) 50%, rgba(26,26,26,0.8) 100%), url('./image in the game/black man background.png');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
             overflow: hidden;
             position: relative;
         }
 
-        body::before {
+        /* 页面容器 */
+        .page {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+        }
+
+        .page.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* 开始页面样式 */
+        #start-page {
+            background: linear-gradient(135deg, rgba(26,26,26,0.8) 0%, rgba(45,45,45,0.8) 50%, rgba(26,26,26,0.8) 100%), url('./image in the game/black man background.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #start-page::before {
             content: '';
             position: absolute;
             top: 0;
@@ -38,11 +59,11 @@
         }
 
         .logo-container {
-            position: static; /* 取消绝对定位 */
+            position: static;
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-top: 0px;      /* logo距离顶部更近 */
+            margin-top: 0px;
             animation: hammerLetterReveal 4s ease-out forwards;
             opacity: 0;
             z-index: 10;
@@ -66,121 +87,11 @@
             box-shadow: 0 0 6px rgba(255, 0, 0, 0.8);
         }
 
-        .blood-particle:nth-child(1) {
-            top: 20%;
-            left: 10%;
-            animation-delay: 0s;
-        }
-
-        .blood-particle:nth-child(2) {
-            top: 40%;
-            left: 15%;
-            animation-delay: 0.5s;
-        }
-
-        .blood-particle:nth-child(3) {
-            top: 60%;
-            left: 5%;
-            animation-delay: 1s;
-        }
-
-        .blood-particle:nth-child(4) {
-            top: 30%;
-            left: 20%;
-            animation-delay: 1.5s;
-        }
-
-        .blood-particle:nth-child(5) {
-            top: 70%;
-            left: 12%;
-            animation-delay: 2s;
-        }
-
-        .game-title {
-            position: absolute;
-            top: 200px;
-            left: 50px;
-            color: #8b0000;
-            font-size: 2.8rem;
-            font-weight: bold;
-            text-shadow: 3px 3px 6px rgba(0,0,0,0.8), 0 0 20px rgba(139,0,0,0.5);
-            letter-spacing: 3px;
-            animation: titleEntrance 2s ease-out 2s forwards;
-            opacity: 0;
-            transform: translateY(30px);
-            margin: 0;
-        }
-
-        @keyframes hammerLetterReveal {
-            0% {
-                opacity: 0;
-                filter: brightness(0.2) blur(5px) drop-shadow(0 0 20px rgba(139, 0, 0, 0.8)) drop-shadow(0 0 40px rgba(139, 0, 0, 0.6));
-                letter-spacing: -20px;
-            }
-            16.67% {
-                opacity: 0.2;
-                filter: brightness(0.4) blur(4px) drop-shadow(0 0 20px rgba(139, 0, 0, 0.8)) drop-shadow(0 0 40px rgba(139, 0, 0, 0.6));
-                letter-spacing: -15px;
-            }
-            33.33% {
-                opacity: 0.4;
-                filter: brightness(0.6) blur(3px) drop-shadow(0 0 20px rgba(139, 0, 0, 0.8)) drop-shadow(0 0 40px rgba(139, 0, 0, 0.6));
-                letter-spacing: -10px;
-            }
-            50% {
-                opacity: 0.6;
-                filter: brightness(0.8) blur(2px) drop-shadow(0 0 20px rgba(139, 0, 0, 0.8)) drop-shadow(0 0 40px rgba(139, 0, 0, 0.6));
-                letter-spacing: -5px;
-            }
-            66.67% {
-                opacity: 0.8;
-                filter: brightness(0.9) blur(1px) drop-shadow(0 0 20px rgba(139, 0, 0, 0.8)) drop-shadow(0 0 40px rgba(139, 0, 0, 0.6));
-                letter-spacing: -2px;
-            }
-            83.33% {
-                opacity: 0.9;
-                filter: brightness(1) blur(0.5px) drop-shadow(0 0 20px rgba(139, 0, 0, 0.8)) drop-shadow(0 0 40px rgba(139, 0, 0, 0.6));
-                letter-spacing: 0px;
-            }
-            100% {
-                opacity: 1;
-                filter: brightness(1) blur(0px) drop-shadow(0 0 20px rgba(139, 0, 0, 0.8)) drop-shadow(0 0 40px rgba(139, 0, 0, 0.6));
-                letter-spacing: 0px;
-            }
-        }
-
-        @keyframes bloodFlow {
-            0% {
-                transform: translateX(-50px) translateY(0px);
-                opacity: 0;
-            }
-            20% {
-                opacity: 0.8;
-            }
-            80% {
-                opacity: 0.8;
-            }
-            100% {
-                transform: translateX(200px) translateY(-10px);
-                opacity: 0;
-            }
-        }
-
-        @keyframes titleEntrance {
-            0% {
-                opacity: 0;
-                transform: translateX(-50px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        @keyframes titleGlow {
-            from { text-shadow: 3px 3px 6px rgba(0,0,0,0.8), 0 0 20px rgba(139,0,0,0.5); }
-            to { text-shadow: 3px 3px 6px rgba(0,0,0,0.8), 0 0 30px rgba(139,0,0,0.8); }
-        }
+        .blood-particle:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
+        .blood-particle:nth-child(2) { top: 40%; left: 15%; animation-delay: 0.5s; }
+        .blood-particle:nth-child(3) { top: 60%; left: 5%; animation-delay: 1s; }
+        .blood-particle:nth-child(4) { top: 30%; left: 20%; animation-delay: 1.5s; }
+        .blood-particle:nth-child(5) { top: 70%; left: 12%; animation-delay: 2s; }
 
         .button-container {
             display: flex;
@@ -190,34 +101,6 @@
             animation: buttonsWaterRise 3s ease-out 4s forwards;
             opacity: 0;
             transform: translateY(100px);
-        }
-
-        @keyframes buttonsWaterRise {
-            0% {
-                opacity: 0;
-                transform: translateY(100px) scale(0.8);
-                filter: blur(3px) brightness(0.6);
-            }
-            30% {
-                opacity: 0.3;
-                transform: translateY(60px) scale(0.9);
-                filter: blur(2px) brightness(0.7);
-            }
-            60% {
-                opacity: 0.7;
-                transform: translateY(20px) scale(0.95);
-                filter: blur(1px) brightness(0.85);
-            }
-            80% {
-                opacity: 0.9;
-                transform: translateY(5px) scale(1.02);
-                filter: blur(0px) brightness(0.95);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-                filter: blur(0px) brightness(1);
-            }
         }
 
         .start-button {
@@ -233,69 +116,17 @@
             text-transform: uppercase;
             letter-spacing: 2px;
             transition: all 0.3s ease;
-            box-shadow: 
-                0 8px 16px rgba(0,0,0,0.6),
-                inset 0 2px 4px rgba(255,255,255,0.1),
-                inset 0 -2px 4px rgba(0,0,0,0.3);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.6), inset 0 2px 4px rgba(255,255,255,0.1), inset 0 -2px 4px rgba(0,0,0,0.3);
             position: relative;
             overflow: hidden;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8), 0 0 10px rgba(255, 0, 0, 0.6);
         }
 
-        .start-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-            transition: left 0.5s;
-        }
-
-        .start-button::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 10%;
-            right: 10%;
-            height: 3px;
-            background: radial-gradient(ellipse, rgba(0, 100, 200, 0.3), transparent);
-            border-radius: 50%;
-            animation: waterRipple 2s ease-in-out infinite;
-        }
-
-        @keyframes waterRipple {
-            0%, 100% {
-                transform: scaleX(1);
-                opacity: 0.3;
-            }
-            50% {
-                transform: scaleX(1.2);
-                opacity: 0.1;
-            }
-        }
-
         .start-button:hover {
             background: linear-gradient(145deg, #660000, #a00000);
             border-color: #800000;
-            box-shadow: 
-                0 12px 24px rgba(0,0,0,0.8),
-                inset 0 2px 4px rgba(255,255,255,0.2),
-                inset 0 -2px 4px rgba(0,0,0,0.4),
-                0 0 20px rgba(139,0,0,0.6);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.8), inset 0 2px 4px rgba(255,255,255,0.2), inset 0 -2px 4px rgba(0,0,0,0.4), 0 0 20px rgba(139,0,0,0.6);
             transform: translateY(-2px);
-        }
-
-        .start-button:hover::before {
-            left: 100%;
-        }
-
-        .start-button:active {
-            transform: translateY(0);
-            box-shadow: 
-                0 4px 8px rgba(0,0,0,0.6),
-                inset 0 2px 4px rgba(0,0,0,0.3);
         }
 
         .about-button {
@@ -318,11 +149,6 @@
             transform: translateY(-1px);
         }
 
-        .about-button:active {
-            transform: translateY(0);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.4);
-        }
-
         .particles {
             position: absolute;
             width: 100%;
@@ -338,46 +164,496 @@
             animation: float 6s infinite linear;
         }
 
-        @keyframes float {
+        /* 登录页面样式 */
+        #login-page {
+            background: url("black man background.png") no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background: #fafafa;
+            border-radius: 10px;
+            box-shadow: 0 14px 28px rgba(0,0,0,.25),0 10px 10px rgba(0,0,0,.22);
+            position: absolute;
+            top: 50%;
+            left: 50px;
+            transform: translateY(-50%);
+            width: 600px;
+            min-height: 400px;
+            overflow: hidden;
+        }
+
+        .form-container {
+            position: absolute;
+            top: 0;
+            height: 100%;
+            transition: all 0.6s ease-in-out;
+        }
+
+        .sign-in-container { left: 0; width: 50%; z-index: 2; }
+        .sign-up-container { left: 0; width: 50%; z-index: 1; opacity: 0; }
+
+        form { background: #fff; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 0 50px; height: 100%; text-align: center; }
+
+        .txtb { position: relative; margin: 10px 0; border-bottom: 2px solid #adadad; }
+        .txtb input { width: 100%; border: none; outline: none; background: none; font-size: 15px; padding: 0 3px; height: 35px; }
+        .txtb span::before { content: attr(data-placeholder); position: absolute; top: 50%; left: 5px; color: #adadad; transform: translateY(-50%); transition: 0.5s; }
+        .txtb span::after { content: ''; position: absolute; left: 0; bottom: 0; width: 0; height: 2px; background-image: linear-gradient(120deg,#fddd83,#7f3205); transition: 0.5s; }
+        .txtb input.focus + span::before { top: -5px; }
+        .txtb input.focus + span::after { width: 100%; }
+
+        .login-button {
+            border-radius: 20px;
+            border: none;
+            background: linear-gradient(120deg,#000000,#595756);
+            color: #fff;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 12px 45px;
+            cursor: pointer;
+            transition: transform 80ms ease-in;
+        }
+        .login-button:active { transform: scale(0.95); }
+        .login-button.ghost { background: transparent; border-color: #fff; }
+
+        .overlay-container {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 50%;
+            height: 100%;
+            overflow: hidden;
+            transition: transform 0.6s ease-in-out;
+            z-index: 100;
+        }
+        .overlay {
+            background-image: linear-gradient(135deg, #d7d7d7, #a9a9a9, #f5f5f5);
+            color: #fff;
+            position: relative;
+            left: -100%;
+            height: 100%;
+            width: 200%;
+            transition: transform 0.6s ease-in-out;
+        }
+
+        .overlay-panel {
+            position: absolute;
+            top: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 0 40px;
+            height: 100%;
+            width: 50%;
+            text-align: center;
+            transition: transform 0.6s ease-in-out;
+        }
+        .overlay-left { transform: translateY(-20%); }
+        .overlay-right { right: 0; transform: translateY(0); }
+
+        .container.right-panel-active .sign-in-container { transform: translateX(100%); }
+        .container.right-panel-active .sign-up-container { transform: translateX(100%); opacity: 1; z-index: 5; }
+        .container.right-panel-active .overlay-container { transform: translateX(-100%); }
+        .container.right-panel-active .overlay { transform: translateX(50%); }
+        .container.right-panel-active .overlay-left { transform: translateY(0); }
+        .container.right-panel-active .overlay-right { transform: translateY(20%); }
+
+        /* 游戏菜单页面样式 */
+        #menu-page {
+            color: #e6e6e6;
+            background:
+                url('https://www.transparenttextures.com/patterns/asfalt-dark.png') repeat,
+                radial-gradient(1200px 700px at 70% -10%, #1a1a22 0%, transparent 60%),
+                radial-gradient(600px 400px at 30% 110%, #111116 0%, transparent 60%),
+                linear-gradient(#0a0a0c, #0b0b0d 40%, #060607 100%);
+            background-blend-mode: overlay;
+        }
+
+        .noise::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            mix-blend-mode: overlay;
+            background:
+                repeating-linear-gradient(0deg, rgba(255,255,255,.015) 0 2px, rgba(0,0,0,.02) 2px 4px),
+                radial-gradient(2000px 1200px at 50% 0%, rgba(255,255,255,.03), transparent 60%);
+            animation: flicker 6s infinite linear;
+        }
+
+        .fog, .fog::after {
+            content: "";
+            position: fixed;
+            inset: -20%;
+            pointer-events: none;
+            background: radial-gradient(60% 40% at 30% 30%, rgba(200,200,220,.06), transparent 60%),
+                        radial-gradient(40% 30% at 70% 60%, rgba(200,200,220,.05), transparent 70%);
+            filter: blur(18px);
+            animation: drift 40s linear infinite;
+        }
+        .fog::after { animation-duration: 65s; opacity: .7; }
+
+        .wrap {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            display: grid;
+            place-items: center;
+            padding: 24px;
+        }
+
+        .panel {
+            width: min(680px, 92vw);
+            text-align: center;
+            padding: 48px 28px;
+            border-radius: 18px;
+            background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+            border: 1px solid rgba(255,255,255,.08);
+            box-shadow: 0 20px 60px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.04);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .panel::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: -8px;
+            height: 42px;
+            pointer-events: none;
+            background:
+                radial-gradient(16px 20px at 8% 70%, #b30017 0 60%, transparent 61%),
+                radial-gradient(12px 14px at 22% 60%, #b30017 0 60%, transparent 61%),
+                radial-gradient(18px 24px at 38% 70%, #b30017 0 60%, transparent 61%),
+                radial-gradient(14px 18px at 56% 65%, #b30017 0 60%, transparent 61%),
+                radial-gradient(12px 16px at 74% 68%, #b30017 0 60%, transparent 61%),
+                radial-gradient(10px 14px at 88% 66%, #b30017 0 60%, transparent 61%),
+                linear-gradient(180deg, #b30017 0 24px, transparent 25px);
+            filter: drop-shadow(0 2px 0 rgba(0,0,0,.45));
+            opacity: .9;
+        }
+
+        .menu-title {
+            margin: 0 0 6px;
+            font-weight: 700;
+            letter-spacing: .2em;
+            font-size: clamp(28px, 4.6vw, 46px);
+            background: linear-gradient(180deg, #fff 0%, #ccc 40%, #555 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 10px rgba(179,0,23,.5), 0 0 20px rgba(255,0,0,.3), 2px 2px 4px rgba(0,0,0,.7);
+        }
+
+        .subtitle {
+            color: #9a9aaa;
+            font-size: clamp(12px, 2.8vw, 14px);
+            letter-spacing: .36em;
+            text-transform: uppercase;
+        }
+
+        .glitch {
+            position: relative;
+            display: inline-block;
+        }
+        .glitch::before, .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            opacity: .15;
+        }
+        .glitch::before { transform: translate(2px, -1px); color: #ff3b3b; }
+        .glitch::after { transform: translate(-1px, 1px); color: #3b8bff; }
+
+        .menu {
+            margin: 28px auto 0;
+            display: grid;
+            gap: 14px;
+            width: min(360px, 88%);
+        }
+
+        .btn {
+            appearance: none;
+            border: none;
+            cursor: pointer;
+            padding: 16px 20px;
+            border-radius: 14px;
+            font-weight: 700;
+            letter-spacing: .24em;
+            background: linear-gradient(180deg, rgba(179,0,23,.9), rgba(122,0,16,.95)),
+                        url('https://www.transparenttextures.com/patterns/blood.png');
+            background-size: cover;
+            background-blend-mode: multiply;
+            color: #fff;
+            text-transform: uppercase;
+            font-size: clamp(14px, 2.8vw, 16px);
+            box-shadow: inset 0 -2px 0 rgba(0,0,0,.5), 0 8px 22px rgba(179,0,23,.18);
+            position: relative;
+            overflow: hidden;
+            transition: transform .06s ease, box-shadow .2s ease, filter .2s ease;
+        }
+
+        .btn:hover {
+            filter: brightness(1.2) saturate(130%);
+            box-shadow: 0 0 12px rgba(255,0,0,.6), 0 0 22px rgba(179,0,23,.4);
+            transform: scale(1.02);
+        }
+
+        .btn::after {
+            content: "";
+            position: absolute;
+            left: 10%;
+            right: 10%;
+            top: 0;
+            height: 8px;
+            background: linear-gradient(180deg, rgba(255,80,80,.9), rgba(179,0,23,0));
+            filter: blur(.4px);
+            opacity: .7;
+        }
+
+        .btn .drip {
+            position: absolute;
+            top: 8px;
+            width: 8px;
+            height: 14px;
+            background: #b30017;
+            left: calc(50% - 4px);
+            border-bottom-left-radius: 6px;
+            border-bottom-right-radius: 6px;
+            animation: drop 2.8s ease-in infinite;
+            box-shadow: 0 2px 0 rgba(0,0,0,.35);
+        }
+        .btn .drip:nth-child(2) { left: 22%; animation-delay: 1s; }
+        .btn .drip:nth-child(3) { left: 78%; animation-delay: 2s; }
+
+        .hint {
+            margin-top: 26px;
+            color: #9a9aaa;
+            font-size: 12px;
+            opacity: .8;
+        }
+
+        /* 动画 */
+        @keyframes hammerLetterReveal {
             0% {
-                transform: translateY(100vh) rotate(0deg);
                 opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
+                filter: brightness(0.2) blur(5px) drop-shadow(0 0 20px rgba(139, 0, 0, 0.8)) drop-shadow(0 0 40px rgba(139, 0, 0, 0.6));
+                letter-spacing: -20px;
             }
             100% {
-                transform: translateY(-10vh) rotate(360deg);
-                opacity: 0;
+                opacity: 1;
+                filter: brightness(1) blur(0px) drop-shadow(0 0 20px rgba(139, 0, 0, 0.8)) drop-shadow(0 0 40px rgba(139, 0, 0, 0.6));
+                letter-spacing: 0px;
             }
         }
+
+        @keyframes bloodFlow {
+            0% { transform: translateX(-50px) translateY(0px); opacity: 0; }
+            20% { opacity: 0.8; }
+            80% { opacity: 0.8; }
+            100% { transform: translateX(200px) translateY(-10px); opacity: 0; }
+        }
+
+        @keyframes buttonsWaterRise {
+            0% {
+                opacity: 0;
+                transform: translateY(100px) scale(0.8);
+                filter: blur(3px) brightness(0.6);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+                filter: blur(0px) brightness(1);
+            }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: .35; }
+            50% { opacity: .6; }
+        }
+
+        @keyframes drift {
+            0% { transform: translateX(-5%) translateY(0); }
+            50% { transform: translateX(5%) translateY(-2%); }
+            100% { transform: translateX(-5%) translateY(0); }
+        }
+
+        @keyframes drop {
+            0% { transform: translateY(0); opacity: 0; }
+            40% { opacity: 1; }
+            90% { transform: translateY(18px); opacity: 1; }
+            100% { transform: translateY(28px); opacity: 0; }
+        }
     </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-    <div class="particles" id="particles"></div>
-    
-    <div class="logo-container">
-        <div style="position: relative; display: inline-block;">
-            <img src="image in the game/logo透明.png" alt="游戏Logo" class="game-logo">
-            <div class="blood-particle"></div>
-            <div class="blood-particle"></div>
-            <div class="blood-particle"></div>
-            <div class="blood-particle"></div>
-            <div class="blood-particle"></div>
+    <!-- 开始页面 -->
+    <div id="start-page" class="page active">
+        <div class="particles" id="particles"></div>
+        
+        <div class="logo-container">
+            <div style="position: relative; display: inline-block;">
+                <img src="image in the game/logo透明.png" alt="游戏Logo" class="game-logo">
+                <div class="blood-particle"></div>
+                <div class="blood-particle"></div>
+                <div class="blood-particle"></div>
+                <div class="blood-particle"></div>
+                <div class="blood-particle"></div>
+            </div>
+        </div>
+        
+        <div class="button-container">
+            <button class="start-button" onclick="showLoginPage()">开始游戏</button>
+            <button class="about-button" onclick="showAbout()">关于我们</button>
         </div>
     </div>
-    
 
-    
-    <div class="button-container">
-        <button class="start-button" onclick="startGame()">开始游戏</button>
-        <button class="about-button" onclick="showAbout()">关于我们</button>
+    <!-- 登录页面 -->
+    <div id="login-page" class="page">
+        <div class="container" id="login-box">
+            <!-- 注册表单 -->
+            <div class="form-container sign-up-container">
+                <form name="registerForm" onsubmit="return registerUser();">
+                    <h1>注册</h1>           
+                    <div class="txtb">
+                        <input type="text" id="regUsername" required
+                        oninvalid="this.setCustomValidity('请输入用户名')" 
+                        oninput="this.setCustomValidity('')">
+                        <span data-placeholder="username"></span>
+                    </div>
+                    <div class="txtb">
+                        <input type="password" id="regPassword" required
+                        oninvalid="this.setCustomValidity('请输入密码')" 
+                        oninput="this.setCustomValidity('')">
+                        <span data-placeholder="password"></span>
+                    </div>
+                    <div class="txtb">
+                        <input type="password" id="confirmPassword" required
+                        oninvalid="this.setCustomValidity('请再次输入密码')" 
+                        oninput="this.setCustomValidity('')">
+                        <span data-placeholder="Confirm Password"></span>
+                    </div>            
+                    <button type="submit" class="login-button">注册</button>
+                </form>
+            </div>
+
+            <!-- 登录表单 -->
+            <div class="form-container sign-in-container">
+                <form name="loginForm" onsubmit="return validateForm();">
+                    <h1>登录</h1>
+                    <div class="txtb">
+                        <input type="text" id="username" required
+                        oninvalid="this.setCustomValidity('请输入用户名')" 
+                        oninput="this.setCustomValidity('')">
+                        <span data-placeholder="username"></span>
+                    </div>
+                    <div class="txtb">
+                        <input type="password" id="password" required
+                        oninvalid="this.setCustomValidity('请输入密码')" 
+                        oninput="this.setCustomValidity('')">
+                        <span data-placeholder="password"></span>
+                    </div>
+                    <button type="submit" class="login-button">登录</button>
+                </form>
+            </div>
+
+            <!-- 滑动覆盖层 -->
+            <div class="overlay-container">
+                <div class="overlay">
+                    <div class="overlay-panel overlay-left">
+                        <h1>已有账号？</h1>
+                        <p>请使用您的账号进行登录</p>
+                        <button class="login-button ghost" id="signIn">登录</button>
+                        <a href="#" onclick="showStartPage()" class="ghost" style="margin-top: 20px; font-family:Pixel Emulator ; display: inline-block; color: white; font-size: 14px; line-height: 20px; margin: 20px 0 30px;">返回首页</a>
+                    </div>
+                    <div class="overlay-panel overlay-right">
+                        <h1>没有账号?</h1>
+                        <p>立即注册，一起开启魔法之旅吧</p>
+                        <button class="login-button ghost" id="signUp">注册</button>
+                        <a href="#" onclick="showStartPage()" class="ghost" style="margin-top: 20px; font-family:Pixel Emulator ; display: inline-block; color: white; font-size: 14px; line-height: 20px; margin: 20px 0 30px;">返回首页</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 游戏菜单页面 -->
+    <div id="menu-page" class="page">
+        <div class="noise"></div>
+        <div class="fog"></div>
+        <main class="wrap" role="main">
+            <section class="panel" aria-labelledby="title">
+                <h1 id="title" class="glitch menu-title" data-text="The Echo of Hammer">The Echo of Hammer</h1>
+                <div class="subtitle" aria-hidden="true">SHADOWS WHISPER · BLOOD REMEMBERS</div>
+
+                <nav class="menu" aria-label="主菜单">
+                    <button class="btn" id="newGameBtn" aria-label="开始新游戏">
+                        New Game
+                        <i class="drip" aria-hidden="true"></i>
+                        <i class="drip" aria-hidden="true"></i>
+                        <i class="drip" aria-hidden="true"></i>
+                    </button>
+                    <button class="btn" id="saveBtn" aria-label="打开存档">
+                        Load Game
+                        <i class="drip" aria-hidden="true"></i>
+                        <i class="drip" aria-hidden="true"></i>
+                        <i class="drip" aria-hidden="true"></i>
+                    </button>
+                    <button class="btn" id="achieveBtn" aria-label="查看成就">
+                        Achievements
+                        <i class="drip" aria-hidden="true"></i>
+                        <i class="drip" aria-hidden="true"></i>
+                        <i class="drip" aria-hidden="true"></i>
+                    </button>
+                </nav>
+
+                <p class="hint">Enter = New Game · S = Load Game · A = Achievements</p>
+            </section>
+        </main>
     </div>
 
     <script>
+        // 页面切换函数
+        function showPage(pageId) {
+            // 隐藏所有页面
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // 显示指定页面
+            document.getElementById(pageId).classList.add('active');
+        }
+
+        function showStartPage() {
+            showPage('start-page');
+        }
+
+        function showLoginPage() {
+            showPage('login-page');
+        }
+
+        function showMenuPage() {
+            showPage('menu-page');
+        }
+
+        // 开始页面函数
+        function showAbout() {
+            window.location.href = './introduction/intro-index/关于我们.html';
+        }
+
         // 创建粒子效果
         function createParticles() {
             const particlesContainer = document.getElementById('particles');
@@ -392,28 +668,120 @@
             }
         }
 
-        // 开始游戏函数
-        function startGame() {
-            // 这里可以添加页面跳转逻辑
-            window.location.href = './login/Login.html';
-        }
+        // 登录/注册切换
+        $(document).ready(function() {
+            $("#signUp").click(function(){
+                $("#login-box").addClass('right-panel-active');
+            });
 
-        // 关于我们函数
-        function showAbout() {
-            // 这里可以添加关于我们页面的跳转逻辑
-            window.location.href = './introduction/intro-index/关于我们.html';
-        }
+            $("#signIn").click(function(){
+                $("#login-box").removeClass('right-panel-active');
+            });
 
-        // 页面加载完成后创建粒子
-        window.addEventListener('load', function() {
-            createParticles();
+            // 输入框 focus 动画
+            $(".txtb input").on("focus", function(){
+                $(this).addClass("focus");
+            });
+
+            $(".txtb input").on("blur", function(){
+                if($(this).val() == '')
+                    $(this).removeClass("focus");
+            });
         });
 
-        // 添加键盘事件
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'Enter') {
-                startGame();
+        // 登录函数
+        function validateForm() {
+            var username = $("#username").val();
+            var password = $("#password").val();
+
+            if (!username || !password) {
+                alert("请输入用户名和密码");
+                return false;
             }
+
+            var storedUsername = localStorage.getItem("username");
+            var storedPassword = localStorage.getItem("password");
+
+            if (username === storedUsername && password === storedPassword) {
+                alert("登录成功");
+                showMenuPage();
+            } else {
+                alert("登录失败");
+            }
+            return false;
+        }
+
+        // 注册函数
+        function registerUser() {
+            var username = $("#regUsername").val();
+            var password = $("#regPassword").val();
+            var confirmPassword = $("#confirmPassword").val();
+
+            if (!username || !password || !confirmPassword) {
+                alert("请输入用户名和密码");
+                return false;
+            }
+
+            if (password !== confirmPassword) {
+                alert("确认密码不匹配");
+                return false;
+            }
+
+            localStorage.setItem("username", username);
+            localStorage.setItem("password", password);
+
+            alert("注册成功");
+            showMenuPage();
+            return false;
+        }
+
+        // 游戏菜单页面函数
+        const toast = (msg) => {
+            const n = document.createElement('div');
+            n.textContent = msg;
+            n.style.position = 'fixed';
+            n.style.left = '50%';
+            n.style.top = '8%';
+            n.style.transform = 'translateX(-50%)';
+            n.style.padding = '12px 16px';
+            n.style.borderRadius = '12px';
+            n.style.background = 'rgba(0,0,0,.7)';
+            n.style.color = '#fff';
+            n.style.boxShadow = '0 6px 22px rgba(0,0,0,.4)';
+            n.style.zIndex = 9999;
+            document.body.appendChild(n);
+            setTimeout(() => n.remove(), 1200);
+        };
+
+        // 页面加载完成后的初始化
+        window.addEventListener('load', function() {
+            createParticles();
+            
+            // 游戏菜单按钮事件
+            document.getElementById('newGameBtn').addEventListener('click', () => {
+                toast('▶ Start Game…');
+            });
+            document.getElementById('saveBtn').addEventListener('click', () => {
+                toast('💾 Start loading…');
+            });
+            document.getElementById('achieveBtn').addEventListener('click', () => {
+                window.location.href = "achievement.html";
+            });
+
+            // 键盘事件
+            document.addEventListener('keydown', function(event) {
+                const currentPage = document.querySelector('.page.active').id;
+                
+                if (currentPage === 'start-page') {
+                    if (event.key === 'Enter') {
+                        showLoginPage();
+                    }
+                } else if (currentPage === 'menu-page') {
+                    if (event.key === 'Enter') document.getElementById('newGameBtn').click();
+                    if (event.key.toLowerCase() === 's') document.getElementById('saveBtn').click();
+                    if (event.key.toLowerCase() === 'a') document.getElementById('achieveBtn').click();
+                }
+            });
         });
     </script>
 </body>
