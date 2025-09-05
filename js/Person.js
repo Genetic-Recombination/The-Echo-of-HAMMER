@@ -45,7 +45,7 @@ class Person extends GameObject {
         return;
       }
 
-      this.movingProgressRemaining = 16;
+      this.movingProgressRemaining = 8;
 
       const intentPosition = utils.nextPosition(this.x, this.y, this.direction);
       this.intentPosition = [intentPosition.x, intentPosition.y];
@@ -66,7 +66,7 @@ class Person extends GameObject {
 
   updatePosition() {
     const [property, change] = this.directionUpdate[this.direction];
-    this[property] += change;
+    this[property] += change * 2;
     this.movingProgressRemaining -= 1;
 
     if (this.movingProgressRemaining === 0) {
