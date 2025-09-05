@@ -16,188 +16,88 @@ window.OverworldMaps = {
       },
       npc1: {
         type: "Person",
-        x: utils.withGrid(8),
-        y: utils.withGrid(4),
-        src: "./image in the game/character/wx.png",
+        x: utils.withGrid(35),
+        y: utils.withGrid(20),
+        src: "./image in the game/character/1walking.png",
         talking: [
           {
             events: [
-              { type: "textMessage", text: "你好，我是王警官。这里发生了一起案件。", faceHero: "npc1" },
-              { type: "textMessage", text: "作为侦探，你需要仔细调查现场。" },
+              { type: "textMessage", text: "这是一个测试", faceHero: "npc1" },
+              { type: "textMessage", text: "这还是测试" },
             ]
           }
         ]
       },
       npc2: {
         type: "Person",
-        x: utils.withGrid(3),
-        y: utils.withGrid(8),
-        src: "./image in the game/character/huasheng.png",
+        x: utils.withGrid(30),
+        y: utils.withGrid(20),
+        src: "./image in the game/character/2walking.png",
         talking: [
           {
             events: [
-              { type: "textMessage", text: "我是目击者花生，我看到了一些可疑的事情...", faceHero: "npc2" },
+              { type: "textMessage", text: "这是一个测试", faceHero: "npc2" },
             ]
           }
         ]
-      }
+      },
+      npc3: {
+        type: "Person",
+        x: utils.withGrid(25),
+        y: utils.withGrid(20),
+        src: "./image in the game/character/3walking.png",
+        talking: [
+          {
+            events: [
+              { type: "textMessage", text: "你好，这是测试", faceHero: "npc1" },
+              { type: "textMessage", text: "这还是测试" },
+            ]
+          }
+        ]
+      },
     },
     walls: {
-      [utils.asGridCoord(3, 21)]: true,
-      [utils.asGridCoord(3, 19)]: true,
-      [utils.asGridCoord(3, 18)]: true,
-      [utils.asGridCoord(3, 17)]: true,
-      [utils.asGridCoord(3, 16)]: true,
-      [utils.asGridCoord(3, 15)]: true,
-      [utils.asGridCoord(3, 14)]: true,
-      [utils.asGridCoord(3, 13)]: true,
-      [utils.asGridCoord(3, 12)]: true,
-      [utils.asGridCoord(3, 11)]: true,
-      [utils.asGridCoord(3, 10)]: true,
-      [utils.asGridCoord(3, 9)]: true,
-      [utils.asGridCoord(3, 8)]: true,
-      [utils.asGridCoord(3, 7)]: true,
-      [utils.asGridCoord(3, 6)]: true,
-      [utils.asGridCoord(3, 5)]: true,
-      [utils.asGridCoord(3, 4)]: true,
-      [utils.asGridCoord(3, 3)]: true,
+  // 左侧纵向墙（原来 3,3 ~ 3,21）
+  ...utils.verticalWall(3, 3, 21),
 
-      
-      // 添加用户指定的坐标
-      [utils.asGridCoord(7, 21)]: true,
-      [utils.asGridCoord(7, 22)]: true,
-      [utils.asGridCoord(7, 23)]: true,
-      [utils.asGridCoord(7, 24)]: true,
-      [utils.asGridCoord(7, 25)]: true,
-      [utils.asGridCoord(7, 26)]: true,
-      [utils.asGridCoord(7, 27)]: true,
-      [utils.asGridCoord(7, 28)]: true,
-      [utils.asGridCoord(7, 29)]: true,
-      [utils.asGridCoord(7, 30)]: true,
-      [utils.asGridCoord(7, 31)]: true,
-      [utils.asGridCoord(7, 32)]: true,
-      [utils.asGridCoord(7, 33)]: true,
-      [utils.asGridCoord(7, 34)]: true,
-      [utils.asGridCoord(7, 35)]: true,
-      [utils.asGridCoord(7, 36)]: true,
+  // 用户指定的纵向墙（原来 7,21 ~ 7,36）
+  ...utils.verticalWall(7, 21, 36),
 
-      
-      // 新增墙体 - 横坐标11
-      [utils.asGridCoord(11, 5)]: true,
-      [utils.asGridCoord(11, 6)]: true,
-      [utils.asGridCoord(11, 7)]: true,
-      [utils.asGridCoord(11, 8)]: true,
-      [utils.asGridCoord(11, 9)]: true,
-      [utils.asGridCoord(11, 10)]: true,
-      [utils.asGridCoord(11, 11)]: true,
-      [utils.asGridCoord(11, 12)]: true,
-      [utils.asGridCoord(11, 13)]: true,
-      [utils.asGridCoord(11, 14)]: true,
-      [utils.asGridCoord(11, 15)]: true,
-      [utils.asGridCoord(11, 16)]: true,
-      [utils.asGridCoord(11, 17)]: true,
-      
-      // 新增墙体 - 横坐标14
-      [utils.asGridCoord(15, 5)]: true,
-      [utils.asGridCoord(15, 6)]: true,
-      [utils.asGridCoord(15, 7)]: true,
-      [utils.asGridCoord(15, 8)]: true,
-      [utils.asGridCoord(15, 9)]: true,
-      [utils.asGridCoord(15, 10)]: true,
-      [utils.asGridCoord(15, 11)]: true,
-      [utils.asGridCoord(15, 12)]: true,
-      [utils.asGridCoord(15, 13)]: true,
-      [utils.asGridCoord(15, 14)]: true,
-      [utils.asGridCoord(15, 15)]: true,
-      [utils.asGridCoord(15, 16)]: true,
-      [utils.asGridCoord(15, 17)]: true,
+  // 新增纵向墙 - x=11, y=5 ~ 17
+  ...utils.verticalWall(11, 5, 16),
 
-      // 右侧纵向墙
-      [utils.asGridCoord(48, 11)]: true,
-      [utils.asGridCoord(48, 12)]: true,
-      [utils.asGridCoord(48, 13)]: true,
-      [utils.asGridCoord(48, 14)]: true,
-      [utils.asGridCoord(48, 15)]: true,
-      [utils.asGridCoord(48, 16)]: true,
-      [utils.asGridCoord(52, 7)]: true,
-      [utils.asGridCoord(52, 8)]: true,
-      [utils.asGridCoord(52, 9)]: true,
-      [utils.asGridCoord(52, 10)]: true,
-      [utils.asGridCoord(52, 11)]: true,
-      [utils.asGridCoord(52, 12)]: true,
-      [utils.asGridCoord(52, 13)]: true,
-      [utils.asGridCoord(52, 14)]: true,
-      [utils.asGridCoord(52, 15)]: true,
-      [utils.asGridCoord(52, 16)]: true,
-      [utils.asGridCoord(52, 17)]: true,
-      [utils.asGridCoord(52, 18)]: true,
-      [utils.asGridCoord(52, 19)]: true,
-      [utils.asGridCoord(52, 20)]: true,
-      [utils.asGridCoord(52, 21)]: true,
-      [utils.asGridCoord(44, 21)]: true,
-      [utils.asGridCoord(44, 22)]: true,
-      [utils.asGridCoord(44, 23)]: true,
-      [utils.asGridCoord(44, 24)]: true,
-      [utils.asGridCoord(44, 25)]: true,
-      [utils.asGridCoord(44, 26)]: true,
-      [utils.asGridCoord(44, 27)]: true,
-      [utils.asGridCoord(44, 28)]: true,
-      [utils.asGridCoord(44, 29)]: true,
-      [utils.asGridCoord(44, 30)]: true,
-      [utils.asGridCoord(44, 31)]: true,
-      [utils.asGridCoord(44, 32)]: true,
-      [utils.asGridCoord(44, 33)]: true,
-      [utils.asGridCoord(44, 34)]: true,
-      [utils.asGridCoord(44, 35)]: true,
-      [utils.asGridCoord(44, 36)]: true,
-      [utils.asGridCoord(44, 37)]: true,
-      [utils.asGridCoord(36, 37)]: true,
-      [utils.asGridCoord(36, 38)]: true,
-      [utils.asGridCoord(36, 39)]: true,
-      [utils.asGridCoord(36, 40)]: true,
-      [utils.asGridCoord(36, 41)]: true,
-      [utils.asGridCoord(36, 42)]: true,
-      [utils.asGridCoord(36, 43)]: true,
-      [utils.asGridCoord(36, 44)]: true,
-      [utils.asGridCoord(36, 45)]: true,
-      
-      // 新增墙体 - 横坐标28
-      [utils.asGridCoord(26, 37)]: true,
-      [utils.asGridCoord(26, 38)]: true,
-      [utils.asGridCoord(26, 39)]: true,
-      [utils.asGridCoord(26, 40)]: true,
-      [utils.asGridCoord(26, 41)]: true,
-      [utils.asGridCoord(26, 42)]: true,
-      [utils.asGridCoord(26, 43)]: true,
-      [utils.asGridCoord(26, 44)]: true,
-      [utils.asGridCoord(26, 45)]: true,
-      
-      
-      // 底部横向墙
-      [utils.asGridCoord(3, 14)]: true,
-      [utils.asGridCoord(4, 14)]: true,
-      [utils.asGridCoord(5, 14)]: true,
-      [utils.asGridCoord(6, 14)]: true,
-      [utils.asGridCoord(7, 14)]: true,
-      [utils.asGridCoord(8, 14)]: true,
-      [utils.asGridCoord(9, 14)]: true,
-      [utils.asGridCoord(10, 14)]: true,
-      [utils.asGridCoord(11, 10)]: true,
-      [utils.asGridCoord(12, 10)]: true,
-      [utils.asGridCoord(13, 10)]: true,
-      [utils.asGridCoord(14, 10)]: true,
-      [utils.asGridCoord(15, 14)]: true,
-      [utils.asGridCoord(16, 14)]: true,
-      [utils.asGridCoord(17, 14)]: true,
-      [utils.asGridCoord(18, 14)]: true,
-      [utils.asGridCoord(19, 14)]: true,
-      [utils.asGridCoord(20, 14)]: true,
-      [utils.asGridCoord(21, 14)]: true,
-      [utils.asGridCoord(22, 14)]: true,
-      [utils.asGridCoord(23, 14)]: true,
+  // 新增纵向墙 - x=15, y=5 ~ 17
+  ...utils.verticalWall(15, 5, 16),
 
+  // 右侧纵向墙
+  ...utils.verticalWall(49, 11, 16),
+  ...utils.verticalWall(53, 7, 21),
+  ...utils.verticalWall(45, 21, 37),
+  ...utils.verticalWall(37, 39, 46),
+  ...utils.verticalWall(28, 39, 46),
+  //两株仙人掌
+  ...utils.verticalWall(37, 13, 17),
+  ...utils.verticalWall(40, 13, 17),
+  ...utils.verticalWall(46, 13, 17),
+  //钟表右侧
+  ...utils.verticalWall(27, 11, 15),
 
-    },
+  // 底部横向墙
+  ...utils.horizontalWall(16, 3, 10),//左上两面墙
+  ...utils.horizontalWall(16, 15, 24),
+  // 墙体连接（横向） y=10, x=11 ~ 14
+  ...utils.horizontalWall(10, 11, 14),
+  //厨房底墙
+  ...utils.horizontalWall(22, 45, 54),
+  //厨房顶墙
+  ...utils.horizontalWall(16, 45, 54),
+
+  ...utils.horizontalWall(15, 25, 27),//钟表下侧
+  ...utils.horizontalWall(12, 28, 48),//顶上方墙体
+  ...utils.horizontalWall(17, 38, 39),//两株仙人掌
+  ...utils.horizontalWall(17, 46, 48),
+},
+
     cutsceneSpaces: {
       // 通往卧室的门
       [utils.asGridCoord(4, 17)]: [
