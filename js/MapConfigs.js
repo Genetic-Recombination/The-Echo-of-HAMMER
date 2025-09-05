@@ -74,35 +74,27 @@ window.OverworldMaps = {
       [utils.asGridCoord(9, 10)]: true,
     },
     cutsceneSpaces: {
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-      [utils.asGridCoord(5, 3)]: [
-=======
       // 通往卧室的门
       [utils.asGridCoord(7, 20)]: [
->>>>>>> Stashed changes
-=======
-      // 通往卧室的门
-      [utils.asGridCoord(7, 20)]: [
->>>>>>> Stashed changes
-=======
-      // 通往卧室的门
-      [utils.asGridCoord(7, 20)]: [
->>>>>>> Stashed changes
         {
           events: [
             { type: "changeMap", map: "Bedroom", x: utils.withGrid(5), y: utils.withGrid(9), direction: "up" }
           ]
         }
-<<<<<<< Updated upstream
-=======
       ],
       // 通往厨房的门
-      [utils.asGridCoord(53, 20)]: [
+      [utils.asGridCoord(5, 20)]: [
         {
           events: [
             { type: "changeMap", map: "Kitchen", x: utils.withGrid(8), y: utils.withGrid(6), direction: "left" }
+          ]
+        }
+      ],
+      // 通往卫生间的门
+      [utils.asGridCoord(5, 3)]: [
+        {
+          events: [
+            { type: "changeMap", map: "Toilet", x: utils.withGrid(3), y: utils.withGrid(8), direction: "left" }
           ]
         }
       ],
@@ -113,7 +105,6 @@ window.OverworldMaps = {
             { type: "changeMap", map: "Balcony", x: utils.withGrid(2), y: utils.withGrid(7), direction: "left" }
           ]
         }
->>>>>>> Stashed changes
       ]
     }
   },
@@ -183,8 +174,6 @@ window.OverworldMaps = {
         }
       ]
     }
-<<<<<<< Updated upstream
-=======
   },
   
   Kitchen: {
@@ -371,6 +360,5 @@ window.OverworldMaps = {
         }
       ]
     }
->>>>>>> Stashed changes
   }
 };
