@@ -17,7 +17,7 @@ window.OverworldMaps = {
       npc1: {
         type: "Person",
         x: utils.withGrid(35),
-        y: utils.withGrid(35),
+        y: utils.withGrid(20),
         src: "./image in the game/character/1walking.png",
         talking: [
           {
@@ -31,7 +31,7 @@ window.OverworldMaps = {
       npc2: {
         type: "Person",
         x: utils.withGrid(30),
-        y: utils.withGrid(35),
+        y: utils.withGrid(20),
         src: "./image in the game/character/2walking.png",
         talking: [
           {
@@ -44,7 +44,7 @@ window.OverworldMaps = {
       npc3: {
         type: "Person",
         x: utils.withGrid(25),
-        y: utils.withGrid(35),
+        y: utils.withGrid(20),
         src: "./image in the game/character/3walking.png",
         talking: [
           {
