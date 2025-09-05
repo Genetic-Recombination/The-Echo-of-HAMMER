@@ -345,32 +345,32 @@ window.OverworldMaps = {
       [utils.asGridCoord(10, 8)]: true,
     },
     cutsceneSpaces: {
-      //通往卧室
+      //通往客厅
       [utils.asGridCoord(28, 21)]: [
         {
           events: [
-            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(6), y: utils.withGrid(19), direction: "right" }
+            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(5), y: utils.withGrid(18), direction: "right" }
           ]
         }
       ],
       [utils.asGridCoord(28, 22)]: [
         {
           events: [
-            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(6), y: utils.withGrid(19), direction: "right" }
+            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(5), y: utils.withGrid(18), direction: "right" }
           ]
         }
       ],
       [utils.asGridCoord(28, 23)]: [
         {
           events: [
-            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(6), y: utils.withGrid(19), direction: "right" }
+            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(5), y: utils.withGrid(18), direction: "right" }
           ]
         }
       ],
       [utils.asGridCoord(28, 24)]: [
         {
           events: [
-            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(6), y: utils.withGrid(19), direction: "right" }
+            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(5), y: utils.withGrid(18), direction: "right" }
           ]
         }
       ],
