@@ -32,5 +32,22 @@ const utils = {
     if (direction === "right") { return "left" }
     if (direction === "up") { return "down" }
     return "up"
+  },
+   // 生成竖直墙
+  verticalWall(x, yStart, yEnd) {
+    const result = {};
+    for (let y = yStart; y <= yEnd; y++) {
+      result[this.asGridCoord(x, y)] = true;
+    }
+    return result;
+  },
+
+  // 生成水平墙
+  horizontalWall(y, xStart, xEnd) {
+    const result = {};
+    for (let x = xStart; x <= xEnd; x++) {
+      result[this.asGridCoord(x, y)] = true;
+    }
+    return result;
   }
 };
