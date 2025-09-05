@@ -78,28 +78,28 @@ window.OverworldMaps = {
       [utils.asGridCoord(4, 17)]: [
         {
           events: [
-            { type: "changeMap", map: "Bedroom", x: utils.withGrid(27), y: utils.withGrid(23), direction: "right" }
+            { type: "changeMap", map: "Bedroom", x: utils.withGrid(27), y: utils.withGrid(23), direction: "left" }
           ]
         }
       ],
       [utils.asGridCoord(4, 18)]: [
         {
           events: [
-            { type: "changeMap", map: "Bedroom", x: utils.withGrid(27), y: utils.withGrid(23), direction: "right" }
+            { type: "changeMap", map: "Bedroom", x: utils.withGrid(27), y: utils.withGrid(23), direction: "left" }
           ]
         }
       ],
       [utils.asGridCoord(4, 19)]: [
         {
           events: [
-            { type: "changeMap", map: "Bedroom", x: utils.withGrid(27), y: utils.withGrid(23), direction: "right" }
+            { type: "changeMap", map: "Bedroom", x: utils.withGrid(27), y: utils.withGrid(23), direction: "left" }
           ]
         }
       ],
       [utils.asGridCoord(4, 20)]: [
         {
           events: [
-            { type: "changeMap", map: "Bedroom", x: utils.withGrid(27), y: utils.withGrid(23), direction: "right" }
+            { type: "changeMap", map: "Bedroom", x: utils.withGrid(27), y: utils.withGrid(23), direction: "left" }
           ]
         }
       ],
