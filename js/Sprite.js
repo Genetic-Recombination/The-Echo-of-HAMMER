@@ -91,8 +91,9 @@ class Sprite {
     const centerX = ctx.canvas.width / 2;
     const centerY = ctx.canvas.height / 2;
 
-    const x = this.gameObject.x - 8 + centerX - cameraPerson.x;
-    const y = this.gameObject.y - 18 + centerY - cameraPerson.y;
+    // 调整渲染偏移量，使坐标原点位于两脚中心而不是左耳
+    const x = this.gameObject.x - 24 + centerX - cameraPerson.x;  // 向左偏移24像素（48/2）
+    const y = this.gameObject.y - 40 + centerY - cameraPerson.y;  // 向上偏移40像素，使脚部对齐坐标点
 
     if (this.useShadow && this.shadow && this.shadow.complete) {
       ctx.drawImage(this.shadow, x, y);

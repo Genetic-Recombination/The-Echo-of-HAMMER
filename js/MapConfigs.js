@@ -192,31 +192,79 @@ window.OverworldMaps = {
     },
     cutsceneSpaces: {
       // 通往卧室的门
-      [utils.asGridCoord(7, 20)]: [
+      [utils.asGridCoord(4, 17)]: [
         {
           events: [
-            { type: "changeMap", map: "Bedroom", x: utils.withGrid(5), y: utils.withGrid(9), direction: "up" }
+            { type: "changeMap", map: "Bedroom", x: utils.withGrid(27), y: utils.withGrid(23), direction: "left" }
+          ]
+        }
+      ],
+      [utils.asGridCoord(4, 18)]: [
+        {
+          events: [
+            { type: "changeMap", map: "Bedroom", x: utils.withGrid(27), y: utils.withGrid(23), direction: "left" }
+          ]
+        }
+      ],
+      [utils.asGridCoord(4, 19)]: [
+        {
+          events: [
+            { type: "changeMap", map: "Bedroom", x: utils.withGrid(27), y: utils.withGrid(23), direction: "left" }
+          ]
+        }
+      ],
+      [utils.asGridCoord(4, 20)]: [
+        {
+          events: [
+            { type: "changeMap", map: "Bedroom", x: utils.withGrid(27), y: utils.withGrid(23), direction: "left" }
           ]
         }
       ],
       // 通往厨房的门
-      [utils.asGridCoord(5, 20)]: [
+      [utils.asGridCoord(52, 17)]: [
         {
           events: [
             { type: "changeMap", map: "Kitchen", x: utils.withGrid(8), y: utils.withGrid(6), direction: "left" }
           ]
         }
       ],
-      // 通往卫生间的门
-      [utils.asGridCoord(5, 3)]: [
+      [utils.asGridCoord(52, 18)]: [
         {
           events: [
-            { type: "changeMap", map: "Toilet", x: utils.withGrid(3), y: utils.withGrid(8), direction: "left" }
+            { type: "changeMap", map: "Kitchen", x: utils.withGrid(8), y: utils.withGrid(6), direction: "left" }
+          ]
+        }
+      ],
+      [utils.asGridCoord(52, 19)]: [
+        {
+          events: [
+            { type: "changeMap", map: "Kitchen", x: utils.withGrid(8), y: utils.withGrid(6), direction: "left" }
+          ]
+        }
+      ],
+      [utils.asGridCoord(52, 20)]: [
+        {
+          events: [
+            { type: "changeMap", map: "Kitchen", x: utils.withGrid(8), y: utils.withGrid(6), direction: "left" }
           ]
         }
       ],
       // 通往阳台的门
-      [utils.asGridCoord(15, 16)]: [
+      [utils.asGridCoord(12, 14)]: [
+        {
+          events: [
+            { type: "changeMap", map: "Balcony", x: utils.withGrid(2), y: utils.withGrid(7), direction: "left" }
+          ]
+        }
+      ],
+      [utils.asGridCoord(13, 14)]: [
+        {
+          events: [
+            { type: "changeMap", map: "Balcony", x: utils.withGrid(2), y: utils.withGrid(7), direction: "left" }
+          ]
+        }
+      ],
+      [utils.asGridCoord(14, 14)]: [
         {
           events: [
             { type: "changeMap", map: "Balcony", x: utils.withGrid(2), y: utils.withGrid(7), direction: "left" }
@@ -233,8 +281,8 @@ window.OverworldMaps = {
       hero: {
         type: "Person",
         isPlayerControlled: true,
-        x: utils.withGrid(5),
-        y: utils.withGrid(9),
+        x: utils.withGrid(25),
+        y: utils.withGrid(20),
         src: "./image in the game/character/detectivewalking.png",
         walkingSrc: "./image in the game/character/detectivewalking.png",
         useShadow: true,
@@ -275,15 +323,44 @@ window.OverworldMaps = {
       [utils.asGridCoord(10, 8)]: true,
     },
     cutsceneSpaces: {
-      [utils.asGridCoord(5, 10)]: [
+      //通往卧室
+      [utils.asGridCoord(28, 21)]: [
         {
           events: [
-            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(5), y: utils.withGrid(4), direction: "down" }
+            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(6), y: utils.withGrid(19), direction: "right" }
+          ]
+        }
+      ],
+      [utils.asGridCoord(28, 22)]: [
+        {
+          events: [
+            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(6), y: utils.withGrid(19), direction: "right" }
+          ]
+        }
+      ],
+      [utils.asGridCoord(28, 23)]: [
+        {
+          events: [
+            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(6), y: utils.withGrid(19), direction: "right" }
+          ]
+        }
+      ],
+      [utils.asGridCoord(28, 24)]: [
+        {
+          events: [
+            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(6), y: utils.withGrid(19), direction: "right" }
           ]
         }
       ],
       // 通往洗手间
-      [utils.asGridCoord(9, 6)]: [
+      [utils.asGridCoord(18, 31)]: [
+        {
+          events: [
+            { type: "changeMap", map: "Toilet", x: utils.withGrid(3), y: utils.withGrid(8), direction: "left" }
+          ]
+        }
+      ],
+      [utils.asGridCoord(19, 31)]: [
         {
           events: [
             { type: "changeMap", map: "Toilet", x: utils.withGrid(3), y: utils.withGrid(8), direction: "left" }
@@ -351,10 +428,18 @@ window.OverworldMaps = {
     },
     cutsceneSpaces: {
       // 返回客厅
+      [utils.asGridCoord(5, 10)]: [
+        {
+          events: [
+            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(7), y: utils.withGrid(19), direction: "down" }
+          ]
+        }
+      ],
+      // 通往洗手间
       [utils.asGridCoord(9, 6)]: [
         {
           events: [
-            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(3), y: utils.withGrid(5), direction: "right" }
+            { type: "changeMap", map: "Toilet", x: utils.withGrid(3), y: utils.withGrid(8), direction: "left" }
           ]
         }
       ]

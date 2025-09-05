@@ -13,18 +13,18 @@ class Overworld {
 
       const cameraPerson = this.map.gameObjects.hero;
 
+      // 更新所有对象
       Object.values(this.map.gameObjects).forEach(object => {
-        if (object.isMounted) {
-          object.update({
-            arrow: this.directionInput.direction,
-            map: this.map,
-          });
-        }
+        object.update({
+          arrow: this.directionInput.direction,
+          map: this.map,
+        });
       });
 
       this.map.drawLowerImage(this.ctx, cameraPerson);
 
-      Object.values(this.map.gameObjects).filter(object => object.isMounted).sort((a, b) => {
+      // 渲染游戏对象
+      Object.values(this.map.gameObjects).sort((a, b) => {
         return a.y - b.y;
       }).forEach(object => {
         object.sprite.draw(this.ctx, cameraPerson);
@@ -32,7 +32,7 @@ class Overworld {
 
       this.map.drawUpperImage(this.ctx, cameraPerson);
 
-      // 更新坐标调试器
+      // 更新调试器（在所有渲染之后）
       if (this.coordinateDebugger) {
         this.coordinateDebugger.update(this);
       }
@@ -47,10 +47,10 @@ class Overworld {
   }
 
   bindActionInput() {
-    this.enter=new KeyPressListener("Space", () => {
+    new KeyPressListener("Space", () => {
       this.map.checkForActionCutscene();
     });
-    this.escape=new KeyPressListener("Escape", () => {
+    new KeyPressListener("Escape", () => {
       if (!this.map.isCutscenePlaying) {
         this.map.startCutscene([
           { type: "pause" }
@@ -66,13 +66,7 @@ class Overworld {
       }
     });
   }
-  removeHeroPositionCheck() {
-    document.removeEventListener("PersonWalkingComplete", e => {
-      if (e.detail.whoId === "hero") {
-        this.map.checkForFootstepCutscene();
-      }
-    });
-  }
+
   startMap(mapConfig, heroInitialState) {
     this.map = new OverworldMap(mapConfig);
     this.map.overworld = this;
@@ -84,6 +78,8 @@ class Overworld {
       hero.y = heroInitialState.y;
       hero.direction = heroInitialState.direction;
     }
+
+    // DirectionInput只需要初始化一次，不需要在地图切换时重新初始化
 
     this.progress.mapId = mapConfig.id;
     this.progress.startingHeroX = this.map.gameObjects.hero.x;
@@ -114,13 +110,14 @@ class Overworld {
     this.hud = new Hud();
     this.hud.init(container);
 
+    // 初始化DirectionInput
+    this.directionInput = new DirectionInput();
+    this.directionInput.init();
+
     this.startMap(window.OverworldMaps[this.progress.mapId], initialHeroState);
 
     this.bindActionInput();
     this.bindHeroPositionCheck();
-
-    this.directionInput = new DirectionInput();
-    this.directionInput.init();
 
     this.startGameLoop();
 
