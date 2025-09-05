@@ -16,31 +16,45 @@ window.OverworldMaps = {
       },
       npc1: {
         type: "Person",
-        x: utils.withGrid(8),
-        y: utils.withGrid(4),
-        src: "./image in the game/character/wx.png",
+        x: utils.withGrid(35),
+        y: utils.withGrid(35),
+        src: "./image in the game/character/1walking.png",
         talking: [
           {
             events: [
-              { type: "textMessage", text: "你好，我是王警官。这里发生了一起案件。", faceHero: "npc1" },
-              { type: "textMessage", text: "作为侦探，你需要仔细调查现场。" },
+              { type: "textMessage", text: "这是一个测试", faceHero: "npc1" },
+              { type: "textMessage", text: "这还是测试" },
             ]
           }
         ]
       },
       npc2: {
         type: "Person",
-        x: utils.withGrid(3),
-        y: utils.withGrid(8),
-        src: "./image in the game/character/huasheng.png",
+        x: utils.withGrid(30),
+        y: utils.withGrid(35),
+        src: "./image in the game/character/2walking.png",
         talking: [
           {
             events: [
-              { type: "textMessage", text: "我是目击者花生，我看到了一些可疑的事情...", faceHero: "npc2" },
+              { type: "textMessage", text: "这是一个测试", faceHero: "npc2" },
             ]
           }
         ]
-      }
+      },
+      npc3: {
+        type: "Person",
+        x: utils.withGrid(25),
+        y: utils.withGrid(35),
+        src: "./image in the game/character/3walking.png",
+        talking: [
+          {
+            events: [
+              { type: "textMessage", text: "你好，这是测试", faceHero: "npc1" },
+              { type: "textMessage", text: "这还是测试" },
+            ]
+          }
+        ]
+      },
     },
     walls: {
       [utils.asGridCoord(3, 21)]: true,
