@@ -13,6 +13,7 @@ class Overworld {
 
       const cameraPerson = this.map.gameObjects.hero;
 
+      // 更新所有对象
       Object.values(this.map.gameObjects).forEach(object => {
         object.update({
           arrow: this.directionInput.direction,
@@ -22,6 +23,7 @@ class Overworld {
 
       this.map.drawLowerImage(this.ctx, cameraPerson);
 
+      // 渲染游戏对象
       Object.values(this.map.gameObjects).sort((a, b) => {
         return a.y - b.y;
       }).forEach(object => {
@@ -29,6 +31,11 @@ class Overworld {
       });
 
       this.map.drawUpperImage(this.ctx, cameraPerson);
+
+      // 更新调试器（在所有渲染之后）
+      if (this.coordinateDebugger) {
+        this.coordinateDebugger.update(this);
+      }
 
       if (!this.map.isPaused) {
         requestAnimationFrame(() => {
@@ -72,6 +79,8 @@ class Overworld {
       hero.direction = heroInitialState.direction;
     }
 
+    // DirectionInput只需要初始化一次，不需要在地图切换时重新初始化
+
     this.progress.mapId = mapConfig.id;
     this.progress.startingHeroX = this.map.gameObjects.hero.x;
     this.progress.startingHeroY = this.map.gameObjects.hero.y;
@@ -101,13 +110,14 @@ class Overworld {
     this.hud = new Hud();
     this.hud.init(container);
 
+    // 初始化DirectionInput
+    this.directionInput = new DirectionInput();
+    this.directionInput.init();
+
     this.startMap(window.OverworldMaps[this.progress.mapId], initialHeroState);
 
     this.bindActionInput();
     this.bindHeroPositionCheck();
-
-    this.directionInput = new DirectionInput();
-    this.directionInput.init();
 
     this.startGameLoop();
 

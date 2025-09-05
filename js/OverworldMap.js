@@ -22,10 +22,11 @@ class OverworldMap {
   }
 
   drawLowerImage(ctx, cameraPerson) {
+    // 使用画布中心作为摄像机中心，以人物居中
     ctx.drawImage(
       this.lowerImage,
-      utils.withGrid(10.5) - cameraPerson.x,
-      utils.withGrid(6) - cameraPerson.y
+      ctx.canvas.width / 2 - cameraPerson.x,
+      ctx.canvas.height / 2 - cameraPerson.y
     );
   }
 
@@ -34,8 +35,8 @@ class OverworldMap {
     if (this.upperImage) {
       ctx.drawImage(
         this.upperImage,
-        utils.withGrid(10.5) - cameraPerson.x,
-        utils.withGrid(6) - cameraPerson.y
+        ctx.canvas.width / 2 - cameraPerson.x,
+        ctx.canvas.height / 2 - cameraPerson.y
       );
     }
   }
