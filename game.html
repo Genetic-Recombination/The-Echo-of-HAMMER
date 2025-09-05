@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <title>榔头男 - The Echo of Hammer</title>
+  <meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
+  <style>
+    :root {
+      --border-color: #291D4D;
+      --dialog-background: #FFF3B4;
+      --menu-background: #FFE8D2;
+      --menu-border-color: #A48465;
+      --menu-font-color: #3A160D;
+      --menu-selected-background: #00000044;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      position: absolute;
+      background: #333;
+      padding: 0;
+      margin: 0;
+      top: 0px;
+      left: 0px;
+      right: 0px;
+      bottom: 0px;
+      overflow: hidden;
+      font-family: 'Microsoft YaHei', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
+    }
+
+    .game-container {
+      position: relative;
+      width: 800px;
+      height: 500px;
+      border: 4px solid #8b0000;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 0 20px rgba(139, 0, 0, 0.5);
+    }
+
+    .game-canvas {
+      background: #000;
+      image-rendering: pixelated;
+      image-rendering: -moz-crisp-edges;
+      image-rendering: crisp-edges;
+    }
+
+    .how-to-play {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      text-align: center;
+      font-size: 15px;
+      font-weight: bold;
+      color: #fff;
+      line-height: 50px;
+      background-color: rgba(139, 0, 0, 0.8);
+      margin: 0px;
+      color: #fff;
+      box-shadow: 0px 0px 5px #666;
+      font-family: 'Microsoft YaHei', sans-serif;
+    }
+
+    .how-to-play .emp {
+      color: #ffff00;
+      font-weight: bold;
+    }
+
+    /* 文本消息样式 */
+    .TextMessage {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 100px;
+      background: var(--dialog-background);
+      border-top: 3px solid var(--border-color);
+      z-index: 2;
+      padding: 12px;
+    }
+
+    .TextMessage_p {
+      margin: 0;
+      font-size: 18px;
+      color: var(--menu-font-color);
+      line-height: 22px;
+    }
+
+    .TextMessage_button {
+      margin: 0;
+      font-size: 16px;
+      padding: 8px 12px;
+      background: none;
+      border: 2px solid var(--border-color);
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+
+    .TextMessage_button:hover,
+    .TextMessage_button:focus {
+      background: var(--menu-selected-background);
+    }
+
+    /* 暂停菜单样式 */
+    .PauseMenu {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--menu-background);
+      border: 3px solid var(--menu-border-color);
+      border-radius: 8px;
+      padding: 20px;
+      z-index: 3;
+      min-width: 200px;
+    }
+
+    .PauseMenu h2 {
+      margin: 0 0 16px 0;
+      color: var(--menu-font-color);
+      text-align: center;
+    }
+
+    .PauseMenu button {
+      display: block;
+      width: 100%;
+      margin: 8px 0;
+      padding: 12px;
+      background: none;
+      border: 2px solid var(--menu-border-color);
+      border-radius: 4px;
+      color: var(--menu-font-color);
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .PauseMenu button:hover,
+    .PauseMenu button:focus {
+      background: var(--menu-selected-background);
+    }
+
+    /* 场景过渡效果 */
+    .SceneTransition {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #000;
+      opacity: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .SceneTransition.fade-in {
+      animation: fadeIn 800ms forwards;
+    }
+
+    .SceneTransition.fade-out {
+      animation: fadeOut 400ms forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeOut {
+      from { opacity: 1; }
+      to { opacity: 0; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="game-container">
+    <canvas class="game-canvas" width="800" height="500"></canvas>
+  </div>
+  <p class="how-to-play">
+    使用 <span class="emp">方向键</span> 移动角色。
+    <span class="emp">空格键</span> 互动/对话。
+    按 <span class="emp">ESC</span> 暂停游戏。
+  </p>
+
+  <!-- 引入外部JS文件 -->
+  <script src="js/utils.js"></script>
+  <script src="js/KeyPressListener.js"></script>
+  <script src="js/DirectionInput.js"></script>
+  <script src="js/Sprite.js"></script>
+  <script src="js/GameObject.js"></script>
+  <script src="js/Person.js"></script>
+  <script src="js/TextMessage.js"></script>
+  <script src="js/SceneTransition.js"></script>
+  <script src="js/Progress.js"></script>
+  <script src="js/TitleScreen.js"></script>
+  <script src="js/Hud.js"></script>
+  <script src="js/PauseMenu.js"></script>
+  <script src="js/OverworldEvent.js"></script>
+  <script src="js/OverworldMap.js"></script>
+  <script src="js/Overworld.js"></script>
+
+  <script>
+    // 游戏状态管理
+    window.playerState = {
+      storyFlags: {},
+      lineup: [],
+      pizzas: {}
+    };
+  </script>
+
+  <!-- 地图配置 -->
+  <script src="./js/MapConfigs.js"></script>
+  <!-- 游戏初始化 -->
+  <script src="./js/GameInit.js"></script>
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,101 @@
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./over.css">
+    <link href="../favicon.ico" type="image/x-icon" rel="icon">
+    <title>结局四</title>
+    <style>
+        #over-pic-frame {
+            position: relative;
+            height: 179px;
+            background: url(./over-4.png) repeat-x;
+            border-radius: 7px;
+            box-shadow: 0px 1px 1px rgb(255 255 255 /50%),inset 0px 0px 4px 1px rgb(0 0 0 /70%);
+        }
+
+        #over-pic {
+            position: absolute;
+            right: 0px;
+            top: 0px;
+        }
+
+        #hero {
+            width: 48px;
+            height: 48px;
+            position: absolute;
+            left: 336px;
+            top: 96px;
+            background: url(../images/characters/heroine.png) no-repeat;
+        }
+    </style>
+    <script>
+        window.onload = function(){
+            let street = document.getElementById("over-pic-frame");
+            let hero = document.getElementById("hero");
+            let pos = 977;
+            let frame = 0;
+            let moveBack = () => {
+                if(pos > 0){
+                    pos = pos - 1;
+                }else{
+                    pos = 977;
+                }
+
+                if(frame == 0){
+                    hero.style.backgroundPosition = "0px -48px";
+                }else if(frame == 15){
+                    hero.style.backgroundPosition = "-48px -48px";
+                }else if(frame == 30){
+                    hero.style.backgroundPosition = "-96px -48px";
+                }else if(frame == 45){
+                    hero.style.backgroundPosition = "-48px -48px";
+                }
+
+                street.style.backgroundPosition = `-${pos}px center`;
+                requestAnimationFrame(() => {
+                    frame += 1;
+                    if(frame > 59){
+                        frame = 0;
+                    }
+                    moveBack();
+                })
+            }
+            moveBack();
+        }
+    </script>
+</head>
+
+<body>
+    <div id="top">
+        <div id="namekuang">
+            <img src="./gamename.png" height="125" />
+        </div>
+    </div>
+    <div id="mid">
+        <div id="over-pic-frame">
+            <div id="hero"></div>
+        </div>
+        <div id="midTxt">
+            <h1 style="margin-top:55px;">真结局&nbsp;&nbsp;&nbsp;再见</h1>
+            <p class="suojin">
+                你走出了这场带有善意的骗局，把抉择命运的权利交回了自己手中，留存一切美好的记忆，独自面对一切未知。已经消逝的人，终究无法挽回；失而复得的光，却是倍加珍贵。再见即是分别，告别痛苦的过去，告别虚妄的现实；再见亦是重逢，再次见到光明，再次见到世界，再次见到自己无从知晓的命运。
+            </p>
+            <!-- <h2>结语</h2> -->
+            <p id="xinjian">一封信件:</p>
+            <p>亲爱的哈里森夫妇:</p>
+            <p class="suojin">我很抱歉辜负了你们的善意，但我不得不离开。得知真相和做出抉择是我与生俱来的权利，我不希望有人将它剥夺。虽然事实很残酷，但这是我自己的命运，也注定要我独自面对。</p>
+            <p class="suojin">惟愿你们一切安好，我相信可爱的瑞雯.哈里森也心怀此愿。</p>
+            <p id="shuming">克莱尔.布兰德</p>
+        </div>
+    </div>
+    <div id="bottom">
+        <div id="buttonkuang">
+            <button type="button" onclick="window.location.href='../game.html'">重新开始</button>
+        </div>
+    </div>
+</body>
+
+</html>

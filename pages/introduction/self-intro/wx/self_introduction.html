@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>个人介绍</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Microsoft YaHei', sans-serif;
+  background: #9e4c36; /* 红色背景 */
+  color: #333;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+}
+
+.container {
+  max-width: 900px;
+  width: 100%;
+  background: #f5efd7; /* 米色主体 */
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  border-top: 6px solid #9e4c36;
+  border-bottom: 6px solid #2a589c;
+}
+
+/* 头像 */
+.photo {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.photo img {
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 6px solid #2a589c;
+  transition: transform 0.3s;
+}
+
+.photo img:hover {
+  transform: scale(1.1);
+}
+
+h1 {
+  text-align: center;
+  color: #9e4c36;
+  font-size: 2.8rem;
+  margin-bottom: 25px;
+}
+
+.section {
+  margin-bottom: 40px;
+}
+
+.section h2 {
+  color: #2a589c;
+  margin-bottom: 20px;
+  font-size: 2rem;
+  border-left: 6px solid #9e4c36;
+  padding-left: 12px;
+  display: inline-block;
+  transition: transform 0.3s;
+}
+
+.section h2:hover {
+  transform: scale(1.05);
+}
+
+/* 自我介绍列表 */
+.main-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.main-list > li {
+  background: #fff2e8;
+  border-left: 5px solid #9e4c36;
+  padding: 12px 18px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+  font-size: 1.2rem;
+}
+
+.main-list > li:hover {
+  transform: scale(1.03);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  background: #fff7f0;
+}
+
+/* 子列表卡片 */
+.sub-list {
+  list-style: none;
+  padding-left: 20px;
+  margin-top: 8px;
+}
+
+.sub-list li {
+  background: #f9e3d6;
+  border-left: 5px solid #9e4c36;
+  padding: 10px 15px;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  font-size: 1.1rem;
+  transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+}
+
+.sub-list li:hover {
+  transform: scale(1.03);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  background: #fff2eb;
+}
+
+/* 两栏布局 */
+.flex-container {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.flex-container .column {
+  flex: 1 1 45%;
+}
+
+/* 卡片样式 */
+.card {
+  background: #fff2e8; 
+  border-left: 5px solid #9e4c36;
+  padding: 12px 18px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  font-size: 1.2rem;
+  transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  background: #fff7f0;
+}
+
+/* 返回按钮样式 */
+.back-btn {
+  display: inline-block;
+  margin-top: 30px;
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #2a589c, #1a4080);
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(42, 88, 156, 0.3);
+}
+
+.back-btn:hover {
+  background: linear-gradient(135deg, #1a4080, #2a589c);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(42, 88, 156, 0.4);
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+  .container { padding: 20px; }
+  h1 { font-size: 2.2rem; }
+  .section h2 { font-size: 1.6rem; }
+  .main-list > li { font-size: 1.1rem; padding: 10px 15px; }
+  .sub-list li { font-size: 1rem; padding: 8px 12px; }
+  .flex-container { flex-direction: column; }
+  .card { font-size: 1.1rem; padding: 10px 15px; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="photo">
+    <img src="self_image.png" alt="我的照片">
+  </div>
+
+  <h1>吴洵</h1>
+
+  <div class="section">
+    <h2>个人简介</h2>
+    <ul class="main-list">
+      <li>睿信2424班 数据科学与大数据技术专业</li>
+      <li>情绪稳定的ISTP（除了DDL之前）</li>
+      <li>热爱吃饭，没有什么是吃饭不能解决的，减肥也是为了吃饭</li>
+      <li>基因重组成员之一，主要负责：
+        <ul class="sub-list">
+          <li>设计游戏剧情（如果玩游戏发现逻辑不缜密，可以联系我！）</li>
+          <li>网页编程（<s>调教AI</s>写代码）</li>
+          <li>网页美工（致力于当有审美的程序员）</li>
+          <li>维护小组气氛（主要表现为让大家吃饭和推荐好吃的给大家）</li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>爱好 & 联系方式</h2>
+    <div class="flex-container">
+      <!-- 爱好列 -->
+      <div class="column">
+        <h3 style="color:#2a589c; margin-bottom:10px;">爱好</h3>
+        <div class="card">网球</div>
+        <div class="card">旅游</div>
+        <div class="card">美食</div>
+        <div class="card">摄影</div>
+      </div>
+
+      <!-- 联系方式列 -->
+      <div class="column">
+        <h3 style="color:#2a589c; margin-bottom:10px;">如何联系我</h3>
+        <div class="card">微信: Wx211530010168</div>
+        <div class="card">QQ: 3531184693</div>
+      </div>
+    </div>
+  </div>
+  
+  <div style="text-align: center;">
+    <a href="../../intro-index/关于我们.html" class="back-btn">返回团队页面</a>
+  </div>
+</div>
+</body>
+</html>
