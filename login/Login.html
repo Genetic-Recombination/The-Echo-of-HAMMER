@@ -4,7 +4,115 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>登录注册</title>
-    <link rel="stylesheet" href="login.css">
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: "Pixel Emulator", sans-serif;
+           background: url("black man background.png") no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        h1 { margin: 0; font-weight: bold; }
+        p { font-size: 14px; line-height: 20px; margin: 20px 0 30px; }
+        span { font-size: 12px; }
+        a { color: #333; text-decoration: none; }
+
+        .container {
+            background: #fafafa;
+            border-radius: 10px;
+            box-shadow: 0 14px 28px rgba(0,0,0,.25),0 10px 10px rgba(0,0,0,.22);
+            position: absolute;   /* 改成绝对定位 */
+            top: 50%;             /* 垂直居中 */
+            left: 50px;           /* 靠左 50px，可调 */
+            transform: translateY(-50%);
+
+            width: 600px;         /* 比原来 768 小一些 */
+            min-height: 400px;    /* 比原来 480 小一些 */
+            overflow: hidden;
+        }
+
+        .form-container {
+            position: absolute;
+            top: 0;
+            height: 100%;
+            transition: all 0.6s ease-in-out;
+        }
+
+        .sign-in-container { left: 0; width: 50%; z-index: 2; }
+        .sign-up-container { left: 0; width: 50%; z-index: 1; opacity: 0; }
+
+        form { background: #fff; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 0 50px; height: 100%; text-align: center; }
+
+        .txtb { position: relative; margin: 10px 0; border-bottom: 2px solid #adadad; }
+        .txtb input { width: 100%; border: none; outline: none; background: none; font-size: 15px; padding: 0 3px; height: 35px; }
+        .txtb span::before { content: attr(data-placeholder); position: absolute; top: 50%; left: 5px; color: #adadad; transform: translateY(-50%); transition: 0.5s; }
+        .txtb span::after { content: ''; position: absolute; left: 0; bottom: 0; width: 0; height: 2px; background-image: linear-gradient(120deg,#fddd83,#7f3205); transition: 0.5s; }
+        .txtb input.focus + span::before { top: -5px; }
+        .txtb input.focus + span::after { width: 100%; }
+
+        button {
+            border-radius: 20px;
+            border: none;
+            background: linear-gradient(120deg,#000000,#595756);
+            color: #fff;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 12px 45px;
+            cursor: pointer;
+            transition: transform 80ms ease-in;
+            }
+        button:active { transform: scale(0.95); }
+        button.ghost { background: transparent; border-color: #fff; }
+
+        .overlay-container {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 50%;
+            height: 100%;
+            overflow: hidden;
+            transition: transform 0.6s ease-in-out;
+            z-index: 100;
+        }
+        .overlay {
+            background-image: linear-gradient(135deg, #d7d7d7, #a9a9a9, #f5f5f5);
+            color: #fff;
+            position: relative;
+            left: -100%;
+            height: 100%;
+            width: 200%;
+            transition: transform 0.6s ease-in-out;
+        }
+
+        .overlay-panel {
+            position: absolute;
+            top: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 0 40px;
+            height: 100%;
+            width: 50%;
+            text-align: center;
+            transition: transform 0.6s ease-in-out;
+        }
+        .overlay-left { transform: translateY(-20%); }
+        .overlay-right { right: 0; transform: translateY(0); }
+
+        .container.right-panel-active .sign-in-container { transform: translateX(100%); }
+        .container.right-panel-active .sign-up-container { transform: translateX(100%); opacity: 1; z-index: 5; }
+        .container.right-panel-active .overlay-container { transform: translateX(-100%); }
+        .container.right-panel-active .overlay { transform: translateX(50%); }
+        .container.right-panel-active .overlay-left { transform: translateY(0); }
+        .container.right-panel-active .overlay-right { transform: translateY(20%); }
+    </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
