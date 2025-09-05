@@ -76,9 +76,13 @@ window.OverworldMaps = {
     cutsceneSpaces: {
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
       [utils.asGridCoord(5, 3)]: [
 =======
       // 通往卧室的门
+      [utils.asGridCoord(7, 20)]: [
+>>>>>>> Stashed changes
+=======
       [utils.asGridCoord(7, 20)]: [
 >>>>>>> Stashed changes
 =======
