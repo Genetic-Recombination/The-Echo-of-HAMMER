@@ -161,7 +161,7 @@ window.OverworldMaps = {
       [utils.asGridCoord(5, 10)]: [
         {
           events: [
-            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(5), y: utils.withGrid(4), direction: "down" }
+            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(7), y: utils.withGrid(19), direction: "down" }
           ]
         }
       ],
@@ -234,10 +234,18 @@ window.OverworldMaps = {
     },
     cutsceneSpaces: {
       // 返回客厅
+      [utils.asGridCoord(5, 10)]: [
+        {
+          events: [
+            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(7), y: utils.withGrid(19), direction: "down" }
+          ]
+        }
+      ],
+      // 通往洗手间
       [utils.asGridCoord(9, 6)]: [
         {
           events: [
-            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(3), y: utils.withGrid(5), direction: "right" }
+            { type: "changeMap", map: "Toilet", x: utils.withGrid(3), y: utils.withGrid(8), direction: "left" }
           ]
         }
       ]

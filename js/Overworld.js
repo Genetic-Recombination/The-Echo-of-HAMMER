@@ -30,6 +30,11 @@ class Overworld {
 
       this.map.drawUpperImage(this.ctx, cameraPerson);
 
+      // 更新调试器（在所有渲染之后）
+      if (this.coordinateDebugger) {
+        this.coordinateDebugger.update(this);
+      }
+
       if (!this.map.isPaused) {
         requestAnimationFrame(() => {
           step();
@@ -70,6 +75,12 @@ class Overworld {
       hero.x = heroInitialState.x;
       hero.y = heroInitialState.y;
       hero.direction = heroInitialState.direction;
+    }
+
+    // 重新初始化输入控制，确保新的角色对象能够接收输入
+    if (this.directionInput) {
+      this.directionInput = new DirectionInput();
+      this.directionInput.init();
     }
 
     this.progress.mapId = mapConfig.id;
