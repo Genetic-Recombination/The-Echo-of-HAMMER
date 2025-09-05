@@ -164,8 +164,8 @@ window.OverworldMaps = {
       hero: {
         type: "Person",
         isPlayerControlled: true,
-        x: utils.withGrid(27),
-        y: utils.withGrid(23),
+        x: utils.withGrid(25),
+        y: utils.withGrid(20),
         src: "./image in the game/character/detectivewalking.png",
         walkingSrc: "./image in the game/character/detectivewalking.png",
         useShadow: true,
