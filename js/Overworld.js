@@ -47,10 +47,10 @@ class Overworld {
   }
 
   bindActionInput() {
-    new KeyPressListener("Space", () => {
+    this.enter=new KeyPressListener("Space", () => {
       this.map.checkForActionCutscene();
     });
-    new KeyPressListener("Escape", () => {
+    this.escape=new KeyPressListener("Escape", () => {
       if (!this.map.isCutscenePlaying) {
         this.map.startCutscene([
           { type: "pause" }
@@ -66,7 +66,13 @@ class Overworld {
       }
     });
   }
-
+  removeHeroPositionCheck() {
+    document.removeEventListener("PersonWalkingComplete", e => {
+      if (e.detail.whoId === "hero") {
+        this.map.checkForFootstepCutscene();
+      }
+    });
+  }
   startMap(mapConfig, heroInitialState) {
     this.map = new OverworldMap(mapConfig);
     this.map.overworld = this;
