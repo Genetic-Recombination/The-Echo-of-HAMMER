@@ -14,47 +14,7 @@ window.OverworldMaps = {
         walkingSrc: "./image in the game/character/detectivewalking.png",
         useShadow: false,
       },
-      npc1: {
-        type: "Person",
-        x: utils.withGrid(35),
-        y: utils.withGrid(20),
-        src: "./image in the game/character/1walking.png",
-        talking: [
-          {
-            events: [
-              { type: "textMessage", text: "这是一个测试", faceHero: "npc1" },
-              { type: "textMessage", text: "这还是测试" },
-            ]
-          }
-        ]
-      },
-      npc2: {
-        type: "Person",
-        x: utils.withGrid(30),
-        y: utils.withGrid(20),
-        src: "./image in the game/character/2walking.png",
-        talking: [
-          {
-            events: [
-              { type: "textMessage", text: "这是一个测试", faceHero: "npc2" },
-            ]
-          }
-        ]
-      },
-      npc3: {
-        type: "Person",
-        x: utils.withGrid(25),
-        y: utils.withGrid(20),
-        src: "./image in the game/character/3walking.png",
-        talking: [
-          {
-            events: [
-              { type: "textMessage", text: "你好，这是测试", faceHero: "npc1" },
-              { type: "textMessage", text: "这还是测试" },
-            ]
-          }
-        ]
-      },
+  // NPCs for LivingRoom are created at runtime in OverworldMap
     },
     walls: {
   // 左侧纵向墙（原来 3,3 ~ 3,21）
