@@ -10,30 +10,24 @@ const utils = {
     let x = initialX;
     let y = initialY;
     const size = 16;
-    if (direction === "left") {
-      x -= size;
-    } else if (direction === "right") {
-      x += size;
-    } else if (direction === "up") {
-      y -= size;
-    } else if (direction === "down") {
-      y += size;
-    }
+    if (direction === "left") x -= size;
+    else if (direction === "right") x += size;
+    else if (direction === "up") y -= size;
+    else if (direction === "down") y += size;
     return { x, y };
   },
   emitEvent(name, detail) {
-    const event = new CustomEvent(name, {
-      detail
-    });
+    const event = new CustomEvent(name, { detail });
     document.dispatchEvent(event);
   },
   oppositeDirection(direction) {
-    if (direction === "left") { return "right" }
-    if (direction === "right") { return "left" }
-    if (direction === "up") { return "down" }
-    return "up"
+    if (direction === "left") return "right";
+    if (direction === "right") return "left";
+    if (direction === "up") return "down";
+    return "up";
   },
-   // 生成竖直墙
+
+  // 生成竖直墙
   verticalWall(x, yStart, yEnd) {
     const result = {};
     for (let y = yStart; y <= yEnd; y++) {
@@ -47,6 +41,34 @@ const utils = {
     const result = {};
     for (let x = xStart; x <= xEnd; x++) {
       result[this.asGridCoord(x, y)] = true;
+    }
+    return result;
+  },
+
+  // 生成一整排传送点
+  portalLine(xStart, xEnd, y, targetMap, targetX, targetY, direction) {
+    const result = {};
+    for (let x = xStart; x <= xEnd; x++) {
+      result[this.asGridCoord(x, y)] = [
+        {
+          events: [
+            { type: "changeMap", map: targetMap, x: this.withGrid(targetX), y: this.withGrid(targetY), direction }
+          ]
+        }
+      ];
+    }
+    return result;
+  },
+  portalColumn(yStart, yEnd, x, targetMap, targetX, targetY, direction) {
+    const result = {};
+    for (let y = yStart; y <= yEnd; y++) {
+      result[this.asGridCoord(x, y)] = [
+        {
+          events: [
+            { type: "changeMap", map: targetMap, x: this.withGrid(targetX), y: this.withGrid(targetY), direction }
+          ]
+        }
+      ];
     }
     return result;
   }
