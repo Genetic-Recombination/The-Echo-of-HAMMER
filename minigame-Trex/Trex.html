@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Chrome Dino 复刻 — GIF恐龙版</title>
+  <title>小恐龙的跑酷游戏</title>
   <style>
     :root{--bg:#f7f7f7;--ground:#7f8c8d;--cactus:#2ecc71;--cloud:#ecf0f1}
     html,body{height:100%;margin:0;font-family:Inter, "Segoe UI", Roboto, "Helvetica Neue", Arial;color:#222}
@@ -25,8 +25,8 @@
   <div class="game">
     <div class="bar">
       <div>
-        <div style="font-size:18px;font-weight:600">Chrome Dino 复刻</div>
-        <div class="hint">按 空格 / ↑ 跳跃，↓ 下蹲。移动端：触控按钮。</div>
+        <div style="font-size:18px;font-weight:600">小恐龙的跑酷游戏</div>
+        <div class="hint">按 空格 / ↑ 跳跃避开仙人掌，按 ↓ 下蹲躲避低飞鸟，河流可连续跳跃。</div>
       </div>
       <div class="score">分数: <span id="score">0</span></div>
     </div>
@@ -38,7 +38,6 @@
       <button id="startBtn" class="btn">开始 / 重置</button>
       <button id="pauseBtn" class="btn">暂停</button>
       <label style="display:flex;align-items:center;gap:8px"><input id="soundToggle" type="checkbox" checked/> 声音</label>
-      <label style="display:flex;align-items:center;gap:8px"><input id="nightToggle" type="checkbox"/> 强制夜间</label>
     </div>
     <div class="touch-area">
       <button id="touchJump" class="btn">跳</button>
@@ -58,6 +57,10 @@ const soundToggle = document.getElementById('soundToggle');
 const dinoGif = document.getElementById('dinoGif');
 let W = canvas.width, H = canvas.height;
 
+// 加载图片资源
+const cactusImg = new Image(); cactusImg.src = "images/trex_tree.png";
+const birdImg = new Image(); birdImg.src = "images/trex_bird.gif";
+
 function playSound(id){
   if(soundToggle.checked){
     const audio = document.getElementById(id);
@@ -70,7 +73,8 @@ function resize(){
   W = canvas.width = Math.max(600, Math.floor(rect.width));
   H = canvas.height = 280;
 }
-window.addEventListener('resize', resize); resize();
+window.addEventListener('resize', resize);
+resize();
 
 const dinoGifSrcs = {
   normal: "images/trex_normal.gif",
@@ -78,6 +82,12 @@ const dinoGifSrcs = {
   duck: "images/trex_duck.gif",
   fly: "images/trex_fly.gif"
 };
+
+// 预加载 GIF，确保打开页面就显示
+for(let key in dinoGifSrcs){
+  const img = new Image();
+  img.src = dinoGifSrcs[key];
+}
 
 class Dino {
   constructor(x,y){
@@ -112,8 +122,7 @@ class Dino {
       this.lastGif = newGif;
     }
     dinoGif.style.left = (this.x - camX) + "px";
-    dinoGif.style.top = this.y + "px";
-
+    dinoGif.style.top = (this.y + 10) + "px";
   }
   jump(){
     if(this.jumpCount < this.maxJumps && !this.ducking){
@@ -127,25 +136,21 @@ class Dino {
 }
 
 class Cactus{
-  constructor(x,y,speed){this.x=x;this.y=y;this.w=18;this.h=36;this.speed=speed;this.passed=false;}
+  constructor(x,y,speed){this.x=x;this.y=y;this.w=100;this.h=100;this.speed=speed;this.passed=false;}
   update(dt){this.x -= this.speed*dt;}
-  draw(ctx, camX){
-    ctx.fillStyle='#2ecc71';
-    ctx.fillRect(this.x-camX,this.y-this.h,this.w,this.h);
-    ctx.fillRect(this.x-camX-6,this.y-this.h/2,8,this.h/2);
-  }
+  draw(ctx, camX){ ctx.drawImage(cactusImg, this.x-camX, this.y-this.h, this.w, this.h); }
 }
 
 class Ptero{
-  constructor(x,y,speed,phase){this.x=x;this.y=y;this.w=36;this.h=24;this.speed=speed;this.phase=phase;this.passed=false;}
+  constructor(x,y,speed,phase){this.x=x;this.y=y;this.w=80;this.h=80;this.speed=speed;this.phase=phase;this.passed=false;}
   update(dt){this.x-=this.speed*dt; this.y += Math.sin((this.x+this.phase)/40)*0.6;}
-  draw(ctx, camX){ctx.fillStyle='#2d3436'; ctx.fillRect(this.x-camX,this.y-this.h,this.w,this.h);}
+  draw(ctx, camX){ ctx.drawImage(birdImg, this.x-camX, this.y-this.h, this.w, this.h); }
 }
 
 class LowPtero{
-  constructor(x,y,speed,phase){this.x=x; this.y=y; this.w=36; this.h=18; this.speed=speed; this.phase=phase; this.passed=false;}
+  constructor(x,y,speed,phase){this.x=x; this.y=y; this.w=80;this.h=80; this.speed=speed; this.phase=phase; this.passed=false;}
   update(dt){this.x -= this.speed*dt; this.y += Math.sin((this.x+this.phase)/40)*0.3;}
-  draw(ctx, camX){ctx.fillStyle='#2d3436'; ctx.fillRect(this.x-camX,this.y-this.h,this.w,this.h); ctx.fillStyle='#555'; ctx.fillRect(this.x-camX+5,this.y-this.h-6,this.w-10,6);}
+  draw(ctx, camX){ ctx.drawImage(birdImg, this.x-camX, this.y-this.h, this.w, this.h); }
 }
 
 class Cloud{
@@ -165,57 +170,44 @@ function rectIntersect(a,b){
 }
 
 class Game{
-  constructor(){this.reset();}
+  constructor(){ this.reset(); this.dino.updateGif(0); } // 页面加载立即显示
   reset(){
     this.running=false; this.score=0; this.speed=320;
     this.spawnTimer=0; this.obstacles=[]; this.clouds=[]; this.rivers=[];
     this.dino=new Dino(80,H-120); this.dino.groundY=H-120;
     this.last=0; this.day=true; this.nightOverride=false; this.pause=false;
     this.fallInWater=false; this.camX=0;
+    this.dino.updateGif(this.camX); // 初始化显示小恐龙
   }
   start(){this.reset(); this.running=true; this.last=performance.now(); requestAnimationFrame(this.loop.bind(this));}
   togglePause(){this.pause=!this.pause; if(!this.pause){this.last=performance.now(); requestAnimationFrame(this.loop.bind(this));}}
-  loop(ts){
-    if(!this.running) return; if(this.pause) return;
+  loop(ts){ if(!this.running) return; if(this.pause) return;
     const dt=Math.min(0.05,(ts-this.last)/1000); this.last=ts;
     this.update(dt); this.draw(); requestAnimationFrame(this.loop.bind(this));
   }
   update(dt){
     this.camX = this.dino.x-100;
 
-    // ---------- 生成障碍物 ----------
     this.spawnTimer -= dt;
     if(this.spawnTimer <= 0){
-      let base = 2.0;   // 初始间隔 (秒)
-      let min  = 0.4;   // 最小间隔
-      let k    = 0.002; // 加速系数
-
-      this.spawnTimer = Math.max(min, base - this.score * k) 
-                        + Math.random() * 0.5;
-
-      const rand = Math.random();
-      const spawnX = this.dino.x + W;
-
-      if(rand < 0.15){
-        this.obstacles.push(new Ptero(spawnX,H-140-Math.random()*40,this.speed,Math.random()*1000));
-      }
-      else if(rand < 0.3){
-        this.obstacles.push(new LowPtero(spawnX,H-95,this.speed,Math.random()*1000));
-      }
-      else if(rand < 0.4){
-        this.rivers.push(new River(spawnX,H-40,200 + Math.random()*100,this.speed));
-      }
-      else{
-        this.obstacles.push(new Cactus(spawnX,H-48,this.speed));
-      }
+      let base = 2.0; let min = 0.4; let k = 0.002;
+      this.spawnTimer = Math.max(min, base - this.score * k) + Math.random() * 0.5;
+      const rand = Math.random(); const spawnX = this.dino.x + W;
+      if(rand < 0.15){ this.obstacles.push(new Ptero(spawnX,H-140-Math.random()*40,this.speed,Math.random()*1000)); }
+      else if(rand < 0.3){ this.obstacles.push(new LowPtero(spawnX,H-75,this.speed,Math.random()*1000)); }
+      else if(rand < 0.4){ this.rivers.push(new River(spawnX,H-40,200 + Math.random()*100,this.speed)); }
+      else{ this.obstacles.push(new Cactus(spawnX,H-20,this.speed)); }
     }
-    // ------------------------------
 
     if(Math.random()<0.02) this.clouds.push(new Cloud(this.dino.x + W,20+Math.random()*60,20+Math.random()*30));
+
     this.dino.update(dt);
-    this.clouds.forEach(c=>c.update(dt)); this.clouds=this.clouds.filter(c=>c.x > this.camX - 200);
-    this.obstacles.forEach(o=>o.update(dt)); this.obstacles=this.obstacles.filter(o=>o.x+o.w>this.camX-100);
-    this.rivers.forEach(r=>r.update(dt)); this.rivers=this.rivers.filter(r=>r.x+r.w>this.camX-100);
+    this.clouds.forEach(c=>c.update(dt));
+    this.clouds=this.clouds.filter(c=>c.x > this.camX - 200);
+    this.obstacles.forEach(o=>o.update(dt));
+    this.obstacles=this.obstacles.filter(o=>o.x+o.w>this.camX-100);
+    this.rivers.forEach(r=>r.update(dt));
+    this.rivers=this.rivers.filter(r=>r.x+r.w>this.camX-100);
 
     this.obstacles.forEach(o=>{if(!o.passed && o.x + o.w < this.dino.x){o.passed=true; this.score+=1; playSound('scoreSound');}});
     this.rivers.forEach(r=>{if(!r.passed && r.x + r.w < this.dino.x){r.passed=true; this.score+=1; playSound('scoreSound');}});
@@ -226,15 +218,14 @@ class Game{
     for(let o of this.obstacles){
       const standBox={x:this.dino.x,y:this.dino.y,w:this.dino.w,h:this.dino.h};
       const duckBox={x:this.dino.x,y:this.dino.y+16,w:this.dino.w,h:this.dino.h-16};
-      let oBox={x:o.x,y:o.y-(o.h||0),w:o.w,h:o.h};
-      if(o instanceof Ptero){
-        if(rectIntersect(this.dino.ducking?duckBox:standBox,oBox)){this.running=false; this.fallInWater=false; this.showGameOver();}
-      } else if(o instanceof LowPtero){
-        if(!this.dino.ducking && rectIntersect(standBox,oBox)){this.running=false; this.fallInWater=false; this.showGameOver();}
-      } else {
-        if(rectIntersect(this.dino.ducking?duckBox:standBox,oBox)){this.running=false; this.fallInWater=false; this.showGameOver();}
-      }
+      let oBox;
+      if(o instanceof Cactus){ let pad = 30; oBox = {x:o.x+pad, y:o.y-o.h+pad, w:o.w-2*pad, h:o.h-2*pad}; }
+      else{ oBox = {x:o.x,y:o.y-(o.h||0),w:o.w,h:o.h}; }
+      if(o instanceof Ptero){ if(rectIntersect(this.dino.ducking?duckBox:standBox,oBox)){this.running=false; this.fallInWater=false; this.showGameOver();} }
+      else if(o instanceof LowPtero){ if(!this.dino.ducking && rectIntersect(standBox,oBox)){this.running=false; this.fallInWater=false; this.showGameOver();} }
+      else{ if(rectIntersect(this.dino.ducking?duckBox:standBox,oBox)){this.running=false; this.fallInWater=false; this.showGameOver();} }
     }
+
     for(let r of this.rivers){
       const dinoBox={x:this.dino.x,y:this.dino.y,w:this.dino.w,h:this.dino.h};
       const riverBox={x:r.x,y:r.y-r.h,w:r.w,h:r.h};
@@ -242,12 +233,13 @@ class Game{
         this.running=false; this.fallInWater=true; this.showGameOver();
       }
     }
+
     scoreEl.innerText=this.score;
     this.dino.updateGif(this.camX);
   }
   draw(){
     ctx.clearRect(0,0,W,H);
-    ctx.fillStyle=this.day?'#f7f7f7':'#151628'; 
+    ctx.fillStyle=this.day?'#f7f7f7':'#151628';
     ctx.fillRect(0,0,W,H);
     this.clouds.forEach(c=>c.draw(ctx,this.camX));
     const offset = this.camX % W;
@@ -256,7 +248,7 @@ class Game{
     ctx.fillRect(W-offset,H-40,W,40);
     this.obstacles.forEach(o=>o.draw(ctx,this.camX));
     this.rivers.forEach(r=>r.draw(ctx,this.camX));
-    ctx.fillStyle=this.day?'#222':'#fff'; ctx.font='18px monospace'; 
+    ctx.fillStyle=this.day?'#222':'#fff'; ctx.font='18px monospace';
     ctx.fillText('SCORE '+this.score,W-170,30);
     if(!this.running){
       ctx.save(); ctx.globalAlpha=0.92; ctx.fillStyle=this.day?'#fff':'#222';
@@ -273,28 +265,21 @@ const g=new Game(); game=g;
 document.getElementById('startBtn').addEventListener('click',()=>{g.start();});
 document.getElementById('pauseBtn').addEventListener('click',()=>{g.togglePause(); document.getElementById('pauseBtn').innerText=g.pause?'继续':'暂停';});
 
-// ------------------ 按键处理（必须点三次，长按无效） ------------------
+// 按键处理
 let jumpKeyPressed = false;
-
 window.addEventListener('keydown',(e)=>{
-  if(e.code==='Space'||e.code==='ArrowUp'){
-    e.preventDefault();
-    if(!jumpKeyPressed){
-      jumpKeyPressed = true;
-      if(!g.running) g.start();
-      g.dino.jump();
-    }
+  if(e.code==='Space'||e.code==='ArrowUp'){ e.preventDefault();
+    if(!jumpKeyPressed){ jumpKeyPressed = true; if(!g.running) g.start(); g.dino.jump(); }
   }
   if(e.code==='ArrowDown'){ g.dino.duck(true); }
   if(e.code==='KeyR'){ g.start(); }
 });
-
 window.addEventListener('keyup',(e)=>{
   if(e.code==='Space'||e.code==='ArrowUp'){ jumpKeyPressed=false; }
   if(e.code==='ArrowDown'){ g.dino.duck(false); }
 });
 
-// ------------------ 移动端按钮 ------------------
+// 移动端按钮
 document.getElementById('touchJump').addEventListener('touchstart',(e)=>{e.preventDefault(); if(!g.running) g.start(); g.dino.jump();});
 document.getElementById('touchDuck').addEventListener('touchstart',(e)=>{e.preventDefault(); g.dino.duck(true);});
 document.getElementById('touchDuck').addEventListener('touchend',(e)=>{e.preventDefault(); g.dino.duck(false);});
