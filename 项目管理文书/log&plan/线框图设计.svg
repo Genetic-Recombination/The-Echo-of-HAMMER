@@ -1,0 +1,294 @@
+<svg width="1400" height="2000" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .title { font-family: Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #1a1a2e; }
+      .subtitle { font-family: Arial, sans-serif; font-size: 16px; font-weight: bold; fill: #16213e; }
+      .text { font-family: Arial, sans-serif; font-size: 12px; fill: #333; }
+      .label { font-family: Arial, sans-serif; font-size: 10px; fill: #666; }
+      .wireframe { fill: #f8f9fa; stroke: #333; stroke-width: 1; }
+      .button { fill: #e3f2fd; stroke: #1976d2; stroke-width: 1; rx: 4; }
+      .input { fill: #fff; stroke: #666; stroke-width: 1; rx: 2; }
+      .canvas { fill: #000; stroke: #333; stroke-width: 2; }
+      .header { fill: #f5f5f5; stroke: #333; stroke-width: 1; }
+      .footer { fill: #f0f0f0; stroke: #333; stroke-width: 1; }
+    </style>
+  </defs>
+  
+  <!-- 标题 -->
+  <text x="700" y="30" text-anchor="middle" class="title">The Echo of HAMMER - 线框图设计</text>
+  
+  <!-- 1. 主页线框图 -->
+  <text x="50" y="70" class="subtitle">1. 主页 (start.html)</text>
+  
+  <!-- 主页框架 -->
+  <rect x="50" y="90" width="300" height="400" class="wireframe"/>
+  
+  <!-- Header -->
+  <rect x="60" y="100" width="280" height="60" class="header"/>
+  <text x="80" y="120" class="text">[LOGO]</text>
+  <text x="200" y="120" text-anchor="middle" class="text">The Echo of HAMMER</text>
+  <text x="80" y="140" class="label">游戏标题和Logo区域</text>
+  
+  <!-- 主要按钮区域 -->
+  <rect x="100" y="180" width="160" height="40" class="button"/>
+  <text x="180" y="205" text-anchor="middle" class="text">开始游戏</text>
+  
+  <rect x="100" y="230" width="160" height="40" class="button"/>
+  <text x="180" y="255" text-anchor="middle" class="text">继续游戏</text>
+  
+  <rect x="100" y="280" width="160" height="40" class="button"/>
+  <text x="180" y="305" text-anchor="middle" class="text">成就系统</text>
+  
+  <rect x="100" y="330" width="160" height="40" class="button"/>
+  <text x="180" y="355" text-anchor="middle" class="text">游戏设置</text>
+  
+  <rect x="100" y="380" width="160" height="40" class="button"/>
+  <text x="180" y="405" text-anchor="middle" class="text">帮助说明</text>
+  
+  <!-- Footer -->
+  <rect x="60" y="440" width="280" height="40" class="footer"/>
+  <text x="200" y="465" text-anchor="middle" class="label">© 2024 Genetic Recombination</text>
+  
+  <!-- 2. 登录页面线框图 -->
+  <text x="400" y="70" class="subtitle">2. 登录页面 (login.html)</text>
+  
+  <rect x="400" y="90" width="300" height="400" class="wireframe"/>
+  
+  <!-- 登录标题 -->
+  <text x="550" y="130" text-anchor="middle" class="text">用户登录</text>
+  
+  <!-- 输入框 -->
+  <rect x="430" y="150" width="240" height="30" class="input"/>
+  <text x="440" y="170" class="label">用户名/邮箱</text>
+  
+  <rect x="430" y="190" width="240" height="30" class="input"/>
+  <text x="440" y="210" class="label">密码</text>
+  
+  <!-- 选项 -->
+  <rect x="430" y="230" width="15" height="15" class="input"/>
+  <text x="450" y="242" class="label">记住我</text>
+  <text x="600" y="242" class="label">忘记密码？</text>
+  
+  <!-- 登录按钮 -->
+  <rect x="480" y="260" width="140" height="35" class="button"/>
+  <text x="550" y="282" text-anchor="middle" class="text">登录</text>
+  
+  <!-- 注册链接 -->
+  <text x="550" y="320" text-anchor="middle" class="label">还没有账号？立即注册</text>
+  
+  <!-- 3. 游戏主界面线框图 -->
+  <text x="750" y="70" class="subtitle">3. 游戏主界面 (game.html)</text>
+  
+  <rect x="750" y="90" width="600" height="450" class="wireframe"/>
+  
+  <!-- 顶部工具栏 -->
+  <rect x="760" y="100" width="580" height="40" class="header"/>
+  <rect x="770" y="110" width="60" height="20" class="button"/>
+  <text x="800" y="123" text-anchor="middle" class="label">菜单</text>
+  
+  <rect x="840" y="110" width="60" height="20" class="button"/>
+  <text x="870" y="123" text-anchor="middle" class="label">存档</text>
+  
+  <rect x="910" y="110" width="60" height="20" class="button"/>
+  <text x="940" y="123" text-anchor="middle" class="label">设置</text>
+  
+  <rect x="1250" y="110" width="60" height="20" class="button"/>
+  <text x="1280" y="123" text-anchor="middle" class="label">帮助</text>
+  
+  <!-- 游戏画布 -->
+  <rect x="760" y="150" width="580" height="320" class="canvas"/>
+  <text x="1050" y="310" text-anchor="middle" class="text" fill="white">游戏画布区域 (Canvas 800x600)</text>
+  <text x="1050" y="330" text-anchor="middle" class="label" fill="white">角色移动、场景渲染、交互显示</text>
+  
+  <!-- 底部状态栏 -->
+  <rect x="760" y="480" width="580" height="50" class="header"/>
+  <text x="780" y="500" class="label">证据: 3/10</text>
+  <rect x="850" y="490" width="50" height="20" class="button"/>
+  <text x="875" y="503" text-anchor="middle" class="label">提示</text>
+  
+  <rect x="920" y="490" width="50" height="20" class="button"/>
+  <text x="945" y="503" text-anchor="middle" class="label">成就</text>
+  
+  <!-- 进度条 -->
+  <rect x="1100" y="495" width="200" height="10" class="input"/>
+  <rect x="1100" y="495" width="120" height="10" fill="#4caf50"/>
+  <text x="1200" y="515" text-anchor="middle" class="label">游戏进度 60%</text>
+  
+  <!-- 4. 对话界面线框图 -->
+  <text x="50" y="600" class="subtitle">4. 对话界面</text>
+  
+  <rect x="50" y="620" width="600" height="350" class="wireframe"/>
+  
+  <!-- 游戏画布（背景） -->
+  <rect x="60" y="630" width="580" height="240" class="canvas"/>
+  <text x="350" y="750" text-anchor="middle" class="text" fill="white">游戏场景（背景模糊）</text>
+  
+  <!-- 对话框 -->
+  <rect x="80" y="880" width="540" height="80" class="header"/>
+  
+  <!-- 角色头像 -->
+  <rect x="90" y="890" width="50" height="50" class="input"/>
+  <text x="115" y="920" text-anchor="middle" class="label">头像</text>
+  
+  <!-- 对话内容 -->
+  <text x="150" y="905" class="text">角色名称</text>
+  <text x="150" y="920" class="label">对话内容文本区域...</text>
+  <text x="150" y="935" class="label">继续显示更多对话内容...</text>
+  
+  <!-- 对话按钮 -->
+  <rect x="520" y="930" width="40" height="20" class="button"/>
+  <text x="540" y="943" text-anchor="middle" class="label">继续</text>
+  
+  <rect x="570" y="930" width="40" height="20" class="button"/>
+  <text x="590" y="943" text-anchor="middle" class="label">跳过</text>
+  
+  <!-- 5. 成就页面线框图 -->
+  <text x="700" y="600" class="subtitle">5. 成就页面 (achievement.html)</text>
+  
+  <rect x="700" y="620" width="400" height="500" class="wireframe"/>
+  
+  <!-- 页面标题 -->
+  <text x="900" y="650" text-anchor="middle" class="text">成就系统</text>
+  
+  <!-- 筛选标签 -->
+  <rect x="720" y="670" width="60" height="25" class="button"/>
+  <text x="750" y="687" text-anchor="middle" class="label">全部</text>
+  
+  <rect x="790" y="670" width="60" height="25" class="button"/>
+  <text x="820" y="687" text-anchor="middle" class="label">已解锁</text>
+  
+  <rect x="860" y="670" width="60" height="25" class="button"/>
+  <text x="890" y="687" text-anchor="middle" class="label">未解锁</text>
+  
+  <!-- 成就列表 -->
+  <!-- 已解锁成就 -->
+  <rect x="720" y="710" width="360" height="60" class="input"/>
+  <rect x="730" y="720" width="40" height="40" fill="#4caf50" stroke="#333"/>
+  <text x="750" y="743" text-anchor="middle" class="text" fill="white">✓</text>
+  <text x="780" y="735" class="text">初次探索</text>
+  <text x="780" y="750" class="label">完成第一次场景探索</text>
+  <text x="780" y="765" class="label">解锁条件：进入游戏世界</text>
+  
+  <!-- 未解锁成就 -->
+  <rect x="720" y="780" width="360" height="60" class="input"/>
+  <rect x="730" y="790" width="40" height="40" fill="#ccc" stroke="#333"/>
+  <text x="750" y="813" text-anchor="middle" class="text">?</text>
+  <text x="780" y="805" class="text">神秘成就</text>
+  <text x="780" y="820" class="label">???</text>
+  <text x="780" y="835" class="label">???</text>
+  
+  <!-- 更多成就项 -->
+  <rect x="720" y="850" width="360" height="60" class="input"/>
+  <rect x="730" y="860" width="40" height="40" fill="#4caf50" stroke="#333"/>
+  <text x="750" y="883" text-anchor="middle" class="text" fill="white">✓</text>
+  <text x="780" y="875" class="text">证据收集者</text>
+  <text x="780" y="890" class="label">收集第一个证据</text>
+  <text x="780" y="905" class="label">解锁条件：获得任意证据</text>
+  
+  <!-- 返回按钮 -->
+  <rect x="850" y="1050" width="100" height="30" class="button"/>
+  <text x="900" y="1070" text-anchor="middle" class="text">返回游戏</text>
+  
+  <!-- 6. 暂停菜单线框图 -->
+  <text x="50" y="1200" class="subtitle">6. 暂停菜单</text>
+  
+  <rect x="50" y="1220" width="300" height="350" class="wireframe"/>
+  
+  <!-- 半透明背景 -->
+  <rect x="60" y="1230" width="280" height="330" fill="rgba(0,0,0,0.5)" stroke="#333"/>
+  
+  <!-- 菜单框 -->
+  <rect x="120" y="1280" width="160" height="220" class="header"/>
+  <text x="200" y="1305" text-anchor="middle" class="text">游戏暂停</text>
+  
+  <!-- 菜单选项 -->
+  <rect x="140" y="1320" width="120" height="30" class="button"/>
+  <text x="200" y="1340" text-anchor="middle" class="text">继续游戏</text>
+  
+  <rect x="140" y="1360" width="120" height="30" class="button"/>
+  <text x="200" y="1380" text-anchor="middle" class="text">保存游戏</text>
+  
+  <rect x="140" y="1400" width="120" height="30" class="button"/>
+  <text x="200" y="1420" text-anchor="middle" class="text">游戏设置</text>
+  
+  <rect x="140" y="1440" width="120" height="30" class="button"/>
+  <text x="200" y="1460" text-anchor="middle" class="text">返回主菜单</text>
+  
+  <!-- 7. 小游戏界面线框图 -->
+  <text x="400" y="1200" class="subtitle">7. 小游戏界面 (T-Rex)</text>
+  
+  <rect x="400" y="1220" width="500" height="300" class="wireframe"/>
+  
+  <!-- 游戏标题 -->
+  <text x="650" y="1250" text-anchor="middle" class="text">T-Rex 跑酷小游戏</text>
+  
+  <!-- 游戏画布 -->
+  <rect x="420" y="1270" width="460" height="180" class="canvas"/>
+  <text x="650" y="1360" text-anchor="middle" class="text" fill="white">小游戏画面</text>
+  
+  <!-- 控制说明 -->
+  <text x="430" y="1470" class="label">空格键：跳跃</text>
+  <text x="430" y="1485" class="label">下箭头：下蹲</text>
+  
+  <!-- 分数显示 -->
+  <text x="750" y="1470" class="text">得分: 1250</text>
+  <text x="750" y="1485" class="text">最高分: 3420</text>
+  
+  <!-- 返回按钮 -->
+  <rect x="800" y="1490" width="80" height="25" class="button"/>
+  <text x="840" y="1507" text-anchor="middle" class="text">返回</text>
+  
+  <!-- 8. 设置页面线框图 -->
+  <text x="950" y="1200" class="subtitle">8. 设置页面</text>
+  
+  <rect x="950" y="1220" width="350" height="400" class="wireframe"/>
+  
+  <!-- 页面标题 -->
+  <text x="1125" y="1250" text-anchor="middle" class="text">游戏设置</text>
+  
+  <!-- 设置选项 -->
+  <text x="970" y="1280" class="text">音效设置</text>
+  <rect x="970" y="1290" width="200" height="20" class="input"/>
+  <rect x="970" y="1290" width="120" height="20" fill="#4caf50"/>
+  <text x="1180" y="1305" class="label">音量: 60%</text>
+  
+  <text x="970" y="1330" class="text">背景音乐</text>
+  <rect x="970" y="1340" width="200" height="20" class="input"/>
+  <rect x="970" y="1340" width="80" height="20" fill="#4caf50"/>
+  <text x="1180" y="1355" class="label">音量: 40%</text>
+  
+  <text x="970" y="1380" class="text">画质设置</text>
+  <rect x="970" y="1390" width="80" height="25" class="button"/>
+  <text x="1010" y="1407" text-anchor="middle" class="label">高</text>
+  <rect x="1060" y="1390" width="80" height="25" class="input"/>
+  <text x="1100" y="1407" text-anchor="middle" class="label">中</text>
+  <rect x="1150" y="1390" width="80" height="25" class="input"/>
+  <text x="1190" y="1407" text-anchor="middle" class="label">低</text>
+  
+  <text x="970" y="1440" class="text">控制设置</text>
+  <rect x="970" y="1450" width="15" height="15" class="input"/>
+  <text x="990" y="1462" class="label">启用键盘控制</text>
+  <rect x="970" y="1470" width="15" height="15" class="input"/>
+  <text x="990" y="1482" class="label">启用鼠标控制</text>
+  
+  <!-- 按钮 -->
+  <rect x="1000" y="1550" width="80" height="30" class="button"/>
+  <text x="1040" y="1570" text-anchor="middle" class="text">保存</text>
+  
+  <rect x="1100" y="1550" width="80" height="30" class="button"/>
+  <text x="1140" y="1570" text-anchor="middle" class="text">取消</text>
+  
+  <!-- 设计说明 -->
+  <text x="50" y="1700" class="subtitle">设计说明：</text>
+  <text x="50" y="1720" class="text">1. 所有线框图采用简洁的黑白设计，突出功能布局</text>
+  <text x="50" y="1740" class="text">2. 按钮和交互元素使用不同的填充色区分</text>
+  <text x="50" y="1760" class="text">3. 游戏画布区域使用黑色背景表示</text>
+  <text x="50" y="1780" class="text">4. 输入框使用白色背景，便于识别</text>
+  <text x="50" y="1800" class="text">5. 所有文字大小和间距遵循8px网格系统</text>
+  
+  <text x="50" y="1840" class="subtitle">响应式适配：</text>
+  <text x="50" y="1860" class="text">• 移动端：垂直布局，按钮加大，触控优化</text>
+  <text x="50" y="1880" class="text">• 平板端：适中布局，保持可读性</text>
+  <text x="50" y="1900" class="text">• 桌面端：水平布局，充分利用屏幕空间</text>
+  
+</svg>

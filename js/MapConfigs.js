@@ -371,7 +371,7 @@ window.OverworldMaps = {
         }
       ]
   },
-  
+},
   Toilet: {
     id: "Toilet",
     lowerSrc: "./image in the game/map/toilet.png",
@@ -484,5 +484,4 @@ window.OverworldMaps = {
       ]
     }
   }
-}
 }
