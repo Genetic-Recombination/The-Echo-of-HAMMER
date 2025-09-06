@@ -14,47 +14,7 @@ window.OverworldMaps = {
         walkingSrc: "./image in the game/character/detectivewalking.png",
         useShadow: false,
       },
-      npc1: {
-        type: "Person",
-        x: utils.withGrid(35),
-        y: utils.withGrid(20),
-        src: "./image in the game/character/1walking.png",
-        talking: [
-          {
-            events: [
-              { type: "textMessage", text: "这是一个测试", faceHero: "npc1" },
-              { type: "textMessage", text: "这还是测试" },
-            ]
-          }
-        ]
-      },
-      npc2: {
-        type: "Person",
-        x: utils.withGrid(30),
-        y: utils.withGrid(20),
-        src: "./image in the game/character/2walking.png",
-        talking: [
-          {
-            events: [
-              { type: "textMessage", text: "这是一个测试", faceHero: "npc2" },
-            ]
-          }
-        ]
-      },
-      npc3: {
-        type: "Person",
-        x: utils.withGrid(25),
-        y: utils.withGrid(20),
-        src: "./image in the game/character/3walking.png",
-        talking: [
-          {
-            events: [
-              { type: "textMessage", text: "你好，这是测试", faceHero: "npc1" },
-              { type: "textMessage", text: "这还是测试" },
-            ]
-          }
-        ]
-      },
+  // NPCs for LivingRoom are created at runtime in OverworldMap
     },
     walls: {
   // 左侧纵向墙（原来 3,3 ~ 3,21）
@@ -388,7 +348,22 @@ window.OverworldMaps = {
       }
     },
     walls: {
-     
+      ...utils.verticalWall(8, 0,30),
+      ...utils.verticalWall(12, 0, 14),
+      ...utils.verticalWall(17, 0, 12),
+      ...utils.verticalWall(21, 0, 11),
+      ...utils.verticalWall(25, 0, 30),
+      ...utils.verticalWall(22, 13, 18),
+      ...utils.verticalWall(24, 13, 18),
+      ...utils.verticalWall(22, 21, 25),
+
+     ...utils.horizontalWall(25, 0, 100),
+     ...utils.horizontalWall(14, 0, 12),
+     ...utils.horizontalWall(12, 0, 17),
+     ...utils.horizontalWall(11, 21, 30),
+     ...utils.horizontalWall(13, 22, 24),
+     ...utils.horizontalWall(18, 22, 24),
+     ...utils.horizontalWall(21, 22, 24),
     },
     cutsceneSpaces: {
       // 返回卧室
