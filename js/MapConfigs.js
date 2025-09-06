@@ -388,7 +388,22 @@ window.OverworldMaps = {
       }
     },
     walls: {
-     
+      ...utils.verticalWall(8, 0,30),
+      ...utils.verticalWall(12, 0, 14),
+      ...utils.verticalWall(17, 0, 12),
+      ...utils.verticalWall(21, 0, 11),
+      ...utils.verticalWall(25, 0, 30),
+      ...utils.verticalWall(22, 13, 18),
+      ...utils.verticalWall(24, 13, 18),
+      ...utils.verticalWall(22, 21, 25),
+
+     ...utils.horizontalWall(25, 0, 100),
+     ...utils.horizontalWall(14, 0, 12),
+     ...utils.horizontalWall(12, 0, 17),
+     ...utils.horizontalWall(11, 21, 30),
+     ...utils.horizontalWall(13, 22, 24),
+     ...utils.horizontalWall(18, 22, 24),
+     ...utils.horizontalWall(21, 22, 24),
     },
     cutsceneSpaces: {
       // 返回卧室
