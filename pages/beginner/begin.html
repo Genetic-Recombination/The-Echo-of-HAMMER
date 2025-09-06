@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>榔头男的传说 · 互动剧本</title>
+<style>
+:root {
+  --bg: #0b0f14;
+  --panel: rgba(20, 24, 30, 0.7);
+  --panel-solid: #151922;
+  --text: #e7ebf3;
+  --muted: #9aa7b3;
+  --accent: #8ab4ff;
+}
+html, body {
+  margin:0; padding:0; height:100%; background: var(--bg); color: var(--text);
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans";
+}
+.stage {
+  position: relative; width:100%; height:100vh; overflow:hidden;
+  background: none;
+}
+.bg {
+  position:absolute; inset:0; background-size:cover; background-position:center center;
+  filter: brightness(1.2) contrast(1.05) saturate(1.1);
+  transition: opacity 0.6s ease-in-out; opacity:1;
+}
+.film-grain::after {
+  content: "";
+  position:absolute; inset:-10%; pointer-events:none;
+  mix-blend-mode: soft-light; opacity: .35;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2"/><feColorMatrix type="saturate" values="0"/></filter><rect width="100%" height="100%" filter="url(%23n)"/></svg>');
+  background-size: 350px 350px; animation: grain 7s steps(10) infinite;
+}
+@keyframes grain { 0% { transform: translate(0,0) } 100% { transform: translate(-10px,-10px) } }
+.vignette { position:absolute; inset:0; pointer-events:none; box-shadow: inset 0 0 160px 40px rgba(0,0,0,.85); }
+
+.subtitle {
+  position:absolute; top:50%; left:50%; transform:translate(-50%, -50%);
+  background: rgba(0,0,0,0); color: var(--text);
+  padding: 1.2rem 2.5rem; border-radius:16px;
+  max-width:90%; text-align:center; line-height:1.6;
+  font-size: clamp(28px,5vw,48px); font-weight:800; font-family:"方正大黑体_GBK", "Arial", sans-serif;
+  letter-spacing:1px; opacity:0; transition: opacity 1s ease-in-out; z-index:10;
+}
+.subtitle.show { opacity:1; }
+
+.dialogue {
+  position:absolute; left:50%; bottom:3.5%; transform:translateX(-50%);
+  width:min(1100px,92%); background: var(--panel); backdrop-filter: blur(8px) saturate(110%);
+  border:1px solid rgba(255,255,255,.06); border-radius:16px; box-shadow:0 12px 40px rgba(0,0,0,.35);
+  padding:1.1rem 1.2rem 1rem; cursor:pointer; user-select:none;
+  display:none; transition: opacity 0.5s;
+}
+.name { display:inline-flex; gap:.5rem; align-items:center; font-weight:700; letter-spacing:.03em; color: var(--accent); margin-bottom:.25rem; font-size: clamp(14px,2.3vw,16px);}
+.text { font-size: clamp(15px,2.6vw,19px); line-height:1.8; min-height:3lh; white-space: pre-wrap; }
+.hint { color: var(--muted); font-size:12px; margin-top:.45rem; }
+
+.choices { display:grid; gap:.6rem; margin-top:.8rem; }
+.choice { background: var(--panel-solid); border:1px solid rgba(255,255,255,.07); border-radius:12px; padding:.7rem .9rem; cursor:pointer; transition:160ms ease; }
+.choice:hover { transform:translateY(-1px); box-shadow:0 6px 18px rgba(0,0,0,.25); }
+
+.flash { position:absolute; inset:0; background-size:cover; background-position:center; opacity:0; pointer-events:none; transition: opacity 80ms linear; }
+
+.topbar { position:absolute; inset-inline:2%; top:2%; display:flex; gap:.5rem; align-items:center; z-index:20; }
+.btn { background: rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.09); color: var(--text); padding:.45rem .7rem; border-radius:10px; font-size:12px; cursor:pointer; transition:160ms ease; backdrop-filter: blur(6px); }
+.btn:hover { transform: translateY(-1px); box-shadow:0 6px 18px rgba(0,0,0,.25); }
+
+.muted {
+  color: var(--muted); position: absolute; bottom: 1%; left:50%; transform: translateX(-50%);
+  font-size: 14px; opacity:0; transition: opacity 0.5s; z-index:10;
+}
+.muted.show { opacity:1; }
+
+@media (min-width:900px){ .dialogue{bottom:4.5%;} }
+</style>
+</head>
+<body>
+<div class="stage film-grain" id="stage">
+  <div class="bg" id="bg" aria-hidden="true"></div>
+  <div class="vignette" id="vignette"></div>
+
+  <div class="topbar">
+    <button class="btn" id="btnSkip">跳过文字动画</button>
+    <button class="btn" id="btnAuto">自动播放：关</button>
+  </div>
+
+  <div class="subtitle" id="subtitle"></div>
+
+  <div class="dialogue" id="dialogue" role="button" aria-label="下一句">
+    <div class="name" id="name">&nbsp;</div>
+    <div class="text" id="text"></div>
+    <div class="choices" id="choices" hidden></div>
+    <div class="hint">点击继续 ▸</div>
+  </div>
+
+  <div class="flash" id="flash"></div>
+  <div class="muted" id="muted">（点击任意位置或空格键以继续）</div>
+</div>
+
+<script>
+const el=id=>document.getElementById(id);
+const nameEl=el('name'), textEl=el('text'), choicesEl=el('choices'), subtitleEl=el('subtitle');
+const dialogueEl=el('dialogue'), bgEl=el('bg'), mutedEl=el('muted');
+const btnSkip=el('btnSkip'), btnAuto=el('btnAuto');
+
+let idx=0, skipType=false, autoPlay=false, typing=false, waitingChoice=false;
+let currentBg='', inMontage=false;
+
+async function typeText(str){
+  typing=true; textEl.innerHTML='';
+  const speed=22;
+  for(let i=0;i<str.length;i++){
+    if(skipType){ textEl.innerHTML=str.replace(/\n/g,'<br>'); break; }
+    textEl.innerHTML += (str[i]==='\n'?'<br>':str[i]);
+    await new Promise(r=>setTimeout(r,speed));
+  }
+  typing=false;
+  if(autoPlay && !inMontage && !waitingChoice) setTimeout(next,600);
+}
+
+const script=[
+  { t:'subtitle', text:'每个城市都有它的秘密。', bg:'images/1.jpg' },
+  { t:'subtitle', text:'在霓虹灯无法照亮的阴影里，流传着令人恐惧的神秘与罪恶。', bg:'images/1.jpg' },
+  { t:'subtitle', text:'人们称它们为——', bg:'images/1.jpg' },
+  { t:'subtitle', text:'都市传说', bg:'images/1.jpg' },
+  { t:'bg', url:'images/2.jpg', alt:'咖啡馆' },
+  { t:'say', name:'', text:'你正坐在一个略显嘈杂的咖啡馆里，窗外是傍晚的城市。' },
+  { t:'say', name:'', text:'你对面的朋友正在看手机，突然压低声音对你说话，神神秘秘的。' },
+  { t:'say', name:'友人', text:'喂，大侦探，你最近……听过那个传闻吗？' },
+  { t:'choice', name:'你', choices:[
+    { text:'什么传闻？', goto:'after-choice' },
+    { text:'没兴趣。', goto:'after-boring' },
+  ]},
+  { t:'label', id:'after-choice' },
+  { t:'say', name:'友人', text:'就是那个……“榔头男”的事。' },
+  { t:'say', name:'友人', text:'最近好多女生群里都在传，说得有鼻子有眼的，怪吓人的。' },
+  { t:'goto', target:'hammer' },
+  { t:'label', id:'after-boring' },
+  { t:'say', name:'友人', text:'我知道你觉得这种传说都离谱，但这个你一定感兴趣！' },
+  { t:'say', name:'友人', text:'说不定你能碰到关于这个的案子呢。' },
+  { t:'goto', target:'after-choice' },
+  { t:'label', id:'hammer' },
+  { t:'bg', url:'images/3.jpg', alt:'榔头男传说' },
+  { t:'say', name:'友人', text:'听说是个很高大的男人，总是深夜出现在没什么人的地方，没人看清过他的脸。' },
+  { t:'say', name:'友人', text:'但他手里……总提着一把锤子。' },
+  { t:'say', name:'友人', text:'他们说，他专门挑落单的年轻女孩子下手……从背后跟上，然后……' },
+  { t:'say', name:'友人', text:'……只用一下。甚至发不出什么太大的声音……（他吞了一下口水）' },
+  { t:'montage', img:'images/4.jpg', alt:'雨夜奔跑的脚步' },
+  { t:'montage', img:'images/7.jpg', alt:'血迹斑斑的榔头' },
+  { t:'montage', img:'images/5.jpg', alt:'雨水打湿的寻人启事' },
+  { t:'bg', url:'images/2.jpg', alt:'咖啡馆' },
+  { t:'say', name:'友人', text:'呵，可能只是渲染的有些吓人了……对吧？总之，晚上回家小心点。' },
+  { t:'bg', url:'images/6.jpg', alt:'新闻画面' },
+  { t:'say', name:'', text:'警方再次呼吁，近日晚间独自出行的市民，尤其是女性，请务必注意人身安全，尽量选择人多明亮的路线……' },
+  { t:'end' }
+];
+
+const labelIndex={};
+script.forEach((s,i)=>{ if(s.t==='label') labelIndex[s.id]=i; });
+
+function renderChoice(step){
+  waitingChoice=true;
+  choicesEl.innerHTML=''; choicesEl.hidden=false;
+  nameEl.textContent=step.name||''; textEl.textContent='选择：';
+  step.choices.forEach(ch=>{
+    const btn=document.createElement('div');
+    btn.className='choice'; btn.textContent=ch.text;
+    btn.addEventListener('click', e=>{
+      e.stopPropagation(); choicesEl.hidden=true; choicesEl.innerHTML=''; waitingChoice=false;
+      if(ch.goto!==undefined && labelIndex[ch.goto]!==undefined) idx=labelIndex[ch.goto];
+      next();
+    });
+    choicesEl.appendChild(btn);
+  });
+  updateMuted();
+}
+
+function setBackground(url){
+  if(url===currentBg) return;
+  currentBg=url;
+  bgEl.style.opacity=0;
+  setTimeout(()=>{ bgEl.style.backgroundImage=`linear-gradient(120deg, rgba(50,60,70,.35), rgba(10,12,16,.6)), url('${url}')`; bgEl.style.opacity=1; },600);
+}
+
+async function next(){
+  if(waitingChoice) return;
+  if(typing){ skipType=true; return; }
+  skipType=false;
+  const step=script[idx++];
+  if(!step) return;
+
+  subtitleEl.classList.remove('show');
+
+  switch(step.t){
+    case 'subtitle':
+      subtitleEl.textContent=step.text;
+      dialogueEl.style.display='none';
+      nameEl.textContent=''; textEl.textContent='';
+      if(step.bg) setBackground(step.bg);
+      setTimeout(()=>subtitleEl.classList.add('show'),50);
+      updateMuted();
+      break;
+    case 'say':
+      choicesEl.hidden=true; nameEl.textContent=step.name||''; dialogueEl.style.display='block';
+      subtitleEl.classList.remove('show');
+      updateMuted();
+      await typeText(step.text);
+      updateMuted();
+      break;
+    case 'choice': renderChoice(step); break;
+    case 'goto': idx=labelIndex[step.target]; next(); break;
+    case 'montage': inMontage=true; setBackground(step.img); dialogueEl.style.display='none'; updateMuted(); break;
+    case 'end': nameEl.textContent=''; textEl.textContent=''; subtitleEl.classList.remove('show'); bgEl.style.background=`#000`; updateMuted(); break;
+    case 'label': next(); break;
+    case 'bg': setBackground(step.url); next(); break;
+  }
+}
+
+function updateMuted(){
+  if(dialogueEl.style.display==='none' && !waitingChoice){
+    mutedEl.classList.add('show');
+  } else mutedEl.classList.remove('show');
+}
+
+function advance(){
+  if(waitingChoice) return;
+  if(typing){ skipType=true; return; }
+  skipType=false;
+  if(inMontage){ inMontage=false; next(); }
+  else if(subtitleEl.classList.contains('show')){ subtitleEl.classList.remove('show'); updateMuted(); }
+  else next();
+}
+
+document.addEventListener('keydown', e=>{ if(e.code==='Space'){ e.preventDefault(); advance(); } });
+document.addEventListener('click', advance);
+btnSkip.addEventListener('click', ()=>{ skipType=true; });
+btnAuto.addEventListener('click', ()=>{ autoPlay=!autoPlay; btnAuto.textContent=`自动播放：${autoPlay?'开':'关'}`; });
+
+setBackground('images/1.jpg');
+next();
+</script>
+</body>
+</html>
