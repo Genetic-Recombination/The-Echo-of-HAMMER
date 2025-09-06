@@ -323,31 +323,22 @@ window.OverworldMaps = {
       }
     },
     walls: {
-      [utils.asGridCoord(0, 3)]: true,
-      [utils.asGridCoord(0, 4)]: true,
-      [utils.asGridCoord(0, 5)]: true,
-      [utils.asGridCoord(0, 6)]: true,
-      [utils.asGridCoord(0, 7)]: true,
-      [utils.asGridCoord(1, 2)]: true,
-      [utils.asGridCoord(2, 2)]: true,
-      [utils.asGridCoord(3, 2)]: true,
-      [utils.asGridCoord(5, 2)]: true,
-      [utils.asGridCoord(6, 2)]: true,
-      [utils.asGridCoord(7, 2)]: true,
-      [utils.asGridCoord(8, 2)]: true,
-      [utils.asGridCoord(9, 3)]: true,
-      [utils.asGridCoord(9, 4)]: true,
-      [utils.asGridCoord(9, 5)]: true,
-      [utils.asGridCoord(9, 6)]: true,
-      [utils.asGridCoord(9, 7)]: true,
-      [utils.asGridCoord(1, 8)]: true,
-      [utils.asGridCoord(2, 8)]: true,
-      [utils.asGridCoord(3, 8)]: true,
-      [utils.asGridCoord(4, 8)]: true,
-      [utils.asGridCoord(5, 8)]: true,
-      [utils.asGridCoord(6, 8)]: true,
-      [utils.asGridCoord(7, 8)]: true,
-      [utils.asGridCoord(8, 8)]: true,
+    ...utils.verticalWall(4, 15, 19),//左侧墙
+    ...utils.verticalWall(42, 0, 100),//右侧墙
+    ...utils.verticalWall(38, 17, 19),
+    ...utils.verticalWall(38, 21, 30),
+    ...utils.verticalWall(35, 21, 30),
+
+    ...utils.horizontalWall(19, 0, 4),//入口上横墙
+    ...utils.horizontalWall(15, 0, 100),//上排
+    ...utils.horizontalWall(24, 0, 100),//下墙
+    ...utils.horizontalWall(17, 31, 33),//椅子上
+    ...utils.horizontalWall(17, 35, 100),//椅子上
+    ...utils.horizontalWall(18, 31, 33),//椅子下
+    ...utils.horizontalWall(18, 35, 100),//椅子下
+    ...utils.horizontalWall(19, 38, 100),
+    ...utils.horizontalWall(21, 35, 100),
+
     },
     cutsceneSpaces: {
       // 返回客厅
