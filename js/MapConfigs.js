@@ -8,8 +8,8 @@ window.OverworldMaps = {
       hero: {
         type: "Person",
         isPlayerControlled: true,
-        x: utils.withGrid(33),
-        y: utils.withGrid(43),
+        x: utils.withGrid(30),
+        y: utils.withGrid(45),
         src: "./image in the game/character/detectivewalking.png",
         walkingSrc: "./image in the game/character/detectivewalking.png",
         useShadow: false,
@@ -148,28 +148,28 @@ window.OverworldMaps = {
       [utils.asGridCoord(52, 17)]: [
         {
           events: [
-            { type: "changeMap", map: "Kitchen", x: utils.withGrid(8), y: utils.withGrid(6), direction: "left" }
+            { type: "changeMap", map: "Kitchen", x: utils.withGrid(2), y: utils.withGrid(22), direction: "right" }
           ]
         }
       ],
       [utils.asGridCoord(52, 18)]: [
         {
           events: [
-            { type: "changeMap", map: "Kitchen", x: utils.withGrid(8), y: utils.withGrid(6), direction: "left" }
+            { type: "changeMap", map: "Kitchen", x: utils.withGrid(2), y: utils.withGrid(22), direction: "right" }
           ]
         }
       ],
       [utils.asGridCoord(52, 19)]: [
         {
           events: [
-            { type: "changeMap", map: "Kitchen", x: utils.withGrid(8), y: utils.withGrid(6), direction: "left" }
+            { type: "changeMap", map: "Kitchen", x: utils.withGrid(2), y: utils.withGrid(22), direction: "right" }
           ]
         }
       ],
       [utils.asGridCoord(52, 20)]: [
         {
           events: [
-            { type: "changeMap", map: "Kitchen", x: utils.withGrid(8), y: utils.withGrid(6), direction: "left" }
+            { type: "changeMap", map: "Kitchen", x: utils.withGrid(2), y: utils.withGrid(22), direction: "right" }
           ]
         }
       ],
@@ -177,21 +177,21 @@ window.OverworldMaps = {
       [utils.asGridCoord(12, 14)]: [
         {
           events: [
-            { type: "changeMap", map: "Balcony", x: utils.withGrid(2), y: utils.withGrid(7), direction: "left" }
+            { type: "changeMap", map: "Balcony", x: utils.withGrid(19), y: utils.withGrid(23), direction: "up" }
           ]
         }
       ],
       [utils.asGridCoord(13, 14)]: [
         {
           events: [
-            { type: "changeMap", map: "Balcony", x: utils.withGrid(2), y: utils.withGrid(7), direction: "left" }
+            { type: "changeMap", map: "Balcony", x: utils.withGrid(19), y: utils.withGrid(23), direction: "up" }
           ]
         }
       ],
       [utils.asGridCoord(14, 14)]: [
         {
           events: [
-            { type: "changeMap", map: "Balcony", x: utils.withGrid(2), y: utils.withGrid(7), direction: "left" }
+            { type: "changeMap", map: "Balcony", x: utils.withGrid(19), y: utils.withGrid(23), direction: "up" }
           ]
         }
       ]
@@ -257,21 +257,21 @@ window.OverworldMaps = {
       [utils.asGridCoord(28, 22)]: [
         {
           events: [
-            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(5), y: utils.withGrid(18), direction: "right" }
+            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(5), y: utils.withGrid(19), direction: "right" }
           ]
         }
       ],
       [utils.asGridCoord(28, 23)]: [
         {
           events: [
-            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(5), y: utils.withGrid(18), direction: "right" }
+            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(5), y: utils.withGrid(19), direction: "right" }
           ]
         }
       ],
       [utils.asGridCoord(28, 24)]: [
         {
           events: [
-            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(5), y: utils.withGrid(18), direction: "right" }
+            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(5), y: utils.withGrid(19), direction: "right" }
           ]
         }
       ],
@@ -279,14 +279,14 @@ window.OverworldMaps = {
       [utils.asGridCoord(18, 31)]: [
         {
           events: [
-            { type: "changeMap", map: "Toilet", x: utils.withGrid(3), y: utils.withGrid(8), direction: "left" }
+            { type: "changeMap", map: "Toilet", x: utils.withGrid(19), y: utils.withGrid(7), direction: "down" }
           ]
         }
       ],
       [utils.asGridCoord(19, 31)]: [
         {
           events: [
-            { type: "changeMap", map: "Toilet", x: utils.withGrid(3), y: utils.withGrid(8), direction: "left" }
+            { type: "changeMap", map: "Toilet", x: utils.withGrid(19), y: utils.withGrid(7), direction: "down" }
           ]
         }
       ]
@@ -351,22 +351,34 @@ window.OverworldMaps = {
     },
     cutsceneSpaces: {
       // 返回客厅
-      [utils.asGridCoord(5, 10)]: [
+      [utils.asGridCoord(1, 22)]: [
         {
           events: [
-            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(7), y: utils.withGrid(19), direction: "down" }
+            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(51), y: utils.withGrid(19), direction: "left" }
           ]
         }
       ],
-      // 通往洗手间
-      [utils.asGridCoord(9, 6)]: [
+      [utils.asGridCoord(1, 23)]: [
         {
           events: [
-            { type: "changeMap", map: "Toilet", x: utils.withGrid(3), y: utils.withGrid(8), direction: "left" }
+            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(51), y: utils.withGrid(19), direction: "left" }
+          ]
+        }
+      ],
+      [utils.asGridCoord(1, 21)]: [
+        {
+          events: [
+            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(51), y: utils.withGrid(19), direction: "left" }
+          ]
+        }
+      ],
+      [utils.asGridCoord(1, 20)]: [
+        {
+          events: [
+            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(51), y: utils.withGrid(19), direction: "left" }
           ]
         }
       ]
-    }
   },
   
   Toilet: {
@@ -403,19 +415,25 @@ window.OverworldMaps = {
       [utils.asGridCoord(5, 9)]: true,
     },
     cutsceneSpaces: {
-      // 返回客厅
-      [utils.asGridCoord(3, 9)]: [
+      // 返回卧室
+      [utils.asGridCoord(18, 6)]: [
         {
           events: [
-            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(8), y: utils.withGrid(6), direction: "down" }
+            { type: "changeMap", map: "Bedroom", x: utils.withGrid(18), y: utils.withGrid(30), direction: "up" }
           ]
         }
       ],
-      // 返回卧室
-      [utils.asGridCoord(6, 6)]: [
+      [utils.asGridCoord(19, 6)]: [
         {
           events: [
-            { type: "changeMap", map: "Bedroom", x: utils.withGrid(8), y: utils.withGrid(6), direction: "right" }
+            { type: "changeMap", map: "Bedroom", x: utils.withGrid(18), y: utils.withGrid(30), direction: "up" }
+          ]
+        }
+      ],
+      [utils.asGridCoord(20, 6)]: [
+        {
+          events: [
+            { type: "changeMap", map: "Bedroom", x: utils.withGrid(18), y: utils.withGrid(30), direction: "up" }
           ]
         }
       ]
@@ -435,20 +453,6 @@ window.OverworldMaps = {
         src: "./image in the game/character/detectivewalking.png",
         walkingSrc: "./image in the game/character/detectivewalking.png",
         useShadow: true,
-      },
-      witness: {
-        type: "Person",
-        x: utils.withGrid(6),
-        y: utils.withGrid(4),
-        src: "./image in the game/character/picture/2.png",
-        talking: [
-          {
-            events: [
-              { type: "textMessage", text: "我在阳台上看到了一些可疑的活动。", faceHero: "witness" },
-              { type: "textMessage", text: "大约在晚上8点左右，我听到了争吵声。" },
-            ]
-          }
-        ]
       }
     },
     walls: {
@@ -477,13 +481,28 @@ window.OverworldMaps = {
     },
     cutsceneSpaces: {
       // 返回客厅
-      [utils.asGridCoord(1, 7)]: [
+      [utils.asGridCoord(19, 24)]: [
         {
           events: [
-            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(8), y: utils.withGrid(5), direction: "right" }
+            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(13), y: utils.withGrid(15), direction: "down" }
+          ]
+        }
+      ],
+      [utils.asGridCoord(18, 24)]: [
+        {
+          events: [
+            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(13), y: utils.withGrid(15), direction: "down" }
+          ]
+        }
+      ],
+      [utils.asGridCoord(20, 24)]: [
+        {
+          events: [
+            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(13), y: utils.withGrid(15), direction: "down" }
           ]
         }
       ]
     }
   }
-};
+}
+}
