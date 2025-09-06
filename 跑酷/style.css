@@ -1,0 +1,10 @@
+body {
+  margin: 0;
+  overflow: hidden;
+  background: #cce7ff; /* 天空色 */
+}
+
+canvas {
+  display: block;
+  background: #87ceeb;
+}
