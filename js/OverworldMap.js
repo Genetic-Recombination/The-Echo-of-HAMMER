@@ -92,6 +92,22 @@ class OverworldMap {
       });
     }
 
+    // Kitchen: 垃圾桶交互 (35<=x<=37, 21<=y<=24)
+    if (this.id === "Kitchen") {
+      const ashText = "新线索【灰烬】\n桶内底层有一些灰白色的纸灰和少量未完全烧尽的碎纸片，纸片边缘卷曲焦黑，已经看不清了。";
+      for (let x = 35; x <= 37; x++) {
+        for (let y = 21; y <= 24; y++) {
+          this.cutsceneSpaces[utils.asGridCoord(x, y)] = [
+            {
+              events: [
+                { type: "textMessage", text: ashText }
+              ]
+            }
+          ];
+        }
+      }
+    }
+
     // 实例化对象
     Object.keys(this.gameObjects).forEach(key => {
       const conf = this.gameObjects[key];
@@ -115,6 +131,15 @@ class OverworldMap {
   checkForActionCutscene() {
     const hero = this.gameObjects["hero"];
     const nextCoords = utils.nextPosition(hero.x, hero.y, hero.direction);
+    // 先检查面向格子是否有 cutsceneSpaces（用于像垃圾桶这种无法站上去的交互）
+    const faceKey = `${nextCoords.x},${nextCoords.y}`;
+    const spaceMatch = this.cutsceneSpaces[faceKey];
+    if (!this.isCutscenePlaying && spaceMatch) {
+      this.startCutscene(spaceMatch[0].events);
+      return;
+    }
+
+    // 若没有面向的触发点，则检查是否面对可对话的 NPC
     const match = Object.values(this.gameObjects).find(obj =>
       `${obj.x},${obj.y}` === `${nextCoords.x},${nextCoords.y}`
     );
