@@ -88,7 +88,49 @@ class OverworldMap {
               { type: "textMessage", text: "这还是测试" },
             ]}
           ]
-        }
+        },
+        npc4: {
+          type: "Person",
+          x: utils.withGrid(15),
+          y: utils.withGrid(26),
+          src: "./image in the game/character/2walking.png",
+          visible: false// 快递箱
+        },
+        npc5: {
+          type: "Person",
+          x: utils.withGrid(15),
+          y: utils.withGrid(26),
+          src: "./image in the game/character/2walking.png",
+          visible: false // 初始隐藏
+        },
+        npc6: {
+          type: "Person",
+          x: utils.withGrid(15),
+          y: utils.withGrid(26),
+          src: "./image in the game/character/2walking.png",
+          visible: false // 初始隐藏
+        },
+        npc7: {
+          type: "Person",
+          x: utils.withGrid(15),
+          y: utils.withGrid(26),
+          src: "./image in the game/character/2walking.png",
+          visible: false // 初始隐藏
+        },
+        npc8: {
+          type: "Person",
+          x: utils.withGrid(15),
+          y: utils.withGrid(26),
+          src: "./image in the game/character/2walking.png",
+          visible: false // 初始隐藏
+        },
+        npc9: {
+          type: "Person",
+          x: utils.withGrid(15),
+          y: utils.withGrid(26),
+          src: "./image in the game/character/2walking.png",
+          visible: false // 初始隐藏
+        },
       });
     }
 

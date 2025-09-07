@@ -14,8 +14,28 @@ window.OverworldMaps = {
         walkingSrc: "./image in the game/character/detectivewalking.png",
         useShadow: false,
       },
+      // 添加一个可交互的物品
+      // interactiveObject: {
+      //   type: "Person",
+      //   x: utils.withGrid(20),
+      //   y: utils.withGrid(30),
+      //   src: "./image in the game/character/1walking.png",
+      //   talking: [
+      //     {
+      //       events: [
+      //         { type: "textMessage", text: "你发现了一个神秘的物品！" },
+      //         { type: "textMessage", text: "这可能是解开谜题的关键线索。" }
+      //       ]
+      //     }
+      //   ]
+      
+      // },
+       
   // NPCs for LivingRoom are created at runtime in OverworldMap
     },
+      
+      // 添加一个在特定位置显示的图片
+     
     walls: {
   // 左侧纵向墙（原来 3,3 ~ 3,21）
   ...utils.verticalWall(3, 3, 21),
@@ -80,7 +100,41 @@ window.OverworldMaps = {
   // 通往厨房的门 (52,17..20)
   ...utils.portalColumn(17, 20, 52, "Kitchen", 2, 22, "right"),
   // 通往阳台的门 (12..14,14)
-  ...utils.portalLine(12, 14, 14, "Balcony", 19, 23, "up")
+  ...utils.portalLine(12, 14, 14, "Balcony", 19, 23, "up"),
+  // 当玩家走到坐标(15, 25)时显示图片
+  [utils.asGridCoord(15, 25)]: [
+        {
+          events: [
+            { type: "textMessage", text: "你发现了一张隐藏的图片！" },
+            { type: "setVisibility", objectId: "npc4", visible: true }
+          ]
+        }
+      ],
+  // 当玩家走到坐标(15, 25)时显示图片，
+    [utils.asGridCoord(20, 32)]: [
+        {
+          events: [
+            { type: "textMessage", text: "是送货员留下的快递箱！" },
+            { type: "showImage", src: "./image in the game/character/2walking.png" }
+          ]
+        }
+      ],
+  [utils.asGridCoord(29, 41)]: [
+        {
+          events: [
+            { type: "textMessage", text: "鞋柜似乎有些异常" },
+            { type: "showImage", src: "./image in the game/character/shadow.png" }
+          ]
+        }
+      ],//鞋柜
+  [utils.asGridCoord(40, 28)]: [
+        {
+          events: [
+            { type: "textMessage", text: "你发现了一张隐藏的图片！" },
+            { type: "setVisibility", objectId: "npc7", visible: true }
+          ]
+        }
+      ],//垃圾桶
     }
   },
   Bedroom: {
@@ -327,20 +381,6 @@ window.OverworldMaps = {
         {
           events: [
             { type: "changeMap", map: "LivingRoom", x: utils.withGrid(13), y: utils.withGrid(15), direction: "down" }
-          ]
-        }
-      ],
-      [utils.asGridCoord(18, 24)]: [
-        {
-          events: [
-            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(13), y: utils.withGrid(15), direction: "right" }
-          ]
-        }
-      ],
-      [utils.asGridCoord(20, 24)]: [
-        {
-          events: [
-            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(13), y: utils.withGrid(15), direction: "right" }
           ]
         }
       ]

@@ -88,6 +88,9 @@ class Sprite {
   }
 
   draw(ctx, cameraPerson) {
+    // 如果对象不可见，则不绘制
+    if (!this.gameObject.visible) return;
+    
     const centerX = ctx.canvas.width / 2;
     const centerY = ctx.canvas.height / 2;
 

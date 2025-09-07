@@ -103,6 +103,15 @@ class OverworldEvent {
     menu.init(document.querySelector(".game-container"));
   }
 
+  // 控制对象可见性事件
+  setVisibility(resolve) {
+    const obj = this.map.gameObjects[this.event.objectId];
+    if (obj) {
+      obj.visible = this.event.visible;
+    }
+    resolve();
+  }
+
   battle(resolve) {
     const battle = new Battle({
       enemy: this.event.enemyId,
@@ -111,6 +120,26 @@ class OverworldEvent {
       }
     });
     battle.init(document.querySelector(".game-container"));
+  }
+
+  // 显示图片事件
+  showImage(resolve) {
+    const img = document.createElement("img");
+    img.src = this.event.src;
+    img.classList.add("popup-image");
+    document.querySelector(".game-container").appendChild(img);
+
+    // 按空格键后关闭
+    const closeImage = () => {
+      img.remove();
+      document.removeEventListener("keydown", closeImage);
+      resolve();
+    };
+    document.addEventListener("keydown", (e) => {
+      if (e.key === " ") {
+        closeImage();
+      }
+    });
   }
 
   init() {
