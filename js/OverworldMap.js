@@ -92,22 +92,37 @@ class OverworldMap {
       });
     }
 
-    // Kitchen: 垃圾桶交互 (35<=x<=37, 21<=y<=24)
+   //厨房交互
     if (this.id === "Kitchen") {
-      const ashText = "新线索【灰烬】\n桶内底层有一些灰白色的纸灰和少量未完全烧尽的碎纸片，纸片边缘卷曲焦黑，已经看不清了。";
-      for (let x = 35; x <= 37; x++) {
-        for (let y = 21; y <= 24; y++) {
-          this.cutsceneSpaces[utils.asGridCoord(x, y)] = [
-            {
-              events: [
-                { type: "textMessage", text: ashText }
-              ]
-            }
-          ];
-        }
+  const interactions = [
+    {
+      text: "新线索【灰烬】\n桶内底层有一些灰白色的纸灰和少量未完全烧尽的碎纸片，纸片边缘卷曲焦黑，已经看不清了。",
+      range: { xStart: 35, xEnd: 37, yStart: 21, yEnd: 24 }
+    },
+    {
+      text: "新线索【冰箱】\n一台嗡嗡作响的老旧冰箱。",
+      range: { xStart: 26, xEnd: 29, yStart: 15, yEnd: 15 }
+    },
+    {
+      text: "水槽旁的橱柜\n柜门虚掩着。",
+      range: { xStart: 17, xEnd: 20, yStart: 15, yEnd: 15 }
+    }
+  ];
+
+  interactions.forEach(({ text, range }) => {
+    for (let x = range.xStart; x <= range.xEnd; x++) {
+      for (let y = range.yStart; y <= range.yEnd; y++) {
+        this.cutsceneSpaces[utils.asGridCoord(x, y)] = [
+          {
+            events: [
+              { type: "textMessage", text }
+            ]
+          }
+        ];
       }
     }
-
+  });
+}
     // 实例化对象
     Object.keys(this.gameObjects).forEach(key => {
       const conf = this.gameObjects[key];

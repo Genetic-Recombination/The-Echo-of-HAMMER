@@ -9,13 +9,26 @@ class RevealingText {
     this.isDone = false;
   }
 
-  revealOneCharacter(list) {
-    const next = list.splice(0, 1)[0];
-    next.span.classList.add("revealed");
+  revealOneCharacter() {
+    const next = this.characters.splice(0, 1)[0];
 
-    if (list.length > 0) {
+    if (!next) {
+      this.isDone = true;
+      return;
+    }
+
+    if (next.isBreak) {
+      // 对于换行，插入 <br> 元素
+  this.element.appendChild(next.node);
+    } else {
+  // 只有在显示时才把 span 插入 DOM 并显示
+  this.element.appendChild(next.span);
+  next.span.classList.add("revealed");
+    }
+
+    if (this.characters.length > 0) {
       this.timeout = setTimeout(() => {
-        this.revealOneCharacter(list);
+        this.revealOneCharacter();
       }, next.delayAfter);
     } else {
       this.isDone = true;
@@ -25,28 +38,39 @@ class RevealingText {
   warpToDone() {
     clearTimeout(this.timeout);
     this.isDone = true;
-    this.element.querySelectorAll("span").forEach(s => {
-      s.classList.add("revealed");
+    // 把所有剩余的字符瞬间显示出来，包含尚未插入的换行节点
+    this.characters.forEach(item => {
+      if (item.isBreak) {
+        this.element.appendChild(item.node);
+      } else {
+        this.element.appendChild(item.span);
+        item.span.classList.add("revealed");
+      }
     });
+    // 清空队列
+    this.characters = [];
   }
 
   init() {
-    let characters = [];
-    this.text.split("").forEach(character => {
+  this.characters = [];
+  // 把文本中可能存在的转义序列 \n 转为真实换行
+  const normalized = this.text.replace(/\\n/g, "\n");
+  normalized.split("").forEach(character => {
+      if (character === "\n") {
+        // 为换行准备一个节点，但不立即插入，交由 revealOneCharacter 处理
+        const br = document.createElement("br");
+        this.characters.push({ isBreak: true, node: br, delayAfter: 0 });
+      } else {
+        // Create each span but不要立刻加入 DOM，交由 revealOneCharacter 时插入
+        let span = document.createElement("span");
+        span.textContent = character;
 
-      // Create each span, add to element in DOM
-      let span = document.createElement("span");
-      span.textContent = character;
-      this.element.appendChild(span);
-
-      // Add this span to our internal state Array
-      characters.push({
-        span,
-        delayAfter: character === " " ? 0 : this.speed
-      });
+        // Add this span to our internal state Array
+        this.characters.push({ span, delayAfter: character === " " ? 0 : this.speed });
+      }
     });
 
-    this.revealOneCharacter(characters);
+    this.revealOneCharacter();
   }
 }
 
