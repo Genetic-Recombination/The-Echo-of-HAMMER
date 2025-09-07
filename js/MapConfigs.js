@@ -97,20 +97,6 @@ window.OverworldMaps = {
         walkingSrc: "./image in the game/character/detectivewalking.png",
         useShadow: true,
       },
-      suspect: {
-        type: "Person",
-        x: utils.withGrid(7),
-        y: utils.withGrid(5),
-        src: "./image in the game/character/1.png",
-        talking: [
-          {
-            events: [
-              { type: "textMessage", text: "我是嫌疑人，但我是无辜的！", faceHero: "suspect" },
-              { type: "textMessage", text: "请相信我，我没有做任何坏事。" },
-            ]
-          }
-        ]
-      }
     },
     walls: {
     ...utils.verticalWall(25, 16, 20),//衣柜右侧竖墙
@@ -153,20 +139,7 @@ window.OverworldMaps = {
         walkingSrc: "./image in the game/character/detectivewalking.png",
         useShadow: true,
       },
-      cook: {
-        type: "Person",
-        x: utils.withGrid(4),
-        y: utils.withGrid(4),
-        src: "./image in the game/character/picture/zq.png",
-        talking: [
-          {
-            events: [
-              { type: "textMessage", text: "我是厨师，案发时我在这里准备晚餐。", faceHero: "cook" },
-              { type: "textMessage", text: "我什么都没有看到，只听到了一些奇怪的声音。" },
-            ]
-          }
-        ]
-      }
+      
     },
     walls: {
     ...utils.verticalWall(4, 15, 19),//左侧墙
@@ -187,35 +160,8 @@ window.OverworldMaps = {
 
     },
     cutsceneSpaces: {
-      // 返回客厅
-      [utils.asGridCoord(1, 22)]: [
-        {
-          events: [
-            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(51), y: utils.withGrid(19), direction: "left" }
-          ]
-        }
-      ],
-      [utils.asGridCoord(1, 23)]: [
-        {
-          events: [
-            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(51), y: utils.withGrid(19), direction: "left" }
-          ]
-        }
-      ],
-      [utils.asGridCoord(1, 21)]: [
-        {
-          events: [
-            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(51), y: utils.withGrid(19), direction: "left" }
-          ]
-        }
-      ],
-      [utils.asGridCoord(1, 20)]: [
-        {
-          events: [
-            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(51), y: utils.withGrid(19), direction: "left" }
-          ]
-        }
-      ]
+  // 返回客厅（合并成一列）
+  ...utils.portalColumn(20, 23, 1, "LivingRoom", 51, 19, "left")
   },
 },
   Toilet: {
@@ -253,28 +199,9 @@ window.OverworldMaps = {
      ...utils.horizontalWall(4, 0, 100),
     },
     cutsceneSpaces: {
-      // 返回卧室
-      [utils.asGridCoord(18, 6)]: [
-        {
-          events: [
-            { type: "changeMap", map: "Bedroom", x: utils.withGrid(18), y: utils.withGrid(30), direction: "up" }
-          ]
-        }
-      ],
-      [utils.asGridCoord(19, 6)]: [
-        {
-          events: [
-            { type: "changeMap", map: "Bedroom", x: utils.withGrid(18), y: utils.withGrid(30), direction: "up" }
-          ]
-        }
-      ],
-      [utils.asGridCoord(20, 6)]: [
-        {
-          events: [
-            { type: "changeMap", map: "Bedroom", x: utils.withGrid(18), y: utils.withGrid(31), direction: "up" }
-          ]
-        }
-      ]
+  // 返回卧室：18~19 为同一目的地，20 为不同目标
+  ...utils.portalLine(18, 19, 6, "Bedroom", 18, 30, "up"),
+  ...utils.portalLine(20, 20, 6, "Bedroom", 18, 31, "up")
     }
   },
   
@@ -308,42 +235,10 @@ window.OverworldMaps = {
      ...utils.horizontalWall(12, 8, 22),//上墙
     },
     cutsceneSpaces: {
-      // 返回客厅
-      [utils.asGridCoord(19, 24)]: [
-        {
-          events: [
-            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(13), y: utils.withGrid(15), direction: "down" }
-          ]
-        }
-      ],
-      [utils.asGridCoord(18, 24)]: [
-        {
-          events: [
-            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(13), y: utils.withGrid(15), direction: "down" }
-          ]
-        }
-      ],
-      [utils.asGridCoord(20, 24)]: [
-        {
-          events: [
-            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(13), y: utils.withGrid(15), direction: "down" }
-          ]
-        }
-      ],
-      [utils.asGridCoord(18, 24)]: [
-        {
-          events: [
-            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(13), y: utils.withGrid(15), direction: "right" }
-          ]
-        }
-      ],
-      [utils.asGridCoord(20, 24)]: [
-        {
-          events: [
-            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(13), y: utils.withGrid(15), direction: "right" }
-          ]
-        }
-      ]
+  // 返回客厅：先统一设置 18~20 为 down，随后用单点覆盖其中 18 与 20 为 right（保留原来覆盖顺序）
+  ...utils.portalLine(18, 20, 24, "LivingRoom", 13, 15, "down"),
+  ...utils.portalLine(18, 18, 24, "LivingRoom", 13, 15, "right"),
+  ...utils.portalLine(20, 20, 24, "LivingRoom", 13, 15, "right")
     }
   }
 }
