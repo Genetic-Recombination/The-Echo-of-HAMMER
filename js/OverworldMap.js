@@ -106,7 +106,31 @@ class OverworldMap {
     {
       text: "水槽旁的橱柜\n柜门虚掩着。",
       range: { xStart: 17, xEnd: 20, yStart: 15, yEnd: 15 }
-    }
+    },
+    {
+      text: "微波炉\n里面是空的。",
+      range: { xStart: 5, xEnd: 7, yStart: 15, yEnd: 15 }
+    },
+    {
+      text: "灶台\n保持的比较干净。",
+      range: { xStart: 9, xEnd: 12, yStart: 15, yEnd: 15 }
+    },
+     {
+      text: "水槽\n水槽里有一点水渍。",
+      range: { xStart: 13, xEnd: 16, yStart: 15, yEnd: 15 }
+    },
+     {
+      text: "碗柜\n整齐地摆放着碗碟和玻璃杯。",
+      range: { xStart: 22, xEnd: 24, yStart: 15, yEnd: 15 }
+    },
+     {
+      text: "花盆\n为单调的厨房增添了一抹色彩。",
+      range: { xStart: 39, xEnd: 41, yStart: 17, yEnd: 24 }
+    },
+     {
+      text: "桌子\n似乎是在厨房用餐的地方，桌子上只摆着一杯水和一个干净的大盘子。",
+      range: { xStart: 31, xEnd: 37, yStart: 15, yEnd: 15 }
+    },
   ];
 
   interactions.forEach(({ text, range }) => {
