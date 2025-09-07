@@ -121,8 +121,7 @@ class OverworldEvent {
     });
     battle.init(document.querySelector(".game-container"));
   }
-
-  // 显示图片事件
+   // 显示图片事件
   showImage(resolve) {
     const img = document.createElement("img");
     img.src = this.event.src;
@@ -140,6 +139,16 @@ class OverworldEvent {
         closeImage();
       }
     });
+  }
+  interactionMenu(resolve) {
+    const menu = new InteractionMenu({
+      title: this.event.title,
+      options: this.event.options,
+      onComplete: () => {
+        resolve();
+      }
+    });
+    menu.init(document.querySelector(".game-container"));
   }
 
   init() {
