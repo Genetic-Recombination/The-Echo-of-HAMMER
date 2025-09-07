@@ -5,11 +5,11 @@ canvas.height = 800;
 
 // 玩家精灵图
 const playerSprite = new Image();
-playerSprite.src = "detectivewalking.png"; // 玩家精灵图
+playerSprite.src = "detectivewalking.png";
 
 // goal 精灵图
 const goalSprite = new Image();
-goalSprite.src = "2walking.png"; // goal 精灵图（4行3列）
+goalSprite.src = "2walking.png";
 
 // 玩家
 const player = {
@@ -39,9 +39,9 @@ const keys = {};
 
 // 提示信息
 const startMessageLines = [
-  "Controls: WASD or Arrow keys to move",
-  "Space to jump",
-  "Hold Space and quickly change direction to wall jump"
+  "操作：WASD 或 方向键移动",
+  "空格跳跃",
+  "靠墙时长按按空格并快速左右移动可蹬墙跳"
 ];
 let alertMessage = "";
 let alertColor = "yellow";
@@ -53,7 +53,10 @@ setTimeout(() => { showStartMessage = false; }, 3000);
 // 游戏结束标志
 let gameOver = false;
 
-// 平台数组
+// 连续掉落计数
+let fallCount = 0;
+
+// 平台数组（保持原样）
 const platforms = [
   {x: 230, y: 730, width: 150, height: 20, velX:0, velY:0},
   {x: 230, y: 130, width: 40, height: 600, velX:0, velY:0},
@@ -82,13 +85,35 @@ const platforms = [
 ];
 
 // 终点
-const goal = {x: 4300, y: 170, width: 60, height: 20};
+const goal = {x: 4300, y: 180, width: 60, height: 20};
 
 let cameraX = 0;
 let cameraY = 0;
 
 document.addEventListener("keydown", e => keys[e.code] = true);
 document.addEventListener("keyup", e => keys[e.code] = false);
+
+// 一键抓捕按钮
+const captureBtn = document.createElement("button");
+captureBtn.textContent = "一键抓捕";
+captureBtn.style.position = "absolute";
+captureBtn.style.top = "20px";
+captureBtn.style.left = "50%";
+captureBtn.style.transform = "translateX(-50%)";
+captureBtn.style.padding = "10px 20px";
+captureBtn.style.fontSize = "16px";
+captureBtn.style.display = "none";
+document.body.appendChild(captureBtn);
+
+captureBtn.addEventListener("click", () => {
+  player.x = goal.x + player.width;
+  player.y = goal.y - 30;
+  fallCount = 0;
+  captureBtn.style.display = "none";
+  alertMessage = "已传送到终点！";
+  alertColor = "yellow";
+  alertTimer = alertDuration;
+});
 
 function updatePlatforms() {
   for (let plat of platforms) {
@@ -177,21 +202,25 @@ function updatePlayer() {
 
   if(player.onGround || !player.wallSliding) player.hasWallJumped = false;
 
+  // 掉落判断
   if(player.y > canvas.height){
-    alertMessage = "Fell!";
+    alertMessage = "掉落！";
     alertColor = "red";
     alertTimer = alertDuration;
+    fallCount++;
     resetGame();
+    if(fallCount >= 3) captureBtn.style.display = "block";
   }
 
+  // 到达终点
   if(player.x < goal.x + goal.width &&
      player.x + player.width > goal.x &&
      player.y < goal.y + goal.height &&
      player.y + player.height > goal.y){
-    alertMessage = "Win!";
+    alertMessage = "胜利！";
     alertColor = "yellow";
     alertTimer = alertDuration;
-    gameOver = true; // ✅ 不再 resetGame，游戏暂停
+    gameOver = true;
   }
 
   cameraX = player.x - canvas.width/2 + player.width/2;
@@ -257,15 +286,13 @@ function draw(){
 
   // goal
   if(goalSprite.complete){
-    const frameW = goalSprite.width / 3; // 3列
-    const frameH = goalSprite.height / 4; // 4行
+    const frameW = goalSprite.width / 3;
+    const frameH = goalSprite.height / 4;
     const spriteRow = 0;
     const spriteCol = 1;
     const scale = 1.2;
-
     const drawW = frameW * scale;
     const drawH = frameH * scale;
-
     ctx.drawImage(
       goalSprite,
       spriteCol * frameW,
@@ -273,7 +300,7 @@ function draw(){
       frameW,
       frameH,
       goal.x,
-      goal.y - (drawH - goal.height), // 脚底贴地
+      goal.y - (drawH - goal.height),
       drawW,
       drawH
     );
