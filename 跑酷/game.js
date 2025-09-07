@@ -82,7 +82,7 @@ const platforms = [
 ];
 
 // 终点
-const goal = {x: 300, y: 170, width: 60, height: 20};
+const goal = {x: 4300, y: 170, width: 60, height: 20};
 
 let cameraX = 0;
 let cameraY = 0;
@@ -212,7 +212,7 @@ function updatePlayer() {
 
 function resetGame(){
   player.x = 270;
-  player.y = 700;
+  player.y = 300;
   player.velX = 0;
   player.velY = 0;
   player.hasWallJumped = false;

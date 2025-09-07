@@ -21,7 +21,11 @@
       linear-gradient(#0a0a0c, #0b0b0d 40%, #060607 100%);
     color: var(--fg);
     height:100vh;
-    position: relative; /* 作为定位参考 */
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    perspective:2000px;
+    position: relative;
     overflow: hidden;
   }
 
@@ -37,7 +41,6 @@
     -webkit-text-fill-color: transparent;
     text-shadow:0 0 10px rgba(179,0,23,.5),0 0 20px rgba(255,0,0,.3),2px 2px 4px rgba(0,0,0,.7);
     letter-spacing:.15em;
-    z-index: 10;
   }
 
   .tips{
@@ -54,8 +57,7 @@
     top: 150px;
     left: 50%;
     transform: translateX(-50%);
-    transition: opacity .3s;
-    z-index: 10;
+    transition: opacity .4s;
   }
 
   .book {
@@ -70,7 +72,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: opacity .3s;
+    transition: transform .5s, opacity .5s;
   }
 
   .page {
@@ -82,7 +84,6 @@
     transform-origin:left center;
     transition: transform 0.9s cubic-bezier(.68,-0.55,.27,1.55), box-shadow 0.5s;
     cursor:pointer;
-    z-index:0;
   }
 
   .front, .back {
@@ -90,7 +91,6 @@
     width:100%;
     height:100%;
     border-radius:16px;
-    background: linear-gradient(180deg, #2b0b0b 0%, #4c0b0b 70%, #7a0010 100%);
     box-shadow: 0 8px 30px rgba(0,0,0,.6), inset 0 -2px 0 rgba(0,0,0,.6), 0 0 12px rgba(255,0,0,.2);
     display:flex;
     justify-content:center;
@@ -100,11 +100,24 @@
     backface-visibility:hidden;
     text-shadow: 0 0 8px rgba(0,0,0,.9);
     border:2px solid rgba(255,0,0,.3);
+    background-color: #4c0b0b; /* 默认不透明 */
+  }
+
+  /* 第一页 front 正面透明，仅显示封面 */
+  #book .page[data-index="0"] .front {
+    background: url('first.png') no-repeat center/cover !important;
+    color: transparent !important;
+    background-color: transparent !important;
+  }
+
+  /* 第一页 back 保持不透明渐变背景 */
+  #book .page[data-index="0"] .back {
+    background-color: #4c0b0b !important;
+    color: transparent;
   }
 
   .back {
     transform: rotateY(180deg);
-    background: linear-gradient(180deg, #4c0b0b 0%, #2b0b0b 100%);
   }
 
   .page.flipped {
@@ -129,36 +142,34 @@
     box-shadow:0 0 12px rgba(255,0,0,.6)
   }
 
-  /* 📚 View Thumbnails / View Book 按钮 */
   .thumb-btn {
     position: absolute;
     top: 580px;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 10;
+    transition: all .5s;
   }
 
-  /* ← Back 按钮 */
   .back-nav {
     position: absolute;
     bottom: 50px;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 10;
   }
 
-  /* 缩略图容器 */
   .thumbnails {
     display: none; 
     position: absolute;
-    top: 200px;
+    top: 140px;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translateX(-50%) scale(0.8);
     width: 80%;
     max-width: 600px;
     grid-template-columns: repeat(5, 1fr);
     gap: 15px;
     justify-items: center;
+    transition: all .5s;
+    opacity: 0;
   }
 
   .thumbnail {
@@ -189,39 +200,39 @@
   Left Click → Next Page   Right Click → Previous Page
 </div>
 
-<!-- 📚 View Thumbnails / View Book -->
 <button class="back-btn thumb-btn" id="toggleBtn" onclick="toggleThumbnails()">📚 View Thumbnails</button>
 
 <div class="book" id="book">
-  <div class="page" data-index="0"><div class="front">?</div><div class="back">?</div></div>
+  <!-- 第一页 front 透明，back 不透明 -->
+  <div class="page" data-index="0">
+    <div class="front"></div>
+    <div class="back"></div>
+  </div>
+  <!-- 其他页 -->
   <div class="page" data-index="1"><div class="front">?</div><div class="back">?</div></div>
   <div class="page" data-index="2"><div class="front">?</div><div class="back">?</div></div>
   <div class="page" data-index="3"><div class="front">?</div><div class="back">?</div></div>
   <div class="page" data-index="4"><div class="front">?</div><div class="back">?</div></div>
 </div>
 
-<!-- 缩略图容器 -->
 <div class="thumbnails" id="thumbnails"></div>
 
-<!-- ← Back -->
 <button class="back-btn back-nav" onclick="window.location.href='../start.html'">← Back</button>
 
 <script>
   const pages = Array.from(document.querySelectorAll('.page'));
   const totalPages = pages.length;
+  const book = document.getElementById('book');
+  const thumbnailsDiv = document.getElementById("thumbnails");
+  const toggleBtn = document.getElementById("toggleBtn");
+  const tipsDiv = document.getElementById("tips");
 
-  // 初始化 z-index
   pages.forEach((p,i)=>{
     p.style.zIndex = totalPages - i;
   });
 
   let currentPage = 0;
-  const book = document.getElementById('book');
-  const thumbnailsDiv = document.getElementById("thumbnails");
-  const tipsDiv = document.getElementById("tips");
-  const toggleBtn = document.getElementById("toggleBtn");
 
-  // 左键翻页
   book.addEventListener('click', ()=>{
     if(currentPage < totalPages){
       const page = pages[currentPage];
@@ -231,7 +242,6 @@
     }
   });
 
-  // 右键翻页回退
   book.addEventListener('contextmenu', (e)=>{
     e.preventDefault();
     if(currentPage > 0){
@@ -246,28 +256,33 @@
   pages.forEach((page, i) => {
     const thumb = document.createElement("div");
     thumb.className = "thumbnail";
-    thumb.textContent = "?";
+    thumb.textContent = "?"; // 缩略图第一页保留问号
     thumbnailsDiv.appendChild(thumb);
   });
 
   function toggleThumbnails(){
     if(thumbnailsDiv.style.display === "grid"){
-      // 隐藏缩略图，显示书和 tips
-      thumbnailsDiv.style.display = "none";
-      book.style.opacity = "1";
-      book.style.pointerEvents = "auto";
-      tipsDiv.style.opacity = "1";
-      toggleBtn.textContent = "📚 View Thumbnails";
+      thumbnailsDiv.style.transform = "translateX(-50%) scale(0.8)";
+      thumbnailsDiv.style.opacity = "0";
+      setTimeout(()=>{
+        thumbnailsDiv.style.display = "none";
+        book.style.opacity = "1";
+        book.style.transform = "translateX(-50%) scale(1)";
+        tipsDiv.style.opacity = "1";
+        toggleBtn.textContent = "📚 View Thumbnails";
+      },500);
     } else {
-      // 显示缩略图，隐藏书和 tips
       thumbnailsDiv.style.display = "grid";
+      setTimeout(()=>{
+        thumbnailsDiv.style.transform = "translateX(-50%) scale(1)";
+        thumbnailsDiv.style.opacity = "1";
+      },50);
       book.style.opacity = "0";
-      book.style.pointerEvents = "none";
+      book.style.transform = "translateX(-50%) scale(0.8)";
       tipsDiv.style.opacity = "0";
       toggleBtn.textContent = "📖 View Book";
     }
   }
 </script>
-
 </body>
 </html>
