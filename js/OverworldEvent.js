@@ -113,6 +113,17 @@ class OverworldEvent {
     battle.init(document.querySelector(".game-container"));
   }
 
+  interactionMenu(resolve) {
+    const menu = new InteractionMenu({
+      title: this.event.title,
+      options: this.event.options,
+      onComplete: () => {
+        resolve();
+      }
+    });
+    menu.init(document.querySelector(".game-container"));
+  }
+
   init() {
     return new Promise(resolve => {
       this[this.event.type](resolve);

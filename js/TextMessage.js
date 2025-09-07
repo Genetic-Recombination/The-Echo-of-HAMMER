@@ -76,9 +76,10 @@ class RevealingText {
 
 // Text message UI
 class TextMessage {
-  constructor({ text, onComplete }) {
+  constructor({ text, onComplete, backgroundImage }) {
     this.text = text;
     this.onComplete = onComplete;
+    this.backgroundImage = backgroundImage;
     this.element = null;
   }
 
@@ -86,6 +87,42 @@ class TextMessage {
     // Create the element
     this.element = document.createElement("div");
     this.element.classList.add("TextMessage");
+
+    // 如果有背景图片，添加全屏背景图片
+    if (this.backgroundImage) {
+      console.log('设置全屏背景图片:', this.backgroundImage);
+      this.element.classList.add('TextMessage-with-bg');
+      
+      // 预加载图片以确保显示
+      const img = new Image();
+      img.onload = () => {
+        console.log('背景图片加载成功:', this.backgroundImage);
+        
+        // 创建全屏背景层
+        const backgroundLayer = document.createElement('div');
+        backgroundLayer.classList.add('TextMessage-background-layer');
+        backgroundLayer.style.position = 'absolute';
+        backgroundLayer.style.top = '0';
+        backgroundLayer.style.left = '0';
+        backgroundLayer.style.width = '100%';
+        backgroundLayer.style.height = '100%';
+        backgroundLayer.style.backgroundImage = `url(${this.backgroundImage})`;
+        backgroundLayer.style.backgroundSize = 'cover';
+        backgroundLayer.style.backgroundPosition = 'center';
+        backgroundLayer.style.backgroundRepeat = 'no-repeat';
+        backgroundLayer.style.zIndex = '1';
+        
+        // 将背景层插入到容器的最前面
+        const container = document.querySelector('.game-container');
+        container.insertBefore(backgroundLayer, container.firstChild);
+        
+        console.log('全屏背景图片已应用');
+      };
+      img.onerror = () => {
+        console.error('背景图片加载失败:', this.backgroundImage);
+      };
+      img.src = this.backgroundImage;
+    }
 
     this.element.innerHTML = (`
       <p class="TextMessage_p"></p>
@@ -110,6 +147,12 @@ class TextMessage {
 
   done() {
     if (this.revealingText.isDone) {
+      // 移除背景层
+      const backgroundLayer = document.querySelector('.TextMessage-background-layer');
+      if (backgroundLayer) {
+        backgroundLayer.remove();
+      }
+      
       this.element.remove();
       this.actionListener.unbind();
       this.onComplete();
