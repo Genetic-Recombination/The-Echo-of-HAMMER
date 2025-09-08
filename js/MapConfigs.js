@@ -289,7 +289,7 @@ window.OverworldMaps = {
       { type: "textMessage", text: "Wx警官：\n（语气带着不确定的推测）\n“难道…是畏罪自杀？他穿好衣服戴好帽子…是原本想逃跑，但发现逃不掉后，就选择了自我了断？”" },
 
       { type: "textMessage", text: "(凝重的背景音乐响起...)" },
-      { type: "showImage", src: "./image in the game/character/shadow.png" },
+      { type: "showImage", src: "./image in the game/article/big_dead.png" },
 
       {
         type: "interactionMenu",
