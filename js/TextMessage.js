@@ -210,7 +210,8 @@ class TextMessage {
       text: this.text
     });
 
-    this.element.querySelector("button").addEventListener("click", () => {
+    this.element.querySelector("button").addEventListener("click", (e) => {
+      e.stopPropagation();
       // Close the text message
       this.done();
     });
@@ -241,5 +242,13 @@ class TextMessage {
     this.createElement();
     container.appendChild(this.element);
     this.revealingText.init();
+
+    // 阻止对话容器内部的按键冒泡到全局，避免同一次空格触发重复交互
+    this.element.addEventListener('keydown', (e) => {
+      if (e.code === 'Space') {
+        e.stopPropagation();
+        e.preventDefault();
+      }
+    });
   }
 }

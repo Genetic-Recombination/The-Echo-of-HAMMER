@@ -39,14 +39,23 @@ class OverworldMap {
   }
 
   // 是否有物体/墙壁占用
-  isSpaceTaken(currentX, currentY, direction) {
+  isSpaceTaken(currentX, currentY, direction, mover) {
     const { x, y } = utils.nextPosition(currentX, currentY, direction);
+    // 任何人都不能穿墙
     if (this.walls[`${x},${y}`]) return true;
 
-    return Object.values(this.gameObjects).some(obj =>
-      (obj.x === x && obj.y === y) ||
-      (obj.intentPosition && obj.intentPosition[0] === x && obj.intentPosition[1] === y)
-    );
+    return Object.values(this.gameObjects).some(obj => {
+      // 忽略自身
+      if (mover && obj === mover) return false;
+      // hero 走位时忽略跟随者
+      if (mover && mover.id === "hero" && obj.nonBlockingForHero) return false;
+      // 跟随者走位时忽略 hero（但不忽略墙体，墙体已在上方返回）
+      if (mover && mover.isFollower && obj.id === "hero") return false;
+
+      const isOccupy = (obj.x === x && obj.y === y);
+      const isIntent = (obj.intentPosition && obj.intentPosition[0] === x && obj.intentPosition[1] === y);
+      return isOccupy || isIntent;
+    });
   }
 
   // 挂载对象
@@ -139,6 +148,7 @@ class OverworldMap {
   const interactions = [
     {
       text: "新线索【灰烬】\n桶内底层有一些灰白色的纸灰和少量未完全烧尽的碎纸片，纸片边缘卷曲焦黑，已经看不清了。",
+       backgroundImage: "./image in the game/article/厨房的垃圾桶.png" ,
       range: { xStart: 35, xEnd: 37, yStart: 21, yEnd: 24 }
     },
     {
@@ -178,6 +188,7 @@ class OverworldMap {
     },
     {
       text: "水槽旁的橱柜\n柜门虚掩着。",
+      backgroundImage: "./image in the game/article/厨房的柜子.png",
       range: { xStart: 17, xEnd: 20, yStart: 15, yEnd: 15 }
     },
     {
@@ -206,13 +217,13 @@ class OverworldMap {
     },
   ];
 
-  interactions.forEach(({ text, range, events }) => {
+  interactions.forEach(({ text, range, events, backgroundImage, backgroundSize, backgroundLayout, blurAmount, panelPadding, panelMaxWidth, panelMaxHeight, panelBackground, panelBorderRadius, panelBoxShadow }) => {
     for (let x = range.xStart; x <= range.xEnd; x++) {
       for (let y = range.yStart; y <= range.yEnd; y++) {
         this.cutsceneSpaces[utils.asGridCoord(x, y)] = [
           {
             events: events || [
-              { type: "textMessage", text }
+              { type: "textMessage", text, backgroundImage, backgroundSize, backgroundLayout, blurAmount, panelPadding, panelMaxWidth, panelMaxHeight, panelBackground, panelBorderRadius, panelBoxShadow }
             ]
           }
         ];
