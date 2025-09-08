@@ -105,8 +105,10 @@ window.OverworldMaps = {
   [utils.asGridCoord(15, 26)]: [
         {
           events: [
-            { type: "textMessage", text: "【新线索】:一个捆得很紧的麻袋",backgroundImage:"./image in the game/character/2walking.png"},
-            { type: "textMessage", text: "zq警官:是榔头男作案时的风衣帽子和墨镜，看来这的确就是榔头男的家了" },
+            { type: "textMessage", text: "【新线索】:一个捆得很紧的麻袋",backgroundImage:"./image in the game/article/客厅麻袋.png"},
+            { type: "textMessage", text: "zq警官:打开看看吧，这能是什么呢？"},
+            { type: "textMessage", text: "一件沾血的风衣，帽子和墨镜", backgroundImage:"./image in the game/article/麻袋里：沾血的风衣.png"},
+            { type: "textMessage", text: "zq警官:！！！什么！！！是榔头男作案时的风衣帽子和墨镜，看来这的确就是榔头男的家了" },
           ]
         }
       ],
@@ -114,7 +116,7 @@ window.OverworldMaps = {
     [utils.asGridCoord(19, 32)]: [
         {
           events: [
-            { type: "textMessage", text: "【新线索】：这应该是快递员送来的包裹，有几处可能是运输时的碰撞导致的凹陷。箱子有一点重量", backgroundImage:"./image in the game/character/2walking.png" },
+            { type: "textMessage", text: "【新线索】：这应该是快递员送来的包裹，有几处可能是运输时的碰撞导致的凹陷。箱子有一点重量", backgroundImage:"./image in the game/article/客厅快递箱.png" },
             { type: "textMessage", text: "zq警官:！！扳手！这大小……确实很像凶器！完全有可能造成死者头部的伤痕！"},
             { type: "textMessage", text: "zq警官:但是这也太干净了。不像是凶器……不过也有可能被凶手细致的清洗过了"},
             { type: "textMessage", text: "wx警官:很有可能是取货员用这个扳手杀了人，清洗干净再藏到这个快递箱中，嫁祸给快递员！！"},
@@ -125,16 +127,14 @@ window.OverworldMaps = {
   [utils.asGridCoord(28, 41)]: [
         {
           events: [
-            { type: "textMessage", text: "【新线索】：一个简陋的木质鞋柜，看起来有些年头了" },
-            { type: "showImage", src: "image in the game/article/客厅鞋柜.png" }
+            { type: "textMessage", text: "【新线索】：一个简陋的木质鞋柜，看起来有些年头了",backgroundImage:"image in the game/article/客厅鞋柜.png" },
           ]
         }
       ],//鞋柜
    [utils.asGridCoord(41, 28)]: [
         {
           events: [
-            { type: "textMessage", text: "【新线索】：很脏很乱的垃圾桶，像是很久没人打理了" },
-            { type: "showImage", src: "./image in the game/character/shadow.png" },
+            { type: "textMessage", text: "【新线索】：很脏很乱的垃圾桶，像是很久没人打理了" ,backgroundImage:"./image in the game/article/客厅的垃圾桶.pnng"},
             { type: "textMessage", text: "zq警官:这榔头男也太不讲卫生了，怎么会这么乱啊" },
           ]
         }
@@ -142,8 +142,7 @@ window.OverworldMaps = {
     [utils.asGridCoord(12, 32)]: [
         {
           events: [
-            { type: "textMessage", text: "【新线索】：披萨和收据" },
-            { type: "showImage", src: "./image in the game/character/shadow.png" },
+            { type: "textMessage", text: "【新线索】：披萨和收据",backgroundImage:"./image in the game/article/客厅披萨盒.png" },
             { type: "textMessage", text: "wx警官:这张单据是披萨外卖员留下的，上面有他的联系方式以及店铺的联系方式。价格和送到的披萨口味一致。" },
             { type: "textMessage", text: "zq警官:奇怪？？送货员和机车女的收据怎么不见了呢？" },
           ]
@@ -152,8 +151,7 @@ window.OverworldMaps = {
       [utils.asGridCoord(9, 34)]: [
         {
           events: [
-            { type: "textMessage", text: "【新线索】：一个置物箱，杂七杂八的东西都堆在一块" },
-            { type: "showImage", src: "./image in the game/character/shadow.png" },
+            { type: "textMessage", text: "【新线索】：一个置物箱，杂七杂八的东西都堆在一块",backgroundImage:"./image in the game/article/客厅的置物篮.png" },
             { type: "textMessage", text: "wx警官:这都是些啥啊，好乱啊" },
           ]
         }
@@ -161,16 +159,14 @@ window.OverworldMaps = {
       [utils.asGridCoord(19, 36)]: [
         {
           events: [
-            { type: "textMessage", text: "【新线索】：一张款式老旧的布艺沙发靠墙摆放。沙发套看起来有些日子没洗了，颜色暗淡。" },
-            { type: "showImage", src: "image in the game/article/客厅沙发.png" },
+            { type: "textMessage", text: "【新线索】：一张款式老旧的布艺沙发靠墙摆放。沙发套看起来有些日子没洗了，颜色暗淡。",backgroundImage: "image in the game/article/客厅沙发.png"},
           ]
         }
       ],
       [utils.asGridCoord(37, 36)]: [
         {
           events: [
-            { type: "textMessage", text: "【新线索】：墙边堆着两个扁平的棕色瓦楞纸箱" },
-            { type: "showImage", src: "./image in the game/character/shadow.png" },
+            { type: "textMessage", text: "【新线索】：墙边堆着两个扁平的空棕色瓦楞纸箱" ,backgroundImage:"./image in the game/article/客厅箱子.png" },
             { type: "textMessage", text: "wx警官:看来这榔头男随时准备搬家逃跑啊，辛亏我们接到线报就一直在这监视" },
           ]
         }
@@ -179,7 +175,6 @@ window.OverworldMaps = {
         {
           events: [
             { type: "textMessage", text: "【新线索】：破旧的大时钟，看来指针已经停摆好久了" },
-            { type: "showImage", src: "./image in the game/character/shadow.png" },
           ]
         }
       ],
@@ -213,6 +208,20 @@ window.OverworldMaps = {
         walkingSrc: "./image in the game/character/detectivewalking.png",
         useShadow: true,
       },
+      suspect: {
+        type: "Person",
+        x: utils.withGrid(7),
+        y: utils.withGrid(5),
+        src: "./image in the game/character/1.png",
+        talking: [
+          {
+            events: [
+              { type: "textMessage", text: "我是嫌疑人，但我是无辜的！", faceHero: "suspect" },
+              { type: "textMessage", text: "请相信我，我没有做任何坏事。" },
+            ]
+          }
+        ]
+      }
     },
     walls: {
     ...utils.verticalWall(25, 16, 20),//衣柜右侧竖墙
@@ -223,8 +232,6 @@ window.OverworldMaps = {
     ...utils.verticalWall(29, 0, 100),
     ...utils.verticalWall(21, 25, 33),//卫生间门右侧墙
     ...utils.verticalWall(16, 29, 100),
-    ...utils.verticalWall(14, 17,20),//死人左
-    ...utils.verticalWall(17, 17,20),//死人右
 
     ...utils.horizontalWall(20, 25, 28),//通往客厅门上厕横墙
     ...utils.horizontalWall(15, 13, 24),//衣柜下方横墙
@@ -234,8 +241,6 @@ window.OverworldMaps = {
     ...utils.horizontalWall(29, 0, 16),//沙发下横墙
     ...utils.horizontalWall(25, 21, 30),//沙发下横墙
     ...utils.horizontalWall(33, 0, 100),
-    ...utils.horizontalWall(17, 14,17),//死人上
-    ...utils.horizontalWall(20, 14,17),//死人下
     },
     cutsceneSpaces: {
   // 通往客厅 (28,21..24)
@@ -320,8 +325,8 @@ window.OverworldMaps = {
       }
     ];
 
-    for (let x = 14; x <= 17; x++) {
-      for (let y = 17; y <= 20; y++) {
+    for (let x = 14; x <= 16; x++) {
+      for (let y = 17; y <= 19; y++) {
         spaces[utils.asGridCoord(x, y)] = [{ events }];
       }
     }
@@ -380,7 +385,34 @@ window.OverworldMaps = {
     },
     cutsceneSpaces: {
       // 返回客厅
-      ...utils.portalColumn(20, 23, 1, "LivingRoom", 51, 19, "left")
+      [utils.asGridCoord(1, 22)]: [
+        {
+          events: [
+            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(51), y: utils.withGrid(19), direction: "left" }
+          ]
+        }
+      ],
+      [utils.asGridCoord(1, 23)]: [
+        {
+          events: [
+            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(51), y: utils.withGrid(19), direction: "left" }
+          ]
+        }
+      ],
+      [utils.asGridCoord(1, 21)]: [
+        {
+          events: [
+            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(51), y: utils.withGrid(19), direction: "left" }
+          ]
+        }
+      ],
+      [utils.asGridCoord(1, 20)]: [
+        {
+          events: [
+            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(51), y: utils.withGrid(19), direction: "left" }
+          ]
+        }
+      ]
   },
 },
   Toilet: {
@@ -419,7 +451,20 @@ window.OverworldMaps = {
     },
     cutsceneSpaces: {
       // 返回卧室
-      ...utils.portalLine(18, 19, 6, "Bedroom", 18, 30, "up"),
+      [utils.asGridCoord(18, 6)]: [
+        {
+          events: [
+            { type: "changeMap", map: "Bedroom", x: utils.withGrid(18), y: utils.withGrid(30), direction: "up" }
+          ]
+        }
+      ],
+      [utils.asGridCoord(19, 6)]: [
+        {
+          events: [
+            { type: "changeMap", map: "Bedroom", x: utils.withGrid(18), y: utils.withGrid(30), direction: "up" }
+          ]
+        }
+      ],
       [utils.asGridCoord(20, 6)]: [
         {
           events: [
@@ -511,7 +556,27 @@ window.OverworldMaps = {
     },
     cutsceneSpaces: {
       // 返回客厅
-      ...utils.portalLine(18, 20, 24, "LivingRoom", 13, 15, "down")
+      [utils.asGridCoord(19, 24)]: [
+        {
+          events: [
+            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(13), y: utils.withGrid(15), direction: "down" }
+          ]
+        }
+      ],
+      [utils.asGridCoord(18, 24)]: [
+        {
+          events: [
+            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(13), y: utils.withGrid(15), direction: "down" }
+          ]
+        }
+      ],
+      [utils.asGridCoord(20, 24)]: [
+        {
+          events: [
+            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(13), y: utils.withGrid(15), direction: "down" }
+          ]
+        }
+      ]
     }
   }
 }
