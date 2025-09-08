@@ -106,7 +106,8 @@ class TextMessage {
         backgroundLayer.style.left = '0';
         backgroundLayer.style.width = '100%';
         backgroundLayer.style.height = '100%';
-        backgroundLayer.style.backgroundImage = `url(${this.backgroundImage})`;
+        const encodedUrl = encodeURI(this.backgroundImage);
+        backgroundLayer.style.backgroundImage = `url("${encodedUrl}")`;
         backgroundLayer.style.backgroundSize = 'cover';
         backgroundLayer.style.backgroundPosition = 'center';
         backgroundLayer.style.backgroundRepeat = 'no-repeat';

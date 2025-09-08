@@ -157,7 +157,7 @@ class OverworldMap {
                 // 触发冰箱内部检查的文本消息
                 const message = new TextMessage({
                   text: "你打开了冰箱门。\n\n几瓶矿泉水\n一小盒吃了一半的超市沙拉\n一小罐果酱\n看不到需要烹饪的新鲜食材。",
-                  backgroundImage: "./fridge_open.png",
+                  backgroundImage: "./image in the game/article/厨房的打火机.png",
                   onComplete: () => {
                     console.log("冰箱检查完成");
                   }
@@ -239,7 +239,7 @@ class OverworldMap {
                   description: "打开洗衣机看看里面有什么",
                   handler: () => {
                     const message = new TextMessage({
-                      text: "你打开了洗衣机。",
+                      text: "你打开了洗衣机\n\n新线索[一些没洗的衣服]\n两件宽大的t恤\n一件黑色工装外套\n一条深蓝色工装裤。",
                       onComplete: () => {}
                     });
                     message.init(document.querySelector(".game-container"));

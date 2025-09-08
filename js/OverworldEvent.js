@@ -51,7 +51,8 @@ class OverworldEvent {
 
     const message = new TextMessage({
       text: this.event.text,
-      onComplete: () => resolve()
+      onComplete: () => resolve(),
+      backgroundImage: this.event.backgroundImage
     });
     message.init(document.querySelector(".game-container"));
   }
