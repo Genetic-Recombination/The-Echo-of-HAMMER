@@ -286,7 +286,7 @@ window.OverworldMaps = {
         {
           events: [
             { type: "textMessage", text: "【新线索】: 简单的沙发床" },
-            { type: "showImage", src: "./image in the game/character/shadow.png" },
+            { type: "showImage", src: "image in the game/article/卧室沙发.png" },
             { type: "textMessage", text: "zq警官:很短小的沙发床啊，我听外界传闻说榔头男身高八尺有余，竟然用样的沙发床啊"},
             { type: "textMessage", text: "wx警官:那都是都市传说啦，很多都夸大了不少，其实没人真正见过榔头男的真面目"}
           ]
@@ -451,14 +451,42 @@ window.OverworldMaps = {
           ]
         }
       ], 
-      [utils.asGridCoord(22, 17)]: [
+      [utils.asGridCoord(15, 12)]: [
         {
           events: [
             { type: "textMessage", text: "【新线索】:洗手台" },
-            { type: "showImage", src: "./image in the game/character/2walking.png" },
+            { type: "showImage", src: "./image in the game/article/厕所洗手台.png"},
           ]
         }
-      ]
+      ],
+       [utils.asGridCoord(11, 14)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】:置物台" },
+            { type: "showImage", src: "./image in the game/article/置物台.png" },
+            { type: "textMessage", text: "wx警官:这置物台也这么整洁啊？！" },
+          ]
+        }
+      ],
+      [utils.asGridCoord(8, 15)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】:装洗浴用品的篮子" },
+            { type: "showImage", src: "./image in the game/character/2walking.png" },
+            { type: "textMessage", text: "zq警官:这些牙膏啥的像是刚囤的货" },
+          ]
+        }
+      ], 
+      [utils.asGridCoord(8, 23)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】:浴缸" },
+            { type: "showImage", src: "./image in the game/character/2walking.png" },
+            { type: "textMessage", text: "zq警官:这浴缸也是一点使用痕迹都没有啊" },
+            { type: "textMessage", text: "wx警官:是的，这应该也是才打扫过不久的" },
+          ]
+        }
+      ],
     }
   },
   
