@@ -13,7 +13,6 @@ class OverworldMap {
     this.isCutscenePlaying = false;
     this.isPaused = false;
   }
-
   // 工具：加载图片
   loadImage(src) {
     const img = new Image();
@@ -52,87 +51,150 @@ class OverworldMap {
   // 挂载对象
   mountObjects() {
     // 特殊地图注入 NPC
-    if (this.id === "LivingRoom") {
-      Object.assign(this.gameObjects, {
-        npc1: {
-          type: "Person",
-          x: utils.withGrid(35),
-          y: utils.withGrid(20),
-          src: "./image in the game/character/1walking.png",
-          talking: [
-            { events: [
+  if (this.id === "LivingRoom") {
+    Object.assign(this.gameObjects, {
+      npc1: {
+        type: "Person",
+        x: utils.withGrid(35),
+        y: utils.withGrid(20),
+        src: "./image in the game/character/1walking.png",
+        talking: [
+          { events: [
               { type: "textMessage", text: "这是一个测试", faceHero: "npc1" },
               { type: "textMessage", text: "这还是测试" },
-            ]}
-          ]
-        },
-        npc2: {
-          type: "Person",
-          x: utils.withGrid(30),
-          y: utils.withGrid(20),
-          src: "./image in the game/character/2walking.png",
-          talking: [
-            { events: [
+              {
+                type: "interactionMenu",
+                title: "如何处理 NPC1",
+                options: [
+                  {
+                    label: "盘问",
+                    description: "对 NPC1 进行盘问",
+                    handler: () => {
+                      const message = new TextMessage({
+                        text: "你选择了：盘问 NPC1。",
+                        onComplete: () => {
+                          playerState.storyFlags["npc1_interrogated"] = true;
+                        }
+                      });
+                      message.init(document.querySelector(".game-container"));
+                    }
+                  },
+                  {
+                    label: "搜身",
+                    description: "搜查 NPC1 的随身物品",
+                    handler: () => {
+                      const message = new TextMessage({
+                        text: "你选择了：搜身 NPC1。",
+                        onComplete: () => {
+                          playerState.storyFlags["npc1_searched"] = true;
+                        }
+                      });
+                      message.init(document.querySelector(".game-container"));
+                    }
+                  }
+                ]
+              }
+          ]}
+        ]
+      },
+      npc2: {
+        type: "Person",
+        x: utils.withGrid(30),
+        y: utils.withGrid(20),
+        src: "./image in the game/character/2walking.png",
+        talking: [
+          { events: [
               { type: "textMessage", text: "这是一个测试", faceHero: "npc2" },
-            ]}
-          ]
-        },
-        npc3: {
-          type: "Person",
-          x: utils.withGrid(25),
-          y: utils.withGrid(20),
-          src: "./image in the game/character/3walking.png",
-          talking: [
-            { events: [
-              { type: "textMessage", text: "你好，这是测试", faceHero: "npc1" },
+              {
+                type: "interactionMenu",
+                title: "如何处理 NPC2",
+                options: [
+                  {
+                    label: "盘问",
+                    description: "对 NPC2 进行盘问",
+                    handler: () => {
+                      const message = new TextMessage({
+                        text: "你选择了：盘问 NPC2。",
+                        onComplete: () => {
+                          playerState.storyFlags["npc2_interrogated"] = true;
+                        }
+                      });
+                      message.init(document.querySelector(".game-container"));
+                    }
+                  },
+                  {
+                    label: "搜身",
+                    description: "搜查 NPC2 的随身物品",
+                    handler: () => {
+                      const message = new TextMessage({
+                        text: "你选择了：搜身 NPC2。",
+                        onComplete: () => {
+                          playerState.storyFlags["npc2_searched"] = true;
+                        }
+                      });
+                      message.init(document.querySelector(".game-container"));
+                    }
+                  }
+                ]
+              }
+          ]}
+        ]
+      },
+      npc3: {
+        type: "Person",
+        x: utils.withGrid(25),
+        y: utils.withGrid(20),
+        src: "./image in the game/character/3walking.png",
+        talking: [
+          { events: [
+              { type: "textMessage", text: "你好，这是测试", faceHero: "npc3" },
               { type: "textMessage", text: "这还是测试" },
-            ]}
-          ]
-        },
-        npc4: {
-          type: "Person",
-          x: utils.withGrid(15),
-          y: utils.withGrid(26),
-          src: "./image in the game/character/2walking.png",
-          visible: false// 快递箱
-        },
-        npc5: {
-          type: "Person",
-          x: utils.withGrid(15),
-          y: utils.withGrid(26),
-          src: "./image in the game/character/2walking.png",
-          visible: false // 初始隐藏
-        },
-        npc6: {
-          type: "Person",
-          x: utils.withGrid(15),
-          y: utils.withGrid(26),
-          src: "./image in the game/character/2walking.png",
-          visible: false // 初始隐藏
-        },
-        npc7: {
-          type: "Person",
-          x: utils.withGrid(15),
-          y: utils.withGrid(26),
-          src: "./image in the game/character/2walking.png",
-          visible: false // 初始隐藏
-        },
-        npc8: {
-          type: "Person",
-          x: utils.withGrid(15),
-          y: utils.withGrid(26),
-          src: "./image in the game/character/2walking.png",
-          visible: false // 初始隐藏
-        },
-        npc9: {
-          type: "Person",
-          x: utils.withGrid(15),
-          y: utils.withGrid(26),
-          src: "./image in the game/character/2walking.png",
-          visible: false // 初始隐藏
-        },
-      });
-    }
+              {
+                type: "interactionMenu",
+                title: "如何处理 NPC3",
+                options: [
+                  {
+                    label: "盘问",
+                    description: "对 NPC3 进行盘问",
+                    handler: () => {
+                      const message = new TextMessage({
+                        text: "你选择了：盘问 NPC3。",
+                        onComplete: () => {
+                          playerState.storyFlags["npc3_interrogated"] = true;
+                        }
+                      });
+                      message.init(document.querySelector(".game-container"));
+                    }
+                  },
+                  {
+                    label: "搜身",
+                    description: "搜查 NPC3 的随身物品",
+                    handler: () => {
+                      const message = new TextMessage({
+                        text: "你选择了：搜身 NPC3。",
+                        onComplete: () => {
+                          playerState.storyFlags["npc3_searched"] = true;
+                        }
+                      });
+                      message.init(document.querySelector(".game-container"));
+                    }
+                  }
+                ]
+              }
+          ]}
+        ]
+      },
+      // 其他 NPC 保持原有设置
+      npc4: { type: "Person", x: utils.withGrid(15), y: utils.withGrid(26), src: "./image in the game/character/2walking.png", visible: false },
+      npc5: { type: "Person", x: utils.withGrid(15), y: utils.withGrid(26), src: "./image in the game/character/2walking.png", visible: false },
+      npc6: { type: "Person", x: utils.withGrid(15), y: utils.withGrid(26), src: "./image in the game/character/2walking.png", visible: false },
+      npc7: { type: "Person", x: utils.withGrid(15), y: utils.withGrid(26), src: "./image in the game/character/2walking.png", visible: false },
+      npc8: { type: "Person", x: utils.withGrid(15), y: utils.withGrid(26), src: "./image in the game/character/2walking.png", visible: false },
+      npc9: { type: "Person", x: utils.withGrid(15), y: utils.withGrid(26), src: "./image in the game/character/2walking.png", visible: false },
+    });
+  }
+
+
 
    //厨房交互
     if (this.id === "Kitchen") {
