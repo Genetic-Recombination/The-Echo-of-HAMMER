@@ -88,7 +88,49 @@ class OverworldMap {
               { type: "textMessage", text: "这还是测试" },
             ]}
           ]
-        }
+        },
+        npc4: {
+          type: "Person",
+          x: utils.withGrid(15),
+          y: utils.withGrid(26),
+          src: "./image in the game/character/2walking.png",
+          visible: false// 快递箱
+        },
+        npc5: {
+          type: "Person",
+          x: utils.withGrid(15),
+          y: utils.withGrid(26),
+          src: "./image in the game/character/2walking.png",
+          visible: false // 初始隐藏
+        },
+        npc6: {
+          type: "Person",
+          x: utils.withGrid(15),
+          y: utils.withGrid(26),
+          src: "./image in the game/character/2walking.png",
+          visible: false // 初始隐藏
+        },
+        npc7: {
+          type: "Person",
+          x: utils.withGrid(15),
+          y: utils.withGrid(26),
+          src: "./image in the game/character/2walking.png",
+          visible: false // 初始隐藏
+        },
+        npc8: {
+          type: "Person",
+          x: utils.withGrid(15),
+          y: utils.withGrid(26),
+          src: "./image in the game/character/2walking.png",
+          visible: false // 初始隐藏
+        },
+        npc9: {
+          type: "Person",
+          x: utils.withGrid(15),
+          y: utils.withGrid(26),
+          src: "./image in the game/character/2walking.png",
+          visible: false // 初始隐藏
+        },
       });
     }
 
@@ -101,7 +143,38 @@ class OverworldMap {
     },
     {
       text: "新线索【冰箱】\n一台嗡嗡作响的老旧冰箱。",
-      range: { xStart: 26, xEnd: 29, yStart: 15, yEnd: 15 }
+      range: { xStart: 26, xEnd: 29, yStart: 15, yEnd: 15 },
+      events: [
+        { type: "textMessage", text: "新线索【冰箱】\n一台嗡嗡作响的老旧冰箱。" },
+        { 
+          type: "interactionMenu",
+          title: "冰箱",
+          options: [
+            {
+              label: "打开冰箱",
+              description: "仔细检查冰箱内部",
+              handler: () => {
+                // 触发冰箱内部检查的文本消息
+                const message = new TextMessage({
+                  text: "你打开了冰箱门。\n\n几瓶矿泉水\n一小盒吃了一半的超市沙拉\n一小罐果酱\n看不到需要烹饪的新鲜食材。",
+                  backgroundImage: "./fridge_open.png",
+                  onComplete: () => {
+                    console.log("冰箱检查完成");
+                  }
+                });
+                message.init(document.querySelector(".game-container"));
+              }
+            },
+            {
+              label: "离开",
+              description: "不检查冰箱",
+              handler: () => {
+                console.log("离开冰箱");
+              }
+            }
+          ]
+        }
+      ]
     },
     {
       text: "水槽旁的橱柜\n柜门虚掩着。",
@@ -133,12 +206,12 @@ class OverworldMap {
     },
   ];
 
-  interactions.forEach(({ text, range }) => {
+  interactions.forEach(({ text, range, events }) => {
     for (let x = range.xStart; x <= range.xEnd; x++) {
       for (let y = range.yStart; y <= range.yEnd; y++) {
         this.cutsceneSpaces[utils.asGridCoord(x, y)] = [
           {
-            events: [
+            events: events || [
               { type: "textMessage", text }
             ]
           }

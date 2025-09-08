@@ -6,6 +6,7 @@ class GameObject {
     this.x = config.x || 0;
     this.y = config.y || 0;
     this.direction = config.direction || "down";
+    this.visible = config.visible !== undefined ? config.visible : true; // 默认可见
     this.sprite = new Sprite({
       gameObject: this,
       src: config.src || "./image in the game/character/detective.png",

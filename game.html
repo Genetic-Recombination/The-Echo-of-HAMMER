@@ -80,18 +80,43 @@
       left: 0;
       right: 0;
       bottom: 0;
-      height: 100px;
+      min-height: 100px;
+      max-height: 200px;
       background: var(--dialog-background);
       border-top: 3px solid var(--border-color);
       z-index: 2;
       padding: 12px;
+      overflow-y: auto;
+    }
+
+    /* 有背景图片的文本消息样式 */
+    .TextMessage-with-bg {
+      background: rgba(0, 0, 0, 0.7) !important;
+      border-top: 3px solid var(--border-color);
+      z-index: 3;
+    }
+    
+    .TextMessage-with-bg .TextMessage_p {
+      background: rgba(255, 243, 180, 0.9);
+      padding: 12px;
+      border-radius: 6px;
+      margin-bottom: 12px;
+      color: var(--menu-font-color);
+      font-weight: bold;
+    }
+    
+    .TextMessage-with-bg .TextMessage_button {
+      background: rgba(255, 243, 180, 0.9);
+      border: 2px solid var(--border-color);
+      font-weight: bold;
     }
 
     .TextMessage_p {
       margin: 0;
-      font-size: 18px;
+      font-size: 16px;
       color: var(--menu-font-color);
-      line-height: 22px;
+      line-height: 1.4;
+      white-space: pre-line;
     }
 
     .TextMessage_button {
@@ -148,6 +173,66 @@
       background: var(--menu-selected-background);
     }
 
+    /* 通用二级交互菜单样式 */
+    .InteractionMenu {
+      position: absolute;
+      left: 4.5em;
+      top: 1em;
+      right: 4.5em;
+      background: var(--menu-background);
+      color: var(--menu-font-color);
+      border: 1px solid var(--menu-border-color);
+      z-index: 2;
+      padding: 8px;
+    }
+
+    .InteractionMenu .menu-title {
+      font-size: 20px;
+      color: var(--menu-font-color);
+      margin: 0;
+      padding: 2px 0;
+      text-align: center;
+      border-bottom: 1px solid #A48465;
+      margin-bottom: 8px;
+    }
+
+    .InteractionMenu .menu-options {
+      margin-top: 8px;
+    }
+
+    .InteractionMenu .option {
+      margin: 4px 0;
+    }
+
+    .InteractionMenu button {
+      width: 100%;
+      padding: 8px 12px;
+      background: none;
+      border: 2px solid var(--menu-border-color);
+      border-radius: 4px;
+      color: var(--menu-font-color);
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .InteractionMenu button:hover,
+    .InteractionMenu button:focus {
+      background: var(--menu-selected-background);
+    }
+
+    .InteractionMenu .DescriptionBox {
+      margin-top: 8px;
+      padding: 8px;
+      background: rgba(0, 0, 0, 0.1);
+      border-radius: 4px;
+    }
+
+    .InteractionMenu .DescriptionBox p {
+      margin: 0;
+      font-size: 14px;
+      color: var(--menu-font-color);
+    }
+
     /* 场景过渡效果 */
     .SceneTransition {
       position: absolute;
@@ -178,6 +263,21 @@
       from { opacity: 1; }
       to { opacity: 0; }
     }
+
+    /* 弹窗图片样式 */
+    .popup-image {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      max-width: 90%;
+      max-height: 90%;
+      width:600px;
+      height:auto;
+      border: 3px solid #fff;
+      box-shadow: 0 0 15px rgba(0,0,0,0.7);
+      z-index: 100;
+    }
   </style>
 </head>
 
@@ -204,6 +304,7 @@
   <script src="js/TitleScreen.js"></script>
   <script src="js/Hud.js"></script>
   <script src="js/PauseMenu.js"></script>
+  <script src="js/InteractionMenu.js"></script>
   <script src="js/OverworldEvent.js"></script>
   <script src="js/OverworldMap.js"></script>
   <script src="js/Overworld.js"></script>
