@@ -391,7 +391,9 @@ class OverworldMap {
     const faceKey = `${nextCoords.x},${nextCoords.y}`;
     const spaceMatch = this.cutsceneSpaces[faceKey];
     if (!this.isCutscenePlaying && spaceMatch) {
-      this.startCutscene(spaceMatch[0].events);
+      const scenario = spaceMatch.find(s => (s.required || []).every(f => playerState.storyFlags[f])) || spaceMatch[0];
+      const eventsCopy = JSON.parse(JSON.stringify(scenario.events));
+      this.startCutscene(eventsCopy);
       return;
     }
 
@@ -410,7 +412,9 @@ class OverworldMap {
     const hero = this.gameObjects["hero"];
     const match = this.cutsceneSpaces[`${hero.x},${hero.y}`];
     if (!this.isCutscenePlaying && match) {
-      this.startCutscene(match[0].events);
+      const scenario = match.find(s => (s.required || []).every(f => playerState.storyFlags[f])) || match[0];
+      const eventsCopy = JSON.parse(JSON.stringify(scenario.events));
+      this.startCutscene(eventsCopy);
     }
   }
 
