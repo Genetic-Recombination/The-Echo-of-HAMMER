@@ -70,8 +70,8 @@ class OverworldMap {
           src: "./image in the game/character/1walking.png",
           talking: [
             { events: [
-              { type: "textMessage", text: "这是一个测试", faceHero: "npc1" },
-              { type: "textMessage", text: "这还是测试" },
+              { type: "textMessage", text: "你好，我是角色1！", faceHero: "npc1", who: "npc1" },
+              { type: "textMessage", text: "立绘系统测试中...", who: "npc1" },
             ]}
           ]
         },
@@ -82,7 +82,7 @@ class OverworldMap {
           src: "./image in the game/character/2walking.png",
           talking: [
             { events: [
-              { type: "textMessage", text: "这是一个测试", faceHero: "npc2" },
+              { type: "textMessage", text: "嗨！我是角色2！", faceHero: "npc2", who: "npc2" },
             ]}
           ]
         },
@@ -93,8 +93,8 @@ class OverworldMap {
           src: "./image in the game/character/3walking.png",
           talking: [
             { events: [
-              { type: "textMessage", text: "你好，这是测试", faceHero: "npc1" },
-              { type: "textMessage", text: "这还是测试" },
+              { type: "textMessage", text: "你好，我是角色3！", faceHero: "npc3", who: "npc3" },
+              { type: "textMessage", text: "立绘显示正常吗？", who: "npc3" },
             ]}
           ]
         },
@@ -354,7 +354,16 @@ class OverworldMap {
 
     if (!this.isCutscenePlaying && match?.talking?.length) {
       const scenario = match.talking.find(s => (s.required || []).every(f => playerState.storyFlags[f]));
-      scenario && this.startCutscene(scenario.events);
+      if (scenario) {
+        // 深拷贝事件并为文本自动补充说话者ID
+        const eventsCopy = JSON.parse(JSON.stringify(scenario.events));
+        eventsCopy.forEach(ev => {
+          if (ev.type === 'textMessage' && !ev.who) {
+            ev.who = match.id || 'interact';
+          }
+        });
+        this.startCutscene(eventsCopy);
+      }
     }
   }
 

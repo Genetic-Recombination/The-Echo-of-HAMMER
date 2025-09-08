@@ -66,6 +66,7 @@ class OverworldEvent {
       panelBackground: this.event.panelBackground,
       panelBorderRadius: this.event.panelBorderRadius,
       panelBoxShadow: this.event.panelBoxShadow,
+      who: this.event.who, // 添加角色立绘支持
     });
     message.init(document.querySelector(".game-container"));
   }

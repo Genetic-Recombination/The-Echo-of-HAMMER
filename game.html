@@ -135,6 +135,30 @@
       background: var(--menu-selected-background);
     }
 
+    /* 立绘样式 */
+    .character-portrait {
+      position: absolute;
+      left: 20px;
+      top: -180px;
+      width: 150px;
+      height: 180px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+      z-index: 4;
+      pointer-events: none;
+    }
+
+    .character-portrait.show {
+      opacity: 1;
+    }
+
+    .character-portrait.fade-out {
+      opacity: 0;
+    }
+
     /* 暂停菜单样式 */
     .PauseMenu {
       position: absolute;
