@@ -213,20 +213,6 @@ window.OverworldMaps = {
         walkingSrc: "./image in the game/character/detectivewalking.png",
         useShadow: true,
       },
-      suspect: {
-        type: "Person",
-        x: utils.withGrid(7),
-        y: utils.withGrid(5),
-        src: "./image in the game/character/1.png",
-        talking: [
-          {
-            events: [
-              { type: "textMessage", text: "我是嫌疑人，但我是无辜的！", faceHero: "suspect" },
-              { type: "textMessage", text: "请相信我，我没有做任何坏事。" },
-            ]
-          }
-        ]
-      }
     },
     walls: {
     ...utils.verticalWall(25, 16, 20),//衣柜右侧竖墙
@@ -237,6 +223,8 @@ window.OverworldMaps = {
     ...utils.verticalWall(29, 0, 100),
     ...utils.verticalWall(21, 25, 33),//卫生间门右侧墙
     ...utils.verticalWall(16, 29, 100),
+    ...utils.verticalWall(14, 17,20),//死人左
+    ...utils.verticalWall(17, 17,20),//死人右
 
     ...utils.horizontalWall(20, 25, 28),//通往客厅门上厕横墙
     ...utils.horizontalWall(15, 13, 24),//衣柜下方横墙
@@ -246,6 +234,8 @@ window.OverworldMaps = {
     ...utils.horizontalWall(29, 0, 16),//沙发下横墙
     ...utils.horizontalWall(25, 21, 30),//沙发下横墙
     ...utils.horizontalWall(33, 0, 100),
+    ...utils.horizontalWall(17, 14,17),//死人上
+    ...utils.horizontalWall(20, 14,17),//死人下
     },
     cutsceneSpaces: {
   // 通往客厅 (28,21..24)
@@ -330,8 +320,8 @@ window.OverworldMaps = {
       }
     ];
 
-    for (let x = 14; x <= 16; x++) {
-      for (let y = 17; y <= 19; y++) {
+    for (let x = 14; x <= 17; x++) {
+      for (let y = 17; y <= 20; y++) {
         spaces[utils.asGridCoord(x, y)] = [{ events }];
       }
     }
@@ -390,34 +380,7 @@ window.OverworldMaps = {
     },
     cutsceneSpaces: {
       // 返回客厅
-      [utils.asGridCoord(1, 22)]: [
-        {
-          events: [
-            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(51), y: utils.withGrid(19), direction: "left" }
-          ]
-        }
-      ],
-      [utils.asGridCoord(1, 23)]: [
-        {
-          events: [
-            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(51), y: utils.withGrid(19), direction: "left" }
-          ]
-        }
-      ],
-      [utils.asGridCoord(1, 21)]: [
-        {
-          events: [
-            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(51), y: utils.withGrid(19), direction: "left" }
-          ]
-        }
-      ],
-      [utils.asGridCoord(1, 20)]: [
-        {
-          events: [
-            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(51), y: utils.withGrid(19), direction: "left" }
-          ]
-        }
-      ]
+      ...utils.portalColumn(20, 23, 1, "LivingRoom", 51, 19, "left")
   },
 },
   Toilet: {
@@ -456,20 +419,7 @@ window.OverworldMaps = {
     },
     cutsceneSpaces: {
       // 返回卧室
-      [utils.asGridCoord(18, 6)]: [
-        {
-          events: [
-            { type: "changeMap", map: "Bedroom", x: utils.withGrid(18), y: utils.withGrid(30), direction: "up" }
-          ]
-        }
-      ],
-      [utils.asGridCoord(19, 6)]: [
-        {
-          events: [
-            { type: "changeMap", map: "Bedroom", x: utils.withGrid(18), y: utils.withGrid(30), direction: "up" }
-          ]
-        }
-      ],
+      ...utils.portalLine(18, 19, 6, "Bedroom", 18, 30, "up"),
       [utils.asGridCoord(20, 6)]: [
         {
           events: [
@@ -561,27 +511,7 @@ window.OverworldMaps = {
     },
     cutsceneSpaces: {
       // 返回客厅
-      [utils.asGridCoord(19, 24)]: [
-        {
-          events: [
-            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(13), y: utils.withGrid(15), direction: "down" }
-          ]
-        }
-      ],
-      [utils.asGridCoord(18, 24)]: [
-        {
-          events: [
-            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(13), y: utils.withGrid(15), direction: "down" }
-          ]
-        }
-      ],
-      [utils.asGridCoord(20, 24)]: [
-        {
-          events: [
-            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(13), y: utils.withGrid(15), direction: "down" }
-          ]
-        }
-      ]
+      ...utils.portalLine(18, 20, 24, "LivingRoom", 13, 15, "down")
     }
   }
 }
