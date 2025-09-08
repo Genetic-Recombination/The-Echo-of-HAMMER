@@ -199,6 +199,7 @@ window.OverworldMaps = {
           ]
         }
       ],
+      
     }
   },
   Bedroom: {
@@ -249,50 +250,137 @@ window.OverworldMaps = {
     ...utils.horizontalWall(25, 21, 30),//沙发下横墙
     ...utils.horizontalWall(33, 0, 100),
     },
-    cutsceneSpaces: {
+  //   cutsceneSpaces: {
+  // // 通往客厅 (28,21..24)
+  // ...utils.portalColumn(21, 24, 28, "LivingRoom", 5, 18, "right"),
+  // // 通往洗手间 (17..20,31)
+  // ...utils.portalLine(17, 20, 31, "Toilet", 20, 6, "down"),
+  // [utils.asGridCoord(14, 15)]: [
+  //       {
+  //         events: [
+  //           { type: "textMessage", text: "【新线索】：床头柜上的书" },
+  //           { type: "showImage", src: "./image in the game/character/shadow.png" },
+  //         ]
+  //       }
+  //     ],
+  // [utils.asGridCoord(18, 15)]: [
+  //       {
+  //         events: [
+  //           { type: "textMessage", text: "【新线索】：老式的大衣柜，柜门都有些破损" },
+  //           { type: "showImage", src: "./image in the game/character/shadow.png" },
+  //           { type: "textMessage", text: "wx警官:打开它看看吧，说不定里面是榔头男的作案工具呢" },
+  //           { type: "showImage", src: "./image in the game/character/shadow.png" },
+  //         ]
+  //       }
+  //     ],
+  // [utils.asGridCoord(18, 17)]: [
+  //       {
+  //         events: [
+  //           { type: "textMessage", text: "【新线索】：抽屉柜" },
+  //           { type: "showImage", src: "./image in the game/character/shadow.png" },
+  //           { type: "textMessage", text: "zq警官:空的吗，里面的东西被人拿走了还是本来就什么也没放啊" },
+  //         ]
+  //       }
+  //     ],
+  //   }
+  cutsceneSpaces: {
   // 通往客厅 (28,21..24)
   ...utils.portalColumn(21, 24, 28, "LivingRoom", 5, 18, "right"),
   // 通往洗手间 (17..20,31)
   ...utils.portalLine(17, 20, 31, "Toilet", 20, 6, "down"),
+
   [utils.asGridCoord(14, 15)]: [
-        {
-          events: [
-            { type: "textMessage", text: "【新线索】：床头柜上的书" },
-            { type: "showImage", src: "./image in the game/character/shadow.png" },
-          ]
-        }
-      ],
-  [utils.asGridCoord(18, 15)]: [
-        {
-          events: [
-            { type: "textMessage", text: "【新线索】：老式的大衣柜，柜门都有些破损" },
-            { type: "showImage", src: "./image in the game/character/shadow.png" },
-            { type: "textMessage", text: "wx警官:打开它看看吧，说不定里面是榔头男的作案工具呢" },
-            { type: "showImage", src: "./image in the game/character/shadow.png" },
-          ]
-        }
-      ],
-  [utils.asGridCoord(23, 15)]: [
-        {
-          events: [
-            { type: "textMessage", text: "【新线索】：抽屉柜" },
-            { type: "showImage", src: "./image in the game/character/shadow.png" },
-            { type: "textMessage", text: "zq警官:空的吗，里面的东西被人拿走了？" },
-            { type: "textMessage", text: "wx警官:说不准本来就什么也没放" },
-          ]
-        }
-      ],
-  [utils.asGridCoord(7, 25)]: [
-        {
-          events: [
-            { type: "textMessage", text: "【新线索】: 简单的沙发床" },
-            { type: "showImage", src: "image in the game/article/卧室沙发.png" },
-            { type: "textMessage", text: "zq警官:很短小的沙发床啊，我听外界传闻说榔头男身高八尺有余，竟然用样的沙发床啊"},
-            { type: "textMessage", text: "wx警官:那都是都市传说啦，很多都夸大了不少，其实没人真正见过榔头男的真面目"}
-          ]
-        }
-      ],
+    {
+      events: [
+        { type: "textMessage", text: "【新线索】：床头柜上的书" },
+        { type: "showImage", src: "./image in the game/character/shadow.png" },
+      ]
     }
+  ],
+
+  [utils.asGridCoord(18, 15)]: [
+    {
+      events: [
+        { type: "textMessage", text: "【新线索】：老式的大衣柜，柜门都有些破损" },
+        { type: "showImage", src: "./image in the game/character/shadow.png" },
+        { type: "textMessage", text: "wx警官:打开它看看吧，说不定里面是榔头男的作案工具呢" },
+        { type: "showImage", src: "./image in the game/character/shadow.png" },
+      ]
+    }
+  ],
+
+  [utils.asGridCoord(18, 17)]: [
+    {
+      events: [
+        { type: "textMessage", text: "【新线索】：抽屉柜" },
+        { type: "showImage", src: "./image in the game/character/shadow.png" },
+        { type: "textMessage", text: "zq警官:空的吗，里面的东西被人拿走了还是本来就什么也没放啊" },
+      ]
+    }
+  ],
+
+  // 新增：卧室尸体九格触发
+  ...(() => {
+    const spaces = {};
+    const events = [
+      { type: "textMessage", text: "(卧室里，一个高大的男人仰面躺在地上一动不动。他穿着厚重的长袖外套，头上戴着一顶压得很低的帽子，仿佛随时准备出门。穿戴得异常整齐。)" },
+      { type: "textMessage", text: "(在他的手边，倾倒着一个棕色的药瓶，几粒白色药片散落在枕边和地面上。)" },
+
+      { type: "textMessage", text: "Zq警官 & Wx警官：\n（同时惊呼）“喂！？你怎么样？！”" },
+      { type: "textMessage", text: "(两人迅速冲上前去。Zq警官检查颈动脉，Wx警官则注意到了那个药瓶。)" },
+
+      { type: "textMessage", text: "Zq警官：\n（收回手，面色沉重地摇了摇头）\n“死了”" },
+      { type: "textMessage", text: "Wx警官：\n（拿起药瓶看了一眼）\n“是安眠药！”" },
+
+      { type: "textMessage", text: "(两位警官都沉默了，目光从尸体移到散落的药片，再移到死者过于整齐的穿着上。现场看起来像是一场…)" },
+      { type: "textMessage", text: "Wx警官：\n（语气带着不确定的推测）\n“难道…是畏罪自杀？他穿好衣服戴好帽子…是原本想逃跑，但发现逃不掉后，就选择了自我了断？”" },
+
+      { type: "textMessage", text: "(凝重的背景音乐响起...)" },
+      { type: "showImage", src: "./image in the game/character/shadow.png" },
+
+      {
+        type: "interactionMenu",
+        title: "对现场的判断",
+        options: [
+          {
+            label: "A：【得出结论】",
+            description: "看来就是这样了。",
+            handler: () => {
+              const message = new TextMessage({
+                text: "你选择了：得出结论。\n调查暂时结束。",
+                onComplete: () => {
+                  playerState.storyFlags["bedroom_conclusion"] = true;
+                }
+              });
+              message.init(document.querySelector(".game-container"));
+            }
+          },
+          {
+            label: "B：【提出质疑】",
+            description: "不对！这太不合常理了。我们再仔细看看！",
+            handler: () => {
+              const message = new TextMessage({
+                text: "你选择了：提出质疑。\n继续仔细搜查现场……",
+                onComplete: () => {
+                  playerState.storyFlags["bedroom_investigate_more"] = true;
+                }
+              });
+              message.init(document.querySelector(".game-container"));
+            }
+          }
+        ]
+      }
+    ];
+
+    for (let x = 14; x <= 16; x++) {
+      for (let y = 17; y <= 19; y++) {
+        spaces[utils.asGridCoord(x, y)] = [{ events }];
+      }
+    }
+    return spaces;
+  })()
+}
+
   },
   
   Kitchen: {
