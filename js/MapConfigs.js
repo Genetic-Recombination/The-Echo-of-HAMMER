@@ -105,12 +105,7 @@ window.OverworldMaps = {
   [utils.asGridCoord(15, 26)]: [
         {
           events: [
-<<<<<<< Updated upstream
             { type: "textMessage", text: "【新线索】:一个捆得很紧的麻袋",backgroundImage:"./image in the game/character/2walking.png"},
-=======
-            { type: "textMessage", text: "【新线索】:一个捆的很紧的麻袋" },
-            { type: "showImage", src: "./image in the game/character/2walking.png" },
->>>>>>> Stashed changes
             { type: "textMessage", text: "zq警官:是榔头男作案时的风衣帽子和墨镜，看来这的确就是榔头男的家了" },
           ]
         }
@@ -258,7 +253,6 @@ window.OverworldMaps = {
   // 通往洗手间 (17..20,31)
   ...utils.portalLine(17, 20, 31, "Toilet", 20, 6, "down"),
   [utils.asGridCoord(14, 15)]: [
-<<<<<<< Updated upstream
     {
       events: [
         { type: "textMessage", text: "【新线索】：床头柜上的书",backgroundImage: "./image in the game/article/床头柜.png" },
@@ -345,46 +339,6 @@ window.OverworldMaps = {
   })()
 }
 
-=======
-        {
-          events: [
-            { type: "textMessage", text: "【新线索】：床头柜上的书" },
-            { type: "showImage", src: "./image in the game/character/shadow.png" },
-          ]
-        }
-      ],
-  [utils.asGridCoord(18, 15)]: [
-        {
-          events: [
-            { type: "textMessage", text: "【新线索】：老式的大衣柜，柜门都有些破损" },
-            { type: "showImage", src: "./image in the game/character/shadow.png" },
-            { type: "textMessage", text: "wx警官:打开它看看吧，说不定里面是榔头男的作案工具呢" },
-            { type: "showImage", src: "./image in the game/character/shadow.png" },
-          ]
-        }
-      ],
-  [utils.asGridCoord(23, 15)]: [
-        {
-          events: [
-            { type: "textMessage", text: "【新线索】：抽屉柜" },
-            { type: "showImage", src: "./image in the game/character/shadow.png" },
-            { type: "textMessage", text: "zq警官:空的吗，里面的东西被人拿走了？" },
-            { type: "textMessage", text: "wx警官:说不准本来就什么也没放" },
-          ]
-        }
-      ],
-  [utils.asGridCoord(7, 25)]: [
-        {
-          events: [
-            { type: "textMessage", text: "【新线索】: 简单的沙发床" },
-            { type: "showImage", src: "./image in the game/character/shadow.png" },
-            { type: "textMessage", text: "zq警官:很短小的沙发床啊，我听外界传闻说榔头男身高八尺有余，竟然用样的沙发床啊"},
-            { type: "textMessage", text: "wx警官:那都是都市传说啦，很多都夸大了不少，其实没人真正见过榔头男的真面目"}
-          ]
-        }
-      ],
-    }
->>>>>>> Stashed changes
   },
   
   Kitchen: {
@@ -522,7 +476,6 @@ window.OverworldMaps = {
             { type: "changeMap", map: "Bedroom", x: utils.withGrid(18), y: utils.withGrid(31), direction: "up" }
           ]
         }
-<<<<<<< Updated upstream
       ],
        [utils.asGridCoord(22, 17)]: [
         {
@@ -574,9 +527,6 @@ window.OverworldMaps = {
           ]
         }
       ],
-=======
-      ]
->>>>>>> Stashed changes
     }
   },
   
