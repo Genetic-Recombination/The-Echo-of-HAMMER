@@ -220,12 +220,10 @@ class OverworldMap {
     }
   });
 }
-
-    // 阳台交互
+// 阳台交互
     if (this.id === "Balcony") {
       const interactions = [
         {
-          text: "这里似乎有一台洗衣机。",
           // 占位坐标，后续可自行修改为准确位置
           range: { xStart: 22, xEnd: 26, yStart: 10, yEnd: 15 },
           events: [
@@ -240,6 +238,7 @@ class OverworldMap {
                   handler: () => {
                     const message = new TextMessage({
                       text: "你打开了洗衣机\n\n新线索[一些没洗的衣服]\n两件宽大的t恤\n一件黑色工装外套\n一条深蓝色工装裤。",
+                      backgroundImage: "./image in the game/article/厨房的打火机.png",
                       onComplete: () => {}
                     });
                     message.init(document.querySelector(".game-container"));
@@ -253,7 +252,43 @@ class OverworldMap {
               ]
             }
           ]
-        }
+        },
+        {
+          range: { xStart: 5, xEnd:8, yStart: 18, yEnd:21 },
+          events: [
+            { type: "textMessage", text: "洗衣房的一个木桶，但里面什么都没有。"},
+           { type: "backgroundImage", src: "./image in the game/artical/阳台木桶.png" },
+          ]
+        },
+         {
+          range: { xStart: 5, xEnd:8, yStart: 13, yEnd:17 },
+          events: [
+            { type: "textMessage", text: "洗衣房的置物筐。" },
+            {
+              type: "interactionMenu",
+              title: "是否要仔细查看",
+              options: [
+                {
+                  label: "仔细查看",
+                  description: "合格的侦探需要细心和耐心，不要忽略任何细节。",
+                  handler: () => {
+                    const message = new TextMessage({
+                      text: "你仔细查看了置物筐里的衣物\n\n里面放了一些外套和牛仔裤。",
+                      backgroundImage: "./image in the game/article/阳台置物篮.png",
+                      onComplete: () => {}
+                    });
+                    message.init(document.querySelector(".game-container"));
+                  }
+                },
+                {
+                  label: "离开",
+                  description: "衣物跟案件无关，不看也罢",
+                  handler: () => {}
+                }
+              ]
+            }
+          ]
+        },
       ];
 
       interactions.forEach(({ text, range, events }) => {
