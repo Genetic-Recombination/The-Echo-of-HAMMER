@@ -108,6 +108,9 @@ window.OverworldMaps = {
 <<<<<<< Updated upstream
             { type: "textMessage", text: "【新线索】:一个捆得很紧的麻袋",backgroundImage:"./image in the game/character/2walking.png"},
 =======
+            { type: "textMessage", text: "【新线索】:一个捆的很紧的麻袋" },
+            { type: "showImage", src: "./image in the game/character/2walking.png" },
+>>>>>>> Stashed changes
             { type: "textMessage", text: "zq警官:是榔头男作案时的风衣帽子和墨镜，看来这的确就是榔头男的家了" },
           ]
         }
@@ -242,12 +245,11 @@ window.OverworldMaps = {
     ...utils.horizontalWall(25, 21, 30),//沙发下横墙
     ...utils.horizontalWall(33, 0, 100),
     },
-cutsceneSpaces: {
+    cutsceneSpaces: {
   // 通往客厅 (28,21..24)
   ...utils.portalColumn(21, 24, 28, "LivingRoom", 5, 18, "right"),
   // 通往洗手间 (17..20,31)
   ...utils.portalLine(17, 20, 31, "Toilet", 20, 6, "down"),
-
   [utils.asGridCoord(14, 15)]: [
 <<<<<<< Updated upstream
     {
