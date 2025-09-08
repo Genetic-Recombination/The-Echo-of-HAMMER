@@ -130,14 +130,16 @@ window.OverworldMaps = {
   [utils.asGridCoord(28, 41)]: [
         {
           events: [
-            { type: "textMessage", text: "【新线索】：一个简陋的木质鞋柜，看起来有些年头了", backgroundImage: "./image in the game/article/客厅鞋柜.png", backgroundSize: "contain", backgroundLayout: "panel", blurAmount: "10px", panelPadding: "18px", panelMaxWidth: "60vw", panelMaxHeight: "60vh", panelBackground: "rgba(255,255,255,0.94)", panelBorderRadius: "14px", panelBoxShadow: "0 12px 36px rgba(0,0,0,0.35)" }
+            { type: "textMessage", text: "【新线索】：一个简陋的木质鞋柜，看起来有些年头了" },
+            { type: "showImage", src: "image in the game/article/客厅鞋柜.png" }
           ]
         }
       ],//鞋柜
    [utils.asGridCoord(41, 28)]: [
         {
           events: [
-            { type: "textMessage", text: "【新线索】：很脏很乱的垃圾桶，像是很久没人打理了", backgroundImage: "./image in the game/character/shadow.png" },
+            { type: "textMessage", text: "【新线索】：很脏很乱的垃圾桶，像是很久没人打理了" },
+            { type: "showImage", src: "./image in the game/character/shadow.png" },
             { type: "textMessage", text: "zq警官:这榔头男也太不讲卫生了，怎么会这么乱啊" },
           ]
         }
@@ -145,7 +147,8 @@ window.OverworldMaps = {
     [utils.asGridCoord(12, 32)]: [
         {
           events: [
-            { type: "textMessage", text: "【新线索】：披萨和收据" ,backgroundImage: "./image in the game/character/shadow.png" },
+            { type: "textMessage", text: "【新线索】：披萨和收据" },
+            { type: "showImage", src: "./image in the game/character/shadow.png" },
             { type: "textMessage", text: "wx警官:这张单据是披萨外卖员留下的，上面有他的联系方式以及店铺的联系方式。价格和送到的披萨口味一致。" },
             { type: "textMessage", text: "zq警官:奇怪？？送货员和机车女的收据怎么不见了呢？" },
           ]
@@ -154,7 +157,8 @@ window.OverworldMaps = {
       [utils.asGridCoord(9, 34)]: [
         {
           events: [
-            { type: "textMessage", text: "【新线索】：一个置物箱，杂七杂八的东西都堆在一块", backgroundImage: "./image in the game/character/shadow.png" },
+            { type: "textMessage", text: "【新线索】：一个置物箱，杂七杂八的东西都堆在一块" },
+            { type: "showImage", src: "./image in the game/character/shadow.png" },
             { type: "textMessage", text: "wx警官:这都是些啥啊，好乱啊" },
           ]
         }
@@ -162,14 +166,16 @@ window.OverworldMaps = {
       [utils.asGridCoord(19, 36)]: [
         {
           events: [
-            { type: "textMessage", text: "【新线索】：一张款式老旧的布艺沙发靠墙摆放。沙发套看起来有些日子没洗了，颜色暗淡。", backgroundImage: "image in the game/article/客厅沙发.png" },
+            { type: "textMessage", text: "【新线索】：一张款式老旧的布艺沙发靠墙摆放。沙发套看起来有些日子没洗了，颜色暗淡。" },
+            { type: "showImage", src: "image in the game/article/客厅沙发.png" },
           ]
         }
       ],
       [utils.asGridCoord(37, 36)]: [
         {
           events: [
-            { type: "textMessage", text: "【新线索】：墙边堆着两个扁平的棕色瓦楞纸箱", backgroundImage: "./image in the game/character/shadow.png" },
+            { type: "textMessage", text: "【新线索】：墙边堆着两个扁平的棕色瓦楞纸箱" },
+            { type: "showImage", src: "./image in the game/character/shadow.png" },
             { type: "textMessage", text: "wx警官:看来这榔头男随时准备搬家逃跑啊，辛亏我们接到线报就一直在这监视" },
           ]
         }
@@ -177,7 +183,8 @@ window.OverworldMaps = {
       [utils.asGridCoord(26, 15)]: [
         {
           events: [
-            { type: "textMessage", text: "【新线索】：破旧的大时钟，看来指针已经停摆好久了", backgroundImage: "./image in the game/character/shadow.png" },
+            { type: "textMessage", text: "【新线索】：破旧的大时钟，看来指针已经停摆好久了" },
+            { type: "showImage", src: "./image in the game/character/shadow.png" },
           ]
         }
       ],
