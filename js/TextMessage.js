@@ -106,12 +106,15 @@ class TextMessage {
         backgroundLayer.style.left = '0';
         backgroundLayer.style.width = '100%';
         backgroundLayer.style.height = '100%';
-        const encodedUrl = encodeURI(this.backgroundImage);
-        backgroundLayer.style.backgroundImage = `url("${encodedUrl}")`;
+        // 计算绝对URL并确保编码
+        const absUrl = new URL(this.backgroundImage, document.baseURI).href;
+        backgroundLayer.style.backgroundImage = `url("${absUrl}")`;
         backgroundLayer.style.backgroundSize = 'cover';
         backgroundLayer.style.backgroundPosition = 'center';
         backgroundLayer.style.backgroundRepeat = 'no-repeat';
+        // backgroundLayer.style.zIndex = '10';
         backgroundLayer.style.zIndex = '1';
+        backgroundLayer.style.pointerEvents = 'none';
         
         // 将背景层插入到容器的最前面
         const container = document.querySelector('.game-container');
@@ -122,7 +125,8 @@ class TextMessage {
       img.onerror = () => {
         console.error('背景图片加载失败:', this.backgroundImage);
       };
-      img.src = this.backgroundImage;
+      // 预加载同样使用绝对URL
+      img.src = new URL(this.backgroundImage, document.baseURI).href;
     }
 
     this.element.innerHTML = (`

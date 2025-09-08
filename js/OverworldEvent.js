@@ -55,6 +55,7 @@ class OverworldEvent {
 
     const message = new TextMessage({
       text: this.event.text,
+      backgroundImage: this.event.backgroundImage,
       onComplete: () => {
         // 检查是否有图片显示，如果有则需要等待图片关闭
         if (this.closeImageFunction && !this.imageClosed) {

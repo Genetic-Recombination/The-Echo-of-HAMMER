@@ -256,8 +256,7 @@ class OverworldMap {
         {
           range: { xStart: 5, xEnd:8, yStart: 18, yEnd:21 },
           events: [
-            { type: "textMessage", text: "洗衣房的一个木桶，但里面什么都没有。"},
-           { type: "backgroundImage", src: "./image in the game/artical/阳台木桶.png" },
+            { type: "textMessage", text: "洗衣房的一个木桶，但里面什么都没有。", backgroundImage: "./image in the game/article/阳台木桶.png" },
           ]
         },
          {
@@ -320,13 +319,10 @@ class OverworldMap {
   async startCutscene(events) {
     this.isCutscenePlaying = true;
     for (const event of events) {
-      const overworldEvent = new OverworldEvent({ event, map: this });
-      this.overworld.currentEvent = overworldEvent;
-      const result = await overworldEvent.init();
+      const result = await new OverworldEvent({ event, map: this }).init();
       if (result === "LOST_BATTLE") break;
     }
     this.isCutscenePlaying = false;
-    this.overworld.currentEvent = null;
   }
 
   checkForActionCutscene() {
