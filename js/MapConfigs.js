@@ -309,20 +309,6 @@ window.OverworldMaps = {
         walkingSrc: "./image in the game/character/detectivewalking.png",
         useShadow: true,
       },
-      cook: {
-        type: "Person",
-        x: utils.withGrid(4),
-        y: utils.withGrid(4),
-        src: "./image in the game/character/picture/zq.png",
-        talking: [
-          {
-            events: [
-              { type: "textMessage", text: "我是厨师，案发时我在这里准备晚餐。", faceHero: "cook" },
-              { type: "textMessage", text: "我什么都没有看到，只听到了一些奇怪的声音。" },
-            ]
-          }
-        ]
-      }
     },
     walls: {
     ...utils.verticalWall(4, 15, 19),//左侧墙
