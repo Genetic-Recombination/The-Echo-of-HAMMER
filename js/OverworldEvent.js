@@ -55,16 +55,18 @@ class OverworldEvent {
 
     const message = new TextMessage({
       text: this.event.text,
-      onComplete: () => {
-        // 检查是否有图片显示，如果有则需要等待图片关闭
-        if (this.closeImageFunction && !this.imageClosed) {
-          // 图片还在显示，不立即resolve，而是等待图片关闭
-          this.textMessageResolved = true;
-          this.textMessageResolve = resolve;
-          return;
-        }
-        resolve();
-      }
+      onComplete: () => resolve(),
+      backgroundImage: this.event.backgroundImage,
+      backgroundSize: this.event.backgroundSize,
+      backgroundLayout: this.event.backgroundLayout,
+      blurAmount: this.event.blurAmount,
+      panelPadding: this.event.panelPadding,
+      panelMaxWidth: this.event.panelMaxWidth,
+      panelMaxHeight: this.event.panelMaxHeight,
+      panelBackground: this.event.panelBackground,
+      panelBorderRadius: this.event.panelBorderRadius,
+      panelBoxShadow: this.event.panelBoxShadow,
+      who: this.event.who, // 添加角色立绘支持
     });
     message.init(document.querySelector(".game-container"));
   }

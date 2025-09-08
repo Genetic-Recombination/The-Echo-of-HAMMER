@@ -14,6 +14,8 @@ class Overworld {
 
       const cameraPerson = this.map.gameObjects.hero;
 
+      // heroTrail 在移动完成事件中记录，避免逐帧采样导致跟随滞后过大
+
       // 更新所有对象
       Object.values(this.map.gameObjects).forEach(object => {
         object.update({
@@ -49,6 +51,11 @@ class Overworld {
 
   bindActionInput() {
     new KeyPressListener("Space", () => {
+      // 若当前有对话框/菜单/过场在进行，交由其处理，不触发新的交互
+      const hasOverlay = document.querySelector(".TextMessage") || document.querySelector(".InteractionMenu") || this.map?.isCutscenePlaying;
+      if (hasOverlay) {
+        return;
+      }
       this.map.checkForActionCutscene();
     });
     new KeyPressListener("Escape", () => {
@@ -64,6 +71,14 @@ class Overworld {
     document.addEventListener("PersonWalkingComplete", e => {
       if (e.detail.whoId === "hero") {
         this.map.checkForFootstepCutscene();
+        // 在主角完成一步移动时记录轨迹点（以格为单位），避免过密
+        const hero = this.map.gameObjects.hero;
+        if (!this.map.heroTrail) this.map.heroTrail = [];
+        const last = this.map.heroTrail[this.map.heroTrail.length - 1];
+        if (!last || last.x !== hero.x || last.y !== hero.y) {
+          this.map.heroTrail.push({ x: hero.x, y: hero.y });
+          if (this.map.heroTrail.length > 60) this.map.heroTrail.shift();
+        }
       }
     });
   }
@@ -110,6 +125,47 @@ class Overworld {
     this.progress.startingHeroX = this.map.gameObjects.hero.x;
     this.progress.startingHeroY = this.map.gameObjects.hero.y;
     this.progress.startingHeroDirection = this.map.gameObjects.hero.direction;
+
+    // 注入两个全程跟随的NPC（不阻挡 hero）
+    const hero = this.map.gameObjects.hero;
+    const follower1 = new Person({
+      x: hero.x,
+      y: hero.y,
+      direction: hero.direction,
+      src: "./image in the game/character/wxwalking.png",
+      walkingSrc: "./image in the game/character/wxwalking.png",
+      useShadow: true,
+      isFollower: true,
+      nonBlockingForHero: true,
+      followIndex: 0,
+      desiredLagTiles: 1, // 折中：第1名跟随者与主角保持约1格距离
+    });
+    follower1.id = "wx";
+    follower1.mount(this.map);
+
+    const follower2 = new Person({
+      x: hero.x,
+      y: hero.y,
+      direction: hero.direction,
+      src: "./image in the game/character/zqwalking.png",
+      walkingSrc: "./image in the game/character/zqwalking.png",
+      useShadow: true,
+      isFollower: true,
+      nonBlockingForHero: true,
+      followIndex: 0,
+      desiredLagTiles: 2, // 折中：第2名跟随者与主角保持约2格距离
+    });
+    follower2.id = "zq";
+    follower2.mount(this.map);
+
+    // 将跟随者纳入gameObjects，参与渲染与排序
+    this.map.gameObjects.wx = follower1;
+    this.map.gameObjects.zq = follower2;
+
+    // 初始化 hero 轨迹（以格为单位）
+    this.map.heroTrail = [{ x: hero.x, y: hero.y }];
+    follower1.followIndex = 0;
+    follower2.followIndex = 0;
   }
 
   async init() {
