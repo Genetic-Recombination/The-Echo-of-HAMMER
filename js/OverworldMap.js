@@ -38,14 +38,27 @@ class OverworldMap {
   }
 
   // 是否有物体/墙壁占用
-  isSpaceTaken(currentX, currentY, direction) {
+  isSpaceTaken(currentX, currentY, direction, movingObject) {
     const { x, y } = utils.nextPosition(currentX, currentY, direction);
     if (this.walls[`${x},${y}`]) return true;
 
-    return Object.values(this.gameObjects).some(obj =>
-      (obj.x === x && obj.y === y) ||
-      (obj.intentPosition && obj.intentPosition[0] === x && obj.intentPosition[1] === y)
-    );
+    return Object.values(this.gameObjects).some(obj => {
+      // 跳过自己
+      if (obj === movingObject) return false;
+      
+      // 如果移动对象是主人公，跳过跟随NPC的碰撞检测
+      if (movingObject && movingObject.isPlayerControlled && obj.isFollower) {
+        return false;
+      }
+      
+      // 如果移动对象是跟随NPC，跳过与主人公的碰撞检测
+      if (movingObject && movingObject.isFollower && obj.isPlayerControlled) {
+        return false;
+      }
+      
+      return (obj.x === x && obj.y === y) ||
+             (obj.intentPosition && obj.intentPosition[0] === x && obj.intentPosition[1] === y);
+    });
   }
 
   // 挂载对象
