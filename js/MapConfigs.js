@@ -430,6 +430,34 @@ window.OverworldMaps = {
             { type: "changeMap", map: "Bedroom", x: utils.withGrid(18), y: utils.withGrid(31), direction: "up" }
           ]
         }
+      ],
+       [utils.asGridCoord(22, 17)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】:分外干净的马桶" },
+            { type: "showImage", src: "./image in the game/character/2walking.png" },
+            { type: "textMessage", text: "zq警官:奇怪，这到了卫生间就好像换了一番景象" },
+            { type: "textMessage", text: "wx警官:是啊，洁净的有些诡异了" },
+          ]
+        }
+      ],
+      [utils.asGridCoord(22, 23)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】:垃圾桶" },
+            { type: "showImage", src: "./image in the game/character/2walking.png" },
+            { type: "textMessage", text: "zq警官:刚倒的垃圾吗，里面一点垃圾都没有" },
+            { type: "textMessage", text: "wx警官:奇怪，为什么客厅的垃圾就没倒呢" },
+          ]
+        }
+      ], 
+      [utils.asGridCoord(22, 17)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】:洗手台" },
+            { type: "showImage", src: "./image in the game/character/2walking.png" },
+          ]
+        }
       ]
     }
   },

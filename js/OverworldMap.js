@@ -234,10 +234,13 @@ class OverworldMap {
   async startCutscene(events) {
     this.isCutscenePlaying = true;
     for (const event of events) {
-      const result = await new OverworldEvent({ event, map: this }).init();
+      const overworldEvent = new OverworldEvent({ event, map: this });
+      this.overworld.currentEvent = overworldEvent;
+      const result = await overworldEvent.init();
       if (result === "LOST_BATTLE") break;
     }
     this.isCutscenePlaying = false;
+    this.overworld.currentEvent = null;
   }
 
   checkForActionCutscene() {
