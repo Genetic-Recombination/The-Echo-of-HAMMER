@@ -128,7 +128,7 @@ window.OverworldMaps = {
         {
           events: [
             { type: "textMessage", text: "【新线索】：一个简陋的木质鞋柜，看起来有些年头了" },
-            { type: "showImage", src: "./image in the game/character/shadow.png" }
+            { type: "showImage", src: "image in the game/article/客厅鞋柜.png" }
           ]
         }
       ],//鞋柜
@@ -164,7 +164,7 @@ window.OverworldMaps = {
         {
           events: [
             { type: "textMessage", text: "【新线索】：一张款式老旧的布艺沙发靠墙摆放。沙发套看起来有些日子没洗了，颜色暗淡。" },
-            { type: "showImage", src: "./image in the game/character/shadow.png" },
+            { type: "showImage", src: "image in the game/article/客厅沙发.png" },
           ]
         }
       ],
@@ -272,12 +272,23 @@ window.OverworldMaps = {
           ]
         }
       ],
-  [utils.asGridCoord(18, 17)]: [
+  [utils.asGridCoord(23, 15)]: [
         {
           events: [
             { type: "textMessage", text: "【新线索】：抽屉柜" },
             { type: "showImage", src: "./image in the game/character/shadow.png" },
-            { type: "textMessage", text: "zq警官:空的吗，里面的东西被人拿走了还是本来就什么也没放啊" },
+            { type: "textMessage", text: "zq警官:空的吗，里面的东西被人拿走了？" },
+            { type: "textMessage", text: "wx警官:说不准本来就什么也没放" },
+          ]
+        }
+      ],
+  [utils.asGridCoord(7, 25)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】: 简单的沙发床" },
+            { type: "showImage", src: "./image in the game/character/shadow.png" },
+            { type: "textMessage", text: "zq警官:很短小的沙发床啊，我听外界传闻说榔头男身高八尺有余，竟然用样的沙发床啊"},
+            { type: "textMessage", text: "wx警官:那都是都市传说啦，很多都夸大了不少，其实没人真正见过榔头男的真面目"}
           ]
         }
       ],
