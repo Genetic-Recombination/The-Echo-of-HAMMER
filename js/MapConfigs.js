@@ -254,6 +254,7 @@ window.OverworldMaps = {
   ...utils.portalColumn(21, 24, 28, "LivingRoom", 5, 18, "right"),
   // 通往洗手间 (17..20,31)
   ...utils.portalLine(17, 20, 31, "Toilet", 20, 6, "down"),
+
   [utils.asGridCoord(14, 15)]: [
         {
           events: [
