@@ -5,6 +5,7 @@ class Overworld {
     this.canvas = this.element.querySelector(".game-canvas");
     this.ctx = this.canvas.getContext("2d");
     this.map = null;
+    this.currentEvent = null;
   }
 
   startGameLoop() {

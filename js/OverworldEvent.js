@@ -3,6 +3,10 @@ class OverworldEvent {
   constructor({ map, event }) {
     this.map = map;
     this.event = event;
+    this.textMessageResolved = false;
+    this.textMessageResolve = null;
+    this.imageClosed = false;
+    this.closeImageFunction = null;
   }
 
   stand(resolve) {
@@ -51,8 +55,16 @@ class OverworldEvent {
 
     const message = new TextMessage({
       text: this.event.text,
-      onComplete: () => resolve(),
-      backgroundImage: this.event.backgroundImage
+      onComplete: () => {
+        // 检查是否有图片显示，如果有则需要等待图片关闭
+        if (this.closeImageFunction && !this.imageClosed) {
+          // 图片还在显示，不立即resolve，而是等待图片关闭
+          this.textMessageResolved = true;
+          this.textMessageResolve = resolve;
+          return;
+        }
+        resolve();
+      }
     });
     message.init(document.querySelector(".game-container"));
   }
@@ -132,14 +144,28 @@ class OverworldEvent {
     // 按空格键后关闭
     const closeImage = () => {
       img.remove();
-      document.removeEventListener("keydown", closeImage);
+      document.removeEventListener("keydown", this.closeImageFunction);
+      this.imageClosed = true;
+      
+      // 检查是否有待处理的textMessage
+      if (this.textMessageResolved && this.textMessageResolve) {
+        this.textMessageResolve();
+        this.textMessageResolved = false;
+        this.textMessageResolve = null;
+      }
+      
       resolve();
     };
-    document.addEventListener("keydown", (e) => {
+    
+    // 创建一个标志，用于跟踪图片是否已关闭
+    this.imageClosed = false;
+    
+    this.closeImageFunction = (e) => {
       if (e.key === " ") {
         closeImage();
       }
-    });
+    };
+    document.addEventListener("keydown", this.closeImageFunction);
   }
   interactionMenu(resolve) {
     const menu = new InteractionMenu({
