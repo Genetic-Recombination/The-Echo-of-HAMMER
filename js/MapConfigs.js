@@ -214,6 +214,20 @@ window.OverworldMaps = {
         src: "./image in the game/character/detectivewalking.png",
         walkingSrc: "./image in the game/character/detectivewalking.png",
         useShadow: true,
+      },
+      suspect: {
+        type: "Person",
+        x: utils.withGrid(7),
+        y: utils.withGrid(5),
+        src: "./image in the game/character/1.png",
+        talking: [
+          {
+            events: [
+              { type: "textMessage", text: "我是嫌疑人，但我是无辜的！", faceHero: "suspect" },
+              { type: "textMessage", text: "请相信我，我没有做任何坏事。" },
+            ]
+          }
+        ]
       }
     },
     walls: {
@@ -239,7 +253,7 @@ window.OverworldMaps = {
   // 通往客厅 (28,21..24)
   ...utils.portalColumn(21, 24, 28, "LivingRoom", 5, 18, "right"),
   // 通往洗手间 (17..20,31)
-  ...utils.portalLine(17, 20, 31, "Toilet", 20, 7, "down"),
+  ...utils.portalLine(17, 20, 31, "Toilet", 20, 6, "down"),
   [utils.asGridCoord(14, 15)]: [
         {
           events: [
@@ -295,6 +309,20 @@ window.OverworldMaps = {
         walkingSrc: "./image in the game/character/detectivewalking.png",
         useShadow: true,
       },
+      cook: {
+        type: "Person",
+        x: utils.withGrid(4),
+        y: utils.withGrid(4),
+        src: "./image in the game/character/picture/zq.png",
+        talking: [
+          {
+            events: [
+              { type: "textMessage", text: "我是厨师，案发时我在这里准备晚餐。", faceHero: "cook" },
+              { type: "textMessage", text: "我什么都没有看到，只听到了一些奇怪的声音。" },
+            ]
+          }
+        ]
+      }
     },
     walls: {
     ...utils.verticalWall(4, 15, 19),//左侧墙
@@ -399,7 +427,7 @@ window.OverworldMaps = {
       [utils.asGridCoord(20, 6)]: [
         {
           events: [
-            { type: "changeMap", map: "Bedroom", x: utils.withGrid(18), y: utils.withGrid(30), direction: "up" }
+            { type: "changeMap", map: "Bedroom", x: utils.withGrid(18), y: utils.withGrid(31), direction: "up" }
           ]
         }
       ],
@@ -453,7 +481,7 @@ window.OverworldMaps = {
         {
           events: [
             { type: "textMessage", text: "【新线索】:浴缸" },
-            { type: "showImage", src: "./image in the game/character/2walking.png" },
+            { type: "showImage", src: "./image in the game/article/浴缸.png" },
             { type: "textMessage", text: "zq警官:这浴缸也是一点使用痕迹都没有啊" },
             { type: "textMessage", text: "wx警官:是的，这应该也是才打扫过不久的" },
           ]
