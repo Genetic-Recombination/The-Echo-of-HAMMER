@@ -105,7 +105,12 @@ window.OverworldMaps = {
   [utils.asGridCoord(15, 26)]: [
         {
           events: [
+<<<<<<< Updated upstream
             { type: "textMessage", text: "【新线索】:一个捆得很紧的麻袋",backgroundImage:"./image in the game/character/2walking.png"},
+=======
+            { type: "textMessage", text: "【新线索】:一个捆的很紧的麻袋" },
+            { type: "showImage", src: "./image in the game/character/2walking.png" },
+>>>>>>> Stashed changes
             { type: "textMessage", text: "zq警官:是榔头男作案时的风衣帽子和墨镜，看来这的确就是榔头男的家了" },
           ]
         }
@@ -125,14 +130,16 @@ window.OverworldMaps = {
   [utils.asGridCoord(28, 41)]: [
         {
           events: [
-            { type: "textMessage", text: "【新线索】：一个简陋的木质鞋柜，看起来有些年头了", backgroundImage: "./image in the game/article/客厅鞋柜.png", backgroundSize: "contain", backgroundLayout: "panel", blurAmount: "10px", panelPadding: "18px", panelMaxWidth: "60vw", panelMaxHeight: "60vh", panelBackground: "rgba(255,255,255,0.94)", panelBorderRadius: "14px", panelBoxShadow: "0 12px 36px rgba(0,0,0,0.35)" }
+            { type: "textMessage", text: "【新线索】：一个简陋的木质鞋柜，看起来有些年头了" },
+            { type: "showImage", src: "image in the game/article/客厅鞋柜.png" }
           ]
         }
       ],//鞋柜
    [utils.asGridCoord(41, 28)]: [
         {
           events: [
-            { type: "textMessage", text: "【新线索】：很脏很乱的垃圾桶，像是很久没人打理了", backgroundImage: "./image in the game/character/shadow.png" },
+            { type: "textMessage", text: "【新线索】：很脏很乱的垃圾桶，像是很久没人打理了" },
+            { type: "showImage", src: "./image in the game/character/shadow.png" },
             { type: "textMessage", text: "zq警官:这榔头男也太不讲卫生了，怎么会这么乱啊" },
           ]
         }
@@ -140,7 +147,8 @@ window.OverworldMaps = {
     [utils.asGridCoord(12, 32)]: [
         {
           events: [
-            { type: "textMessage", text: "【新线索】：披萨和收据" ,backgroundImage: "./image in the game/character/shadow.png" },
+            { type: "textMessage", text: "【新线索】：披萨和收据" },
+            { type: "showImage", src: "./image in the game/character/shadow.png" },
             { type: "textMessage", text: "wx警官:这张单据是披萨外卖员留下的，上面有他的联系方式以及店铺的联系方式。价格和送到的披萨口味一致。" },
             { type: "textMessage", text: "zq警官:奇怪？？送货员和机车女的收据怎么不见了呢？" },
           ]
@@ -149,7 +157,8 @@ window.OverworldMaps = {
       [utils.asGridCoord(9, 34)]: [
         {
           events: [
-            { type: "textMessage", text: "【新线索】：一个置物箱，杂七杂八的东西都堆在一块", backgroundImage: "./image in the game/character/shadow.png" },
+            { type: "textMessage", text: "【新线索】：一个置物箱，杂七杂八的东西都堆在一块" },
+            { type: "showImage", src: "./image in the game/character/shadow.png" },
             { type: "textMessage", text: "wx警官:这都是些啥啊，好乱啊" },
           ]
         }
@@ -157,14 +166,16 @@ window.OverworldMaps = {
       [utils.asGridCoord(19, 36)]: [
         {
           events: [
-            { type: "textMessage", text: "【新线索】：一张款式老旧的布艺沙发靠墙摆放。沙发套看起来有些日子没洗了，颜色暗淡。", backgroundImage: "image in the game/article/客厅沙发.png" },
+            { type: "textMessage", text: "【新线索】：一张款式老旧的布艺沙发靠墙摆放。沙发套看起来有些日子没洗了，颜色暗淡。" },
+            { type: "showImage", src: "image in the game/article/客厅沙发.png" },
           ]
         }
       ],
       [utils.asGridCoord(37, 36)]: [
         {
           events: [
-            { type: "textMessage", text: "【新线索】：墙边堆着两个扁平的棕色瓦楞纸箱", backgroundImage: "./image in the game/character/shadow.png" },
+            { type: "textMessage", text: "【新线索】：墙边堆着两个扁平的棕色瓦楞纸箱" },
+            { type: "showImage", src: "./image in the game/character/shadow.png" },
             { type: "textMessage", text: "wx警官:看来这榔头男随时准备搬家逃跑啊，辛亏我们接到线报就一直在这监视" },
           ]
         }
@@ -172,7 +183,8 @@ window.OverworldMaps = {
       [utils.asGridCoord(26, 15)]: [
         {
           events: [
-            { type: "textMessage", text: "【新线索】：破旧的大时钟，看来指针已经停摆好久了", backgroundImage: "./image in the game/character/shadow.png" },
+            { type: "textMessage", text: "【新线索】：破旧的大时钟，看来指针已经停摆好久了" },
+            { type: "showImage", src: "./image in the game/character/shadow.png" },
           ]
         }
       ],
@@ -240,13 +252,13 @@ window.OverworldMaps = {
     ...utils.horizontalWall(25, 21, 30),//沙发下横墙
     ...utils.horizontalWall(33, 0, 100),
     },
-cutsceneSpaces: {
+    cutsceneSpaces: {
   // 通往客厅 (28,21..24)
   ...utils.portalColumn(21, 24, 28, "LivingRoom", 5, 18, "right"),
   // 通往洗手间 (17..20,31)
   ...utils.portalLine(17, 20, 31, "Toilet", 20, 6, "down"),
-
   [utils.asGridCoord(14, 15)]: [
+<<<<<<< Updated upstream
     {
       events: [
         { type: "textMessage", text: "【新线索】：床头柜上的书",backgroundImage: "./image in the game/article/床头柜.png" },
@@ -333,6 +345,46 @@ cutsceneSpaces: {
   })()
 }
 
+=======
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】：床头柜上的书" },
+            { type: "showImage", src: "./image in the game/character/shadow.png" },
+          ]
+        }
+      ],
+  [utils.asGridCoord(18, 15)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】：老式的大衣柜，柜门都有些破损" },
+            { type: "showImage", src: "./image in the game/character/shadow.png" },
+            { type: "textMessage", text: "wx警官:打开它看看吧，说不定里面是榔头男的作案工具呢" },
+            { type: "showImage", src: "./image in the game/character/shadow.png" },
+          ]
+        }
+      ],
+  [utils.asGridCoord(23, 15)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】：抽屉柜" },
+            { type: "showImage", src: "./image in the game/character/shadow.png" },
+            { type: "textMessage", text: "zq警官:空的吗，里面的东西被人拿走了？" },
+            { type: "textMessage", text: "wx警官:说不准本来就什么也没放" },
+          ]
+        }
+      ],
+  [utils.asGridCoord(7, 25)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】: 简单的沙发床" },
+            { type: "showImage", src: "./image in the game/character/shadow.png" },
+            { type: "textMessage", text: "zq警官:很短小的沙发床啊，我听外界传闻说榔头男身高八尺有余，竟然用样的沙发床啊"},
+            { type: "textMessage", text: "wx警官:那都是都市传说啦，很多都夸大了不少，其实没人真正见过榔头男的真面目"}
+          ]
+        }
+      ],
+    }
+>>>>>>> Stashed changes
   },
   
   Kitchen: {
@@ -470,6 +522,7 @@ cutsceneSpaces: {
             { type: "changeMap", map: "Bedroom", x: utils.withGrid(18), y: utils.withGrid(31), direction: "up" }
           ]
         }
+<<<<<<< Updated upstream
       ],
        [utils.asGridCoord(22, 17)]: [
         {
@@ -521,6 +574,9 @@ cutsceneSpaces: {
           ]
         }
       ],
+=======
+      ]
+>>>>>>> Stashed changes
     }
   },
   
