@@ -157,7 +157,7 @@ class OverworldMap {
                 // 触发冰箱内部检查的文本消息
                 const message = new TextMessage({
                   text: "你打开了冰箱门。\n\n几瓶矿泉水\n一小盒吃了一半的超市沙拉\n一小罐果酱\n看不到需要烹饪的新鲜食材。",
-                  backgroundImage: "./fridge_open.png",
+                  backgroundImage: "./image in the game/article/厨房的打火机.png",
                   onComplete: () => {
                     console.log("冰箱检查完成");
                   }
@@ -220,6 +220,57 @@ class OverworldMap {
     }
   });
 }
+
+    // 阳台交互
+    if (this.id === "Balcony") {
+      const interactions = [
+        {
+          text: "这里似乎有一台洗衣机。",
+          // 占位坐标，后续可自行修改为准确位置
+          range: { xStart: 22, xEnd: 26, yStart: 10, yEnd: 15 },
+          events: [
+            { type: "textMessage", text: "你来到洗衣机前。" },
+            {
+              type: "interactionMenu",
+              title: "是否要打开洗衣机",
+              options: [
+                {
+                  label: "打开",
+                  description: "打开洗衣机看看里面有什么",
+                  handler: () => {
+                    const message = new TextMessage({
+                      text: "你打开了洗衣机\n\n新线索[一些没洗的衣服]\n两件宽大的t恤\n一件黑色工装外套\n一条深蓝色工装裤。",
+                      onComplete: () => {}
+                    });
+                    message.init(document.querySelector(".game-container"));
+                  }
+                },
+                {
+                  label: "离开",
+                  description: "暂时不打开",
+                  handler: () => {}
+                }
+              ]
+            }
+          ]
+        }
+      ];
+
+      interactions.forEach(({ text, range, events }) => {
+        for (let x = range.xStart; x <= range.xEnd; x++) {
+          for (let y = range.yStart; y <= range.yEnd; y++) {
+            this.cutsceneSpaces[utils.asGridCoord(x, y)] = [
+              {
+                events: events || [
+                  { type: "textMessage", text }
+                ]
+              }
+            ];
+          }
+        }
+      });
+    }
+
     // 实例化对象
     Object.keys(this.gameObjects).forEach(key => {
       const conf = this.gameObjects[key];
