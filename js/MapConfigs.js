@@ -105,8 +105,7 @@ window.OverworldMaps = {
   [utils.asGridCoord(15, 26)]: [
         {
           events: [
-            { type: "textMessage", text: "【新线索】:一个捆得很紧的麻袋"},
-            { type: "showImage", src:"./image in the game/character/2walking.png"  },
+            { type: "textMessage", text: "【新线索】:一个捆得很紧的麻袋",backgroundImage:"./image in the game/character/2walking.png"},
             { type: "textMessage", text: "zq警官:是榔头男作案时的风衣帽子和墨镜，看来这的确就是榔头男的家了" },
           ]
         }
@@ -115,8 +114,7 @@ window.OverworldMaps = {
     [utils.asGridCoord(19, 32)]: [
         {
           events: [
-            { type: "textMessage", text: "【新线索】：这应该是快递员送来的包裹，有几处可能是运输时的碰撞导致的凹陷。箱子有一点重量"},
-            { type: "showImage", src: "./image in the game/character/2walking.png" },
+            { type: "textMessage", text: "【新线索】：这应该是快递员送来的包裹，有几处可能是运输时的碰撞导致的凹陷。箱子有一点重量", backgroundImage:"./image in the game/character/2walking.png" },
             { type: "textMessage", text: "zq警官:！！扳手！这大小……确实很像凶器！完全有可能造成死者头部的伤痕！"},
             { type: "textMessage", text: "zq警官:但是这也太干净了。不像是凶器……不过也有可能被凶手细致的清洗过了"},
             { type: "textMessage", text: "wx警官:很有可能是取货员用这个扳手杀了人，清洗干净再藏到这个快递箱中，嫁祸给快递员！！"},
@@ -251,8 +249,7 @@ cutsceneSpaces: {
   [utils.asGridCoord(14, 15)]: [
     {
       events: [
-        { type: "textMessage", text: "【新线索】：床头柜上的书" },
-        { type: "showImage", src: "./image in the game/character/shadow.png" },
+        { type: "textMessage", text: "【新线索】：床头柜上的书",backgroundImage: "./image in the game/character/shadow.png" },
       ]
     }
   ],
@@ -260,8 +257,7 @@ cutsceneSpaces: {
   [utils.asGridCoord(18, 15)]: [
     {
       events: [
-        { type: "textMessage", text: "【新线索】：老式的大衣柜，柜门都有些破损" },
-        { type: "showImage", src: "./image in the game/character/shadow.png" },
+        { type: "textMessage", text: "【新线索】：老式的大衣柜，柜门都有些破损" ,backgroundImage:"./image in the game/character/shadow.png"},
         { type: "textMessage", text: "wx警官:打开它看看吧，说不定里面是榔头男的作案工具呢" },
         { type: "showImage", src: "./image in the game/character/shadow.png" },
       ]
@@ -271,8 +267,7 @@ cutsceneSpaces: {
   [utils.asGridCoord(18, 17)]: [
     {
       events: [
-        { type: "textMessage", text: "【新线索】：抽屉柜" },
-        { type: "showImage", src: "./image in the game/character/shadow.png" },
+        { type: "textMessage", text: "【新线索】：抽屉柜",backgroundImage: "./image in the game/character/shadow.png"},
         { type: "textMessage", text: "zq警官:空的吗，里面的东西被人拿走了还是本来就什么也没放啊" },
       ]
     }
@@ -481,8 +476,7 @@ cutsceneSpaces: {
        [utils.asGridCoord(22, 17)]: [
         {
           events: [
-            { type: "textMessage", text: "【新线索】:分外干净的马桶" },
-            { type: "showImage", src: "./image in the game/character/2walking.png" },
+            { type: "textMessage", text: "【新线索】:分外干净的马桶",backgroundImage:"./image in the game/character/2walking.png" },
             { type: "textMessage", text: "zq警官:奇怪，这到了卫生间就好像换了一番景象" },
             { type: "textMessage", text: "wx警官:是啊，洁净的有些诡异了" },
           ]
@@ -491,8 +485,7 @@ cutsceneSpaces: {
       [utils.asGridCoord(22, 23)]: [
         {
           events: [
-            { type: "textMessage", text: "【新线索】:垃圾桶" },
-            { type: "showImage", src: "./image in the game/character/2walking.png" },
+            { type: "textMessage", text: "【新线索】:垃圾桶,一个小的不锈钢脚踏式垃圾桶，里面套着干净的垃圾袋，桶内空空如也。" ,backgroundImage:"./image in the game/character/2walking.png"},
             { type: "textMessage", text: "zq警官:刚倒的垃圾吗，里面一点垃圾都没有" },
             { type: "textMessage", text: "wx警官:奇怪，为什么客厅的垃圾就没倒呢" },
           ]
@@ -501,16 +494,14 @@ cutsceneSpaces: {
       [utils.asGridCoord(15, 12)]: [
         {
           events: [
-            { type: "textMessage", text: "【新线索】:洗手台" },
-            { type: "showImage", src: "./image in the game/article/厕所洗手台.png"},
+            { type: "textMessage", text: "【新线索】:洗手台",backgroundImage:"./image in the game/article/厕所洗手台.png" },
           ]
         }
       ],
        [utils.asGridCoord(11, 14)]: [
         {
           events: [
-            { type: "textMessage", text: "【新线索】:置物台" },
-            { type: "showImage", src: "./image in the game/article/置物台.png" },
+            { type: "textMessage", text: "【新线索】:置物台",backgroundImage:"./image in the game/article/置物台.png" },
             { type: "textMessage", text: "wx警官:这置物台也这么整洁啊？！" },
           ]
         }
@@ -518,8 +509,7 @@ cutsceneSpaces: {
       [utils.asGridCoord(8, 15)]: [
         {
           events: [
-            { type: "textMessage", text: "【新线索】:装洗浴用品的篮子" },
-            { type: "showImage", src: "./image in the game/character/2walking.png" },
+            { type: "textMessage", text: "【新线索】:装洗浴用品的篮子",backgroundImage: "./image in the game/character/2walking.png"},
             { type: "textMessage", text: "zq警官:这些牙膏啥的像是刚囤的货" },
           ]
         }
@@ -527,8 +517,7 @@ cutsceneSpaces: {
       [utils.asGridCoord(8, 23)]: [
         {
           events: [
-            { type: "textMessage", text: "【新线索】:浴缸" },
-            { type: "showImage", src: "./image in the game/article/浴缸.png" },
+            { type: "textMessage", text: "【新线索】:浴缸",backgroundImage: "./image in the game/article/浴缸.png" },
             { type: "textMessage", text: "zq警官:这浴缸也是一点使用痕迹都没有啊" },
             { type: "textMessage", text: "wx警官:是的，这应该也是才打扫过不久的" },
           ]
