@@ -76,10 +76,11 @@ class RevealingText {
 
 // Text message UI
 class TextMessage {
-  constructor({ text, onComplete, backgroundImage }) {
+  constructor({ text, onComplete, backgroundImage, backgroundSize }) {
     this.text = text;
     this.onComplete = onComplete;
     this.backgroundImage = backgroundImage;
+    this.backgroundSize = backgroundSize || 'cover';
     this.element = null;
   }
 
@@ -109,7 +110,7 @@ class TextMessage {
         // 计算绝对URL并确保编码
         const absUrl = new URL(this.backgroundImage, document.baseURI).href;
         backgroundLayer.style.backgroundImage = `url("${absUrl}")`;
-        backgroundLayer.style.backgroundSize = 'cover';
+        backgroundLayer.style.backgroundSize = this.backgroundSize;
         backgroundLayer.style.backgroundPosition = 'center';
         backgroundLayer.style.backgroundRepeat = 'no-repeat';
         // backgroundLayer.style.zIndex = '10';
