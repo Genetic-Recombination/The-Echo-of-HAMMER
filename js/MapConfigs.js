@@ -105,7 +105,7 @@ window.OverworldMaps = {
   [utils.asGridCoord(15, 26)]: [
         {
           events: [
-            { type: "textMessage", text: "【新线索】:一个捆的很紧的麻袋"},
+            { type: "textMessage", text: "【新线索】:一个捆得很紧的麻袋"},
             { type: "showImage", src:"./image in the game/character/2walking.png"  },
             { type: "textMessage", text: "zq警官:是榔头男作案时的风衣帽子和墨镜，看来这的确就是榔头男的家了" },
           ]
@@ -127,7 +127,7 @@ window.OverworldMaps = {
   [utils.asGridCoord(28, 41)]: [
         {
           events: [
-            { type: "textMessage", text: "【新线索】：一个简陋的木质鞋柜，看起来有些年头了", backgroundImage: "./image in the game/article/客厅鞋柜.png", backgroundSize: "contain" }
+            { type: "textMessage", text: "【新线索】：一个简陋的木质鞋柜，看起来有些年头了", backgroundImage: "./image in the game/article/客厅鞋柜.png", backgroundSize: "contain", backgroundLayout: "panel", blurAmount: "10px", panelPadding: "18px", panelMaxWidth: "60vw", panelMaxHeight: "60vh", panelBackground: "rgba(255,255,255,0.94)", panelBorderRadius: "14px", panelBoxShadow: "0 12px 36px rgba(0,0,0,0.35)" }
           ]
         }
       ],//鞋柜
@@ -282,7 +282,7 @@ cutsceneSpaces: {
   ...(() => {
     const spaces = {};
     const events = [
-      { type: "textMessage", text: "(卧室里，一个高大的男人仰面躺在地上一动不动。他穿着厚重的长袖外套，头上戴着一顶压得很低的帽子，仿佛随时准备出门。穿戴得异常整齐。)" },
+      { type: "textMessage", text: "(卧室里，一个高大的男人仰面躺在地上一动不动。他穿着厚重的长袖外套，头上戴着一顶压得很低的帽子，仿佛随时准备出门。穿得异常整齐。)" },
       { type: "textMessage", text: "(在他的手边，倾倒着一个棕色的药瓶，几粒白色药片散落在枕边和地面上。)" },
 
       { type: "textMessage", text: "Zq警官 & Wx警官：\n（同时惊呼）“喂！？你怎么样？！”" },
