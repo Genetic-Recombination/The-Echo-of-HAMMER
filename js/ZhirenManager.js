@@ -28,7 +28,7 @@
         border: 2px solid rgba(0,0,0,0.2);
         box-shadow: 0 4px 10px rgba(0,0,0,0.25);
         cursor: pointer;
-        z-index: 6;
+        z-index: 5;
       }
       .ZhirenButton:hover { filter: brightness(1.05); }
 
