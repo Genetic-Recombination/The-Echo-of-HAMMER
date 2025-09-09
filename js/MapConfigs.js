@@ -136,7 +136,7 @@ window.OverworldMaps = {
         { type: "textMessage", text: "【新线索】客厅-鞋柜：一个简陋的木质鞋柜，看起来有些年头了",backgroundImage:"./image in the game/article/客厅鞋柜.png" },
       ]),
   // 垃圾桶交互点 - 多格
-      ...utils.interactionRange(41, 43, 26, 28, [
+      ...utils.interactionRange(41, 43, 26, 29, [
         { type: "discoverClue", id: "clue_13" },
         { type: "textMessage", text: "【新线索】客厅-垃圾桶：很脏很乱的垃圾桶，像是很久没人打理了" ,backgroundImage:"./image in the game/article/客厅的垃圾桶.png"},
         { type: "textMessage", text: "zq警官:这榔头男也太不讲卫生了，怎么会这么乱啊" , who: "zq"},
@@ -245,14 +245,6 @@ window.OverworldMaps = {
         { type: "textMessage", text: "zq警官:空的吗，里面的东西被人拿走了还是本来就什么也没放啊" , who: "zq"},
       ]),
       ...utils.interactionRange(7, 7, 22, 28, [
-        { type: "discoverClue", id: "clue_18" },
-        { type: "textMessage", text: "【新线索】卧室-沙发",backgroundImage: "./image in the game/article/我是沙发.png"},
-        { type: "textMessage", text: "zq警官:诶？这个沙发床怎么这么小巧啊，据说榔头男身高八尺有余，就睡在这个沙发上吗" , who: "zq"},
-        { type: "textMessage", text: "wx警官:那都是都市传说啦，实际上没人见过榔头男的真面目，那天的目击者喝醉了酒其实也没看清" , who: "wx"},
-        { type: "textMessage", text: "zq警官:哦？我想起来了，就像尼斯湖水怪是吧，大众根据想象具体化了凶手的形象" , who: "zq"},
-        { type: "textMessage", text: "wx警官:就是这样的，你看倒下的榔头男也不过170公分而已" , who: "wx"},
-      ]),
-      ...utils.interactionRange(7, 7, 27, 28, [
         { type: "discoverClue", id: "clue_18" },
         { type: "textMessage", text: "【新线索】卧室-沙发",backgroundImage: "./image in the game/article/我是沙发.png"},
         { type: "textMessage", text: "zq警官:诶？这个沙发床怎么这么小巧啊，据说榔头男身高八尺有余，就睡在这个沙发上吗" , who: "zq"},
