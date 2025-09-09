@@ -270,8 +270,7 @@ window.OverworldMaps = {
       { type: "textMessage", text: "wx警官：\n（拿起药瓶看了一眼）\n“是安眠药！”" , who: "wx"},
 
       { type: "textMessage", text: "(两位警官都沉默了，目光从尸体移到散落的药片，再移到死者过于整齐的穿着上。现场看起来像是一场…)" },
-      { type: "textMessage", text: "wx警官：\n（语气带着不确定的推测）\n“难道…是畏罪自杀？他穿好衣服戴上帽子…是原本想逃跑，但发现逃不掉后，就选择了自我了断？”" , who: "wx"},
-      { type: "showImage", src: "./image in the game/article/big_dead.png" },
+      { type: "textMessage", text: "wx警官：\n（语气带着不确定的推测）\n“难道…是畏罪自杀？他穿好衣服戴上帽子…是原本想逃跑，但发现逃不掉后，就选择了自我了断？”" , who: "wx",backgroundImage: "./image in the game/article/big_dead.png"},
 
       {
         type: "interactionMenu",
