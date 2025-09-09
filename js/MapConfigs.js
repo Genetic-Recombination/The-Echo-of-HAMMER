@@ -177,14 +177,14 @@ window.OverworldMaps = {
         { type: "textMessage", text: "wx警官:看来这榔头男随时准备搬家逃跑啊，辛亏我们接到线报就一直在这监视" , who: "wx"},
       ]),
   // 大时钟交互点 - 原始位置
-      ...utils.interactionRange(25, 27, 12, 14, [
+      ...utils.interactionRange(25, 27, 12, 15, [
         { type: "textMessage", text: "破旧的大时钟，看来指针已经停摆好久了" },
       ]),
-      ...utils.interactionRange(37, 39, 15, 17, [
-        { type: "textMessage", text: "两株小仙人掌，看起来很久没有浇水了" },
+      ...utils.interactionRange(37, 40, 14, 18, [
+        { type: "textMessage", text: "一株仙人掌，看起来很久没有浇水了" },
       ]),
-      ...utils.interactionRange(45, 48, 15, 17, [
-        { type: "textMessage", text: "两株小仙人掌，看起来很久没有浇水了" },
+       ...utils.interactionRange(46, 48, 15, 17, [
+        { type: "textMessage", text: "一株略显老态的盆栽。" },
       ])
     }
   },
