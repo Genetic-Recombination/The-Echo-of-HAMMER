@@ -69,9 +69,8 @@ class InteractionMenu {
     this.confirm = new KeyPressListener("Space", (event) => {
       const current = document.activeElement;
       if (current && current.matches('button[data-button]')) {
-        event?.preventDefault();
+        // 仅阻止冒泡，交由按钮的原生 Space 激活（在 keyup 上触发）来触发 click，避免重复触发
         event?.stopPropagation();
-        current.click();
       }
     });
 
