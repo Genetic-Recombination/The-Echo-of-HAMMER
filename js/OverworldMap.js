@@ -350,6 +350,7 @@ setTimeout(() => {
   const interactions = [
     {
       text: "新线索【灰烬】\n桶内底层有一些灰白色的纸灰和少量未完全烧尽的碎纸片，纸片边缘卷曲焦黑，已经看不清了。",
+        backgroundImage: "./image in the game/article/厨房的垃圾桶.png",
       range: { xStart: 35, xEnd: 37, yStart: 21, yEnd: 24 }
     },
     {
@@ -368,7 +369,7 @@ setTimeout(() => {
                 // 触发冰箱内部检查的文本消息
                 const message = new TextMessage({
                   text: "你打开了冰箱门。\n\n几瓶矿泉水\n一小盒吃了一半的超市沙拉\n一小罐果酱\n看不到需要烹饪的新鲜食材。",
-                  backgroundImage: "./image in the game/article/厨房的打火机.png",
+                  backgroundImage: "./image in the game/article/冰箱内景.png",
                   onComplete: () => {
                     console.log("冰箱检查完成");
                   }
@@ -388,7 +389,7 @@ setTimeout(() => {
       ]
     },
     {
-      text: "水槽旁的橱柜\n柜门虚掩着。",
+      text: "水槽旁的橱柜\n柜门虚掩着。",backgroundImage: "./image in the game/article/厨房的柜子.png",
       range: { xStart: 17, xEnd: 20, yStart: 15, yEnd: 15 }
     },
     {
@@ -417,13 +418,13 @@ setTimeout(() => {
     },
   ];
 
-  interactions.forEach(({ text, range, events }) => {
+  interactions.forEach(({ text, range, events, backgroundImage }) => {
     for (let x = range.xStart; x <= range.xEnd; x++) {
       for (let y = range.yStart; y <= range.yEnd; y++) {
         this.cutsceneSpaces[utils.asGridCoord(x, y)] = [
           {
             events: events || [
-              { type: "textMessage", text }
+              { type: "textMessage", text, backgroundImage }
             ]
           }
         ];
@@ -501,13 +502,13 @@ setTimeout(() => {
         },
       ];
 
-      interactions.forEach(({ text, range, events }) => {
+      interactions.forEach(({ text, range, events, backgroundImage }) => {
         for (let x = range.xStart; x <= range.xEnd; x++) {
           for (let y = range.yStart; y <= range.yEnd; y++) {
             this.cutsceneSpaces[utils.asGridCoord(x, y)] = [
               {
                 events: events || [
-                  { type: "textMessage", text }
+                  { type: "textMessage", text, backgroundImage }
                 ]
               }
             ];
@@ -544,7 +545,8 @@ setTimeout(() => {
     const spaceMatch = this.cutsceneSpaces[faceKey];
     if (!this.isCutscenePlaying && spaceMatch) {
       const scenario = spaceMatch.find(s => (s.required || []).every(f => playerState.storyFlags[f])) || spaceMatch[0];
-      const eventsCopy = JSON.parse(JSON.stringify(scenario.events));
+      // 修复：不要使用 JSON 深拷贝（会丢失函数，如 interactionMenu 的 handler），改为浅拷贝以保留函数
+      const eventsCopy = scenario.events.map(ev => ({ ...ev }));
       this.startCutscene(eventsCopy);
       return;
     }
@@ -565,7 +567,8 @@ setTimeout(() => {
     const match = this.cutsceneSpaces[`${hero.x},${hero.y}`];
     if (!this.isCutscenePlaying && match) {
       const scenario = match.find(s => (s.required || []).every(f => playerState.storyFlags[f])) || match[0];
-      const eventsCopy = JSON.parse(JSON.stringify(scenario.events));
+      // 修复：不要使用 JSON 深拷贝，改为浅拷贝保留函数（如 interactionMenu 的 handler）
+      const eventsCopy = scenario.events.map(ev => ({ ...ev }));
       this.startCutscene(eventsCopy);
     }
   }

@@ -825,7 +825,53 @@ window.OverworldMaps = {
     ];
 
     const repeatEvents = [
-      { type: "textMessage", text: "(尸体已经检查过了……继续寻找其他线索吧。)" }
+      { type: "textMessage", text: "(再次检查尸体...)" },
+      {
+        type: "interactionMenu",
+        title: "选择检查部位",
+        options: [
+          {
+            label: "查看安眠药",
+            description: "仔细检查死者旁边的安眠药瓶和散落的药片",
+            handler: () => {
+              // 使用事件系统创建文本消息，而不是直接创建
+              window.overworld.map.startCutscene([
+                { type: "textMessage", text: "药瓶上的标签显示这是一种强效安眠药，需要凭处方购买。瓶子里还剩下几粒药片，地上散落的药片数量不多，看起来死者并没有服用过量的药物。" }
+              ]);
+            }
+          },
+          {
+            label: "掀开帽子",
+            description: "查看死者的面部特征",
+            handler: () => {
+              // 使用事件系统创建文本消息，而不是直接创建
+              window.overworld.map.startCutscene([
+                { type: "textMessage", text: "你小心地掀开死者的帽子，露出了一张中年男性的脸。他的表情平静，没有痛苦或挣扎的迹象。脸色略显苍白，但没有明显的外伤或异常。" }
+              ]);
+            }
+          },
+          {
+            label: "检查上衣",
+            description: "检查死者穿着的外套",
+            handler: () => {
+              // 使用事件系统创建文本消息，而不是直接创建
+              window.overworld.map.startCutscene([
+                { type: "textMessage", text: "死者穿着一件厚重的长袖外套，衣物整洁，没有明显的撕扯或搏斗痕迹。口袋里有一张皱巴巴的纸条，上面写着一串数字，可能是某种密码或联系方式。" }
+              ]);
+            }
+          },
+          {
+            label: "检查裤子",
+            description: "检查死者的裤子和口袋",
+            handler: () => {
+              // 使用事件系统创建文本消息，而不是直接创建
+              window.overworld.map.startCutscene([
+                { type: "textMessage", text: "死者的裤子也很整洁，口袋里有一把公寓钥匙和一些零钱。没有发现钱包或身份证件，这有些奇怪，一个准备出门的人通常会携带这些物品。" }
+              ]);
+            }
+          }
+        ]
+      }
     ];
 
     for (let x = 15; x <= 17; x++) {
