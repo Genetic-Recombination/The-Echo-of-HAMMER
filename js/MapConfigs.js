@@ -121,10 +121,10 @@ window.OverworldMaps = {
       ...utils.interactionRange(19, 19, 31, 33, [
         { type: "discoverClue", id: "clue_10" },
         { type: "textMessage", text: "【新线索】：这应该是快递员送来的包裹，有几处可能是运输时的碰撞导致的凹陷。箱子有一点重量", backgroundImage:"./image in the game/article/客厅快递箱.png" },
-        { type: "textMessage", text: "zq警官:！！扳手！这大小……确实很像凶器！完全有可能造成死者头部的伤痕！"},
-        { type: "textMessage", text: "zq警官:但是这也太干净了。不像是凶器……不过也有可能被凶手细致的清洗过了"},
-        { type: "textMessage", text: "wx警官:很有可能是取货员用这个扳手杀了人，清洗干净再藏到这个快递箱中，嫁祸给快递员！！"},
-        { type: "textMessage", text: "zq警官:大胆假设，小心求证。你有证据吗？"},
+        { type: "textMessage", text: "zq警官:！！扳手！这大小……确实很像凶器！完全有可能造成死者头部的伤痕！",who:"zq"},
+        { type: "textMessage", text: "zq警官:但是这也太干净了。不像是凶器……不过也有可能被凶手细致的清洗过了",who:"zq"},
+        { type: "textMessage", text: "wx警官:很有可能是取货员用这个扳手杀了人，清洗干净再藏到这个快递箱中，嫁祸给快递员！！",who:"wx"},
+        { type: "textMessage", text: "zq警官:大胆假设，小心求证。你有证据吗？",who:"zq"},
       ]),
   // 鞋柜交互点 - 多格
       ...utils.interactionRange(28, 28, 39, 42, [
@@ -269,7 +269,6 @@ window.OverworldMaps = {
         { type: "textMessage", text: "wx警官:就是这样的，你看倒下的榔头男也不过170公分而已" , who: "wx"},
       ]),
 
-
   // 新增：卧室尸体九格触发
   ...(() => {
     const spaces = {};
@@ -337,17 +336,48 @@ window.OverworldMaps = {
             handler: () => {
               // 使用事件系统创建文本消息，而不是直接创建
               window.overworld.map.startCutscene([
-                { type: "textMessage", text: "药瓶上的标签显示这是一种强效安眠药，需要凭处方购买。瓶子里还剩下几粒药片，地上散落的药片数量不多，看起来死者并没有服用过量的药物。" }
+                { type: "textMessage", text: "是一瓶普通且常见的安眠药，里面的药片所剩无几，足以致死。" }
               ]);
             }
           },
           {
-            label: "掀开帽子",
+            label: "查看头部",
             description: "查看死者的面部特征",
             handler: () => {
               // 使用事件系统创建文本消息，而不是直接创建
               window.overworld.map.startCutscene([
-                { type: "textMessage", text: "你小心地掀开死者的帽子，露出了一张中年男性的脸。他的表情平静，没有痛苦或挣扎的迹象。脸色略显苍白，但没有明显的外伤或异常。" }
+                { type: "textMessage", text: "一顶黑色棒球帽，有点旧了。" },
+                {
+                  type: "interactionMenu",
+                  options: [
+                    {
+                      label: "摘掉帽子",
+                      description: "仔细查看帽子下面",
+                      handler: () => {
+                        window.overworld.map.startCutscene([
+                          { type: "textMessage", text: "你小心地摘下了帽子..." },
+                          { type: "textMessage", text: "死者头顶靠近后脑勺的位置，有一处明显的、已经凝结发暗的血迹，周围的头发被血粘在一起。\n伤口看上去应该是钝器击打造成的伤口。" },
+                          { type: "textMessage", text: "zq警官：这…这是？！伤口？！", who: "zq" },
+                          { type: "textMessage", text: "wx警官：死因不是摄入过量安眠药！他死前头部遭受过重击！", who: "wx" },
+                          { type: "textMessage", text: "果然，安眠药只是伪装。他真正的死因，是头部受到的这处致命钝器伤！这不是自杀现场，而是谋杀!",who:"detective" },
+                          { type: "textMessage", text: "（脸色变得极其严肃）谋杀...那么凶手...", who: "zq" },
+                           { type: "textMessage", text: "就在那三个人中间",who:"detective" },
+                           { type: "textMessage", text: "难道是先前受害者的亲友在复仇？", who: "wx" },
+                          { type: "textMessage", text: "在收集到足够的证据之前，还不能妄下定论。",who:"detective" },
+                        ]);
+                      }
+                    },
+                    {
+                      label: "不摘帽子",
+                      description: "保持现场原状",
+                      handler: () => {
+                        window.overworld.map.startCutscene([
+                          { type: "textMessage", text: "你决定暂时不动帽子，保持现场的完整性。" }
+                        ]);
+                      }
+                    }
+                  ]
+                }
               ]);
             }
           },
@@ -357,7 +387,7 @@ window.OverworldMaps = {
             handler: () => {
               // 使用事件系统创建文本消息，而不是直接创建
               window.overworld.map.startCutscene([
-                { type: "textMessage", text: "死者穿着一件厚重的长袖外套，衣物整洁，没有明显的撕扯或搏斗痕迹。口袋里有一张皱巴巴的纸条，上面写着一串数字，可能是某种密码或联系方式。" }
+                { type: "textMessage", text: "是一件深色的棉质的长袖工装外套，搜查衣服口袋没有发现东西。" }
               ]);
             }
           },
@@ -367,7 +397,7 @@ window.OverworldMaps = {
             handler: () => {
               // 使用事件系统创建文本消息，而不是直接创建
               window.overworld.map.startCutscene([
-                { type: "textMessage", text: "死者的裤子也很整洁，口袋里有一把公寓钥匙和一些零钱。没有发现钱包或身份证件，这有些奇怪，一个准备出门的人通常会携带这些物品。" }
+                { type: "textMessage", text: "深蓝色工装裤，Zq警官说这是附近住的邻居看见他最常有的穿着。搜查裤兜发现305公寓的钥匙。" }
               ]);
             }
           }
@@ -530,7 +560,6 @@ window.OverworldMaps = {
       ...utils.verticalWall(21, 22, 25),//底右
       ...utils.verticalWall(17, 22, 25),//底左
 
-
      ...utils.horizontalWall(21, 9, 17),//下左墙
      ...utils.horizontalWall(21, 21, 25),//下右墙
      ...utils.horizontalWall(26, 17, 21),//下墙
@@ -543,3 +572,4 @@ window.OverworldMaps = {
     }
   }
 }
+
