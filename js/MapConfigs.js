@@ -105,9 +105,10 @@ window.OverworldMaps = {
   [utils.asGridCoord(15, 26)]: [
         {
           events: [
-            { type: "textMessage", text: "【新线索】:一个捆得很紧的麻袋"},
-            { type: "showImage", src:"./image in the game/character/2walking.png"  },
-            { type: "textMessage", text: "zq警官:是榔头男作案时的风衣帽子和墨镜，看来这的确就是榔头男的家了" },
+            { type: "textMessage", text: "【新线索】:一个捆得很紧的麻袋",backgroundImage:"./image in the game/article/客厅麻袋.png"},
+            { type: "textMessage", text: "zq警官:打开看看吧，这能是什么呢？", who: "zq"},
+            { type: "textMessage", text: "一件沾血的风衣，帽子和墨镜", backgroundImage:"./image in the game/article/麻袋里：沾血的风衣.png"},
+            { type: "textMessage", text: "zq警官:！！！什么！！！是榔头男作案时的风衣帽子和墨镜，看来这的确就是榔头男的家了", who: "zq" },
           ]
         }
       ],
@@ -115,8 +116,7 @@ window.OverworldMaps = {
     [utils.asGridCoord(19, 32)]: [
         {
           events: [
-            { type: "textMessage", text: "【新线索】：这应该是快递员送来的包裹，有几处可能是运输时的碰撞导致的凹陷。箱子有一点重量"},
-            { type: "showImage", src: "./image in the game/character/2walking.png" },
+            { type: "textMessage", text: "【新线索】：这应该是快递员送来的包裹，有几处可能是运输时的碰撞导致的凹陷。箱子有一点重量", backgroundImage:"./image in the game/article/客厅快递箱.png" },
             { type: "textMessage", text: "zq警官:！！扳手！这大小……确实很像凶器！完全有可能造成死者头部的伤痕！"},
             { type: "textMessage", text: "zq警官:但是这也太干净了。不像是凶器……不过也有可能被凶手细致的清洗过了"},
             { type: "textMessage", text: "wx警官:很有可能是取货员用这个扳手杀了人，清洗干净再藏到这个快递箱中，嫁祸给快递员！！"},
@@ -127,54 +127,54 @@ window.OverworldMaps = {
   [utils.asGridCoord(28, 41)]: [
         {
           events: [
-            { type: "textMessage", text: "【新线索】：一个简陋的木质鞋柜，看起来有些年头了", backgroundImage: "./image in the game/article/客厅鞋柜.png", backgroundSize: "contain", backgroundLayout: "panel", blurAmount: "10px", panelPadding: "18px", panelMaxWidth: "60vw", panelMaxHeight: "60vh", panelBackground: "rgba(255,255,255,0.94)", panelBorderRadius: "14px", panelBoxShadow: "0 12px 36px rgba(0,0,0,0.35)" }
+            { type: "textMessage", text: "【新线索】：一个简陋的木质鞋柜，看起来有些年头了",backgroundImage:"./image in the game/article/客厅鞋柜.png" },
           ]
         }
       ],//鞋柜
    [utils.asGridCoord(41, 28)]: [
         {
           events: [
-            { type: "textMessage", text: "【新线索】：很脏很乱的垃圾桶，像是很久没人打理了", backgroundImage: "./image in the game/character/shadow.png" },
-            { type: "textMessage", text: "zq警官:这榔头男也太不讲卫生了，怎么会这么乱啊" },
+            { type: "textMessage", text: "【新线索】：很脏很乱的垃圾桶，像是很久没人打理了" ,backgroundImage:"./image in the game/article/客厅的垃圾桶.pnng"},
+            { type: "textMessage", text: "zq警官:这榔头男也太不讲卫生了，怎么会这么乱啊" , who: "zq"},
           ]
         }
       ],//垃圾桶
     [utils.asGridCoord(12, 32)]: [
         {
           events: [
-            { type: "textMessage", text: "【新线索】：披萨和收据" ,backgroundImage: "./image in the game/character/shadow.png" },
-            { type: "textMessage", text: "wx警官:这张单据是披萨外卖员留下的，上面有他的联系方式以及店铺的联系方式。价格和送到的披萨口味一致。" },
-            { type: "textMessage", text: "zq警官:奇怪？？送货员和机车女的收据怎么不见了呢？" },
+            { type: "textMessage", text: "【新线索】：披萨和收据",backgroundImage:"./image in the game/article/客厅披萨盒.png" },
+            { type: "textMessage", text: "wx警官:这张单据是披萨外卖员留下的，上面有他的联系方式以及店铺的联系方式。价格和送到的披萨口味一致。" , who: "wx"},
+            { type: "textMessage", text: "zq警官:奇怪？？送货员和机车女的收据怎么不见了呢？" , who: "zq"},
           ]
         }
       ],
       [utils.asGridCoord(9, 34)]: [
         {
           events: [
-            { type: "textMessage", text: "【新线索】：一个置物箱，杂七杂八的东西都堆在一块", backgroundImage: "./image in the game/character/shadow.png" },
-            { type: "textMessage", text: "wx警官:这都是些啥啊，好乱啊" },
+            { type: "textMessage", text: "【新线索】：一个置物箱，杂七杂八的东西都堆在一块",backgroundImage:"./image in the game/article/客厅的置物篮.png" },
+            { type: "textMessage", text: "wx警官:这都是些啥啊，好乱啊", who: "wx" },
           ]
         }
       ],
       [utils.asGridCoord(19, 36)]: [
         {
           events: [
-            { type: "textMessage", text: "【新线索】：一张款式老旧的布艺沙发靠墙摆放。沙发套看起来有些日子没洗了，颜色暗淡。", backgroundImage: "image in the game/article/客厅沙发.png" },
+            { type: "textMessage", text: "【新线索】：一张款式老旧的布艺沙发靠墙摆放。沙发套看起来有些日子没洗了，颜色暗淡。",backgroundImage: "image in the game/article/客厅沙发.png"},
           ]
         }
       ],
       [utils.asGridCoord(37, 36)]: [
         {
           events: [
-            { type: "textMessage", text: "【新线索】：墙边堆着两个扁平的棕色瓦楞纸箱", backgroundImage: "./image in the game/character/shadow.png" },
-            { type: "textMessage", text: "wx警官:看来这榔头男随时准备搬家逃跑啊，辛亏我们接到线报就一直在这监视" },
+            { type: "textMessage", text: "【新线索】：墙边堆着两个扁平的空棕色瓦楞纸箱" ,backgroundImage:"./image in the game/article/客厅箱子.png" },
+            { type: "textMessage", text: "wx警官:看来这榔头男随时准备搬家逃跑啊，辛亏我们接到线报就一直在这监视" , who: "wx"},
           ]
         }
       ],
       [utils.asGridCoord(26, 15)]: [
         {
           events: [
-            { type: "textMessage", text: "【新线索】：破旧的大时钟，看来指针已经停摆好久了", backgroundImage: "./image in the game/character/shadow.png" },
+            { type: "textMessage", text: "【新线索】：破旧的大时钟，看来指针已经停摆好久了" },
           ]
         }
       ],
@@ -208,20 +208,6 @@ window.OverworldMaps = {
         walkingSrc: "./image in the game/character/detectivewalking.png",
         useShadow: true,
       },
-      suspect: {
-        type: "Person",
-        x: utils.withGrid(7),
-        y: utils.withGrid(5),
-        src: "./image in the game/character/1.png",
-        talking: [
-          {
-            events: [
-              { type: "textMessage", text: "我是嫌疑人，但我是无辜的！", faceHero: "suspect" },
-              { type: "textMessage", text: "请相信我，我没有做任何坏事。" },
-            ]
-          }
-        ]
-      }
     },
     walls: {
     ...utils.verticalWall(25, 16, 20),//衣柜右侧竖墙
@@ -232,6 +218,8 @@ window.OverworldMaps = {
     ...utils.verticalWall(29, 0, 100),
     ...utils.verticalWall(21, 25, 33),//卫生间门右侧墙
     ...utils.verticalWall(16, 29, 100),
+    ...utils.verticalWall(14, 17,20),//死人左
+    ...utils.verticalWall(17, 17,20),//死人右
 
     ...utils.horizontalWall(20, 25, 28),//通往客厅门上厕横墙
     ...utils.horizontalWall(15, 13, 24),//衣柜下方横墙
@@ -241,18 +229,18 @@ window.OverworldMaps = {
     ...utils.horizontalWall(29, 0, 16),//沙发下横墙
     ...utils.horizontalWall(25, 21, 30),//沙发下横墙
     ...utils.horizontalWall(33, 0, 100),
+    ...utils.horizontalWall(17, 14,17),//死人上
+    ...utils.horizontalWall(20, 14,17),//死人下
     },
-cutsceneSpaces: {
+    cutsceneSpaces: {
   // 通往客厅 (28,21..24)
   ...utils.portalColumn(21, 24, 28, "LivingRoom", 5, 18, "right"),
   // 通往洗手间 (17..20,31)
   ...utils.portalLine(17, 20, 31, "Toilet", 20, 6, "down"),
-
   [utils.asGridCoord(14, 15)]: [
     {
       events: [
-        { type: "textMessage", text: "【新线索】：床头柜上的书" },
-        { type: "showImage", src: "./image in the game/character/shadow.png" },
+        { type: "textMessage", text: "【新线索】：床头柜上的书",backgroundImage: "./image in the game/article/床头柜.png" },
       ]
     }
   ],
@@ -261,9 +249,6 @@ cutsceneSpaces: {
     {
       events: [
         { type: "textMessage", text: "【新线索】：老式的大衣柜，柜门都有些破损" },
-        { type: "showImage", src: "./image in the game/character/shadow.png" },
-        { type: "textMessage", text: "wx警官:打开它看看吧，说不定里面是榔头男的作案工具呢" },
-        { type: "showImage", src: "./image in the game/character/shadow.png" },
       ]
     }
   ],
@@ -271,9 +256,8 @@ cutsceneSpaces: {
   [utils.asGridCoord(18, 17)]: [
     {
       events: [
-        { type: "textMessage", text: "【新线索】：抽屉柜" },
-        { type: "showImage", src: "./image in the game/character/shadow.png" },
-        { type: "textMessage", text: "zq警官:空的吗，里面的东西被人拿走了还是本来就什么也没放啊" },
+        { type: "textMessage", text: "【新线索】：抽屉柜",backgroundImage: "./image in the game/article/抽屉柜.png"},
+        { type: "textMessage", text: "zq警官:空的吗，里面的东西被人拿走了还是本来就什么也没放啊" , who: "zq"},
       ]
     }
   ],
@@ -281,21 +265,21 @@ cutsceneSpaces: {
   // 新增：卧室尸体九格触发
   ...(() => {
     const spaces = {};
-    const events = [
+    const firstTimeEvents = [
       { type: "textMessage", text: "(卧室里，一个高大的男人仰面躺在地上一动不动。他穿着厚重的长袖外套，头上戴着一顶压得很低的帽子，仿佛随时准备出门。穿得异常整齐。)" },
       { type: "textMessage", text: "(在他的手边，倾倒着一个棕色的药瓶，几粒白色药片散落在枕边和地面上。)" },
 
-      { type: "textMessage", text: "Zq警官 & Wx警官：\n（同时惊呼）“喂！？你怎么样？！”" },
-      { type: "textMessage", text: "(两人迅速冲上前去。Zq警官检查颈动脉，Wx警官则注意到了那个药瓶。)" },
+      { type: "textMessage", text: "wx&zq：\n（同时惊呼）“喂！？你怎么样？！”" , who: "wx&zq"},
+      { type: "textMessage", text: "(两人迅速冲上前去。zq警官检查颈动脉，wx警官则注意到了那个药瓶。)" },
 
-      { type: "textMessage", text: "Zq警官：\n（收回手，面色沉重地摇了摇头）\n“死了”" },
-      { type: "textMessage", text: "Wx警官：\n（拿起药瓶看了一眼）\n“是安眠药！”" },
+      { type: "textMessage", text: "zq警官：\n（收回手，面色沉重地摇了摇头）\n“死了”" , who: "zq"},
+      { type: "textMessage", text: "wx警官：\n（拿起药瓶看了一眼）\n“是安眠药！”" , who: "wx"},
 
       { type: "textMessage", text: "(两位警官都沉默了，目光从尸体移到散落的药片，再移到死者过于整齐的穿着上。现场看起来像是一场…)" },
-      { type: "textMessage", text: "Wx警官：\n（语气带着不确定的推测）\n“难道…是畏罪自杀？他穿好衣服戴好帽子…是原本想逃跑，但发现逃不掉后，就选择了自我了断？”" },
+      { type: "textMessage", text: "wx警官：\n（语气带着不确定的推测）\n“难道…是畏罪自杀？他穿好衣服戴上帽子…是原本想逃跑，但发现逃不掉后，就选择了自我了断？”" , who: "wx"},
 
       { type: "textMessage", text: "(凝重的背景音乐响起...)" },
-      { type: "showImage", src: "./image in the game/character/shadow.png" },
+      { type: "showImage", src: "./image in the game/article/big_dead.png" },
 
       {
         type: "interactionMenu",
@@ -328,12 +312,21 @@ cutsceneSpaces: {
             }
           }
         ]
-      }
+      },
+      // 关键：无论选择什么，立即标记已查看尸体，用于“一次性” gating
+      { type: "addStoryFlag", flag: "bedroom_corpse_viewed" }
     ];
 
-    for (let x = 14; x <= 16; x++) {
-      for (let y = 17; y <= 19; y++) {
-        spaces[utils.asGridCoord(x, y)] = [{ events }];
+    const repeatEvents = [
+      { type: "textMessage", text: "(尸体已经检查过了……继续寻找其他线索吧。)" }
+    ];
+
+    for (let x = 15; x <= 17; x++) {
+      for (let y = 18; y <= 20; y++) {
+        spaces[utils.asGridCoord(x, y)] = [
+          { required: ["bedroom_corpse_viewed"], events: repeatEvents },
+          { events: firstTimeEvents }
+        ];
       }
     }
     return spaces;
@@ -355,20 +348,6 @@ cutsceneSpaces: {
         src: "./image in the game/character/detectivewalking.png",
         walkingSrc: "./image in the game/character/detectivewalking.png",
         useShadow: true,
-      },
-      cook: {
-        type: "Person",
-        x: utils.withGrid(4),
-        y: utils.withGrid(4),
-        src: "./image in the game/character/picture/zq.png",
-        talking: [
-          {
-            events: [
-              { type: "textMessage", text: "我是厨师，案发时我在这里准备晚餐。", faceHero: "cook" },
-              { type: "textMessage", text: "我什么都没有看到，只听到了一些奇怪的声音。" },
-            ]
-          }
-        ]
       }
     },
     walls: {
@@ -391,34 +370,7 @@ cutsceneSpaces: {
     },
     cutsceneSpaces: {
       // 返回客厅
-      [utils.asGridCoord(1, 22)]: [
-        {
-          events: [
-            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(51), y: utils.withGrid(19), direction: "left" }
-          ]
-        }
-      ],
-      [utils.asGridCoord(1, 23)]: [
-        {
-          events: [
-            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(51), y: utils.withGrid(19), direction: "left" }
-          ]
-        }
-      ],
-      [utils.asGridCoord(1, 21)]: [
-        {
-          events: [
-            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(51), y: utils.withGrid(19), direction: "left" }
-          ]
-        }
-      ],
-      [utils.asGridCoord(1, 20)]: [
-        {
-          events: [
-            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(51), y: utils.withGrid(19), direction: "left" }
-          ]
-        }
-      ]
+      ...utils.portalColumn(20, 23, 1, "LivingRoom", 51, 19, "left")
   },
 },
   Toilet: {
@@ -457,20 +409,7 @@ cutsceneSpaces: {
     },
     cutsceneSpaces: {
       // 返回卧室
-      [utils.asGridCoord(18, 6)]: [
-        {
-          events: [
-            { type: "changeMap", map: "Bedroom", x: utils.withGrid(18), y: utils.withGrid(30), direction: "up" }
-          ]
-        }
-      ],
-      [utils.asGridCoord(19, 6)]: [
-        {
-          events: [
-            { type: "changeMap", map: "Bedroom", x: utils.withGrid(18), y: utils.withGrid(30), direction: "up" }
-          ]
-        }
-      ],
+      ...utils.portalLine(18, 19, 6, "Bedroom", 18, 30, "up"),
       [utils.asGridCoord(20, 6)]: [
         {
           events: [
@@ -482,55 +421,49 @@ cutsceneSpaces: {
         {
           events: [
             { type: "textMessage", text: "【新线索】:分外干净的马桶" },
-            { type: "showImage", src: "./image in the game/character/2walking.png" },
-            { type: "textMessage", text: "zq警官:奇怪，这到了卫生间就好像换了一番景象" },
-            { type: "textMessage", text: "wx警官:是啊，洁净的有些诡异了" },
+            { type: "textMessage", text: "zq警官:奇怪，这到了卫生间就好像换了一番景象" , who: "zq"},
+            { type: "textMessage", text: "wx警官:是啊，洁净的有些诡异了" , who: "wx"},
           ]
         }
       ],
       [utils.asGridCoord(22, 23)]: [
         {
           events: [
-            { type: "textMessage", text: "【新线索】:垃圾桶" },
-            { type: "showImage", src: "./image in the game/character/2walking.png" },
-            { type: "textMessage", text: "zq警官:刚倒的垃圾吗，里面一点垃圾都没有" },
-            { type: "textMessage", text: "wx警官:奇怪，为什么客厅的垃圾就没倒呢" },
+            { type: "textMessage", text: "【新线索】:垃圾桶,一个小的不锈钢脚踏式垃圾桶，里面套着干净的垃圾袋，桶内空空如也。" ,backgroundImage:"./image in the game/article/卫生间垃圾桶.png"},
+            { type: "textMessage", text: "zq警官:刚倒的垃圾吗，里面一点垃圾都没有" , who: "zq"},
+            { type: "textMessage", text: "wx警官:奇怪，为什么客厅的垃圾就没倒呢" , who: "wx"},
           ]
         }
       ], 
       [utils.asGridCoord(15, 12)]: [
         {
           events: [
-            { type: "textMessage", text: "【新线索】:洗手台" },
-            { type: "showImage", src: "./image in the game/article/厕所洗手台.png"},
+            { type: "textMessage", text: "【新线索】:洗手台",backgroundImage:"./image in the game/article/厕所洗手台.png" },
           ]
         }
       ],
        [utils.asGridCoord(11, 14)]: [
         {
           events: [
-            { type: "textMessage", text: "【新线索】:置物台" },
-            { type: "showImage", src: "./image in the game/article/置物台.png" },
-            { type: "textMessage", text: "wx警官:这置物台也这么整洁啊？！" },
+            { type: "textMessage", text: "【新线索】:置物台",backgroundImage:"./image in the game/article/置物台.png" },
+            { type: "textMessage", text: "wx警官:这置物台也这么整洁啊？！" , who: "wx"},
+            { type: "textMessage", text: "zq警官:这些牙膏啥的也像是刚囤的货" , who: "zq"},
           ]
         }
       ],
       [utils.asGridCoord(8, 15)]: [
         {
           events: [
-            { type: "textMessage", text: "【新线索】:装洗浴用品的篮子" },
-            { type: "showImage", src: "./image in the game/character/2walking.png" },
-            { type: "textMessage", text: "zq警官:这些牙膏啥的像是刚囤的货" },
+            { type: "textMessage", text: "【新线索】:装洗浴用品的篮子",backgroundImage: "./image in the game/article/卫生间收纳盒.png"},
           ]
         }
       ], 
       [utils.asGridCoord(8, 23)]: [
         {
           events: [
-            { type: "textMessage", text: "【新线索】:浴缸" },
-            { type: "showImage", src: "./image in the game/article/浴缸.png" },
-            { type: "textMessage", text: "zq警官:这浴缸也是一点使用痕迹都没有啊" },
-            { type: "textMessage", text: "wx警官:是的，这应该也是才打扫过不久的" },
+            { type: "textMessage", text: "【新线索】:浴缸",backgroundImage: "./image in the game/article/浴缸.png" },
+            { type: "textMessage", text: "zq警官:这浴缸也是一点使用痕迹都没有啊" , who: "zq"},
+            { type: "textMessage", text: "wx警官:是的，这应该也是才打扫过不久的" , who: "wx"},
           ]
         }
       ],
@@ -568,27 +501,7 @@ cutsceneSpaces: {
     },
     cutsceneSpaces: {
       // 返回客厅
-      [utils.asGridCoord(19, 24)]: [
-        {
-          events: [
-            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(13), y: utils.withGrid(15), direction: "down" }
-          ]
-        }
-      ],
-      [utils.asGridCoord(18, 24)]: [
-        {
-          events: [
-            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(13), y: utils.withGrid(15), direction: "down" }
-          ]
-        }
-      ],
-      [utils.asGridCoord(20, 24)]: [
-        {
-          events: [
-            { type: "changeMap", map: "LivingRoom", x: utils.withGrid(13), y: utils.withGrid(15), direction: "down" }
-          ]
-        }
-      ]
+      ...utils.portalLine(18, 20, 24, "LivingRoom", 13, 15, "down")
     }
   }
 }

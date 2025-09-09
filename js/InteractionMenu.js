@@ -63,6 +63,14 @@ class InteractionMenu {
       nextButton?.focus();
     });
 
+    // 支持空格键选择当前聚焦项
+    this.confirm = new KeyPressListener("Space", () => {
+      const current = document.activeElement;
+      if (current && current.matches('button[data-button]')) {
+        current.click();
+      }
+    });
+
     // 设置初始焦点
     setTimeout(() => {
       buttons[0].focus();
@@ -72,6 +80,7 @@ class InteractionMenu {
   close() {
     if (this.up) this.up.unbind();
     if (this.down) this.down.unbind();
+    if (this.confirm) this.confirm.unbind();
     this.element.remove();
     this.onComplete();
   }

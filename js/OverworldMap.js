@@ -13,7 +13,6 @@ class OverworldMap {
     this.isCutscenePlaying = false;
     this.isPaused = false;
   }
-
   // 工具：加载图片
   loadImage(src) {
     const img = new Image();
@@ -39,101 +38,272 @@ class OverworldMap {
   }
 
   // 是否有物体/墙壁占用
-  isSpaceTaken(currentX, currentY, direction) {
+  isSpaceTaken(currentX, currentY, direction, movingObject) {
     const { x, y } = utils.nextPosition(currentX, currentY, direction);
     if (this.walls[`${x},${y}`]) return true;
 
-    return Object.values(this.gameObjects).some(obj =>
-      (obj.x === x && obj.y === y) ||
-      (obj.intentPosition && obj.intentPosition[0] === x && obj.intentPosition[1] === y)
-    );
+    return Object.values(this.gameObjects).some(obj => {
+      // 跳过自己
+      if (obj === movingObject) return false;
+      
+      // 如果移动对象是主人公，跳过跟随NPC的碰撞检测
+      if (movingObject && movingObject.isPlayerControlled && obj.isFollower) {
+        return false;
+      }
+      
+      // 如果移动对象是跟随NPC，跳过与主人公的碰撞检测
+      if (movingObject && movingObject.isFollower && obj.isPlayerControlled) {
+        return false;
+      }
+      
+      return (obj.x === x && obj.y === y) ||
+             (obj.intentPosition && obj.intentPosition[0] === x && obj.intentPosition[1] === y);
+    });
   }
 
   // 挂载对象
   mountObjects() {
     // 特殊地图注入 NPC
     if (this.id === "LivingRoom") {
-      Object.assign(this.gameObjects, {
-        npc1: {
-          type: "Person",
-          x: utils.withGrid(35),
-          y: utils.withGrid(20),
-          src: "./image in the game/character/1walking.png",
-          talking: [
-            { events: [
-              { type: "textMessage", text: "这是一个测试", faceHero: "npc1" },
-              { type: "textMessage", text: "这还是测试" },
-            ]}
-          ]
-        },
-        npc2: {
-          type: "Person",
-          x: utils.withGrid(30),
-          y: utils.withGrid(20),
-          src: "./image in the game/character/2walking.png",
-          talking: [
-            { events: [
-              { type: "textMessage", text: "这是一个测试", faceHero: "npc2" },
-            ]}
-          ]
-        },
-        npc3: {
-          type: "Person",
-          x: utils.withGrid(25),
-          y: utils.withGrid(20),
-          src: "./image in the game/character/3walking.png",
-          talking: [
-            { events: [
-              { type: "textMessage", text: "你好，这是测试", faceHero: "npc1" },
-              { type: "textMessage", text: "这还是测试" },
-            ]}
-          ]
-        },
-        npc4: {
-          type: "Person",
-          x: utils.withGrid(15),
-          y: utils.withGrid(26),
-          src: "./image in the game/character/2walking.png",
-          visible: false// 快递箱
-        },
-        npc5: {
-          type: "Person",
-          x: utils.withGrid(15),
-          y: utils.withGrid(26),
-          src: "./image in the game/character/2walking.png",
-          visible: false // 初始隐藏
-        },
-        npc6: {
-          type: "Person",
-          x: utils.withGrid(15),
-          y: utils.withGrid(26),
-          src: "./image in the game/character/2walking.png",
-          visible: false // 初始隐藏
-        },
-        npc7: {
-          type: "Person",
-          x: utils.withGrid(15),
-          y: utils.withGrid(26),
-          src: "./image in the game/character/2walking.png",
-          visible: false // 初始隐藏
-        },
-        npc8: {
-          type: "Person",
-          x: utils.withGrid(15),
-          y: utils.withGrid(26),
-          src: "./image in the game/character/2walking.png",
-          visible: false // 初始隐藏
-        },
-        npc9: {
-          type: "Person",
-          x: utils.withGrid(15),
-          y: utils.withGrid(26),
-          src: "./image in the game/character/2walking.png",
-          visible: false // 初始隐藏
-        },
-      });
-    }
-
+  Object.assign(this.gameObjects, {
+    npc1: {
+      type: "Person",
+      x: utils.withGrid(35),
+      y: utils.withGrid(20),
+      src: "./image in the game/character/1walking.png",
+      talking: [
+        { events: [
+          { type: "textMessage", text: "警官，我是快递送货员！", faceHero: "npc1", who: "npc1" },
+          {
+            type: "interactionMenu",
+            title: "如何处理送货员",
+            options: [
+              {
+                label: "盘问",
+                description: "对快递员进行盘问",
+                handler: () => {
+                  // 定义要显示的文本消息序列
+                  const messages = [
+                    "zq警官: 你是第一个进入公寓的，你去305房做什么？见到里面的房客了吗？",
+                    "快递员:（很着急的看手机）警官，能不能快一点？我车上还有一车货要送，快超时了。",
+                    "zq警官: 毕竟出现了案件，我们会尽快解决的，也请您耐心等一等",
+                    "快递员: 我是来送货的，一个小包裹。没见到人，门是虚掩着的。门口地上贴了张纸，说他感冒了怕传染，让我直接进去把包裹放客厅桌上就行。运费就放在桌子上的一个信封里，我拿了之后清点数目，确认没错之后留下一张送货单就离开了。",
+                    "zq警官: 门是虚掩的？纸条上还说什么了？",
+                    "快递员: 纸上特地写了‘门未锁，直接进入。离开时无需关门。我们这行奇怪要求见多了，照做就是。"
+                  ];
+                  
+                  // 创建一个递归函数来显示消息序列
+                  const showMessageSequence = (index) => {
+                    if (index < messages.length) {
+                      const message = new TextMessage({
+                        text: messages[index],
+                        onComplete: () => {
+                          // 当前消息完成后，显示下一个消息
+                          showMessageSequence(index + 1);
+                        }
+                      });
+                      message.init(document.querySelector(".game-container"));
+                    } else {
+                      // 所有消息显示完毕，设置 story flag
+                      playerState.storyFlags["npc1_interrogated"] = true;
+                    }
+                  };
+                  
+                  // 开始显示消息序列
+                  showMessageSequence(0);
+                }
+              },
+              {
+                label: "搜身",
+                description: "搜查快递员的随身物品",
+                handler: () => {
+                  // 定义要显示的文本消息序列
+                  const messages = [
+                    "你选择了：搜身快递员",
+                    "zq警官:这是？",
+                    "快递员：人到中年容易高血压，我这随身备着降压药呢"
+                  ];
+                  
+                  // 创建一个递归函数来显示消息序列
+                  const showMessageSequence = (index) => {
+                    if (index < messages.length) {
+                      const message = new TextMessage({
+                        text: messages[index],
+                        backgroundImage: index === 0 ? "./image in the game/article/快递员搜身.png" : undefined, // 只在第一个消息添加背景图片
+                        onComplete: () => {
+                          // 当前消息完成后，显示下一个消息
+                          showMessageSequence(index + 1);
+                        }
+                      });
+                      message.init(document.querySelector(".game-container"));
+                    } else {
+                      // 所有消息显示完毕，设置 story flag
+                      playerState.storyFlags["npc1_searched"] = true;
+                    }
+                  };
+                  
+                  // 开始显示消息序列
+                  showMessageSequence(0);
+                }
+              }
+            ]
+          }
+        ]}
+      ]
+    },
+    npc2: {
+      type: "Person",
+      x: utils.withGrid(30),
+      y: utils.withGrid(20),
+      src: "./image in the game/character/2walking.png",
+      talking: [
+        { events: [
+          { type: "textMessage", text: "警官，我是机车收货员，里面发生什么事了吗", faceHero: "npc2", who: "npc2" },
+          {
+            type: "interactionMenu",
+            title: "如何处理 机车女",
+            options: [
+              {
+                label: "盘问",
+                description: "对机车女进行盘问",
+                handler: () => {
+                  // 定义要显示的文本消息序列
+                  const messages = [
+                    "zq警官: 你是第二个进入公寓的，你去305房做什么？也是没有见到里面的房客吗？",
+                    "机车女: 我是来取件的。我进去时门也是虚掩的。纸条上写明了让我取走桌上的这个黑色包裹，还特意用笔圈出了一行字‘离开时请勿关门，保持原状’。我还觉得这要求有点怪，但客户是上帝嘛。我拿了钱也留下了收货单，有我的联系方式在上面。",
+                    "zq警官: 情况我们了解了，还请您也在现场多等一会",
+                  ];
+                  
+                  // 创建一个递归函数来显示消息序列
+                  const showMessageSequence = (index) => {
+                    if (index < messages.length) {
+                      const message = new TextMessage({
+                        text: messages[index],
+                        onComplete: () => {
+                          // 当前消息完成后，显示下一个消息
+                          showMessageSequence(index + 1);
+                        }
+                      });
+                      message.init(document.querySelector(".game-container"));
+                    } else {
+                      // 所有消息显示完毕，设置 story flag
+                      playerState.storyFlags["npc1_interrogated"] = true;
+                    }
+                  };
+                  
+                  // 开始显示消息序列
+                  showMessageSequence(0);
+                }
+              },
+              {
+                label: "搜身",
+                description: "搜查机车女的随身物品",
+               handler: () => {
+                  // 定义要显示的文本消息序列
+                  const messages = [
+                    "你选择了：搜身机车女",
+                    "wx警官: 这就是榔头男要送出去的东西吗，打开我们看看吧",
+                    "zq警官: 可恶的榔头男！！！还是个无耻的内衣大盗！！"
+                  ];
+                  
+                  // 创建一个递归函数来显示消息序列
+                  const showMessageSequence = (index) => {
+                    if (index < messages.length) {
+                      const message = new TextMessage({
+                        text: messages[index],
+                        backgroundImage: index === 0 ? "./image in the game/article/机车女搜身.png" : undefined, // 只在第一个消息添加背景图片
+                        onComplete: () => {
+                          // 当前消息完成后，显示下一个消息
+                          showMessageSequence(index + 1);
+                        }
+                      });
+                      message.init(document.querySelector(".game-container"));
+                    } else {
+                      // 所有消息显示完毕，设置 story flag
+                      playerState.storyFlags["npc1_searched"] = true;
+                    }
+                  };
+                  
+                  // 开始显示消息序列
+                  showMessageSequence(0);
+                }
+              }
+            ]
+          }
+        ]}
+      ]
+    },
+    npc3: {
+      type: "Person",
+      x: utils.withGrid(25),
+      y: utils.withGrid(20),
+      src: "./image in the game/character/3walking.png",
+      talking: [
+        { events: [
+          { type: "textMessage", text: "警官，我是外卖员，我可什么都没干啊", faceHero: "npc3", who: "npc3" },
+          {
+            type: "interactionMenu",
+            title: "如何处理外卖员",
+            options: [
+              {
+                label: "盘问",
+                description: "对外卖员进行盘问",
+                handler: () => {
+                  // 定义要显示的文本消息序列
+                  const messages = [
+                    "zq警官: 你是最后一个进入公寓的，你去305房做了什么？",
+                    "外卖员: 一样。门没锁，纸条上写着让我把披萨放在桌上，从桌上的信封里自己拿钱，还特别用大字写着‘请勿关门，通风，谢谢’。我拿笔在那句话下面打了个勾，表示我看到了。",
+                    "zq警官: 原来如此，看俩你们都没见到榔头男了",
+                  ];
+                  
+                  // 创建一个递归函数来显示消息序列
+                  const showMessageSequence = (index) => {
+                    if (index < messages.length) {
+                      const message = new TextMessage({
+                        text: messages[index],
+                        onComplete: () => {
+                          // 当前消息完成后，显示下一个消息
+                          showMessageSequence(index + 1);
+                        }
+                      });
+                      message.init(document.querySelector(".game-container"));
+                    } else {
+                      // 所有消息显示完毕，设置 story flag
+                      playerState.storyFlags["npc1_interrogated"] = true;
+                    }
+                  };
+                  
+                  // 开始显示消息序列
+                  showMessageSequence(0);
+                }
+              },
+              {
+                label: "搜身",
+                description: "搜查外卖员的随身物品",
+                handler: () => {
+                  const message = new TextMessage({
+                    text: "什么都没有发现",
+                    onComplete: () => {
+                      playerState.storyFlags["npc3_searched"] = true;
+                    }
+                  });
+                  message.init(document.querySelector(".game-container"));
+                }
+              }
+            ]
+          }
+        ]}
+      ]
+    },
+    // 其他 NPC 保持原有设置
+    npc4: { type: "Person", x: utils.withGrid(15), y: utils.withGrid(26), src: "./image in the game/character/2walking.png", visible: false },
+    npc5: { type: "Person", x: utils.withGrid(15), y: utils.withGrid(26), src: "./image in the game/character/2walking.png", visible: false },
+    npc6: { type: "Person", x: utils.withGrid(15), y: utils.withGrid(26), src: "./image in the game/character/2walking.png", visible: false },
+    npc7: { type: "Person", x: utils.withGrid(15), y: utils.withGrid(26), src: "./image in the game/character/2walking.png", visible: false },
+    npc8: { type: "Person", x: utils.withGrid(15), y: utils.withGrid(26), src: "./image in the game/character/2walking.png", visible: false },
+    npc9: { type: "Person", x: utils.withGrid(15), y: utils.withGrid(26), src: "./image in the game/character/2walking.png", visible: false },
+  });
+}
    //厨房交互
     if (this.id === "Kitchen") {
   const interactions = [
@@ -332,7 +502,9 @@ class OverworldMap {
     const faceKey = `${nextCoords.x},${nextCoords.y}`;
     const spaceMatch = this.cutsceneSpaces[faceKey];
     if (!this.isCutscenePlaying && spaceMatch) {
-      this.startCutscene(spaceMatch[0].events);
+      const scenario = spaceMatch.find(s => (s.required || []).every(f => playerState.storyFlags[f])) || spaceMatch[0];
+      const eventsCopy = JSON.parse(JSON.stringify(scenario.events));
+      this.startCutscene(eventsCopy);
       return;
     }
 
@@ -351,7 +523,9 @@ class OverworldMap {
     const hero = this.gameObjects["hero"];
     const match = this.cutsceneSpaces[`${hero.x},${hero.y}`];
     if (!this.isCutscenePlaying && match) {
-      this.startCutscene(match[0].events);
+      const scenario = match.find(s => (s.required || []).every(f => playerState.storyFlags[f])) || match[0];
+      const eventsCopy = JSON.parse(JSON.stringify(scenario.events));
+      this.startCutscene(eventsCopy);
     }
   }
 
