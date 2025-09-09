@@ -979,6 +979,88 @@ window.OverworldMaps = {
           ]
         }
       ],
+       [utils.asGridCoord(22, 16)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】:分外干净的马桶" },
+            { type: "textMessage", text: "zq警官:奇怪，这到了卫生间就好像换了一番景象" , who: "zq"},
+            { type: "textMessage", text: "wx警官:是啊，洁净的有些诡异了" , who: "wx"},
+          ]
+        }
+      ],
+      [utils.asGridCoord(22, 15)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】:分外干净的马桶" },
+            { type: "textMessage", text: "zq警官:奇怪，这到了卫生间就好像换了一番景象" , who: "zq"},
+            { type: "textMessage", text: "wx警官:是啊，洁净的有些诡异了" , who: "wx"},
+          ]
+        }
+      ],
+      [utils.asGridCoord(22, 18)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】:分外干净的马桶" },
+            { type: "textMessage", text: "zq警官:奇怪，这到了卫生间就好像换了一番景象" , who: "zq"},
+            { type: "textMessage", text: "wx警官:是啊，洁净的有些诡异了" , who: "wx"},
+          ]
+        }
+      ],
+      [utils.asGridCoord(23, 18)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】:分外干净的马桶" },
+            { type: "textMessage", text: "zq警官:奇怪，这到了卫生间就好像换了一番景象" , who: "zq"},
+            { type: "textMessage", text: "wx警官:是啊，洁净的有些诡异了" , who: "wx"},
+          ]
+        }
+      ],
+      [utils.asGridCoord(24, 18)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】:分外干净的马桶" },
+            { type: "textMessage", text: "zq警官:奇怪，这到了卫生间就好像换了一番景象" , who: "zq"},
+            { type: "textMessage", text: "wx警官:是啊，洁净的有些诡异了" , who: "wx"},
+          ]
+        }
+      ],
+      //
+      [utils.asGridCoord(24, 21)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】:垃圾桶,一个小的不锈钢脚踏式垃圾桶，里面套着干净的垃圾袋，桶内空空如也。" ,backgroundImage:"./image in the game/article/卫生间垃圾桶.png"},
+            { type: "textMessage", text: "zq警官:刚倒的垃圾吗，里面一点垃圾都没有" , who: "zq"},
+            { type: "textMessage", text: "wx警官:奇怪，为什么客厅的垃圾就没倒呢" , who: "wx"},
+          ]
+        }
+      ], 
+      [utils.asGridCoord(23, 21)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】:垃圾桶,一个小的不锈钢脚踏式垃圾桶，里面套着干净的垃圾袋，桶内空空如也。" ,backgroundImage:"./image in the game/article/卫生间垃圾桶.png"},
+            { type: "textMessage", text: "zq警官:刚倒的垃圾吗，里面一点垃圾都没有" , who: "zq"},
+            { type: "textMessage", text: "wx警官:奇怪，为什么客厅的垃圾就没倒呢" , who: "wx"},
+          ]
+        }
+      ], 
+      [utils.asGridCoord(22, 21)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】:垃圾桶,一个小的不锈钢脚踏式垃圾桶，里面套着干净的垃圾袋，桶内空空如也。" ,backgroundImage:"./image in the game/article/卫生间垃圾桶.png"},
+            { type: "textMessage", text: "zq警官:刚倒的垃圾吗，里面一点垃圾都没有" , who: "zq"},
+            { type: "textMessage", text: "wx警官:奇怪，为什么客厅的垃圾就没倒呢" , who: "wx"},
+          ]
+        }
+      ], 
+      [utils.asGridCoord(23, 22)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】:垃圾桶,一个小的不锈钢脚踏式垃圾桶，里面套着干净的垃圾袋，桶内空空如也。" ,backgroundImage:"./image in the game/article/卫生间垃圾桶.png"},
+            { type: "textMessage", text: "zq警官:刚倒的垃圾吗，里面一点垃圾都没有" , who: "zq"},
+            { type: "textMessage", text: "wx警官:奇怪，为什么客厅的垃圾就没倒呢" , who: "wx"},
+          ]
+        }
+      ], 
       [utils.asGridCoord(22, 23)]: [
         {
           events: [
@@ -988,6 +1070,25 @@ window.OverworldMaps = {
           ]
         }
       ], 
+      [utils.asGridCoord(22, 22)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】:垃圾桶,一个小的不锈钢脚踏式垃圾桶，里面套着干净的垃圾袋，桶内空空如也。" ,backgroundImage:"./image in the game/article/卫生间垃圾桶.png"},
+            { type: "textMessage", text: "zq警官:刚倒的垃圾吗，里面一点垃圾都没有" , who: "zq"},
+            { type: "textMessage", text: "wx警官:奇怪，为什么客厅的垃圾就没倒呢" , who: "wx"},
+          ]
+        }
+      ], 
+      [utils.asGridCoord(22, 24)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】:垃圾桶,一个小的不锈钢脚踏式垃圾桶，里面套着干净的垃圾袋，桶内空空如也。" ,backgroundImage:"./image in the game/article/卫生间垃圾桶.png"},
+            { type: "textMessage", text: "zq警官:刚倒的垃圾吗，里面一点垃圾都没有" , who: "zq"},
+            { type: "textMessage", text: "wx警官:奇怪，为什么客厅的垃圾就没倒呢" , who: "wx"},
+          ]
+        }
+      ], 
+      //
       [utils.asGridCoord(15, 12)]: [
         {
           events: [
@@ -995,7 +1096,22 @@ window.OverworldMaps = {
           ]
         }
       ],
-       [utils.asGridCoord(11, 14)]: [
+      [utils.asGridCoord(16, 12)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】:洗手台",backgroundImage:"./image in the game/article/厕所洗手台.png" },
+          ]
+        }
+      ],
+      [utils.asGridCoord(14, 12)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】:洗手台",backgroundImage:"./image in the game/article/厕所洗手台.png" },
+          ]
+        }
+      ],
+      //
+       [utils.asGridCoord(12, 13)]: [
         {
           events: [
             { type: "textMessage", text: "【新线索】:置物台",backgroundImage:"./image in the game/article/置物台.png" },
@@ -1004,6 +1120,43 @@ window.OverworldMaps = {
           ]
         }
       ],
+      [utils.asGridCoord(12, 14)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】:置物台",backgroundImage:"./image in the game/article/置物台.png" },
+            { type: "textMessage", text: "wx警官:这置物台也这么整洁啊？！" , who: "wx"},
+            { type: "textMessage", text: "zq警官:这些牙膏啥的也像是刚囤的货" , who: "zq"},
+          ]
+        }
+      ],
+      [utils.asGridCoord(11, 14)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】:置物台",backgroundImage:"./image in the game/article/置物台.png" },
+            { type: "textMessage", text: "wx警官:这置物台也这么整洁啊？！" , who: "wx"},
+            { type: "textMessage", text: "zq警官:这些牙膏啥的也像是刚囤的货" , who: "zq"},
+          ]
+        }
+      ],
+      [utils.asGridCoord(10, 14)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】:置物台",backgroundImage:"./image in the game/article/置物台.png" },
+            { type: "textMessage", text: "wx警官:这置物台也这么整洁啊？！" , who: "wx"},
+            { type: "textMessage", text: "zq警官:这些牙膏啥的也像是刚囤的货" , who: "zq"},
+          ]
+        }
+      ],
+      [utils.asGridCoord(9, 14)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】:置物台",backgroundImage:"./image in the game/article/置物台.png" },
+            { type: "textMessage", text: "wx警官:这置物台也这么整洁啊？！" , who: "wx"},
+            { type: "textMessage", text: "zq警官:这些牙膏啥的也像是刚囤的货" , who: "zq"},
+          ]
+        }
+      ],
+      // 
       [utils.asGridCoord(8, 15)]: [
         {
           events: [
@@ -1011,7 +1164,69 @@ window.OverworldMaps = {
           ]
         }
       ], 
+      [utils.asGridCoord(8, 16)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】:装洗浴用品的篮子",backgroundImage: "./image in the game/article/卫生间收纳盒.png"},
+          ]
+        }
+      ], 
+      //
+      [utils.asGridCoord(8, 24)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】:浴缸",backgroundImage: "./image in the game/article/浴缸.png" },
+            { type: "textMessage", text: "zq警官:这浴缸也是一点使用痕迹都没有啊" , who: "zq"},
+            { type: "textMessage", text: "wx警官:是的，这应该也是才打扫过不久的" , who: "wx"},
+          ]
+        }
+      ],
       [utils.asGridCoord(8, 23)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】:浴缸",backgroundImage: "./image in the game/article/浴缸.png" },
+            { type: "textMessage", text: "zq警官:这浴缸也是一点使用痕迹都没有啊" , who: "zq"},
+            { type: "textMessage", text: "wx警官:是的，这应该也是才打扫过不久的" , who: "wx"},
+          ]
+        }
+      ],
+      [utils.asGridCoord(8, 22)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】:浴缸",backgroundImage: "./image in the game/article/浴缸.png" },
+            { type: "textMessage", text: "zq警官:这浴缸也是一点使用痕迹都没有啊" , who: "zq"},
+            { type: "textMessage", text: "wx警官:是的，这应该也是才打扫过不久的" , who: "wx"},
+          ]
+        }
+      ],
+      [utils.asGridCoord(8, 21)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】:浴缸",backgroundImage: "./image in the game/article/浴缸.png" },
+            { type: "textMessage", text: "zq警官:这浴缸也是一点使用痕迹都没有啊" , who: "zq"},
+            { type: "textMessage", text: "wx警官:是的，这应该也是才打扫过不久的" , who: "wx"},
+          ]
+        }
+      ],
+      [utils.asGridCoord(8, 20)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】:浴缸",backgroundImage: "./image in the game/article/浴缸.png" },
+            { type: "textMessage", text: "zq警官:这浴缸也是一点使用痕迹都没有啊" , who: "zq"},
+            { type: "textMessage", text: "wx警官:是的，这应该也是才打扫过不久的" , who: "wx"},
+          ]
+        }
+      ],
+      [utils.asGridCoord(8, 19)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】:浴缸",backgroundImage: "./image in the game/article/浴缸.png" },
+            { type: "textMessage", text: "zq警官:这浴缸也是一点使用痕迹都没有啊" , who: "zq"},
+            { type: "textMessage", text: "wx警官:是的，这应该也是才打扫过不久的" , who: "wx"},
+          ]
+        }
+      ],
+      [utils.asGridCoord(8, 18)]: [
         {
           events: [
             { type: "textMessage", text: "【新线索】:浴缸",backgroundImage: "./image in the game/article/浴缸.png" },

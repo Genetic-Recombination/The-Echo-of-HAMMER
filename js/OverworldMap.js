@@ -1,3 +1,4 @@
+const bedroomRange = { xStart: 2, xEnd: 6, yStart: 12, yEnd: 22 };
 // 游戏世界地图
 class OverworldMap {
   constructor(config) {
@@ -6,6 +7,11 @@ class OverworldMap {
     this.gameObjects = config.configObjects || {};
     this.cutsceneSpaces = config.cutsceneSpaces || {};
     this.walls = config.walls || {};
+
+    playerState.storyFlags = playerState.storyFlags || {};
+    playerState.storyFlags["npc1_search_unlocked"] ??= false;
+    playerState.storyFlags["npc2_search_unlocked"] ??= false;
+    playerState.storyFlags["npc3_search_unlocked"] ??= false;
     
     this.lockedRooms = {}; // 用于控制初始锁定房间
 
@@ -76,235 +82,239 @@ class OverworldMap {
     // 特殊地图注入 NPC
     if (this.id === "LivingRoom") {
   Object.assign(this.gameObjects, {
-    npc1: {
-      type: "Person",
-      x: utils.withGrid(35),
-      y: utils.withGrid(20),
-      src: "./image in the game/character/1walking.png",
-      talking: [
-        { events: [
-          { type: "textMessage", text: "警官，我是快递送货员！", faceHero: "npc1", who: "npc1" },
-          {
-            type: "interactionMenu",
-            title: "如何处理送货员",
-            options: [
-              {
-                label: "盘问",
-                description: "对快递员进行盘问",
-                handler: () => {
-                  // 定义要显示的文本消息序列
-                  const messages = [
-                    "zq警官: 你是第一个进入公寓的，你去305房做什么？见到里面的房客了吗？",
-                    "快递员:（很着急的看手机）警官，能不能快一点？我车上还有一车货要送，快超时了。",
-                    "zq警官: 毕竟出现了案件，我们会尽快解决的，也请您耐心等一等",
-                    "快递员: 我是来送货的，一个小包裹。没见到人，门是虚掩着的。门口地上贴了张纸，说他感冒了怕传染，让我直接进去把包裹放客厅桌上就行。运费就放在桌子上的一个信封里，我拿了之后清点数目，确认没错之后留下一张送货单就离开了。",
-                    "zq警官: 门是虚掩的？纸条上还说什么了？",
-                    "快递员: 纸上特地写了‘门未锁，直接进入。离开时无需关门。我们这行奇怪要求见多了，照做就是。"
-                  ];
-                  
-                  // 创建一个递归函数来显示消息序列
-                  const showMessageSequence = (index) => {
-                    if (index < messages.length) {
-                      const message = new TextMessage({
-                        text: messages[index],
-                        onComplete: () => {
-                          // 当前消息完成后，显示下一个消息
-                          showMessageSequence(index + 1);
-                        }
-                      });
-                      message.init(document.querySelector(".game-container"));
-                    } else {
-                      // 所有消息显示完毕，设置 story flag
-                      playerState.storyFlags["npc1_interrogated"] = true;
-                    }
-                  };
-                  
-                  // 开始显示消息序列
-                  showMessageSequence(0);
-                }
-              },
-              {
-                label: "搜身",
-                description: "搜查快递员的随身物品",
-                handler: () => {
-                  // 定义要显示的文本消息序列
+npc1: {
+  type: "Person",
+  x: utils.withGrid(35),
+  y: utils.withGrid(20),
+  src: "./image in the game/character/1walking.png",
+  talking: [
+    {
+      events: [
+        { type: "textMessage", text: "警官，我是快递送货员！", faceHero: "npc1", who: "npc1" },
+        {
+          type: "interactionMenu",
+          title: "如何处理送货员",
+          options: [
+            {
+              label: "盘问",
+              description: "对快递员进行盘问",
+              handler: () => {
+                const messages = [
+                  "zq警官: 你是第一个进入公寓的，你去305房做什么？见到里面的房客了吗？",
+                  "快递员:（很着急的看手机）警官，能不能快一点？我车上还有一车货要送，快超时了。",
+                  "zq警官: 毕竟出现了案件，我们会尽快解决的，也请您耐心等一等",
+                  "快递员: 我是来送货的，一个小包裹。没见到人，门是虚掩着的。门口地上贴了张纸，说他感冒了怕传染，让我直接进去把包裹放客厅桌上就行。运费就放在桌子上的一个信封里，我拿了之后清点数目，确认没错之后留下一张送货单就离开了。",
+                  "zq警官: 门是虚掩的？纸条上还说什么了？",
+                  "快递员: 纸上特地写了‘门未锁，直接进入。离开时无需关门。我们这行奇怪要求见多了，照做就是。"
+                ];
+
+                const showMessageSequence = (index) => {
+                  if (index < messages.length) {
+                    new TextMessage({
+                      text: messages[index],
+                      onComplete: () => showMessageSequence(index + 1)
+                    }).init(document.querySelector(".game-container"));
+                  } else {
+                    playerState.storyFlags["npc1_interrogated"] = true;
+                  }
+                };
+
+                showMessageSequence(0);
+              }
+            },
+            {
+              label: "搜身",
+              description: "搜查快递员的随身物品",
+              handler: () => {
+                const runOriginalSearch = () => {
                   const messages = [
                     "你选择了：搜身快递员",
                     "zq警官:这是？",
                     "快递员：人到中年容易高血压，我这随身备着降压药呢"
                   ];
-                  
-                  // 创建一个递归函数来显示消息序列
+
                   const showMessageSequence = (index) => {
                     if (index < messages.length) {
-                      const message = new TextMessage({
+                      new TextMessage({
                         text: messages[index],
-                        backgroundImage: index === 0 ? "./image in the game/article/快递员搜身.png" : undefined, // 只在第一个消息添加背景图片
-                        onComplete: () => {
-                          // 当前消息完成后，显示下一个消息
-                          showMessageSequence(index + 1);
-                        }
-                      });
-                      message.init(document.querySelector(".game-container"));
+                        backgroundImage: index === 0 ? "./image in the game/article/快递员搜身.png" : undefined,
+                        onComplete: () => showMessageSequence(index + 1)
+                      }).init(document.querySelector(".game-container"));
                     } else {
-                      // 所有消息显示完毕，设置 story flag
                       playerState.storyFlags["npc1_searched"] = true;
                     }
                   };
-                  
-                  // 开始显示消息序列
+
                   showMessageSequence(0);
+                };
+
+                if (!playerState.storyFlags["npc1_search_unlocked"]) {
+                  new TextMessage({
+                    text: "还是先去卧室看看吧。",
+                    onComplete: () => {}
+                  }).init(document.querySelector(".game-container"));
+                  return;
                 }
+
+                runOriginalSearch();
               }
-            ]
-          }
-        ]}
+            }
+          ]
+        }
       ]
-    },
-    npc2: {
-      type: "Person",
-      x: utils.withGrid(30),
-      y: utils.withGrid(20),
-      src: "./image in the game/character/2walking.png",
-      talking: [
-        { events: [
-          { type: "textMessage", text: "警官，我是机车收货员，里面发生什么事了吗", faceHero: "npc2", who: "npc2" },
-          {
-            type: "interactionMenu",
-            title: "如何处理 机车女",
-            options: [
-              {
-                label: "盘问",
-                description: "对机车女进行盘问",
-                handler: () => {
-                  // 定义要显示的文本消息序列
-                  const messages = [
-                    "zq警官: 你是第二个进入公寓的，你去305房做什么？也是没有见到里面的房客吗？",
-                    "机车女: 我是来取件的。我进去时门也是虚掩的。纸条上写明了让我取走桌上的这个黑色包裹，还特意用笔圈出了一行字‘离开时请勿关门，保持原状’。我还觉得这要求有点怪，但客户是上帝嘛。我拿了钱也留下了收货单，有我的联系方式在上面。",
-                    "zq警官: 情况我们了解了，还请您也在现场多等一会",
-                  ];
-                  
-                  // 创建一个递归函数来显示消息序列
-                  const showMessageSequence = (index) => {
-                    if (index < messages.length) {
-                      const message = new TextMessage({
-                        text: messages[index],
-                        onComplete: () => {
-                          // 当前消息完成后，显示下一个消息
-                          showMessageSequence(index + 1);
-                        }
-                      });
-                      message.init(document.querySelector(".game-container"));
-                    } else {
-                      // 所有消息显示完毕，设置 story flag
-                      playerState.storyFlags["npc1_interrogated"] = true;
-                    }
-                  };
-                  
-                  // 开始显示消息序列
-                  showMessageSequence(0);
-                }
-              },
-              {
-                label: "搜身",
-                description: "搜查机车女的随身物品",
-               handler: () => {
-                  // 定义要显示的文本消息序列
+    }
+  ]
+},
+
+npc2: {
+  type: "Person",
+  x: utils.withGrid(30),
+  y: utils.withGrid(20),
+  src: "./image in the game/character/2walking.png",
+  talking: [
+    {
+      events: [
+        { type: "textMessage", text: "警官，我是机车收货员，里面发生什么事了吗", faceHero: "npc2", who: "npc2" },
+        {
+          type: "interactionMenu",
+          title: "如何处理机车女",
+          options: [
+            {
+              label: "盘问",
+              description: "对机车女进行盘问",
+              handler: () => {
+                const messages = [
+                  "zq警官: 你是第二个进入公寓的，你去305房做什么？也是没有见到里面的房客吗？",
+                  "机车女: 我是来取件的。我进去时门也是虚掩的。纸条上写明了让我取走桌上的这个黑色包裹，还特意用笔圈出了一行字‘离开时请勿关门，保持原状’。我还觉得这要求有点怪，但客户是上帝嘛。我拿了钱也留下了收货单，有我的联系方式在上面。",
+                  "zq警官: 情况我们了解了，还请您也在现场多等一会",
+                ];
+
+                const showMessageSequence = (index) => {
+                  if (index < messages.length) {
+                    new TextMessage({
+                      text: messages[index],
+                      onComplete: () => showMessageSequence(index + 1)
+                    }).init(document.querySelector(".game-container"));
+                  } else {
+                    playerState.storyFlags["npc2_interrogated"] = true;
+                  }
+                };
+
+                showMessageSequence(0);
+              }
+            },
+            {
+              label: "搜身",
+              description: "搜查机车女的随身物品",
+              handler: () => {
+                const runOriginalSearch = () => {
                   const messages = [
                     "你选择了：搜身机车女",
                     "wx警官: 这就是榔头男要送出去的东西吗，打开我们看看吧",
                     "zq警官: 可恶的榔头男！！！还是个无耻的内衣大盗！！"
                   ];
-                  
-                  // 创建一个递归函数来显示消息序列
+
                   const showMessageSequence = (index) => {
                     if (index < messages.length) {
-                      const message = new TextMessage({
+                      new TextMessage({
                         text: messages[index],
-                        backgroundImage: index === 0 ? "./image in the game/article/机车女搜身.png" : undefined, // 只在第一个消息添加背景图片
-                        onComplete: () => {
-                          // 当前消息完成后，显示下一个消息
-                          showMessageSequence(index + 1);
-                        }
-                      });
-                      message.init(document.querySelector(".game-container"));
+                        backgroundImage: index === 0 ? "./image in the game/article/机车女搜身.png" : undefined,
+                        onComplete: () => showMessageSequence(index + 1)
+                      }).init(document.querySelector(".game-container"));
                     } else {
-                      // 所有消息显示完毕，设置 story flag
-                      playerState.storyFlags["npc1_searched"] = true;
+                      playerState.storyFlags["npc2_searched"] = true;
                     }
                   };
-                  
-                  // 开始显示消息序列
+
                   showMessageSequence(0);
+                };
+
+                if (!playerState.storyFlags["npc2_search_unlocked"]) {
+                  new TextMessage({
+                    text: "还是先去卧室看看吧。",
+                    onComplete: () => {}
+                  }).init(document.querySelector(".game-container"));
+                  return;
                 }
+
+                runOriginalSearch();
               }
-            ]
-          }
-        ]}
+            }
+          ]
+        }
       ]
-    },
-    npc3: {
-      type: "Person",
-      x: utils.withGrid(25),
-      y: utils.withGrid(20),
-      src: "./image in the game/character/3walking.png",
-      talking: [
-        { events: [
-          { type: "textMessage", text: "警官，我是外卖员，我可什么都没干啊", faceHero: "npc3", who: "npc3" },
-          {
-            type: "interactionMenu",
-            title: "如何处理外卖员",
-            options: [
-              {
-                label: "盘问",
-                description: "对外卖员进行盘问",
-                handler: () => {
-                  // 定义要显示的文本消息序列
-                  const messages = [
-                    "zq警官: 你是最后一个进入公寓的，你去305房做了什么？",
-                    "外卖员: 一样。门没锁，纸条上写着让我把披萨放在桌上，从桌上的信封里自己拿钱，还特别用大字写着‘请勿关门，通风，谢谢’。我拿笔在那句话下面打了个勾，表示我看到了。",
-                    "zq警官: 原来如此，看俩你们都没见到榔头男了",
-                  ];
-                  
-                  // 创建一个递归函数来显示消息序列
-                  const showMessageSequence = (index) => {
-                    if (index < messages.length) {
-                      const message = new TextMessage({
-                        text: messages[index],
-                        onComplete: () => {
-                          // 当前消息完成后，显示下一个消息
-                          showMessageSequence(index + 1);
-                        }
-                      });
-                      message.init(document.querySelector(".game-container"));
-                    } else {
-                      // 所有消息显示完毕，设置 story flag
-                      playerState.storyFlags["npc1_interrogated"] = true;
-                    }
-                  };
-                  
-                  // 开始显示消息序列
-                  showMessageSequence(0);
-                }
-              },
-              {
-                label: "搜身",
-                description: "搜查外卖员的随身物品",
-                handler: () => {
-                  const message = new TextMessage({
+    }
+  ]
+},
+
+npc3: {
+  type: "Person",
+  x: utils.withGrid(25),
+  y: utils.withGrid(20),
+  src: "./image in the game/character/3walking.png",
+  talking: [
+    {
+      events: [
+        { type: "textMessage", text: "警官，我是外卖员，我可什么都没干啊", faceHero: "npc3", who: "npc3" },
+        {
+          type: "interactionMenu",
+          title: "如何处理外卖员",
+          options: [
+            {
+              label: "盘问",
+              description: "对外卖员进行盘问",
+              handler: () => {
+                const messages = [
+                  "zq警官: 你是最后一个进入公寓的，你去305房做了什么？",
+                  "外卖员: 一样。门没锁，纸条上写着让我把披萨放在桌上，从桌上的信封里自己拿钱，还特别用大字写着‘请勿关门，通风，谢谢’。",
+                  "zq警官: 原来如此，看俩你们都没见到榔头男了",
+                ];
+
+                const showMessageSequence = (index) => {
+                  if (index < messages.length) {
+                    new TextMessage({
+                      text: messages[index],
+                      onComplete: () => showMessageSequence(index + 1)
+                    }).init(document.querySelector(".game-container"));
+                  } else {
+                    playerState.storyFlags["npc3_interrogated"] = true;
+                  }
+                };
+
+                showMessageSequence(0);
+              }
+            },
+            {
+              label: "搜身",
+              description: "搜查外卖员的随身物品",
+              handler: () => {
+                const runOriginalSearch = () => {
+                  new TextMessage({
                     text: "什么都没有发现",
                     onComplete: () => {
                       playerState.storyFlags["npc3_searched"] = true;
                     }
-                  });
-                  message.init(document.querySelector(".game-container"));
+                  }).init(document.querySelector(".game-container"));
+                };
+
+                if (!playerState.storyFlags["npc3_search_unlocked"]) {
+                  new TextMessage({
+                    text: "还是先去卧室看看吧。",
+                    onComplete: () => {}
+                  }).init(document.querySelector(".game-container"));
+                  return;
                 }
+
+                runOriginalSearch();
               }
-            ]
-          }
-        ]}
+            }
+          ]
+        }
       ]
-    },
+    }
+  ]
+},
+
     // 其他 NPC 保持原有设置
     npc4: { type: "Person", x: utils.withGrid(15), y: utils.withGrid(26), src: "./image in the game/character/2walking.png", visible: false },
     npc5: { type: "Person", x: utils.withGrid(15), y: utils.withGrid(26), src: "./image in the game/character/2walking.png", visible: false },
@@ -317,7 +327,7 @@ class OverworldMap {
 setTimeout(() => {
   if (!playerState.storyFlags["intro_interrogation"]) {
     this.startCutscene([
-      { type: "textMessage", text: "wx警官: 我们先来问问这三个嫌疑人基本情况吧。" },
+      { type: "textMessage", text: "wx警官: 我们先来问问这三个进入过房间的人的基本情况吧。" },
       // 替代你原来的 callback
       { type: "textMessage", text: "先锁定搜身按钮和其他房间..." },
     ]).then(() => {
@@ -564,6 +574,22 @@ setTimeout(() => {
 
   checkForFootstepCutscene() {
     const hero = this.gameObjects["hero"];
+      // === 新增：检查是否在卧室范围，解锁搜身 ===
+    const heroGridX = hero.x / 16;
+    const heroGridY = hero.y / 16;
+
+    const inBedroom =
+      heroGridX >= bedroomRange.xStart && heroGridX <= bedroomRange.xEnd &&
+      heroGridY >= bedroomRange.yStart && heroGridY <= bedroomRange.yEnd;
+
+    if (inBedroom) {
+      playerState.storyFlags["npc1_search_unlocked"] = true;
+      playerState.storyFlags["npc2_search_unlocked"] = true;
+      playerState.storyFlags["npc3_search_unlocked"] = true;
+    }
+    // console.log("调试: npc1_search_unlocked =", playerState.storyFlags["npc1_search_unlocked"]);
+    // console.log("调试: npc2_search_unlocked =", playerState.storyFlags["npc2_search_unlocked"]);
+    // console.log("调试: npc3_search_unlocked =", playerState.storyFlags["npc3_search_unlocked"]);
     const match = this.cutsceneSpaces[`${hero.x},${hero.y}`];
     if (!this.isCutscenePlaying && match) {
       const scenario = match.find(s => (s.required || []).every(f => playerState.storyFlags[f])) || match[0];
