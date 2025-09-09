@@ -220,21 +220,45 @@ h1{
   <!-- 第1页封面 -->
   <div class="page" data-index="0">
     <div class="front" style="background:url('first.png') no-repeat center/cover;"></div>
-    <div class="back"><div class="mirror" style="background:url('in.png') no-repeat center/cover; transform:scaleX(-1);"></div></div>
+    <div class="back">
+      <div class="mirror" style="background:url('in.png') no-repeat center/cover; transform:scaleX(-1);"></div>
+      <!-- 插入的成就图片 -->
+      <img src="../成就系统照片/糊涂侦探.png" alt="糊涂侦探" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s;">
+      <!-- 成就名称 -->
+      <div style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); background: rgba(255, 215, 0, 0.8); padding: 10px 20px; border-radius: 10px; font-size: 24px; font-weight: bold; color: #000; text-shadow: 0 0 2px #fff; box-shadow: 0 0 10px rgba(255, 215, 0, 0.8); opacity: 0; transition: opacity 0.3s;">糊涂侦探</div>
+    </div>
   </div>
 
   <!-- 第2~3页 -->
   <div class="page" data-index="1">
     <div class="front" style="background:url('in.png') no-repeat center/cover;"></div>
-    <div class="back"><div class="mirror" style="background:url('in.png') no-repeat center/cover; transform:scaleX(-1);"></div></div>
+    <div class="back">
+      <div class="mirror" style="background:url('in.png') no-repeat center/cover; transform:scaleX(-1);"></div>
+      <!-- 插入的成就图片 -->
+      <img src="../成就系统照片/明察秋毫.png" alt="明察秋毫" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s;">
+      <!-- 成就名称 -->
+      <div style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); background: rgba(255, 215, 0, 0.8); padding: 10px 20px; border-radius: 10px; font-size: 24px; font-weight: bold; color: #000; text-shadow: 0 0 2px #fff; box-shadow: 0 0 10px rgba(255, 215, 0, 0.8); opacity: 0; transition: opacity 0.3s;">明察秋毫</div>
+    </div>
   </div>
   <div class="page" data-index="2">
     <div class="front" style="background:url('in.png') no-repeat center/cover;"></div>
-    <div class="back"><div class="mirror" style="background:url('in.png') no-repeat center/cover; transform:scaleX(-1);"></div></div>
+    <div class="back">
+      <div class="mirror" style="background:url('in.png') no-repeat center/cover; transform:scaleX(-1);"></div>
+      <!-- 插入的成就图片 -->
+      <img src="../成就系统照片/蛛丝已成罗网.png" alt="蛛丝已成罗网" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s;">
+      <!-- 成就名称 -->
+      <div style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); background: rgba(255, 215, 0, 0.8); padding: 10px 20px; border-radius: 10px; font-size: 24px; font-weight: bold; color: #000; text-shadow: 0 0 2px #fff; box-shadow: 0 0 10px rgba(255, 215, 0, 0.8); opacity: 0; transition: opacity 0.3s;">蛛丝已成罗网</div>
+    </div>
   </div>
   <div class="page" data-index="3">
     <div class="front" style="background:url('in.png') no-repeat center/cover;"></div>
-    <div class="back"><div class="mirror" style="background:url('in.png') no-repeat center/cover; transform:scaleX(-1);"></div></div>
+    <div class="back">
+      <div class="mirror" style="background:url('in.png') no-repeat center/cover; transform:scaleX(-1);"></div>
+      <!-- 插入的成就图片 -->
+      <img src="../成就系统照片/乐不思蜀.png" alt="乐不思蜀" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s;">
+      <!-- 成就名称 -->
+      <div style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); background: rgba(255, 215, 0, 0.8); padding: 10px 20px; border-radius: 10px; font-size: 24px; font-weight: bold; color: #000; text-shadow: 0 0 2px #fff; box-shadow: 0 0 10px rgba(255, 215, 0, 0.8); opacity: 0; transition: opacity 0.3s;">乐不思蜀</div>
+    </div>
   </div>
 
   <!-- 最后一页：背面改为 end.png -->
@@ -264,9 +288,27 @@ let currentPage = 0;
 
 book.addEventListener('click', ()=>{
   if(currentPage < totalPages){
+    // 在翻到下一页之前，隐藏当前页的图片和名称
+    if (currentPage > 0) {
+      const currentPageElement = pages[currentPage - 1];
+      const currentImg = currentPageElement.querySelector('.back img');
+      const currentName = currentPageElement.querySelector('.back div[style*="position: absolute; bottom: 20px;"]');
+      if (currentImg) currentImg.style.opacity = '0';
+      if (currentName) currentName.style.opacity = '0';
+    }
+    
     const page = pages[currentPage];
     page.classList.add('flipped');
     page.style.zIndex = currentPage;
+    
+    // 在翻页动画结束后显示图片和名称
+    setTimeout(() => {
+      const img = page.querySelector('.back img');
+      const name = page.querySelector('.back div[style*="position: absolute; bottom: 20px;"]');
+      if (img) img.style.opacity = '1';
+      if (name) name.style.opacity = '1';
+    }, 900); // 与CSS过渡时间匹配
+    
     currentPage++;
   }
 });
@@ -276,6 +318,13 @@ book.addEventListener('contextmenu', (e)=>{
   if(currentPage > 0){
     currentPage--;
     const page = pages[currentPage];
+    
+    // 在翻页前隐藏图片和名称
+    const img = page.querySelector('.back img');
+    const name = page.querySelector('.back div[style*="position: absolute; bottom: 20px;"]');
+    if (img) img.style.opacity = '0';
+    if (name) name.style.opacity = '0';
+    
     page.classList.remove('flipped');
     page.style.zIndex = totalPages - currentPage;
   }
