@@ -168,12 +168,12 @@ class TextMessage {
           this.overlayPortrait.style.backgroundSize = 'contain';
           this.overlayPortrait.style.backgroundRepeat = 'no-repeat';
           this.overlayPortrait.style.backgroundPosition = 'top left';
-          this.overlayPortrait.style.zIndex = '6';
-          this.overlayPortrait.style.pointerEvents = 'none';
-          this.overlayPortrait.style.opacity = '1';
-          console.log('立绘元素已创建，准备添加到容器');
-          container.appendChild(this.overlayPortrait);
-          console.log('立绘元素已添加到容器，立即显示');
+
+           this.overlayPortrait.style.pointerEvents = 'none';
+           this.overlayPortrait.style.opacity = '1';
+           console.log('立绘元素已创建，准备添加到容器');
+           container.appendChild(this.overlayPortrait);
+           console.log('立绘元素已添加到容器，立即显示');
         } else {
           console.error('未找到.game-container容器');
         }
