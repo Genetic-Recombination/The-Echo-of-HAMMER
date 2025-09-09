@@ -170,7 +170,7 @@ window.OverworldMaps = {
       ...utils.interactionRange(25, 27, 12, 15, [
         { type: "textMessage", text: "破旧的大时钟，看来指针已经停摆好久了" },
       ]),
-      ...utils.interactionRange(37, 40, 14, 18, [
+      ...utils.interactionRange(37, 40, 14, 17, [
         { type: "textMessage", text: "一株仙人掌，看起来很久没有浇水了" },
       ]),
        ...utils.interactionRange(46, 48, 15, 17, [
