@@ -106,9 +106,9 @@ window.OverworldMaps = {
         {
           events: [
             { type: "textMessage", text: "【新线索】:一个捆得很紧的麻袋",backgroundImage:"./image in the game/article/客厅麻袋.png"},
-            { type: "textMessage", text: "zq警官:打开看看吧，这能是什么呢？"},
+            { type: "textMessage", text: "zq警官:打开看看吧，这能是什么呢？", who: "zq"},
             { type: "textMessage", text: "一件沾血的风衣，帽子和墨镜", backgroundImage:"./image in the game/article/麻袋里：沾血的风衣.png"},
-            { type: "textMessage", text: "zq警官:！！！什么！！！是榔头男作案时的风衣帽子和墨镜，看来这的确就是榔头男的家了" },
+            { type: "textMessage", text: "zq警官:！！！什么！！！是榔头男作案时的风衣帽子和墨镜，看来这的确就是榔头男的家了", who: "zq" },
           ]
         }
       ],
@@ -134,8 +134,8 @@ window.OverworldMaps = {
    [utils.asGridCoord(41, 28)]: [
         {
           events: [
-            { type: "textMessage", text: "【新线索】：很脏很乱的垃圾桶，像是很久没人打理了" ,backgroundImage:"./image in the game/article/客厅的垃圾桶.png"},
-            { type: "textMessage", text: "zq警官:这榔头男也太不讲卫生了，怎么会这么乱啊" },
+            { type: "textMessage", text: "【新线索】：很脏很乱的垃圾桶，像是很久没人打理了" ,backgroundImage:"./image in the game/article/客厅的垃圾桶.pnng"},
+            { type: "textMessage", text: "zq警官:这榔头男也太不讲卫生了，怎么会这么乱啊" , who: "zq"},
           ]
         }
       ],//垃圾桶
@@ -143,8 +143,8 @@ window.OverworldMaps = {
         {
           events: [
             { type: "textMessage", text: "【新线索】：披萨和收据",backgroundImage:"./image in the game/article/客厅披萨盒.png" },
-            { type: "textMessage", text: "wx警官:这张单据是披萨外卖员留下的，上面有他的联系方式以及店铺的联系方式。价格和送到的披萨口味一致。" },
-            { type: "textMessage", text: "zq警官:奇怪？？送货员和机车女的收据怎么不见了呢？" },
+            { type: "textMessage", text: "wx警官:这张单据是披萨外卖员留下的，上面有他的联系方式以及店铺的联系方式。价格和送到的披萨口味一致。" , who: "wx"},
+            { type: "textMessage", text: "zq警官:奇怪？？送货员和机车女的收据怎么不见了呢？" , who: "zq"},
           ]
         }
       ],
@@ -152,7 +152,7 @@ window.OverworldMaps = {
         {
           events: [
             { type: "textMessage", text: "【新线索】：一个置物箱，杂七杂八的东西都堆在一块",backgroundImage:"./image in the game/article/客厅的置物篮.png" },
-            { type: "textMessage", text: "wx警官:这都是些啥啊，好乱啊" },
+            { type: "textMessage", text: "wx警官:这都是些啥啊，好乱啊", who: "wx" },
           ]
         }
       ],
@@ -167,7 +167,7 @@ window.OverworldMaps = {
         {
           events: [
             { type: "textMessage", text: "【新线索】：墙边堆着两个扁平的空棕色瓦楞纸箱" ,backgroundImage:"./image in the game/article/客厅箱子.png" },
-            { type: "textMessage", text: "wx警官:看来这榔头男随时准备搬家逃跑啊，辛亏我们接到线报就一直在这监视" },
+            { type: "textMessage", text: "wx警官:看来这榔头男随时准备搬家逃跑啊，辛亏我们接到线报就一直在这监视" , who: "wx"},
           ]
         }
       ],
@@ -257,7 +257,7 @@ window.OverworldMaps = {
     {
       events: [
         { type: "textMessage", text: "【新线索】：抽屉柜",backgroundImage: "./image in the game/article/抽屉柜.png"},
-        { type: "textMessage", text: "zq警官:空的吗，里面的东西被人拿走了还是本来就什么也没放啊" },
+        { type: "textMessage", text: "zq警官:空的吗，里面的东西被人拿走了还是本来就什么也没放啊" , who: "zq"},
       ]
     }
   ],
@@ -269,14 +269,14 @@ window.OverworldMaps = {
       { type: "textMessage", text: "(卧室里，一个高大的男人仰面躺在地上一动不动。他穿着厚重的长袖外套，头上戴着一顶压得很低的帽子，仿佛随时准备出门。穿得异常整齐。)" },
       { type: "textMessage", text: "(在他的手边，倾倒着一个棕色的药瓶，几粒白色药片散落在枕边和地面上。)" },
 
-      { type: "textMessage", text: "Zq警官 & Wx警官：\n（同时惊呼）“喂！？你怎么样？！”" },
-      { type: "textMessage", text: "(两人迅速冲上前去。Zq警官检查颈动脉，Wx警官则注意到了那个药瓶。)" },
+      { type: "textMessage", text: "wx&zq：\n（同时惊呼）“喂！？你怎么样？！”" , who: "wx&zq"},
+      { type: "textMessage", text: "(两人迅速冲上前去。zq警官检查颈动脉，wx警官则注意到了那个药瓶。)" },
 
-      { type: "textMessage", text: "Zq警官：\n（收回手，面色沉重地摇了摇头）\n“死了”" },
-      { type: "textMessage", text: "Wx警官：\n（拿起药瓶看了一眼）\n“是安眠药！”" },
+      { type: "textMessage", text: "zq警官：\n（收回手，面色沉重地摇了摇头）\n“死了”" , who: "zq"},
+      { type: "textMessage", text: "wx警官：\n（拿起药瓶看了一眼）\n“是安眠药！”" , who: "wx"},
 
       { type: "textMessage", text: "(两位警官都沉默了，目光从尸体移到散落的药片，再移到死者过于整齐的穿着上。现场看起来像是一场…)" },
-      { type: "textMessage", text: "Wx警官：\n（语气带着不确定的推测）\n“难道…是畏罪自杀？他穿好衣服戴好帽子…是原本想逃跑，但发现逃不掉后，就选择了自我了断？”" },
+      { type: "textMessage", text: "wx警官：\n（语气带着不确定的推测）\n“难道…是畏罪自杀？他穿好衣服戴上帽子…是原本想逃跑，但发现逃不掉后，就选择了自我了断？”" , who: "wx"},
 
       { type: "textMessage", text: "(凝重的背景音乐响起...)" },
       { type: "showImage", src: "./image in the game/article/big_dead.png" },
@@ -348,20 +348,6 @@ window.OverworldMaps = {
         src: "./image in the game/character/detectivewalking.png",
         walkingSrc: "./image in the game/character/detectivewalking.png",
         useShadow: true,
-      },
-      cook: {
-        type: "Person",
-        x: utils.withGrid(4),
-        y: utils.withGrid(4),
-        src: "./image in the game/character/picture/zq.png",
-        talking: [
-          {
-            events: [
-              { type: "textMessage", text: "我是厨师，案发时我在这里准备晚餐。", faceHero: "cook" },
-              { type: "textMessage", text: "我什么都没有看到，只听到了一些奇怪的声音。" },
-            ]
-          }
-        ]
       }
     },
     walls: {
@@ -435,8 +421,8 @@ window.OverworldMaps = {
         {
           events: [
             { type: "textMessage", text: "【新线索】:分外干净的马桶" },
-            { type: "textMessage", text: "zq警官:奇怪，这到了卫生间就好像换了一番景象" },
-            { type: "textMessage", text: "wx警官:是啊，洁净的有些诡异了" },
+            { type: "textMessage", text: "zq警官:奇怪，这到了卫生间就好像换了一番景象" , who: "zq"},
+            { type: "textMessage", text: "wx警官:是啊，洁净的有些诡异了" , who: "wx"},
           ]
         }
       ],
@@ -444,8 +430,8 @@ window.OverworldMaps = {
         {
           events: [
             { type: "textMessage", text: "【新线索】:垃圾桶,一个小的不锈钢脚踏式垃圾桶，里面套着干净的垃圾袋，桶内空空如也。" ,backgroundImage:"./image in the game/article/卫生间垃圾桶.png"},
-            { type: "textMessage", text: "zq警官:刚倒的垃圾吗，里面一点垃圾都没有" },
-            { type: "textMessage", text: "wx警官:奇怪，为什么客厅的垃圾就没倒呢" },
+            { type: "textMessage", text: "zq警官:刚倒的垃圾吗，里面一点垃圾都没有" , who: "zq"},
+            { type: "textMessage", text: "wx警官:奇怪，为什么客厅的垃圾就没倒呢" , who: "wx"},
           ]
         }
       ], 
@@ -460,8 +446,8 @@ window.OverworldMaps = {
         {
           events: [
             { type: "textMessage", text: "【新线索】:置物台",backgroundImage:"./image in the game/article/置物台.png" },
-            { type: "textMessage", text: "wx警官:这置物台也这么整洁啊？！" },
-            { type: "textMessage", text: "zq警官:这些牙膏啥的也像是刚囤的货" },
+            { type: "textMessage", text: "wx警官:这置物台也这么整洁啊？！" , who: "wx"},
+            { type: "textMessage", text: "zq警官:这些牙膏啥的也像是刚囤的货" , who: "zq"},
           ]
         }
       ],
@@ -476,8 +462,8 @@ window.OverworldMaps = {
         {
           events: [
             { type: "textMessage", text: "【新线索】:浴缸",backgroundImage: "./image in the game/article/浴缸.png" },
-            { type: "textMessage", text: "zq警官:这浴缸也是一点使用痕迹都没有啊" },
-            { type: "textMessage", text: "wx警官:是的，这应该也是才打扫过不久的" },
+            { type: "textMessage", text: "zq警官:这浴缸也是一点使用痕迹都没有啊" , who: "zq"},
+            { type: "textMessage", text: "wx警官:是的，这应该也是才打扫过不久的" , who: "wx"},
           ]
         }
       ],
