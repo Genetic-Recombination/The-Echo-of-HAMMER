@@ -1,4 +1,4 @@
-// Zhiren Manager Plugin - 1*4 格子显示图片
+// Zhiren Manager Plugin - 1*4 格子显示图片 
 (function(){
   class ZhirenManager {
     constructor(options = {}) {
@@ -13,7 +13,6 @@
 
     injectStyles() {
       if (document.getElementById("zhiren-manager-styles")) return;
-
       const style = document.createElement("style");
       style.id = "zhiren-manager-styles";
       style.textContent = `
@@ -57,56 +56,35 @@
       .ZhirenPanel .zp-close { background: none; border: 2px solid var(--menu-border-color, #A48465); border-radius: 6px; padding: 4px 8px; cursor: pointer; }
       .ZhirenPanel .zp-close:hover { background: var(--menu-selected-background, #00000044); }
 
-      .ZhirenGrid {
-        display: grid;
-        grid-template-columns: repeat(4, 56px);
-        gap: 8px;
-      }
+      .ZhirenGrid { display: grid; gap: 8px; }
       .ZhirenTile {
-        width: 56px;
-        height: 56px;
-        border-radius: 8px;
-        overflow: hidden;
-        position: relative;
-        border: 2px solid rgba(0,0,0,0.15);
-        background: #eee;
-        cursor: pointer;
+        width: 56px; height: 56px; border-radius: 8px; overflow: hidden; position: relative; border: 2px solid rgba(0,0,0,0.15); background: #eee; cursor: pointer;
       }
-      .ZhirenTile .thumb {
-        position: absolute;
-        inset: 0;
-        background-size: cover;
-        background-position: center;
-      }
+      .ZhirenTile .thumb { position: absolute; inset: 0; background-size: cover; background-position: center; }
       `;
       document.head.appendChild(style);
     }
 
     buildDefaultConfig() {
-        const images = [
-            "./image in the game/character/picture/1.png",
-            "./image in the game/character/picture/2.png",
-            "./image in the game/character/picture/3.png",
-            "./image in the game/character/picture/4.png"
-        ];
-        const arr = [];
-        for (let i = 0; i < this.total; i++) {
-            const id = `zhiren_${i+1}`;
-            arr.push({
-                id,
-                title: `Zhiren ${i+1}`,
-                image: images[i]
-            });
-        }
-        return arr;
+      const images = [
+        "image%20in%20the%20game/character/picture/1.png",
+        "image%20in%20the%20game/character/picture/2.png",
+        "image%20in%20the%20game/character/picture/3.png",
+        "image%20in%20the%20game/character/picture/4.png"
+      ];
+      const arr = [];
+      for (let i=0;i<this.total;i++) {
+        arr.push({ id: `zhiren_${i+1}`, title: `Zhiren ${i+1}`, image: images[i] });
+      }
+      return arr;
     }
 
     setConfig(configArray) {
       const defaults = this.buildDefaultConfig();
       const map = new Map();
-      defaults.forEach(c => map.set(c.id, c));
-      (configArray||[]).forEach(c => { if (c && c.id) map.set(c.id, { ...map.get(c.id), ...c }); });
-      this.config = Array.from(map.values()).slice(0, this.total);
+      defaults.forEach(c=>map.set(c.id,c));
+      (configArray||[]).forEach(c=>{ if(c&&c.id) map.set(c.id,{...map.get(c.id),...c}); });
+      this.config = Array.from(map.values()).slice(0,this.total);
       this.renderGrid();
       this.adjustLayout();
     }
@@ -114,13 +92,13 @@
     buildUI() {
       this.injectStyles();
       const root = this.container || document.querySelector('.game-container');
-      if (!root) return;
+      if(!root){ console.warn("⚠️ ZhirenManager: 未找到容器 .game-container"); return; }
 
       // 按钮
       const btn = document.createElement("button");
       btn.className = "ZhirenButton";
       btn.title = "Zhiren 按钮";
-      btn.addEventListener("click", () => this.togglePanel());
+      btn.addEventListener("click",()=>this.togglePanel());
       root.appendChild(btn);
       this.elements.btn = btn;
 
@@ -134,7 +112,7 @@
         </div>
         <div class="ZhirenGrid"></div>
       `;
-      panel.querySelector(".zp-close").addEventListener("click", ()=> this.togglePanel(false));
+      panel.querySelector(".zp-close").addEventListener("click",()=>this.togglePanel(false));
       root.appendChild(panel);
       this.elements.panel = panel;
       this.elements.grid = panel.querySelector(".ZhirenGrid");
@@ -143,67 +121,70 @@
     }
 
     adjustLayout() {
-      if (!this.elements || !this.elements.panel || !this.elements.grid) return;
+      if(!this.elements || !this.elements.panel || !this.elements.grid) return;
       const tile = 56;
       const gap = 8;
       this.elements.grid.style.gridTemplateColumns = `repeat(${this.cols}, ${tile}px)`;
       this.elements.grid.style.gap = `${gap}px`;
       const padding = 20;
-      const gridWidth = this.cols * tile + (this.cols-1)*gap;
+      const gridWidth = this.cols*tile + (this.cols-1)*gap;
       this.elements.panel.style.width = `${gridWidth+padding}px`;
       this.elements.panel.style.height = 'auto';
     }
 
     togglePanel(force) {
-      const open = typeof force === 'boolean' ? force : !this.elements.panel.classList.contains('open');
-      this.elements.panel.classList.toggle('open', open);
+      const open = typeof force==='boolean'?force:!this.elements.panel.classList.contains('open');
+      this.elements.panel.classList.toggle('open',open);
     }
 
     renderGrid() {
-      if (!this.elements.grid || !this.config.length) return;
+      if(!this.elements.grid || !this.config.length) return;
       this.elements.grid.innerHTML = "";
-      this.config.forEach(c => {
+      this.config.forEach(c=>{
         const tile = document.createElement("div");
         tile.className = "ZhirenTile";
         tile.title = c.title || c.id;
+
         const thumb = document.createElement("div");
         thumb.className = "thumb";
+
+        // 仿 ClueManager 加载图片，调试
+        console.log("加载图片路径:", c.image);
+        const imgTest = new Image();
+        imgTest.src = c.image;
+        imgTest.onload = ()=>console.log("✅ 图片加载成功:",c.image);
+        imgTest.onerror = ()=>console.error("❌ 图片加载失败:",c.image);
+
         thumb.style.backgroundImage = `url(${c.image})`;
         tile.appendChild(thumb);
         this.elements.grid.appendChild(tile);
       });
     }
 
-    init(container) {
-      if (this.initialized) return;
+    init(container){
+      if(this.initialized) return;
       this.container = container || this.container || document.querySelector('.game-container');
-      if (!this.container) return;
-
-      if (!this.config.length) this.config = this.buildDefaultConfig();
+      if(!this.container){ console.warn("⚠️ ZhirenManager: 未找到容器 .game-container"); return; }
+      if(!this.config.length) this.config = this.buildDefaultConfig();
       this.buildUI();
       this.renderGrid();
       this.initialized = true;
       window.zhirenManager = this;
+      console.log("✅ ZhirenManager 初始化完成");
     }
   }
+
+  window.ZhirenManager = ZhirenManager;
 
   // 自动初始化
   const bootstrap = () => {
     const container = document.querySelector('.game-container');
-    if (!container) return false;
-    if (!window.zhirenManager) {
-      const zm = new ZhirenManager({ container });
+    if(!container) return false;
+    if(!window.zhirenManager){
+      const zm = new ZhirenManager({container});
       zm.init();
     }
     return true;
   };
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", bootstrap);
-  } else {
-    bootstrap();
-  }
-
-  // 暴露类
-  window.ZhirenManager = ZhirenManager;
+  const timer = setInterval(()=>{ if(bootstrap()) clearInterval(timer); }, 250);
 })();
