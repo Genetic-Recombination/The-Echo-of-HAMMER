@@ -127,7 +127,7 @@ window.OverworldMaps = {
   [utils.asGridCoord(28, 41)]: [
         {
           events: [
-            { type: "textMessage", text: "【新线索】：一个简陋的木质鞋柜，看起来有些年头了",backgroundImage:"image in the game/article/客厅鞋柜.png" },
+            { type: "textMessage", text: "【新线索】：一个简陋的木质鞋柜，看起来有些年头了",backgroundImage:"./image in the game/article/客厅鞋柜.png" },
           ]
         }
       ],//鞋柜
