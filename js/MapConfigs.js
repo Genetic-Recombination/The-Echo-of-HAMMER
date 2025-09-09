@@ -250,6 +250,10 @@ window.OverworldMaps = {
         { type: "textMessage", text: "zq警官:哦？我想起来了，就像尼斯湖水怪是吧，大众根据想象具体化了凶手的形象" , who: "zq"},
         { type: "textMessage", text: "wx警官:就是这样的，你看倒下的榔头男也不过170公分而已" , who: "wx"},
       ]),
+      // 床交互点 - 多格
+      ...utils.interactionRange(8,12, 15, 19, [
+        { type: "textMessage", text: "床：靠墙放置的单人木床，枕头下和被子里都没有藏任何东西。" },
+      ]),
 
   // 新增：卧室尸体九格触发
   ...(() => {
