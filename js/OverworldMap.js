@@ -202,6 +202,9 @@ class OverworldMap {
                 label: "搜身",
                 description: "搜查机车女的随身物品",
                 handler: () => {
+                  window.overworld.map.startCutscene([
+                    { type: "discoverClue", id: "clue_08" }
+                  ]);
                   const runOriginalSearch = () => {
                     const messages = [
                       "你选择了：搜身机车女",
@@ -301,16 +304,8 @@ class OverworldMap {
         ]
       }
     ]
-  },
-
-    // 其他 NPC 保持原有设置
-    npc4: { type: "Person", x: utils.withGrid(15), y: utils.withGrid(26), src: "./image in the game/character/2walking.png", visible: false },
-    npc5: { type: "Person", x: utils.withGrid(15), y: utils.withGrid(26), src: "./image in the game/character/2walking.png", visible: false },
-    npc6: { type: "Person", x: utils.withGrid(15), y: utils.withGrid(26), src: "./image in the game/character/2walking.png", visible: false },
-    npc7: { type: "Person", x: utils.withGrid(15), y: utils.withGrid(26), src: "./image in the game/character/2walking.png", visible: false },
-    npc8: { type: "Person", x: utils.withGrid(15), y: utils.withGrid(26), src: "./image in the game/character/2walking.png", visible: false },
-    npc9: { type: "Person", x: utils.withGrid(15), y: utils.withGrid(26), src: "./image in the game/character/2walking.png", visible: false },
-  });
+  }
+    });
 // NPC 初始剧情挂载（LivingRoom）
 setTimeout(() => {
   if (!playerState.storyFlags["intro_interrogation"]) {
@@ -372,9 +367,11 @@ function checkAllInterrogated(mapInstance) {
       text: "新线索【厨房-垃圾桶】\n桶内底层有一些灰白色的纸灰和少量未完全烧尽的碎纸片，纸片边缘卷曲焦黑，已经看不清了。",
         backgroundImage: "./image in the game/article/厨房的垃圾桶.png",
       range: { xStart: 35, xEnd: 37, yStart: 21, yEnd: 24 },
-      events: [
-        { type: "discoverClue", id: "clue_07" }
-      ]
+      handler: () => {
+        window.overworld.map.startCutscene([
+          { type: "discoverClue", id: "clue_07" }
+        ]);
+      }
     },
     {
       text: "新线索【厨房-冰箱】\n一台嗡嗡作响的老旧冰箱。",
@@ -389,7 +386,11 @@ function checkAllInterrogated(mapInstance) {
               label: "打开冰箱",
               description: "仔细检查冰箱内部",
               handler: () => {
-                // 触发冰箱内部检查的文本消息
+                // 先触发线索发现事件
+                window.overworld.map.startCutscene([
+                  { type: "discoverClue", id: "clue_01" }
+                ]);
+                // 触发线索发现事件后，再触发冰箱内部检查的文本消息
                 const message = new TextMessage({
                   text: "你打开了冰箱门。\n\n几瓶矿泉水\n一小盒吃了一半的超市沙拉\n一小罐果酱\n看不到需要烹饪的新鲜食材。",
                   backgroundImage: "./image in the game/article/冰箱内景.png",
@@ -471,9 +472,12 @@ function checkAllInterrogated(mapInstance) {
                   label: "打开",
                   description: "打开洗衣机看看里面有什么",
                   handler: () => {
+                    window.overworld.map.startCutscene([
+                      { type: "discoverClue", id: "clue_19" }
+                    ]);
                     const message = new TextMessage({
-                      text: "你打开了洗衣机\n\n新线索【阳台-洗衣机】\n一些没洗的衣服\n两件宽大的t恤\n一件黑色工装外套\n一条深蓝色工装裤。",
-                      backgroundImage: "./image in the game/article/阳台洗衣机.png",
+                      text: "你打开了洗衣机\n\n【新线索】阳台-洗衣机\n一些没洗的衣服\n两件宽大的t恤\n一件黑色工装外套\n一条深蓝色工装裤。",
+                      backgroundImage: "./image in the game/article/洗衣机内景.png",
                       onComplete: () => {}
                     });
                     message.init(document.querySelector(".game-container"));
@@ -491,13 +495,14 @@ function checkAllInterrogated(mapInstance) {
         {
           range: { xStart: 5, xEnd:8, yStart: 18, yEnd:21 },
           events: [
-            { type: "textMessage", text: "洗衣房的一个木桶，但里面什么都没有。", backgroundImage: "./image in the game/article/阳台木桶.png" },
+            { type: "discoverClue", id: "clue_23" },
+            { type: "textMessage", text: "【新线索】阳台-木桶:洗衣房的一个木桶，但里面什么都没有。", backgroundImage: "./image in the game/article/阳台木桶.png" },
           ]
         },
          {
           range: { xStart: 5, xEnd:8, yStart: 13, yEnd:17 },
           events: [
-            { type: "textMessage", text: "洗衣房的置物筐。" },
+            { type: "textMessage", text: "【新线索】阳台-置物篮:洗衣房的置物筐。" },
             {
               type: "interactionMenu",
               title: "是否要仔细查看",
@@ -506,6 +511,9 @@ function checkAllInterrogated(mapInstance) {
                   label: "仔细查看",
                   description: "合格的侦探需要细心和耐心，不要忽略任何细节。",
                   handler: () => {
+                    window.overworld.map.startCutscene([
+                      { type: "discoverClue", id: "clue_22" }
+                    ]);
                     const message = new TextMessage({
                       text: "你仔细查看了置物筐里的衣物\n\n里面放了一些外套和牛仔裤。",
                       backgroundImage: "./image in the game/article/阳台置物篮.png",

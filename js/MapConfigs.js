@@ -103,12 +103,14 @@ window.OverworldMaps = {
   ...utils.portalLine(12, 14, 14, "Balcony", 19, 23, "up"),
   // 麻袋交互点 - 使用interactionRange
       ...utils.interactionRange(15, 17, 26, 26, [
+        { type: "discoverClue", id: "clue_16" },
         { type: "textMessage", text: "【新线索】:一个捆得很紧的麻袋",backgroundImage:"./image in the game/article/客厅麻袋.png"},
         { type: "textMessage", text: "zq警官:打开看看吧，这能是什么呢？", who: "zq"},
         { type: "textMessage", text: "一件沾血的风衣，帽子和墨镜", backgroundImage:"./image in the game/article/麻袋里：沾血的风衣.png"},
         { type: "textMessage", text: "zq警官:！！！什么！！！是榔头男作案时的风衣帽子和墨镜，看来这的确就是榔头男的家了", who: "zq" },
       ]),
       ...utils.interactionRange(19, 19, 27, 28, [
+        { type: "discoverClue", id: "clue_16" },
         { type: "textMessage", text: "【新线索】:一个捆得很紧的麻袋",backgroundImage:"./image in the game/article/客厅麻袋.png"},
         { type: "textMessage", text: "zq警官:打开看看吧，这能是什么呢？", who: "zq"},
         { type: "textMessage", text: "一件沾血的风衣，帽子和墨镜", backgroundImage:"./image in the game/article/麻袋里：沾血的风衣.png"},
@@ -117,6 +119,7 @@ window.OverworldMaps = {
   // 当玩家走到坐标(15, 25)时显示图片，
   // 快递箱交互点 - 多格
       ...utils.interactionRange(19, 19, 31, 33, [
+        { type: "discoverClue", id: "clue_10" },
         { type: "textMessage", text: "【新线索】：这应该是快递员送来的包裹，有几处可能是运输时的碰撞导致的凹陷。箱子有一点重量", backgroundImage:"./image in the game/article/客厅快递箱.png" },
         { type: "textMessage", text: "zq警官:！！扳手！这大小……确实很像凶器！完全有可能造成死者头部的伤痕！"},
         { type: "textMessage", text: "zq警官:但是这也太干净了。不像是凶器……不过也有可能被凶手细致的清洗过了"},
@@ -125,54 +128,63 @@ window.OverworldMaps = {
       ]),
   // 鞋柜交互点 - 多格
       ...utils.interactionRange(28, 28, 39, 42, [
-        { type: "textMessage", text: "【新线索】：一个简陋的木质鞋柜，看起来有些年头了",backgroundImage:"./image in the game/article/客厅鞋柜.png" },
+        { type: "discoverClue", id: "clue_15" },
+        { type: "textMessage", text: "【新线索】客厅-鞋柜：一个简陋的木质鞋柜，看起来有些年头了",backgroundImage:"./image in the game/article/客厅鞋柜.png" },
       ]),
       ...utils.interactionRange(26, 26, 38, 38, [
-        { type: "textMessage", text: "【新线索】：一个简陋的木质鞋柜，看起来有些年头了",backgroundImage:"./image in the game/article/客厅鞋柜.png" },
+        { type: "discoverClue", id: "clue_15" },
+        { type: "textMessage", text: "【新线索】客厅-鞋柜：一个简陋的木质鞋柜，看起来有些年头了",backgroundImage:"./image in the game/article/客厅鞋柜.png" },
       ]),
   // 垃圾桶交互点 - 多格
       ...utils.interactionRange(41, 43, 26, 28, [
-        { type: "textMessage", text: "【新线索】：很脏很乱的垃圾桶，像是很久没人打理了" ,backgroundImage:"./image in the game/article/客厅的垃圾桶.png"},
+        { type: "discoverClue", id: "clue_13" },
+        { type: "textMessage", text: "【新线索】客厅-垃圾桶：很脏很乱的垃圾桶，像是很久没人打理了" ,backgroundImage:"./image in the game/article/客厅的垃圾桶.png"},
         { type: "textMessage", text: "zq警官:这榔头男也太不讲卫生了，怎么会这么乱啊" , who: "zq"},
       ]),
   // 披萨盒交互点 - 多格
       ...utils.interactionRange(12, 12, 30, 33, [
-        { type: "textMessage", text: "【新线索】：披萨和收据",backgroundImage:"./image in the game/article/客厅披萨盒.png" },
+        { type: "discoverClue", id: "clue_11" },
+        { type: "textMessage", text: "【新线索】客厅——披萨盒：披萨和收据",backgroundImage:"./image in the game/article/客厅披萨盒.png" },
         { type: "textMessage", text: "wx警官:这张单据是披萨外卖员留下的，上面有他的联系方式以及店铺的联系方式。价格和送到的披萨口味一致。" , who: "wx"},
         { type: "textMessage", text: "zq警官:奇怪？？送货员和机车女的收据怎么不见了呢？" , who: "zq"},
       ]),
 
   // 置物箱交互点 - 多格
       ...utils.interactionRange(9, 10, 34, 34, [
-        { type: "textMessage", text: "【新线索】：一个置物箱，杂七杂八的东西都堆在一块",backgroundImage:"./image in the game/article/客厅的置物篮.png" },
+        { type: "discoverClue", id: "clue_14" },
+        { type: "textMessage", text: "【新线索】客厅-置物篮：一个置物篮，杂七杂八的东西都堆在一块",backgroundImage:"./image in the game/article/客厅的置物篮.png" },
         { type: "textMessage", text: "wx警官:这都是些啥啊，好乱啊", who: "wx" },
       ]),
       ...utils.interactionRange(8, 8, 33, 33, [
-        { type: "textMessage", text: "【新线索】：一个置物箱，杂七杂八的东西都堆在一块",backgroundImage:"./image in the game/article/客厅的置物篮.png" },
+        { type: "discoverClue", id: "clue_14" },
+        { type: "textMessage", text: "【新线索】客厅-置物篮：一个置物篮，杂七杂八的东西都堆在一块",backgroundImage:"./image in the game/article/客厅的置物篮.png" },
         { type: "textMessage", text: "wx警官:这都是些啥啊，好乱啊", who: "wx" },
       ]),
   // 沙发交互点 - 多格
       ...utils.interactionRange(19, 19, 36, 37, [
-        { type: "textMessage", text: "【新线索】：一张款式老旧的布艺沙发靠墙摆放。沙发套看起来有些日子没洗了，颜色暗淡。",backgroundImage: "./image in the game/article/客厅.png"},
+        { type: "discoverClue", id: "clue_24" },
+        { type: "textMessage", text: "【新线索】客厅-客厅全貌：一张款式老旧的布艺沙发靠墙摆放。沙发套看起来有些日子没洗了，颜色暗淡。",backgroundImage: "./image in the game/article/客厅.png"},
       ]),
       ...utils.interactionRange(33, 36, 43, 46, [
-        { type: "textMessage", text: "【新线索】：纸条：我发烧了，请不要打扰我，“亲爱的快递员：包裹在桌上。费用在1号信封中，请自取。无需关门，通风。”\n“亲爱的取件员：取走桌上的黑色背包。费用在2号信封中，请自取。无需关门，通风。”\n“亲爱的外卖员：披萨放桌上。费用在3号信封中，请自取。无需关门，通风。”",backgroundImage: "./image in the game/article/客厅门口纸条.png"},
+        { type: "discoverClue", id: "clue_09" },
+        { type: "textMessage", text: "【新线索】客厅-门口纸条：纸条上面写着：我发烧了，请不要打扰我。\n亲爱的快递员：包裹在桌上。费用在1号信封中，请自取。无需关门，通风。\n亲爱的取件员：取走桌上的黑色背包。费用在2号信封中，请自取。无需关门，通风。\n亲爱的外卖员：披萨放桌上。费用在3号信封中，请自取。无需关门，通风。",backgroundImage: "./image in the game/article/客厅门口纸条.png"},
       ]),
 
   // 纸箱交互点 - 多格
       ...utils.interactionRange(37, 39, 33, 36, [
-        { type: "textMessage", text: "【新线索】：墙边堆着两个扁平的空棕色瓦楞纸箱" ,backgroundImage:"./image in the game/article/客厅箱子.png" },
+        { type: "discoverClue", id: "clue_02" },
+        { type: "textMessage", text: "【新线索】客厅-箱子：墙边堆着两个扁平的空棕色瓦楞纸箱" ,backgroundImage:"./image in the game/article/客厅箱子.png" },
         { type: "textMessage", text: "wx警官:看来这榔头男随时准备搬家逃跑啊，辛亏我们接到线报就一直在这监视" , who: "wx"},
       ]),
   // 大时钟交互点 - 原始位置
       ...utils.interactionRange(25, 27, 12, 14, [
-        { type: "textMessage", text: "【新线索】：破旧的大时钟，看来指针已经停摆好久了" },
+        { type: "textMessage", text: "破旧的大时钟，看来指针已经停摆好久了" },
       ]),
       ...utils.interactionRange(37, 39, 15, 17, [
-        { type: "textMessage", text: "【新线索】：两株小仙人掌，看起来很久没有浇水了" },
+        { type: "textMessage", text: "两株小仙人掌，看起来很久没有浇水了" },
       ]),
       ...utils.interactionRange(45, 48, 15, 17, [
-        { type: "textMessage", text: "【新线索】：两株小仙人掌，看起来很久没有浇水了" },
+        { type: "textMessage", text: "两株小仙人掌，看起来很久没有浇水了" },
       ])
     }
   },
@@ -228,25 +240,29 @@ window.OverworldMaps = {
       ]),
 
       ...utils.interactionRange(22, 24, 15, 15, [
-        { type: "textMessage", text: "【新线索】：卧室抽屉柜",backgroundImage: "./image in the game/article/卧室抽屉柜.png"},
+        { type: "discoverClue", id: "clue_03" },
+        { type: "textMessage", text: "【新线索】卧室-抽屉柜",backgroundImage: "./image in the game/article/卧室抽屉柜.png"},
         { type: "textMessage", text: "zq警官:空的吗，里面的东西被人拿走了还是本来就什么也没放啊" , who: "zq"},
       ]),
       ...utils.interactionRange(7, 7, 22, 28, [
-        { type: "textMessage", text: "【新线索】：卧室沙发",backgroundImage: "./image in the game/article/我是沙发.png"},
+        { type: "discoverClue", id: "clue_18" },
+        { type: "textMessage", text: "【新线索】卧室-沙发",backgroundImage: "./image in the game/article/我是沙发.png"},
         { type: "textMessage", text: "zq警官:诶？这个沙发床怎么这么小巧啊，据说榔头男身高八尺有余，就睡在这个沙发上吗" , who: "zq"},
         { type: "textMessage", text: "wx警官:那都是都市传说啦，实际上没人见过榔头男的真面目，那天的目击者喝醉了酒其实也没看清" , who: "wx"},
         { type: "textMessage", text: "zq警官:哦？我想起来了，就像尼斯湖水怪是吧，大众根据想象具体化了凶手的形象" , who: "zq"},
         { type: "textMessage", text: "wx警官:就是这样的，你看倒下的榔头男也不过170公分而已" , who: "wx"},
       ]),
       ...utils.interactionRange(7, 7, 27, 28, [
-        { type: "textMessage", text: "【新线索】：卧室沙发",backgroundImage: "./image in the game/article/我是沙发.png"},
+        { type: "discoverClue", id: "clue_18" },
+        { type: "textMessage", text: "【新线索】卧室-沙发",backgroundImage: "./image in the game/article/我是沙发.png"},
         { type: "textMessage", text: "zq警官:诶？这个沙发床怎么这么小巧啊，据说榔头男身高八尺有余，就睡在这个沙发上吗" , who: "zq"},
         { type: "textMessage", text: "wx警官:那都是都市传说啦，实际上没人见过榔头男的真面目，那天的目击者喝醉了酒其实也没看清" , who: "wx"},
         { type: "textMessage", text: "zq警官:哦？我想起来了，就像尼斯湖水怪是吧，大众根据想象具体化了凶手的形象" , who: "zq"},
         { type: "textMessage", text: "wx警官:就是这样的，你看倒下的榔头男也不过170公分而已" , who: "wx"},
       ]),
       ...utils.interactionRange(5, 7, 21, 21, [
-        { type: "textMessage", text: "【新线索】：卧室沙发",backgroundImage: "./image in the game/article/我是沙发.png"},
+        { type: "discoverClue", id: "clue_18" },
+        { type: "textMessage", text: "【新线索】卧室-沙发",backgroundImage: "./image in the game/article/我是沙发.png"},
         { type: "textMessage", text: "zq警官:诶？这个沙发床怎么这么小巧啊，据说榔头男身高八尺有余，就睡在这个沙发上吗" , who: "zq"},
         { type: "textMessage", text: "wx警官:那都是都市传说啦，实际上没人见过榔头男的真面目，那天的目击者喝醉了酒其实也没看清" , who: "wx"},
         { type: "textMessage", text: "zq警官:哦？我想起来了，就像尼斯湖水怪是吧，大众根据想象具体化了凶手的形象" , who: "zq"},
@@ -454,33 +470,38 @@ window.OverworldMaps = {
       ],
 
       ...utils.interactionRange(22, 24, 18, 18, [
-        { type: "textMessage", text: "【新线索】:分外干净的马桶" },
+        { type: "textMessage", text: "分外干净的马桶" },
         { type: "textMessage", text: "zq警官:奇怪，这到了卫生间就好像换了一番景象" , who: "zq"},
         { type: "textMessage", text: "wx警官:是啊，洁净的有些诡异了" , who: "wx"},
       ]),
       //
       ...utils.interactionRange(22, 24, 21, 24, [
-        { type: "textMessage", text: "【新线索】:垃圾桶,一个小的不锈钢脚踏式垃圾桶，里面套着干净的垃圾袋，桶内空空如也。" ,backgroundImage:"./image in the game/article/卫生间垃圾桶.png"},
+        { type: "discoverClue", id: "clue_04" },
+        { type: "textMessage", text: "【新线索】卫生间-垃圾桶：一个小的不锈钢脚踏式垃圾桶，里面套着干净的垃圾袋，桶内空空如也。" ,backgroundImage:"./image in the game/article/卫生间垃圾桶.png"},
         { type: "textMessage", text: "zq警官:刚倒的垃圾吗，里面一点垃圾都没有" , who: "zq"},
         { type: "textMessage", text: "wx警官:奇怪，为什么客厅的垃圾就没倒呢" , who: "wx"},
       ]), 
       //
       ...utils.interactionRange(14, 16, 12, 12, [
-        { type: "textMessage", text: "【新线索】:洗手台",backgroundImage:"./image in the game/article/厕所洗手台.png" },
+        { type: "discoverClue", id: "clue_06" },
+        { type: "textMessage", text: "【新线索】卫生间-洗手台：台面上放置的物品少得可怜：一支瘪掉的牙膏，还有一个打开的空漱口杯。镜柜的玻璃门一尘不染。",backgroundImage:"./image in the game/article/厕所洗手台.png" },
       ]),
       //
       ...utils.interactionRange(9, 12, 13, 14, [
-        { type: "textMessage", text: "【新线索】:置物台",backgroundImage:"./image in the game/article/置物台.png" },
+        { type: "discoverClue", id: "clue_21" },
+        { type: "textMessage", text: "【新线索】卫生间-置物台：置物台上面有几盒牙膏，应该是囤货，用完了也不必出门采购。一把吹风机，感觉很旧了，用了很久。还有一个电动刮胡刀，和卫生间一样干净，没有藏污纳垢。" ,backgroundImage:"./image in the game/article/置物台.png" },
         { type: "textMessage", text: "wx警官:这置物台也这么整洁啊？！" , who: "wx"},
         { type: "textMessage", text: "zq警官:这些牙膏啥的也像是刚囤的货" , who: "zq"},
       ]),
       // 
       ...utils.interactionRange(8, 8, 15, 16, [
-         { type: "textMessage", text: "【新线索】:装洗浴用品的篮子",backgroundImage: "./image in the game/article/卫生间收纳盒.png"},
+         { type: "discoverClue", id: "clue_05" },
+         { type: "textMessage", text: "【新线索】卫生间-收纳盒:装洗浴用品的篮子",backgroundImage: "./image in the game/article/卫生间收纳盒.png"},
        ]), 
       //
       ...utils.interactionRange(8, 8, 18, 24, [
-        { type: "textMessage", text: "【新线索】:浴缸",backgroundImage: "./image in the game/article/浴缸.png" },
+        { type: "discoverClue", id: "clue_20" },
+        { type: "textMessage", text: "【新线索】卫生间-浴缸",backgroundImage: "./image in the game/article/浴缸.png" },
         { type: "textMessage", text: "zq警官:这浴缸也是一点使用痕迹都没有啊" , who: "zq"},
         { type: "textMessage", text: "wx警官:是的，这应该也是才打扫过不久的" , who: "wx"},
       ]),
