@@ -153,9 +153,11 @@ window.OverworldMaps = {
       ]),
   // 沙发交互点 - 多格
       ...utils.interactionRange(19, 19, 36, 37, [
-        { type: "textMessage", text: "【新线索】：一张款式老旧的布艺沙发靠墙摆放。沙发套看起来有些日子没洗了，颜色暗淡。",backgroundImage: "image in the game/article/客厅.png"},
+        { type: "textMessage", text: "【新线索】：一张款式老旧的布艺沙发靠墙摆放。沙发套看起来有些日子没洗了，颜色暗淡。",backgroundImage: "./image in the game/article/客厅.png"},
       ]),
-
+      ...utils.interactionRange(33, 36, 43, 46, [
+        { type: "textMessage", text: "【新线索】：纸条：我发烧了，请不要打扰我，“亲爱的快递员：包裹在桌上。费用在1号信封中，请自取。无需关门，通风。”\n“亲爱的取件员：取走桌上的黑色背包。费用在2号信封中，请自取。无需关门，通风。”\n“亲爱的外卖员：披萨放桌上。费用在3号信封中，请自取。无需关门，通风。”",backgroundImage: "./image in the game/article/客厅门口纸条.png"},
+      ]),
 
   // 纸箱交互点 - 多格
       ...utils.interactionRange(37, 39, 33, 36, [
