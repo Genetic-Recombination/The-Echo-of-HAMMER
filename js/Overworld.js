@@ -185,6 +185,23 @@ class Overworld {
     follower2.followIndex = 0;
   }
 
+  // 确保关键资源加载完成
+  async ensureResourcesLoaded() {
+    return new Promise((resolve) => {
+      const checkLoaded = () => {
+        // 检查英雄精灵是否已加载
+        const hero = this.map?.gameObjects?.hero;
+        if (hero?.sprite?.isLoaded) {
+          // 额外等待一帧确保渲染稳定
+          requestAnimationFrame(() => resolve());
+        } else {
+          setTimeout(checkLoaded, 50);
+        }
+      };
+      checkLoaded();
+    });
+  }
+
   async init() {
     const container = document.querySelector(".game-container");
 
@@ -213,6 +230,9 @@ class Overworld {
     this.directionInput.init();
 
     this.startMap(window.OverworldMaps[this.progress.mapId], initialHeroState);
+
+    // 确保资源加载完成后再绑定交互和开始游戏循环
+    await this.ensureResourcesLoaded();
 
     this.bindActionInput();
     this.bindHeroPositionCheck();

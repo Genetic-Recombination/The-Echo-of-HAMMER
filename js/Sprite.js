@@ -91,6 +91,11 @@ class Sprite {
     // 如果对象不可见，则不绘制
     if (!this.gameObject.visible) return;
     
+    // 确保相机人物坐标有效，避免首次渲染时的坐标错位
+    if (!cameraPerson || typeof cameraPerson.x !== 'number' || typeof cameraPerson.y !== 'number') {
+      return;
+    }
+    
     const centerX = ctx.canvas.width / 2;
     const centerY = ctx.canvas.height / 2;
 
