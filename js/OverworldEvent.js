@@ -108,6 +108,22 @@ class OverworldEvent {
     resolve();
   }
 
+  // 新增：发现线索事件
+  discoverClue(resolve) {
+    try {
+      if (!window.playerState) window.playerState = {};
+      if (!window.playerState.clues) window.playerState.clues = {};
+      if (window.clueManager) {
+        window.clueManager.discoverClue(this.event.id, { toast: true });
+      } else {
+        window.playerState.clues[this.event.id] = true;
+      }
+    } catch (e) {
+      console.warn('[OverworldEvent.discoverClue] failed:', e);
+    }
+    resolve();
+  }
+
   craftingMenu(resolve) {
     const menu = new CraftingMenu({
       pizzas: this.event.pizzas,
@@ -186,3 +202,4 @@ class OverworldEvent {
     });
   }
 }
+

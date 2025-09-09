@@ -84,8 +84,25 @@ class Overworld {
   }
 
   startMap(mapConfig, heroInitialState) {
-    // 深拷贝地图配置，避免在mount过程中污染全局的window.OverworldMaps
-    const mapConfigCopy = JSON.parse(JSON.stringify(mapConfig));
+    // 深拷贝地图配置（保留函数），避免在mount过程中污染全局的window.OverworldMaps，且不丢失交互菜单中的 handler
+    const deepClonePreserveFunctions = (value, seen = new WeakMap()) => {
+      if (value === null || typeof value !== "object") {
+        // 基本类型或函数：直接返回，函数引用将被保留
+        return value;
+      }
+      if (seen.has(value)) {
+        return seen.get(value);
+      }
+      const clone = Array.isArray(value) ? [] : {};
+      seen.set(value, clone);
+      for (const key of Object.keys(value)) {
+        const v = value[key];
+        clone[key] = (typeof v === "function") ? v : deepClonePreserveFunctions(v, seen);
+      }
+      return clone;
+    };
+
+    const mapConfigCopy = deepClonePreserveFunctions(mapConfig);
     this.map = new OverworldMap(mapConfigCopy);
     this.map.overworld = this;
     this.map.mountObjects();
@@ -208,3 +225,4 @@ class Overworld {
     // ])
   }
 }
+

@@ -71,5 +71,32 @@ const utils = {
       ];
     }
     return result;
+  },
+
+  // 生成矩形范围的交互触发点
+  interactionRange(xStart, xEnd, yStart, yEnd, eventsOrText, backgroundImage) {
+    const result = {};
+    const isEventsArray = Array.isArray(eventsOrText);
+    const text = isEventsArray ? null : eventsOrText;
+
+    for (let x = xStart; x <= xEnd; x++) {
+      for (let y = yStart; y <= yEnd; y++) {
+        // 检查是否为条件事件格式（包含required字段的对象）
+        if (isEventsArray && eventsOrText.length > 0 && eventsOrText[0].hasOwnProperty('required')) {
+          // 条件事件格式：直接使用传入的数组作为cutsceneSpace的值
+          result[this.asGridCoord(x, y)] = eventsOrText;
+        } else {
+          // 普通格式：包装在events数组中
+          result[this.asGridCoord(x, y)] = [
+            {
+              events: isEventsArray ? eventsOrText : [
+                { type: "textMessage", text, backgroundImage }
+              ]
+            }
+          ];
+        }
+      }
+    }
+    return result;
   }
 };

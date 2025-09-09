@@ -101,97 +101,81 @@ window.OverworldMaps = {
   ...utils.portalColumn(17, 20, 52, "Kitchen", 2, 22, "right"),
   // 通往阳台的门 (12..14,14)
   ...utils.portalLine(12, 14, 14, "Balcony", 19, 23, "up"),
-  // 当玩家走到坐标(15, 25)时显示图片
-  [utils.asGridCoord(15, 26)]: [
-        {
-          events: [
-            { type: "textMessage", text: "【新线索】:一个捆得很紧的麻袋",backgroundImage:"./image in the game/article/客厅麻袋.png"},
-            { type: "textMessage", text: "zq警官:打开看看吧，这能是什么呢？", who: "zq"},
-            { type: "textMessage", text: "一件沾血的风衣，帽子和墨镜", backgroundImage:"./image in the game/article/麻袋里：沾血的风衣.png"},
-            { type: "textMessage", text: "zq警官:！！！什么！！！是榔头男作案时的风衣帽子和墨镜，看来这的确就是榔头男的家了", who: "zq" },
-          ]
-        }
-      ],
+  // 麻袋交互点 - 使用interactionRange
+      ...utils.interactionRange(15, 19, 26, 29, [
+        { type: "discoverClue", id: "clue_16" },
+        { type: "textMessage", text: "【新线索】:一个捆得很紧的麻袋",backgroundImage:"./image in the game/article/客厅麻袋.png"},
+        { type: "textMessage", text: "zq警官:打开看看吧，这能是什么呢？", who: "zq"},
+        { type: "textMessage", text: "一件沾血的风衣，帽子和墨镜", backgroundImage:"./image in the game/article/麻袋里：沾血的风衣.png"},
+        { type: "textMessage", text: "zq警官:！！！什么！！！是榔头男作案时的风衣帽子和墨镜，看来这的确就是榔头男的家了", who: "zq" },
+      ]),
+     
   // 当玩家走到坐标(15, 25)时显示图片，
-    [utils.asGridCoord(19, 32)]: [
-        {
-          events: [
-            { type: "textMessage", text: "【新线索】：这应该是快递员送来的包裹，有几处可能是运输时的碰撞导致的凹陷。箱子有一点重量", backgroundImage:"./image in the game/article/客厅快递箱.png" },
-            { type: "textMessage", text: "zq警官:！！扳手！这大小……确实很像凶器！完全有可能造成死者头部的伤痕！"},
-            { type: "textMessage", text: "zq警官:但是这也太干净了。不像是凶器……不过也有可能被凶手细致的清洗过了"},
-            { type: "textMessage", text: "wx警官:很有可能是取货员用这个扳手杀了人，清洗干净再藏到这个快递箱中，嫁祸给快递员！！"},
-            { type: "textMessage", text: "zq警官:大胆假设，小心求证。你有证据吗？"},
-          ]
-        }
-      ],
-  [utils.asGridCoord(28, 41)]: [
-        {
-          events: [
-            { type: "textMessage", text: "【新线索】：一个简陋的木质鞋柜，看起来有些年头了",backgroundImage:"./image in the game/article/客厅鞋柜.png" },
-          ]
-        }
-      ],//鞋柜
-   [utils.asGridCoord(41, 28)]: [
-        {
-          events: [
-            { type: "textMessage", text: "【新线索】：很脏很乱的垃圾桶，像是很久没人打理了" ,backgroundImage:"./image in the game/article/客厅的垃圾桶.pnng"},
-            { type: "textMessage", text: "zq警官:这榔头男也太不讲卫生了，怎么会这么乱啊" , who: "zq"},
-          ]
-        }
-      ],//垃圾桶
-    [utils.asGridCoord(12, 32)]: [
-        {
-          events: [
-            { type: "textMessage", text: "【新线索】：披萨和收据",backgroundImage:"./image in the game/article/客厅披萨盒.png" },
-            { type: "textMessage", text: "wx警官:这张单据是披萨外卖员留下的，上面有他的联系方式以及店铺的联系方式。价格和送到的披萨口味一致。" , who: "wx"},
-            { type: "textMessage", text: "zq警官:奇怪？？送货员和机车女的收据怎么不见了呢？" , who: "zq"},
-          ]
-        }
-      ],
-      [utils.asGridCoord(9, 34)]: [
-        {
-          events: [
-            { type: "textMessage", text: "【新线索】：一个置物箱，杂七杂八的东西都堆在一块",backgroundImage:"./image in the game/article/客厅的置物篮.png" },
-            { type: "textMessage", text: "wx警官:这都是些啥啊，好乱啊", who: "wx" },
-          ]
-        }
-      ],
-      [utils.asGridCoord(19, 36)]: [
-        {
-          events: [
-            { type: "textMessage", text: "【新线索】：一张款式老旧的布艺沙发靠墙摆放。沙发套看起来有些日子没洗了，颜色暗淡。",backgroundImage: "image in the game/article/客厅沙发.png"},
-          ]
-        }
-      ],
-      [utils.asGridCoord(37, 36)]: [
-        {
-          events: [
-            { type: "textMessage", text: "【新线索】：墙边堆着两个扁平的空棕色瓦楞纸箱" ,backgroundImage:"./image in the game/article/客厅箱子.png" },
-            { type: "textMessage", text: "wx警官:看来这榔头男随时准备搬家逃跑啊，辛亏我们接到线报就一直在这监视" , who: "wx"},
-          ]
-        }
-      ],
-      [utils.asGridCoord(26, 15)]: [
-        {
-          events: [
-            { type: "textMessage", text: "【新线索】：破旧的大时钟，看来指针已经停摆好久了" },
-          ]
-        }
-      ],
-      [utils.asGridCoord(39, 17)]: [
-        {
-          events: [
-            { type: "textMessage", text: "一盆普通的仙人掌" },
-          ]
-        }
-      ],
-      [utils.asGridCoord(47, 17)]: [
-        {
-          events: [
-            { type: "textMessage", text: "不算名贵的绿植" },
-          ]
-        }
-      ],
+  // 快递箱交互点 - 多格
+      ...utils.interactionRange(19, 19, 31, 33, [
+        { type: "discoverClue", id: "clue_10" },
+        { type: "textMessage", text: "【新线索】：这应该是快递员送来的包裹，有几处可能是运输时的碰撞导致的凹陷。箱子有一点重量", backgroundImage:"./image in the game/article/客厅快递箱.png" },
+        { type: "textMessage", text: "zq警官:！！扳手！这大小……确实很像凶器！完全有可能造成死者头部的伤痕！",who:"zq"},
+        { type: "textMessage", text: "zq警官:但是这也太干净了。不像是凶器……不过也有可能被凶手细致的清洗过了",who:"zq"},
+        { type: "textMessage", text: "wx警官:很有可能是取货员用这个扳手杀了人，清洗干净再藏到这个快递箱中，嫁祸给快递员！！",who:"wx"},
+        { type: "textMessage", text: "zq警官:大胆假设，小心求证。你有证据吗？",who:"zq"},
+      ]),
+  // 鞋柜交互点 - 多格
+      ...utils.interactionRange(25, 28, 38, 42, [
+        { type: "discoverClue", id: "clue_15" },
+        { type: "textMessage", text: "【新线索】客厅-鞋柜：一个简陋的木质鞋柜，看起来有些年头了",backgroundImage:"./image in the game/article/客厅鞋柜.png" },
+      ]),
+  // 垃圾桶交互点 - 多格
+      ...utils.interactionRange(41, 43, 26, 29, [
+        { type: "discoverClue", id: "clue_13" },
+        { type: "textMessage", text: "【新线索】客厅-垃圾桶：很脏很乱的垃圾桶，像是很久没人打理了" ,backgroundImage:"./image in the game/article/客厅的垃圾桶.png"},
+        { type: "textMessage", text: "zq警官:这榔头男也太不讲卫生了，怎么会这么乱啊" , who: "zq"},
+      ]),
+  // 披萨盒交互点 - 多格
+      ...utils.interactionRange(12, 12, 30, 33, [
+        { type: "discoverClue", id: "clue_11" },
+        { type: "textMessage", text: "【新线索】客厅——披萨盒：披萨和收据",backgroundImage:"./image in the game/article/客厅披萨盒.png" },
+        { type: "textMessage", text: "wx警官:这张单据是披萨外卖员留下的，上面有他的联系方式以及店铺的联系方式。价格和送到的披萨口味一致。" , who: "wx"},
+        { type: "textMessage", text: "zq警官:奇怪？？送货员和机车女的收据怎么不见了呢？" , who: "zq"},
+      ]),
+
+  // 置物箱交互点 - 多格
+      ...utils.interactionRange(9, 10, 34, 34, [
+        { type: "discoverClue", id: "clue_14" },
+        { type: "textMessage", text: "【新线索】客厅-置物篮：一个置物篮，杂七杂八的东西都堆在一块",backgroundImage:"./image in the game/article/客厅的置物篮.png" },
+        { type: "textMessage", text: "wx警官:这都是些啥啊，好乱啊", who: "wx" },
+      ]),
+      ...utils.interactionRange(8, 8, 33, 33, [
+        { type: "discoverClue", id: "clue_14" },
+        { type: "textMessage", text: "【新线索】客厅-置物篮：一个置物篮，杂七杂八的东西都堆在一块",backgroundImage:"./image in the game/article/客厅的置物篮.png" },
+        { type: "textMessage", text: "wx警官:这都是些啥啊，好乱啊", who: "wx" },
+      ]),
+  // 沙发交互点 - 多格
+      ...utils.interactionRange(19, 19, 36, 37, [
+        { type: "discoverClue", id: "clue_24" },
+        { type: "textMessage", text: "【新线索】客厅-客厅全貌：一张款式老旧的布艺沙发靠墙摆放。沙发套看起来有些日子没洗了，颜色暗淡。",backgroundImage: "./image in the game/article/客厅.png"},
+      ]),
+      ...utils.interactionRange(33, 36, 43, 46, [
+        { type: "discoverClue", id: "clue_09" },
+        { type: "textMessage", text: "【新线索】客厅-门口纸条：纸条上面写着：我发烧了，请不要打扰我。\n亲爱的快递员：包裹在桌上。费用在1号信封中，请自取。无需关门，通风。\n亲爱的取件员：取走桌上的黑色背包。费用在2号信封中，请自取。无需关门，通风。\n亲爱的外卖员：披萨放桌上。费用在3号信封中，请自取。无需关门，通风。",backgroundImage: "./image in the game/article/客厅门口纸条.png"},
+      ]),
+
+  // 纸箱交互点 - 多格
+      ...utils.interactionRange(37, 39, 33, 36, [
+        { type: "discoverClue", id: "clue_02" },
+        { type: "textMessage", text: "【新线索】客厅-箱子：墙边堆着两个扁平的空棕色瓦楞纸箱" ,backgroundImage:"./image in the game/article/客厅箱子.png" },
+        { type: "textMessage", text: "wx警官:看来这榔头男随时准备搬家逃跑啊，辛亏我们接到线报就一直在这监视" , who: "wx"},
+      ]),
+  // 大时钟交互点 - 原始位置
+      ...utils.interactionRange(25, 27, 12, 15, [
+        { type: "textMessage", text: "破旧的大时钟，看来指针已经停摆好久了" },
+      ]),
+      ...utils.interactionRange(37, 40, 14, 18, [
+        { type: "textMessage", text: "一株仙人掌，看起来很久没有浇水了" },
+      ]),
+       ...utils.interactionRange(46, 48, 15, 17, [
+        { type: "textMessage", text: "一株略显老态的盆栽。" },
+      ])
     }
   },
   Bedroom: {
@@ -237,35 +221,45 @@ window.OverworldMaps = {
   ...utils.portalColumn(21, 24, 28, "LivingRoom", 5, 18, "right"),
   // 通往洗手间 (17..20,31)
   ...utils.portalLine(17, 20, 31, "Toilet", 20, 6, "down"),
-  [utils.asGridCoord(14, 15)]: [
-    {
-      events: [
-        { type: "textMessage", text: "【新线索】：床头柜上的书",backgroundImage: "./image in the game/article/床头柜.png" },
-      ]
-    }
-  ],
+      ...utils.interactionRange(13, 15, 15, 15, [
+        { type: "textMessage", text: "床头柜上的书",backgroundImage: "./image in the game/article/床头柜.png" },
+      ]),
 
-  [utils.asGridCoord(18, 15)]: [
-    {
-      events: [
-        { type: "textMessage", text: "【新线索】：老式的大衣柜，柜门都有些破损" },
-      ]
-    }
-  ],
+      ...utils.interactionRange(17, 19, 15, 15, [
+        { type: "textMessage", text: "老式的大衣柜，柜门都有些破损" },
+      ]),
 
-  [utils.asGridCoord(18, 17)]: [
-    {
-      events: [
-        { type: "textMessage", text: "【新线索】：抽屉柜",backgroundImage: "./image in the game/article/抽屉柜.png"},
+      ...utils.interactionRange(22, 24, 15, 15, [
+        { type: "discoverClue", id: "clue_03" },
+        { type: "textMessage", text: "【新线索】卧室-抽屉柜",backgroundImage: "./image in the game/article/卧室抽屉柜.png"},
         { type: "textMessage", text: "zq警官:空的吗，里面的东西被人拿走了还是本来就什么也没放啊" , who: "zq"},
-      ]
-    }
-  ],
+      ]),
+      ...utils.interactionRange(7, 7, 22, 28, [
+        { type: "discoverClue", id: "clue_18" },
+        { type: "textMessage", text: "【新线索】卧室-沙发",backgroundImage: "./image in the game/article/我是沙发.png"},
+        { type: "textMessage", text: "zq警官:诶？这个沙发床怎么这么小巧啊，据说榔头男身高八尺有余，就睡在这个沙发上吗" , who: "zq"},
+        { type: "textMessage", text: "wx警官:那都是都市传说啦，实际上没人见过榔头男的真面目，那天的目击者喝醉了酒其实也没看清" , who: "wx"},
+        { type: "textMessage", text: "zq警官:哦？我想起来了，就像尼斯湖水怪是吧，大众根据想象具体化了凶手的形象" , who: "zq"},
+        { type: "textMessage", text: "wx警官:就是这样的，你看倒下的榔头男也不过170公分而已" , who: "wx"},
+      ]),
+      ...utils.interactionRange(5, 7, 21, 21, [
+        { type: "discoverClue", id: "clue_18" },
+        { type: "textMessage", text: "【新线索】卧室-沙发",backgroundImage: "./image in the game/article/我是沙发.png"},
+        { type: "textMessage", text: "zq警官:诶？这个沙发床怎么这么小巧啊，据说榔头男身高八尺有余，就睡在这个沙发上吗" , who: "zq"},
+        { type: "textMessage", text: "wx警官:那都是都市传说啦，实际上没人见过榔头男的真面目，那天的目击者喝醉了酒其实也没看清" , who: "wx"},
+        { type: "textMessage", text: "zq警官:哦？我想起来了，就像尼斯湖水怪是吧，大众根据想象具体化了凶手的形象" , who: "zq"},
+        { type: "textMessage", text: "wx警官:就是这样的，你看倒下的榔头男也不过170公分而已" , who: "wx"},
+      ]),
+      // 床交互点 - 多格
+      ...utils.interactionRange(8,12, 15, 19, [
+        { type: "textMessage", text: "床：靠墙放置的单人木床，枕头下和被子里都没有藏任何东西。" },
+      ]),
 
   // 新增：卧室尸体九格触发
   ...(() => {
     const spaces = {};
     const firstTimeEvents = [
+      { type: "discoverClue", id: "clue_17" },
       { type: "textMessage", text: "(卧室里，一个高大的男人仰面躺在地上一动不动。他穿着厚重的长袖外套，头上戴着一顶压得很低的帽子，仿佛随时准备出门。穿得异常整齐。)" },
       { type: "textMessage", text: "(在他的手边，倾倒着一个棕色的药瓶，几粒白色药片散落在枕边和地面上。)" },
 
@@ -277,8 +271,6 @@ window.OverworldMaps = {
 
       { type: "textMessage", text: "(两位警官都沉默了，目光从尸体移到散落的药片，再移到死者过于整齐的穿着上。现场看起来像是一场…)" },
       { type: "textMessage", text: "wx警官：\n（语气带着不确定的推测）\n“难道…是畏罪自杀？他穿好衣服戴上帽子…是原本想逃跑，但发现逃不掉后，就选择了自我了断？”" , who: "wx"},
-
-      { type: "textMessage", text: "(凝重的背景音乐响起...)" },
       { type: "showImage", src: "./image in the game/article/big_dead.png" },
 
       {
@@ -318,17 +310,91 @@ window.OverworldMaps = {
     ];
 
     const repeatEvents = [
-      { type: "textMessage", text: "(尸体已经检查过了……继续寻找其他线索吧。)" }
+      { type: "textMessage", text: "(再次检查尸体...)" },
+      {
+        type: "interactionMenu",
+        title: "选择检查部位",
+        options: [
+          {
+            label: "查看安眠药",
+            description: "仔细检查死者旁边的安眠药瓶和散落的药片",
+            handler: () => {
+              // 使用事件系统创建文本消息，而不是直接创建
+              window.overworld.map.startCutscene([
+                { type: "textMessage", text: "是一瓶普通且常见的安眠药，里面的药片所剩无几，足以致死。" }
+              ]);
+            }
+          },
+          {
+            label: "查看头部",
+            description: "查看死者的面部特征",
+            handler: () => {
+              // 使用事件系统创建文本消息，而不是直接创建
+              window.overworld.map.startCutscene([
+                { type: "textMessage", text: "一顶黑色棒球帽，有点旧了。" },
+                {
+                  type: "interactionMenu",
+                  options: [
+                    {
+                      label: "摘掉帽子",
+                      description: "仔细查看帽子下面",
+                      handler: () => {
+                        window.overworld.map.startCutscene([
+                          { type: "textMessage", text: "你小心地摘下了帽子..." },
+                          { type: "textMessage", text: "死者头顶靠近后脑勺的位置，有一处明显的、已经凝结发暗的血迹，周围的头发被血粘在一起。\n伤口看上去应该是钝器击打造成的伤口。" },
+                          { type: "textMessage", text: "zq警官：这…这是？！伤口？！", who: "zq" },
+                          { type: "textMessage", text: "wx警官：死因不是摄入过量安眠药！他死前头部遭受过重击！", who: "wx" },
+                          { type: "textMessage", text: "果然，安眠药只是伪装。他真正的死因，是头部受到的这处致命钝器伤！这不是自杀现场，而是谋杀!",who:"detective" },
+                          { type: "textMessage", text: "（脸色变得极其严肃）谋杀...那么凶手...", who: "zq" },
+                           { type: "textMessage", text: "就在那三个人中间",who:"detective" },
+                           { type: "textMessage", text: "难道是先前受害者的亲友在复仇？", who: "wx" },
+                          { type: "textMessage", text: "在收集到足够的证据之前，还不能妄下定论。",who:"detective" },
+                        ]);
+                      }
+                    },
+                    {
+                      label: "不摘帽子",
+                      description: "保持现场原状",
+                      handler: () => {
+                        window.overworld.map.startCutscene([
+                          { type: "textMessage", text: "你决定暂时不动帽子，保持现场的完整性。" }
+                        ]);
+                      }
+                    }
+                  ]
+                }
+              ]);
+            }
+          },
+          {
+            label: "检查上衣",
+            description: "检查死者穿着的外套",
+            handler: () => {
+              // 使用事件系统创建文本消息，而不是直接创建
+              window.overworld.map.startCutscene([
+                { type: "textMessage", text: "是一件深色的棉质的长袖工装外套，搜查衣服口袋没有发现东西。" }
+              ]);
+            }
+          },
+          {
+            label: "检查裤子",
+            description: "检查死者的裤子和口袋",
+            handler: () => {
+              // 使用事件系统创建文本消息，而不是直接创建
+              window.overworld.map.startCutscene([
+                { type: "textMessage", text: "深蓝色工装裤，Zq警官说这是附近住的邻居看见他最常有的穿着。搜查裤兜发现305公寓的钥匙。" }
+              ]);
+            }
+          }
+        ]
+      }
     ];
 
-    for (let x = 15; x <= 17; x++) {
-      for (let y = 18; y <= 20; y++) {
-        spaces[utils.asGridCoord(x, y)] = [
-          { required: ["bedroom_corpse_viewed"], events: repeatEvents },
-          { events: firstTimeEvents }
-        ];
-      }
-    }
+    // 使用 interactionRange 替换双重循环
+    Object.assign(spaces, utils.interactionRange(15, 17, 18, 20, [
+      { required: ["bedroom_corpse_viewed"], events: repeatEvents },
+      { events: firstTimeEvents }
+    ]));
     return spaces;
   })()
 }
@@ -417,56 +483,43 @@ window.OverworldMaps = {
           ]
         }
       ],
-       [utils.asGridCoord(22, 17)]: [
-        {
-          events: [
-            { type: "textMessage", text: "【新线索】:分外干净的马桶" },
-            { type: "textMessage", text: "zq警官:奇怪，这到了卫生间就好像换了一番景象" , who: "zq"},
-            { type: "textMessage", text: "wx警官:是啊，洁净的有些诡异了" , who: "wx"},
-          ]
-        }
-      ],
-      [utils.asGridCoord(22, 23)]: [
-        {
-          events: [
-            { type: "textMessage", text: "【新线索】:垃圾桶,一个小的不锈钢脚踏式垃圾桶，里面套着干净的垃圾袋，桶内空空如也。" ,backgroundImage:"./image in the game/article/卫生间垃圾桶.png"},
-            { type: "textMessage", text: "zq警官:刚倒的垃圾吗，里面一点垃圾都没有" , who: "zq"},
-            { type: "textMessage", text: "wx警官:奇怪，为什么客厅的垃圾就没倒呢" , who: "wx"},
-          ]
-        }
-      ], 
-      [utils.asGridCoord(15, 12)]: [
-        {
-          events: [
-            { type: "textMessage", text: "【新线索】:洗手台",backgroundImage:"./image in the game/article/厕所洗手台.png" },
-          ]
-        }
-      ],
-       [utils.asGridCoord(11, 14)]: [
-        {
-          events: [
-            { type: "textMessage", text: "【新线索】:置物台",backgroundImage:"./image in the game/article/置物台.png" },
-            { type: "textMessage", text: "wx警官:这置物台也这么整洁啊？！" , who: "wx"},
-            { type: "textMessage", text: "zq警官:这些牙膏啥的也像是刚囤的货" , who: "zq"},
-          ]
-        }
-      ],
-      [utils.asGridCoord(8, 15)]: [
-        {
-          events: [
-            { type: "textMessage", text: "【新线索】:装洗浴用品的篮子",backgroundImage: "./image in the game/article/卫生间收纳盒.png"},
-          ]
-        }
-      ], 
-      [utils.asGridCoord(8, 23)]: [
-        {
-          events: [
-            { type: "textMessage", text: "【新线索】:浴缸",backgroundImage: "./image in the game/article/浴缸.png" },
-            { type: "textMessage", text: "zq警官:这浴缸也是一点使用痕迹都没有啊" , who: "zq"},
-            { type: "textMessage", text: "wx警官:是的，这应该也是才打扫过不久的" , who: "wx"},
-          ]
-        }
-      ],
+
+      ...utils.interactionRange(22, 24, 18, 18, [
+        { type: "textMessage", text: "分外干净的马桶" },
+        { type: "textMessage", text: "zq警官:奇怪，这到了卫生间就好像换了一番景象" , who: "zq"},
+        { type: "textMessage", text: "wx警官:是啊，洁净的有些诡异了" , who: "wx"},
+      ]),
+      //
+      ...utils.interactionRange(22, 24, 21, 24, [
+        { type: "discoverClue", id: "clue_04" },
+        { type: "textMessage", text: "【新线索】卫生间-垃圾桶：一个小的不锈钢脚踏式垃圾桶，里面套着干净的垃圾袋，桶内空空如也。" ,backgroundImage:"./image in the game/article/卫生间垃圾桶.png"},
+        { type: "textMessage", text: "zq警官:刚倒的垃圾吗，里面一点垃圾都没有" , who: "zq"},
+        { type: "textMessage", text: "wx警官:奇怪，为什么客厅的垃圾就没倒呢" , who: "wx"},
+      ]), 
+      //
+      ...utils.interactionRange(14, 16, 12, 12, [
+        { type: "discoverClue", id: "clue_06" },
+        { type: "textMessage", text: "【新线索】卫生间-洗手台：台面上放置的物品少得可怜：一支瘪掉的牙膏，还有一个打开的空漱口杯。镜柜的玻璃门一尘不染。",backgroundImage:"./image in the game/article/厕所洗手台.png" },
+      ]),
+      //
+      ...utils.interactionRange(9, 12, 13, 14, [
+        { type: "discoverClue", id: "clue_21" },
+        { type: "textMessage", text: "【新线索】卫生间-置物台：置物台上面有几盒牙膏，应该是囤货，用完了也不必出门采购。一把吹风机，感觉很旧了，用了很久。还有一个电动刮胡刀，和卫生间一样干净，没有藏污纳垢。" ,backgroundImage:"./image in the game/article/置物台.png" },
+        { type: "textMessage", text: "wx警官:这置物台也这么整洁啊？！" , who: "wx"},
+        { type: "textMessage", text: "zq警官:这些牙膏啥的也像是刚囤的货" , who: "zq"},
+      ]),
+      // 
+      ...utils.interactionRange(8, 8, 15, 16, [
+         { type: "discoverClue", id: "clue_05" },
+         { type: "textMessage", text: "【新线索】卫生间-收纳盒:装洗浴用品的篮子",backgroundImage: "./image in the game/article/卫生间收纳盒.png"},
+       ]), 
+      //
+      ...utils.interactionRange(8, 8, 18, 24, [
+        { type: "discoverClue", id: "clue_20" },
+        { type: "textMessage", text: "【新线索】卫生间-浴缸",backgroundImage: "./image in the game/article/浴缸.png" },
+        { type: "textMessage", text: "zq警官:这浴缸也是一点使用痕迹都没有啊" , who: "zq"},
+        { type: "textMessage", text: "wx警官:是的，这应该也是才打扫过不久的" , who: "wx"},
+      ]),
     }
   },
   
@@ -492,7 +545,6 @@ window.OverworldMaps = {
       ...utils.verticalWall(21, 22, 25),//底右
       ...utils.verticalWall(17, 22, 25),//底左
 
-
      ...utils.horizontalWall(21, 9, 17),//下左墙
      ...utils.horizontalWall(21, 21, 25),//下右墙
      ...utils.horizontalWall(26, 17, 21),//下墙
@@ -505,3 +557,4 @@ window.OverworldMaps = {
     }
   }
 }
+
