@@ -252,7 +252,13 @@ h1{
   </div>
   <div class="page" data-index="3">
     <div class="front" style="background:url('in.png') no-repeat center/cover;"></div>
-    <div class="back"><div class="mirror" style="background:url('in.png') no-repeat center/cover; transform:scaleX(-1);"></div></div>
+    <div class="back">
+      <div class="mirror" style="background:url('in.png') no-repeat center/cover; transform:scaleX(-1);"></div>
+      <!-- 插入的成就图片 -->
+      <img src="../成就系统照片/乐不思蜀.png" alt="乐不思蜀" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s;">
+      <!-- 成就名称 -->
+      <div style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); background: rgba(255, 215, 0, 0.8); padding: 10px 20px; border-radius: 10px; font-size: 24px; font-weight: bold; color: #000; text-shadow: 0 0 2px #fff; box-shadow: 0 0 10px rgba(255, 215, 0, 0.8); opacity: 0; transition: opacity 0.3s;">乐不思蜀</div>
+    </div>
   </div>
 
   <!-- 最后一页：背面改为 end.png -->
