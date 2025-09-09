@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>榔头男的传说 · 互动剧本</title>
+<title>榔头男的传说Ending</title>
 <style>
 :root {
   --bg: #0b0f14;
@@ -67,10 +67,7 @@ html, body {
   <div class="bg" id="bg" aria-hidden="true"></div>
   <div class="vignette" id="vignette"></div>
 
-  <div class="topbar">
-    <button class="btn" id="btnSkip">跳过文字动画</button>
-    <button class="btn" id="btnAuto">自动播放：关</button>
-  </div>
+  
 
   <div class="subtitle" id="subtitle"></div>
 
@@ -89,11 +86,28 @@ html, body {
 const el=id=>document.getElementById(id);
 const nameEl=el('name'), textEl=el('text'), choicesEl=el('choices'), subtitleEl=el('subtitle');
 const dialogueEl=el('dialogue'), bgEl=el('bg'), mutedEl=el('muted');
-const btnSkip=el('btnSkip'), btnAuto=el('btnAuto');
+
 
 let idx=0, skipType=false, autoPlay=false, typing=false, waitingChoice=false;
 let currentBg='', inMontage=false;
+
 let bgm=null;
+let bgmMain=new Audio('main.mp3');
+bgmMain.loop=true;
+bgmMain.volume=0.6;
+let mainStarted=false;
+let bgmEnd = null; // 结尾 credits 音乐
+
+function tryPlayMain(){
+  if(!mainStarted){
+    bgmMain.play().catch(()=>{});
+    mainStarted=true;
+  }
+}
+
+document.addEventListener('click', tryPlayMain);
+document.addEventListener('keydown', e=>{ if(e.code==='Space') tryPlayMain(); });
+dialogueEl.addEventListener('click', tryPlayMain);
 
 async function typeText(str){
   typing=true; textEl.innerHTML='';
@@ -108,6 +122,7 @@ async function typeText(str){
 }
 
 const script=[
+  {t:'music',url:'main.mp3'},
   {t:'bg',url:'images/1.png'},
   {t:'say',name:'',text:'我原本以为自己拥有稳定的幸福。'},
   {t:'say',name:'',text:'和他在一起的八年里，我把自己最好的时光都给了他。'},
@@ -158,12 +173,9 @@ const script=[
   {t:'bg',url:'images/17.png'},
   {t:'say',name:'',text:'所以我布下了第三步。'},
   {t:'say',name:'',text:'我再次叫来一个人，让他误打误撞闯入现场。在警方眼里，他似乎才是真凶——杀了“榔头男”，再随手把凶器塞进第一个快递员的包裹。'},
-  {t:'say',name:'',text:'如此一来，线索混乱、嫌疑分散，我便能趁乱全身而退。'},
-
-  // 黑屏 5 秒 + 循环音乐 + 图19 + 结束黑屏
   {t:'black',duration:5000},
   {t:'music',url:'policecar.mp3'},
-  {t:'bg',url:'images/19.png'},
+  {t:'bg',url:'images/19.png',duration:4000},
   {t:'black',stopMusic:true},
   {t:'credits'}
 ];
@@ -201,34 +213,62 @@ async function next(){
   switch(step.t){
     case 'say':
       choicesEl.hidden=true; nameEl.textContent=step.name||''; dialogueEl.style.display='block';
-      subtitleEl.classList.remove('show');
       await typeText(step.text);
       updateMuted();
       break;
-    case 'credits':
-      dialogueEl.style.display='none';
-      subtitleEl.classList.remove('show');
-      mutedEl.classList.remove('show');
-      showCredits();
-      break;
+
     case 'bg':
       setBackground(step.url);
       break;
+
     case 'black':
       bgEl.style.transition="opacity 1s ease";
       bgEl.style.opacity=0;
-      if(step.stopMusic && bgm){ bgm.pause(); bgm=null; } // 结束音乐
-      setTimeout(next, step.duration || 1200); // 默认 1.2s，指定则 3s
+      if(step.stopMusic && bgm){ 
+        bgm.pause(); 
+        bgm=null; 
+      } 
+      setTimeout(next, step.duration || 1200);
       return;
+
     case 'music':
-      if(bgm) bgm.pause();
-      bgm=new Audio(step.url);
-      bgm.loop=true;
-      bgm.volume=0.6;
-      bgm.play();
-      break;
+  if(step.url.toLowerCase()!=='main.mp3'){
+    if(bgmMain){ bgmMain.pause(); }
+    if(bgm){ bgm.pause(); bgm=null; }
+    bgm = new Audio(step.url);
+    bgm.loop=true;
+    bgm.volume=0.6;
+    bgm.play().catch(()=>{});
+    
+    // 如果是警笛声，就隐藏字幕框
+    if(step.url.toLowerCase()==='policecar.mp3'){
+      dialogueEl.style.display='none';
+    }
+  }
+  break;
+
+
+    case 'credits':
+  dialogueEl.style.display='none';
+  mutedEl.classList.remove('show');
+  
+  // 停掉前面的背景音乐
+  if(bgm){ bgm.pause(); bgm = null; }
+  if(bgmMain){ bgmMain.pause(); bgmMain = null; }
+
+  // 播放结尾音乐
+  bgmEnd = new Audio('endmusic.mp3');
+  bgmEnd.volume = 0.6;
+  bgmEnd.play().catch(()=>{}); // 避免浏览器阻止自动播放
+
+  showCredits();
+  break;
+
+
   }
 }
+
+function updateMuted(){ mutedEl.classList.add('show'); setTimeout(()=>mutedEl.classList.remove('show'),2000); }
 
 function showCredits(){
   const overlay = document.createElement('div');
@@ -263,28 +303,21 @@ function showCredits(){
 
     setTimeout(()=>{ p.style.opacity='1'; }, i*3000);
   });
-
   setTimeout(()=>{
     const hint = document.createElement('div');
     hint.style.marginTop = '18px';
     hint.style.fontSize = '14px';
     hint.style.color = '#888';
-    hint.textContent = '（点击任意处或按空格返回开头）';
     container.appendChild(hint);
     document.addEventListener('keydown', restartFromCredits);
     document.addEventListener('click', restartFromCredits);
   }, creditsText.length * 2000 + 500);
 }
 
-function updateMuted(){ 
-  if(!autoPlay && !typing && !waitingChoice) mutedEl.classList.add('show'); 
-  else mutedEl.classList.remove('show'); 
-}
 
-dialogueEl.addEventListener('click',()=>{ if(!typing) next(); else skipType=true; });
-document.body.addEventListener('keydown',e=>{ if(e.code==='Space'){ e.preventDefault(); if(!typing) next(); else skipType=true; } });
-btnSkip.addEventListener('click',()=>{ skipType=true; });
-btnAuto.addEventListener('click',()=>{ autoPlay=!autoPlay; btnAuto.textContent='自动播放：'+(autoPlay?'开':'关'); if(autoPlay && !typing) next(); });
+
+document.addEventListener('keydown',e=>{ if(e.code==='Space') next(); });
+dialogueEl.addEventListener('click',next);
 
 next();
 </script>
