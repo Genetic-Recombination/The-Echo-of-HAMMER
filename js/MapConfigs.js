@@ -616,21 +616,21 @@ window.OverworldMaps = {
   [utils.asGridCoord(18, 15)]: [
     {
       events: [
-        { type: "textMessage", text: "【新线索】：老式的大衣柜，柜门都有些破损" },
+        { type: "textMessage", text: "老式的大衣柜，柜门都有些破损" },
       ]
     }
   ],
   [utils.asGridCoord(17, 15)]: [
     {
       events: [
-        { type: "textMessage", text: "【新线索】：老式的大衣柜，柜门都有些破损" },
+        { type: "textMessage", text: "老式的大衣柜，柜门都有些破损" },
       ]
     }
   ],
   [utils.asGridCoord(19, 15)]: [
     {
       events: [
-        { type: "textMessage", text: "【新线索】：老式的大衣柜，柜门都有些破损" },
+        { type: "textMessage", text: "老式的大衣柜，柜门都有些破损" },
       ]
     }
   ],
@@ -638,7 +638,7 @@ window.OverworldMaps = {
   [utils.asGridCoord(22, 15)]: [
     {
       events: [
-        { type: "textMessage", text: "【新线索】：抽屉柜",backgroundImage: "./image in the game/article/抽屉柜.png"},
+        { type: "textMessage", text: "【新线索】：卧室抽屉柜",backgroundImage: "./image in the game/article/卧室抽屉柜.png"},
         { type: "textMessage", text: "zq警官:空的吗，里面的东西被人拿走了还是本来就什么也没放啊" , who: "zq"},
       ]
     }
@@ -646,7 +646,7 @@ window.OverworldMaps = {
   [utils.asGridCoord(23, 15)]: [
     {
       events: [
-        { type: "textMessage", text: "【新线索】：抽屉柜",backgroundImage: "./image in the game/article/抽屉柜.png"},
+        { type: "textMessage", text: "【新线索】：卧室抽屉柜",backgroundImage: "./image in the game/article/卧室抽屉柜.png"},
         { type: "textMessage", text: "zq警官:空的吗，里面的东西被人拿走了还是本来就什么也没放啊" , who: "zq"},
       ]
     }
@@ -654,7 +654,7 @@ window.OverworldMaps = {
   [utils.asGridCoord(24, 15)]: [
     {
       events: [
-        { type: "textMessage", text: "【新线索】：抽屉柜",backgroundImage: "./image in the game/article/抽屉柜.png"},
+        { type: "textMessage", text: "【新线索】：卧室抽屉柜",backgroundImage: "./image in the game/article/卧室抽屉柜.png"},
         { type: "textMessage", text: "zq警官:空的吗，里面的东西被人拿走了还是本来就什么也没放啊" , who: "zq"},
       ]
     }
