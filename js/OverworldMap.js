@@ -38,14 +38,27 @@ class OverworldMap {
   }
 
   // 是否有物体/墙壁占用
-  isSpaceTaken(currentX, currentY, direction) {
+  isSpaceTaken(currentX, currentY, direction, movingObject) {
     const { x, y } = utils.nextPosition(currentX, currentY, direction);
     if (this.walls[`${x},${y}`]) return true;
 
-    return Object.values(this.gameObjects).some(obj =>
-      (obj.x === x && obj.y === y) ||
-      (obj.intentPosition && obj.intentPosition[0] === x && obj.intentPosition[1] === y)
-    );
+    return Object.values(this.gameObjects).some(obj => {
+      // 跳过自己
+      if (obj === movingObject) return false;
+      
+      // 如果移动对象是主人公，跳过跟随NPC的碰撞检测
+      if (movingObject && movingObject.isPlayerControlled && obj.isFollower) {
+        return false;
+      }
+      
+      // 如果移动对象是跟随NPC，跳过与主人公的碰撞检测
+      if (movingObject && movingObject.isFollower && obj.isPlayerControlled) {
+        return false;
+      }
+      
+      return (obj.x === x && obj.y === y) ||
+             (obj.intentPosition && obj.intentPosition[0] === x && obj.intentPosition[1] === y);
+    });
   }
 
   // 挂载对象
@@ -60,7 +73,7 @@ class OverworldMap {
       src: "./image in the game/character/1walking.png",
       talking: [
         { events: [
-          { type: "textMessage", text: "你好，我是角色1！", faceHero: "npc1", who: "npc1" },
+          { type: "textMessage", text: "警官，我是快递送货员！", faceHero: "npc1", who: "npc1" },
           { type: "textMessage", text: "立绘系统测试中...", who: "npc1" },
           {
             type: "interactionMenu",
@@ -72,6 +85,9 @@ class OverworldMap {
                 handler: () => {
                   const message = new TextMessage({
                     text: "你选择了：盘问 NPC1。",
+                    text: "快递员:（很着急的看手机）警官，能不能快一点？我车上还有一车货要送，快超时了。",
+                    text: "zq警官: 很快就好。你去305房做什么？见到里面的房客了吗？",
+                    text: "快递员: 我是来送货的，一个小包裹。没见到人，门是虚掩着的。门口地上贴了张纸，说他感冒了怕传染，让我直接进去把包裹放客厅桌上就行。运费就放在桌子上的一个信封里，我拿了之后清点数目，确认没错之后留下一张送货单就离开了。",
                     onComplete: () => {
                       playerState.storyFlags["npc1_interrogated"] = true;
                     }
@@ -183,14 +199,7 @@ class OverworldMap {
           }
         ]}
       ]
-    },
-    // 其他 NPC 保持原有设置
-    npc4: { type: "Person", x: utils.withGrid(15), y: utils.withGrid(26), src: "./image in the game/character/2walking.png", visible: false },
-    npc5: { type: "Person", x: utils.withGrid(15), y: utils.withGrid(26), src: "./image in the game/character/2walking.png", visible: false },
-    npc6: { type: "Person", x: utils.withGrid(15), y: utils.withGrid(26), src: "./image in the game/character/2walking.png", visible: false },
-    npc7: { type: "Person", x: utils.withGrid(15), y: utils.withGrid(26), src: "./image in the game/character/2walking.png", visible: false },
-    npc8: { type: "Person", x: utils.withGrid(15), y: utils.withGrid(26), src: "./image in the game/character/2walking.png", visible: false },
-    npc9: { type: "Person", x: utils.withGrid(15), y: utils.withGrid(26), src: "./image in the game/character/2walking.png", visible: false },
+    }
   });
 }
    //厨房交互
@@ -391,7 +400,9 @@ class OverworldMap {
     const faceKey = `${nextCoords.x},${nextCoords.y}`;
     const spaceMatch = this.cutsceneSpaces[faceKey];
     if (!this.isCutscenePlaying && spaceMatch) {
-      this.startCutscene(spaceMatch[0].events);
+      const scenario = spaceMatch.find(s => (s.required || []).every(f => playerState.storyFlags[f])) || spaceMatch[0];
+      const eventsCopy = JSON.parse(JSON.stringify(scenario.events));
+      this.startCutscene(eventsCopy);
       return;
     }
 
@@ -410,7 +421,9 @@ class OverworldMap {
     const hero = this.gameObjects["hero"];
     const match = this.cutsceneSpaces[`${hero.x},${hero.y}`];
     if (!this.isCutscenePlaying && match) {
-      this.startCutscene(match[0].events);
+      const scenario = match.find(s => (s.required || []).every(f => playerState.storyFlags[f])) || match[0];
+      const eventsCopy = JSON.parse(JSON.stringify(scenario.events));
+      this.startCutscene(eventsCopy);
     }
   }
 

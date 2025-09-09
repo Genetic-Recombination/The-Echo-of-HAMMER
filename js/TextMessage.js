@@ -108,6 +108,7 @@ class TextMessage {
       'huasheng': './image in the game/character/picture/huasheng.png',
       'wx': './image in the game/character/picture/wx.png',
       'zq': './image in the game/character/picture/zq.png',
+      'wx&zq': './image in the game/character/picture/wx&zq.png',
       'interact': null // 旁白不显示立绘
     };
     return portraitMap[characterId] || null;
