@@ -28,7 +28,9 @@ class InteractionMenu {
     // 绑定按钮事件
     const buttons = this.element.querySelectorAll("button");
     buttons.forEach((button, index) => {
-      button.addEventListener("click", () => {
+      button.addEventListener("click", (event) => {
+        event.preventDefault();
+        event.stopPropagation();
         const option = this.options[index];
         if (option.handler) {
           option.handler();
@@ -64,9 +66,11 @@ class InteractionMenu {
     });
 
     // 支持空格键选择当前聚焦项
-    this.confirm = new KeyPressListener("Space", () => {
+    this.confirm = new KeyPressListener("Space", (event) => {
       const current = document.activeElement;
       if (current && current.matches('button[data-button]')) {
+        event?.preventDefault();
+        event?.stopPropagation();
         current.click();
       }
     });
