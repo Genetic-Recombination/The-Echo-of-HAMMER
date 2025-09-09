@@ -83,29 +83,68 @@ class OverworldMap {
                 label: "盘问",
                 description: "对 NPC1 进行盘问",
                 handler: () => {
-                  const message = new TextMessage({
-                    text: "你选择了：盘问 NPC1。",
-                    text: "快递员:（很着急的看手机）警官，能不能快一点？我车上还有一车货要送，快超时了。",
-                    text: "zq警官: 很快就好。你去305房做什么？见到里面的房客了吗？",
-                    text: "快递员: 我是来送货的，一个小包裹。没见到人，门是虚掩着的。门口地上贴了张纸，说他感冒了怕传染，让我直接进去把包裹放客厅桌上就行。运费就放在桌子上的一个信封里，我拿了之后清点数目，确认没错之后留下一张送货单就离开了。",
-                    onComplete: () => {
+                  // 定义要显示的文本消息序列
+                  const messages = [
+                    "zq警官: 你是第一个进入公寓的，你去305房做什么？见到里面的房客了吗？",
+                    "快递员:（很着急的看手机）警官，能不能快一点？我车上还有一车货要送，快超时了。",
+                    "zq警官: 毕竟出现了案件，我们会尽快解决的，也请您耐心等一等",
+                    "快递员: 我是来送货的，一个小包裹。没见到人，门是虚掩着的。门口地上贴了张纸，说他感冒了怕传染，让我直接进去把包裹放客厅桌上就行。运费就放在桌子上的一个信封里，我拿了之后清点数目，确认没错之后留下一张送货单就离开了。",
+                    "zq警官: 门是虚掩的？纸条上还说什么了？",
+                    "快递员: 纸上特地写了‘门未锁，直接进入。离开时无需关门。我们这行奇怪要求见多了，照做就是。"
+                  ];
+                  
+                  // 创建一个递归函数来显示消息序列
+                  const showMessageSequence = (index) => {
+                    if (index < messages.length) {
+                      const message = new TextMessage({
+                        text: messages[index],
+                        onComplete: () => {
+                          // 当前消息完成后，显示下一个消息
+                          showMessageSequence(index + 1);
+                        }
+                      });
+                      message.init(document.querySelector(".game-container"));
+                    } else {
+                      // 所有消息显示完毕，设置 story flag
                       playerState.storyFlags["npc1_interrogated"] = true;
                     }
-                  });
-                  message.init(document.querySelector(".game-container"));
+                  };
+                  
+                  // 开始显示消息序列
+                  showMessageSequence(0);
                 }
               },
               {
                 label: "搜身",
-                description: "搜查 NPC1 的随身物品",
+                description: "搜查快递员的随身物品",
                 handler: () => {
-                  const message = new TextMessage({
-                    text: "你选择了：搜身 NPC1。",
-                    onComplete: () => {
+                  // 定义要显示的文本消息序列
+                  const messages = [
+                    "你选择了：搜身快递员",
+                    "zq警官:这是？",
+                    "快递员：人到中年容易高血压，我这随身备着降压药呢"
+                  ];
+                  
+                  // 创建一个递归函数来显示消息序列
+                  const showMessageSequence = (index) => {
+                    if (index < messages.length) {
+                      const message = new TextMessage({
+                        text: messages[index],
+                        backgroundImage: index === 0 ? "./image in the game/article/快递员搜身.png" : undefined, // 只在第一个消息添加背景图片
+                        onComplete: () => {
+                          // 当前消息完成后，显示下一个消息
+                          showMessageSequence(index + 1);
+                        }
+                      });
+                      message.init(document.querySelector(".game-container"));
+                    } else {
+                      // 所有消息显示完毕，设置 story flag
                       playerState.storyFlags["npc1_searched"] = true;
                     }
-                  });
-                  message.init(document.querySelector(".game-container"));
+                  };
+                  
+                  // 开始显示消息序列
+                  showMessageSequence(0);
                 }
               }
             ]
@@ -199,7 +238,14 @@ class OverworldMap {
           }
         ]}
       ]
-    }
+    },
+    // 其他 NPC 保持原有设置
+    npc4: { type: "Person", x: utils.withGrid(15), y: utils.withGrid(26), src: "./image in the game/character/2walking.png", visible: false },
+    npc5: { type: "Person", x: utils.withGrid(15), y: utils.withGrid(26), src: "./image in the game/character/2walking.png", visible: false },
+    npc6: { type: "Person", x: utils.withGrid(15), y: utils.withGrid(26), src: "./image in the game/character/2walking.png", visible: false },
+    npc7: { type: "Person", x: utils.withGrid(15), y: utils.withGrid(26), src: "./image in the game/character/2walking.png", visible: false },
+    npc8: { type: "Person", x: utils.withGrid(15), y: utils.withGrid(26), src: "./image in the game/character/2walking.png", visible: false },
+    npc9: { type: "Person", x: utils.withGrid(15), y: utils.withGrid(26), src: "./image in the game/character/2walking.png", visible: false },
   });
 }
    //厨房交互
