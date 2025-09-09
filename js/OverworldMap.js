@@ -369,18 +369,21 @@ function checkAllInterrogated(mapInstance) {
     if (this.id === "Kitchen") {
   const interactions = [
     {
-      text: "新线索【灰烬】\n桶内底层有一些灰白色的纸灰和少量未完全烧尽的碎纸片，纸片边缘卷曲焦黑，已经看不清了。",
+      text: "新线索【厨房-垃圾桶】\n桶内底层有一些灰白色的纸灰和少量未完全烧尽的碎纸片，纸片边缘卷曲焦黑，已经看不清了。",
         backgroundImage: "./image in the game/article/厨房的垃圾桶.png",
-      range: { xStart: 35, xEnd: 37, yStart: 21, yEnd: 24 }
+      range: { xStart: 35, xEnd: 37, yStart: 21, yEnd: 24 },
+      events: [
+        { type: "discoverClue", id: "clue_07" }
+      ]
     },
     {
-      text: "新线索【冰箱】\n一台嗡嗡作响的老旧冰箱。",
+      text: "新线索【厨房-冰箱】\n一台嗡嗡作响的老旧冰箱。",
       range: { xStart: 26, xEnd: 29, yStart: 15, yEnd: 15 },
       events: [
-        { type: "textMessage", text: "新线索【冰箱】\n一台嗡嗡作响的老旧冰箱。" },
+        { type: "textMessage", text: "新线索【厨房-冰箱】\n一台嗡嗡作响的老旧冰箱。" },
         { 
           type: "interactionMenu",
-          title: "冰箱",
+          title: "厨房-冰箱",
           options: [
             {
               label: "打开冰箱",
@@ -469,8 +472,8 @@ function checkAllInterrogated(mapInstance) {
                   description: "打开洗衣机看看里面有什么",
                   handler: () => {
                     const message = new TextMessage({
-                      text: "你打开了洗衣机\n\n新线索[一些没洗的衣服]\n两件宽大的t恤\n一件黑色工装外套\n一条深蓝色工装裤。",
-                      backgroundImage: "./image in the game/article/厨房的打火机.png",
+                      text: "你打开了洗衣机\n\n新线索【阳台-洗衣机】\n一些没洗的衣服\n两件宽大的t恤\n一件黑色工装外套\n一条深蓝色工装裤。",
+                      backgroundImage: "./image in the game/article/阳台洗衣机.png",
                       onComplete: () => {}
                     });
                     message.init(document.querySelector(".game-container"));
