@@ -594,7 +594,21 @@ window.OverworldMaps = {
   [utils.asGridCoord(14, 15)]: [
     {
       events: [
-        { type: "textMessage", text: "【新线索】：床头柜上的书",backgroundImage: "./image in the game/article/床头柜.png" },
+        { type: "textMessage", text: "床头柜上的书",backgroundImage: "./image in the game/article/床头柜.png" },
+      ]
+    }
+  ],
+  [utils.asGridCoord(15, 15)]: [
+    {
+      events: [
+        { type: "textMessage", text: "床头柜上的书",backgroundImage: "./image in the game/article/床头柜.png" },
+      ]
+    }
+  ],
+  [utils.asGridCoord(13, 15)]: [
+    {
+      events: [
+        { type: "textMessage", text: "床头柜上的书",backgroundImage: "./image in the game/article/床头柜.png" },
       ]
     }
   ],
@@ -606,8 +620,22 @@ window.OverworldMaps = {
       ]
     }
   ],
+  [utils.asGridCoord(17, 15)]: [
+    {
+      events: [
+        { type: "textMessage", text: "【新线索】：老式的大衣柜，柜门都有些破损" },
+      ]
+    }
+  ],
+  [utils.asGridCoord(19, 15)]: [
+    {
+      events: [
+        { type: "textMessage", text: "【新线索】：老式的大衣柜，柜门都有些破损" },
+      ]
+    }
+  ],
 
-  [utils.asGridCoord(18, 17)]: [
+  [utils.asGridCoord(22, 15)]: [
     {
       events: [
         { type: "textMessage", text: "【新线索】：抽屉柜",backgroundImage: "./image in the game/article/抽屉柜.png"},
@@ -615,7 +643,132 @@ window.OverworldMaps = {
       ]
     }
   ],
-
+  [utils.asGridCoord(23, 15)]: [
+    {
+      events: [
+        { type: "textMessage", text: "【新线索】：抽屉柜",backgroundImage: "./image in the game/article/抽屉柜.png"},
+        { type: "textMessage", text: "zq警官:空的吗，里面的东西被人拿走了还是本来就什么也没放啊" , who: "zq"},
+      ]
+    }
+  ],
+  [utils.asGridCoord(24, 15)]: [
+    {
+      events: [
+        { type: "textMessage", text: "【新线索】：抽屉柜",backgroundImage: "./image in the game/article/抽屉柜.png"},
+        { type: "textMessage", text: "zq警官:空的吗，里面的东西被人拿走了还是本来就什么也没放啊" , who: "zq"},
+      ]
+    }
+  ],
+  [utils.asGridCoord(7, 22)]: [
+    {
+      events: [
+        { type: "textMessage", text: "【新线索】：卧室沙发",backgroundImage: "./image in the game/article/我是沙发.png"},
+        { type: "textMessage", text: "zq警官:诶？这个沙发床怎么这么小巧啊，据说榔头男身高八尺有余，就睡在这个沙发上吗" , who: "zq"},
+        { type: "textMessage", text: "wx警官:那都是都市传说啦，实际上没人见过榔头男的真面目，那天的目击者喝醉了酒其实也没看清" , who: "wx"},
+        { type: "textMessage", text: "zq警官:哦？我想起来了，就像尼斯湖水怪是吧，大众根据想象具体化了凶手的形象" , who: "zq"},
+        { type: "textMessage", text: "wx警官:就是这样的，你看倒下的榔头男也不过170公分而已" , who: "wx"},
+      ]
+    }
+  ],
+  [utils.asGridCoord(7, 23)]: [
+    {
+      events: [
+        { type: "textMessage", text: "【新线索】：卧室沙发",backgroundImage: "./image in the game/article/我是沙发.png"},
+        { type: "textMessage", text: "zq警官:诶？这个沙发床怎么这么小巧啊，据说榔头男身高八尺有余，就睡在这个沙发上吗" , who: "zq"},
+        { type: "textMessage", text: "wx警官:那都是都市传说啦，实际上没人见过榔头男的真面目，那天的目击者喝醉了酒其实也没看清" , who: "wx"},
+        { type: "textMessage", text: "zq警官:哦？我想起来了，就像尼斯湖水怪是吧，大众根据想象具体化了凶手的形象" , who: "zq"},
+        { type: "textMessage", text: "wx警官:就是这样的，你看倒下的榔头男也不过170公分而已" , who: "wx"},
+      ]
+    }
+  ],
+  [utils.asGridCoord(7, 24)]: [
+    {
+      events: [
+        { type: "textMessage", text: "【新线索】：卧室沙发",backgroundImage: "./image in the game/article/我是沙发.png"},
+        { type: "textMessage", text: "zq警官:诶？这个沙发床怎么这么小巧啊，据说榔头男身高八尺有余，就睡在这个沙发上吗" , who: "zq"},
+        { type: "textMessage", text: "wx警官:那都是都市传说啦，实际上没人见过榔头男的真面目，那天的目击者喝醉了酒其实也没看清" , who: "wx"},
+        { type: "textMessage", text: "zq警官:哦？我想起来了，就像尼斯湖水怪是吧，大众根据想象具体化了凶手的形象" , who: "zq"},
+        { type: "textMessage", text: "wx警官:就是这样的，你看倒下的榔头男也不过170公分而已" , who: "wx"},
+      ]
+    }
+  ],
+  [utils.asGridCoord(7, 25)]: [
+    {
+      events: [
+        { type: "textMessage", text: "【新线索】：卧室沙发",backgroundImage: "./image in the game/article/我是沙发.png"},
+        { type: "textMessage", text: "zq警官:诶？这个沙发床怎么这么小巧啊，据说榔头男身高八尺有余，就睡在这个沙发上吗" , who: "zq"},
+        { type: "textMessage", text: "wx警官:那都是都市传说啦，实际上没人见过榔头男的真面目，那天的目击者喝醉了酒其实也没看清" , who: "wx"},
+        { type: "textMessage", text: "zq警官:哦？我想起来了，就像尼斯湖水怪是吧，大众根据想象具体化了凶手的形象" , who: "zq"},
+        { type: "textMessage", text: "wx警官:就是这样的，你看倒下的榔头男也不过170公分而已" , who: "wx"},
+      ]
+    }
+  ],
+  [utils.asGridCoord(7, 26)]: [
+    {
+      events: [
+        { type: "textMessage", text: "【新线索】：卧室沙发",backgroundImage: "./image in the game/article/我是沙发.png"},
+        { type: "textMessage", text: "zq警官:诶？这个沙发床怎么这么小巧啊，据说榔头男身高八尺有余，就睡在这个沙发上吗" , who: "zq"},
+        { type: "textMessage", text: "wx警官:那都是都市传说啦，实际上没人见过榔头男的真面目，那天的目击者喝醉了酒其实也没看清" , who: "wx"},
+        { type: "textMessage", text: "zq警官:哦？我想起来了，就像尼斯湖水怪是吧，大众根据想象具体化了凶手的形象" , who: "zq"},
+        { type: "textMessage", text: "wx警官:就是这样的，你看倒下的榔头男也不过170公分而已" , who: "wx"},
+      ]
+    }
+  ],
+  [utils.asGridCoord(7, 27)]: [
+    {
+      events: [
+        { type: "textMessage", text: "【新线索】：卧室沙发",backgroundImage: "./image in the game/article/我是沙发.png"},
+        { type: "textMessage", text: "zq警官:诶？这个沙发床怎么这么小巧啊，据说榔头男身高八尺有余，就睡在这个沙发上吗" , who: "zq"},
+        { type: "textMessage", text: "wx警官:那都是都市传说啦，实际上没人见过榔头男的真面目，那天的目击者喝醉了酒其实也没看清" , who: "wx"},
+        { type: "textMessage", text: "zq警官:哦？我想起来了，就像尼斯湖水怪是吧，大众根据想象具体化了凶手的形象" , who: "zq"},
+        { type: "textMessage", text: "wx警官:就是这样的，你看倒下的榔头男也不过170公分而已" , who: "wx"},
+      ]
+    }
+  ],
+  [utils.asGridCoord(7, 28)]: [
+    {
+      events: [
+        { type: "textMessage", text: "【新线索】：卧室沙发",backgroundImage: "./image in the game/article/我是沙发.png"},
+        { type: "textMessage", text: "zq警官:诶？这个沙发床怎么这么小巧啊，据说榔头男身高八尺有余，就睡在这个沙发上吗" , who: "zq"},
+        { type: "textMessage", text: "wx警官:那都是都市传说啦，实际上没人见过榔头男的真面目，那天的目击者喝醉了酒其实也没看清" , who: "wx"},
+        { type: "textMessage", text: "zq警官:哦？我想起来了，就像尼斯湖水怪是吧，大众根据想象具体化了凶手的形象" , who: "zq"},
+        { type: "textMessage", text: "wx警官:就是这样的，你看倒下的榔头男也不过170公分而已" , who: "wx"},
+      ]
+    }
+  ],
+  [utils.asGridCoord(6, 21)]: [
+    {
+      events: [
+        { type: "textMessage", text: "【新线索】：卧室沙发",backgroundImage: "./image in the game/article/我是沙发.png"},
+        { type: "textMessage", text: "zq警官:诶？这个沙发床怎么这么小巧啊，据说榔头男身高八尺有余，就睡在这个沙发上吗" , who: "zq"},
+        { type: "textMessage", text: "wx警官:那都是都市传说啦，实际上没人见过榔头男的真面目，那天的目击者喝醉了酒其实也没看清" , who: "wx"},
+        { type: "textMessage", text: "zq警官:哦？我想起来了，就像尼斯湖水怪是吧，大众根据想象具体化了凶手的形象" , who: "zq"},
+        { type: "textMessage", text: "wx警官:就是这样的，你看倒下的榔头男也不过170公分而已" , who: "wx"},
+      ]
+    }
+  ],
+  [utils.asGridCoord(5, 21)]: [
+    {
+      events: [
+        { type: "textMessage", text: "【新线索】：卧室沙发",backgroundImage: "./image in the game/article/我是沙发.png"},
+        { type: "textMessage", text: "zq警官:诶？这个沙发床怎么这么小巧啊，据说榔头男身高八尺有余，就睡在这个沙发上吗" , who: "zq"},
+        { type: "textMessage", text: "wx警官:那都是都市传说啦，实际上没人见过榔头男的真面目，那天的目击者喝醉了酒其实也没看清" , who: "wx"},
+        { type: "textMessage", text: "zq警官:哦？我想起来了，就像尼斯湖水怪是吧，大众根据想象具体化了凶手的形象" , who: "zq"},
+        { type: "textMessage", text: "wx警官:就是这样的，你看倒下的榔头男也不过170公分而已" , who: "wx"},
+      ]
+    }
+  ],
+  [utils.asGridCoord(7, 21)]: [
+    {
+      events: [
+        { type: "textMessage", text: "【新线索】：卧室沙发",backgroundImage: "./image in the game/article/我是沙发.png"},
+        { type: "textMessage", text: "zq警官:诶？这个沙发床怎么这么小巧啊，据说榔头男身高八尺有余，就睡在这个沙发上吗" , who: "zq"},
+        { type: "textMessage", text: "wx警官:那都是都市传说啦，实际上没人见过榔头男的真面目，那天的目击者喝醉了酒其实也没看清" , who: "wx"},
+        { type: "textMessage", text: "zq警官:哦？我想起来了，就像尼斯湖水怪是吧，大众根据想象具体化了凶手的形象" , who: "zq"},
+        { type: "textMessage", text: "wx警官:就是这样的，你看倒下的榔头男也不过170公分而已" , who: "wx"},
+      ]
+    }
+  ],
   // 新增：卧室尸体九格触发
   ...(() => {
     const spaces = {};
