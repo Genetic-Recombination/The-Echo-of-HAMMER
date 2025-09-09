@@ -32,7 +32,7 @@ window.CLUE_CONFIG = [
   { id: "clue_14", title: "客厅-置物篮", image: "./image%20in%20the%20game/article/客厅的置物篮.png", desc: "一个置物篮，杂七杂八的东西都堆在一块\nwx警官:这都是些啥啊，好乱啊" },
   { id: "clue_15", title: "客厅-鞋柜", image: "./image%20in%20the%20game/article/客厅鞋柜.png", desc: "一个简陋的木质鞋柜，看起来有些年头了" },
   { id: "clue_16", title: "客厅-麻袋", image: "./image%20in%20the%20game/article/麻袋里：沾血的风衣.png", desc: "一个捆得很紧的麻袋，打开后，赫然可见里面有一件沾血的风衣，帽子和墨镜" },
-  { id: "clue_17", title: "卧室-尸体", image: "./image%20in%20the%20game/article/big_dead.png", desc: "描述待补充" },
+  { id: "clue_17", title: "卧室-尸体", image: "./image%20in%20the%20game/article/big_dead.png", desc: "一个高大的男人仰面躺在地上一动不动。他穿着厚重的长袖外套，头上戴着一顶压得很低的帽子，仿佛随时准备出门。穿得异常整齐。在他的手边，倾倒着一个棕色的药瓶，几粒白色药片散落在枕边和地面上。\nwx&zq：（同时惊呼）“喂！？你怎么样？！\n(两人迅速冲上前去。zq警官检查颈动脉，wx警官则注意到了那个药瓶。zq警官：（收回手，面色沉重地摇了摇头）死了\nwx警官：（拿起药瓶看了一眼）“是安眠药！\n(两位警官都沉默了，目光从尸体移到散落的药片，再移到死者过于整齐的穿着上。现场看起来像是一场…)\nwx警官：（语气带着不确定的推测）难道…是畏罪自杀？他穿好衣服戴上帽子…是原本想逃跑，但发现逃不掉后，就选择了自我了断？但好像又不是…" },
   { id: "clue_18", title: "卧室-沙发", image: "./image%20in%20the%20game/article/我是沙发.png", desc: "zq警官:诶？这个沙发床怎么这么小巧啊，据说榔头男身高八尺有余，就睡在这个沙发上吗\nwx警官:那都是都市传说啦，实际上没人见过榔头男的真面目，那天的目击者喝醉了酒其实也没看清\nzq警官:哦？我想起来了，就像尼斯湖水怪是吧，大众根据想象具体化了凶手的形象\nwx警官:就是这样的，你看倒下的榔头男也不过170公分而已" },
   { id: "clue_19", title: "阳台-洗衣机", image: "./image%20in%20the%20game/article/洗衣机内景.png", desc: "一些没洗的衣服\n两件宽大的t恤\n一件黑色工装外套\n一条深蓝色工装裤。" },
   { id: "clue_20", title: "卫生间-浴缸", image: "./image%20in%20the%20game/article/浴缸.png", desc: "zq警官:这浴缸也是一点使用痕迹都没有啊\nwx警官:是的，这应该也是才打扫过不久的" },

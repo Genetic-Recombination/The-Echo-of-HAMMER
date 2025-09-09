@@ -273,6 +273,7 @@ window.OverworldMaps = {
   ...(() => {
     const spaces = {};
     const firstTimeEvents = [
+      { type: "discoverClue", id: "clue_17" },
       { type: "textMessage", text: "(卧室里，一个高大的男人仰面躺在地上一动不动。他穿着厚重的长袖外套，头上戴着一顶压得很低的帽子，仿佛随时准备出门。穿得异常整齐。)" },
       { type: "textMessage", text: "(在他的手边，倾倒着一个棕色的药瓶，几粒白色药片散落在枕边和地面上。)" },
 
