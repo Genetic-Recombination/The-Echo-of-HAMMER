@@ -6,6 +6,8 @@ class OverworldMap {
     this.gameObjects = config.configObjects || {};
     this.cutsceneSpaces = config.cutsceneSpaces || {};
     this.walls = config.walls || {};
+    
+    this.lockedRooms = {}; // 用于控制初始锁定房间
 
     this.lowerImage = this.loadImage(config.lowerSrc);
     this.upperImage = config.upperSrc ? this.loadImage(config.upperSrc) : null;
@@ -59,6 +61,14 @@ class OverworldMap {
       return (obj.x === x && obj.y === y) ||
              (obj.intentPosition && obj.intentPosition[0] === x && obj.intentPosition[1] === y);
     });
+  }
+    // === 修改点: 房间切换检查 ===
+  canEnterRoom(roomId) {
+    if (this.lockedRooms[roomId]) {
+      new TextMessage({ text: "wx警官: 现在不能离开这里，先问完嫌疑人吧。" }).init(document.querySelector(".game-container"));
+      return false;
+    }
+    return true;
   }
 
   // 挂载对象
@@ -201,6 +211,37 @@ class OverworldMap {
       ]
     }
   });
+// NPC 初始剧情挂载（LivingRoom）
+setTimeout(() => {
+  if (!playerState.storyFlags["intro_interrogation"]) {
+    this.startCutscene([
+      { type: "textMessage", text: "wx警官: 我们先来问问这三个嫌疑人基本情况吧。" },
+      // 替代你原来的 callback
+      { type: "textMessage", text: "先锁定搜身按钮和其他房间..." },
+    ]).then(() => {
+      // 事件结束后再锁定按钮和房间
+      ["npc1", "npc2", "npc3"].forEach(npcId => {
+        const npc = this.gameObjects[npcId];
+        if (npc && npc.talking) {
+          npc.talking.forEach(scenario => {
+            scenario.events.forEach(evt => {
+              if (evt.type === "interactionMenu") {
+                evt.options.forEach(opt => {
+                  if (opt.label === "搜身") {
+                    opt.disabled = true;      
+                    opt.label += " (锁定)";  
+                  }
+                });
+              }
+            });
+          });
+        }
+      });
+      this.lockedRooms = { Kitchen: true, Bedroom: true, Balcony: true };
+    });
+    playerState.storyFlags["intro_interrogation"] = true;
+  }
+}, 100);
 }
    //厨房交互
     if (this.id === "Kitchen") {
