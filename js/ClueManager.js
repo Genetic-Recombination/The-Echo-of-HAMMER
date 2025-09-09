@@ -29,7 +29,7 @@
       .ClueBagButton {
         position: absolute;
         right: 12px;
-        top: 50%;
+        top: 40%;
         transform: translateY(-50%);
         width: 56px;
         height: 56px;
@@ -86,7 +86,7 @@
       .ClueModal .cm-close { background: none; border: 2px solid var(--menu-border-color, #A48465); border-radius: 6px; padding: 4px 8px; cursor: pointer; }
       .ClueModal .cm-close:hover { background: var(--menu-selected-background, #00000044); }
       .ClueModal .cm-body { padding: 12px; display: flex; gap: 12px; }
-      .ClueModal .cm-image { width: 260px; height: 260px; background: #000; background-size: contain; background-repeat: no-repeat; background-position: center; border-radius: 6px; border: 2px solid rgba(0,0,0,0.15); }
+      .ClueModal .cm-image { width: 260px; height: 260px; background: #fff; background-size: contain; background-repeat: no-repeat; background-position: center; border-radius: 6px; border: 2px solid rgba(0,0,0,0.15); }
       .ClueModal .cm-desc { flex: 1; white-space: pre-wrap; line-height: 1.4; }
       `;
       document.head.appendChild(style);

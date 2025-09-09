@@ -102,20 +102,14 @@ window.OverworldMaps = {
   // 通往阳台的门 (12..14,14)
   ...utils.portalLine(12, 14, 14, "Balcony", 19, 23, "up"),
   // 麻袋交互点 - 使用interactionRange
-      ...utils.interactionRange(15, 17, 26, 26, [
+      ...utils.interactionRange(15, 19, 26, 29, [
         { type: "discoverClue", id: "clue_16" },
         { type: "textMessage", text: "【新线索】:一个捆得很紧的麻袋",backgroundImage:"./image in the game/article/客厅麻袋.png"},
         { type: "textMessage", text: "zq警官:打开看看吧，这能是什么呢？", who: "zq"},
         { type: "textMessage", text: "一件沾血的风衣，帽子和墨镜", backgroundImage:"./image in the game/article/麻袋里：沾血的风衣.png"},
         { type: "textMessage", text: "zq警官:！！！什么！！！是榔头男作案时的风衣帽子和墨镜，看来这的确就是榔头男的家了", who: "zq" },
       ]),
-      ...utils.interactionRange(19, 19, 27, 28, [
-        { type: "discoverClue", id: "clue_16" },
-        { type: "textMessage", text: "【新线索】:一个捆得很紧的麻袋",backgroundImage:"./image in the game/article/客厅麻袋.png"},
-        { type: "textMessage", text: "zq警官:打开看看吧，这能是什么呢？", who: "zq"},
-        { type: "textMessage", text: "一件沾血的风衣，帽子和墨镜", backgroundImage:"./image in the game/article/麻袋里：沾血的风衣.png"},
-        { type: "textMessage", text: "zq警官:！！！什么！！！是榔头男作案时的风衣帽子和墨镜，看来这的确就是榔头男的家了", who: "zq" },
-      ]),
+     
   // 当玩家走到坐标(15, 25)时显示图片，
   // 快递箱交互点 - 多格
       ...utils.interactionRange(19, 19, 31, 33, [
@@ -127,16 +121,12 @@ window.OverworldMaps = {
         { type: "textMessage", text: "zq警官:大胆假设，小心求证。你有证据吗？",who:"zq"},
       ]),
   // 鞋柜交互点 - 多格
-      ...utils.interactionRange(28, 28, 39, 42, [
-        { type: "discoverClue", id: "clue_15" },
-        { type: "textMessage", text: "【新线索】客厅-鞋柜：一个简陋的木质鞋柜，看起来有些年头了",backgroundImage:"./image in the game/article/客厅鞋柜.png" },
-      ]),
-      ...utils.interactionRange(26, 26, 38, 38, [
+      ...utils.interactionRange(25, 28, 38, 42, [
         { type: "discoverClue", id: "clue_15" },
         { type: "textMessage", text: "【新线索】客厅-鞋柜：一个简陋的木质鞋柜，看起来有些年头了",backgroundImage:"./image in the game/article/客厅鞋柜.png" },
       ]),
   // 垃圾桶交互点 - 多格
-      ...utils.interactionRange(41, 43, 26, 28, [
+      ...utils.interactionRange(41, 43, 26, 29, [
         { type: "discoverClue", id: "clue_13" },
         { type: "textMessage", text: "【新线索】客厅-垃圾桶：很脏很乱的垃圾桶，像是很久没人打理了" ,backgroundImage:"./image in the game/article/客厅的垃圾桶.png"},
         { type: "textMessage", text: "zq警官:这榔头男也太不讲卫生了，怎么会这么乱啊" , who: "zq"},
@@ -177,14 +167,14 @@ window.OverworldMaps = {
         { type: "textMessage", text: "wx警官:看来这榔头男随时准备搬家逃跑啊，辛亏我们接到线报就一直在这监视" , who: "wx"},
       ]),
   // 大时钟交互点 - 原始位置
-      ...utils.interactionRange(25, 27, 12, 14, [
+      ...utils.interactionRange(25, 27, 12, 15, [
         { type: "textMessage", text: "破旧的大时钟，看来指针已经停摆好久了" },
       ]),
-      ...utils.interactionRange(37, 39, 15, 17, [
-        { type: "textMessage", text: "两株小仙人掌，看起来很久没有浇水了" },
+      ...utils.interactionRange(37, 40, 14, 18, [
+        { type: "textMessage", text: "一株仙人掌，看起来很久没有浇水了" },
       ]),
-      ...utils.interactionRange(45, 48, 15, 17, [
-        { type: "textMessage", text: "两株小仙人掌，看起来很久没有浇水了" },
+       ...utils.interactionRange(46, 48, 15, 17, [
+        { type: "textMessage", text: "一株略显老态的盆栽。" },
       ])
     }
   },
@@ -252,14 +242,6 @@ window.OverworldMaps = {
         { type: "textMessage", text: "zq警官:哦？我想起来了，就像尼斯湖水怪是吧，大众根据想象具体化了凶手的形象" , who: "zq"},
         { type: "textMessage", text: "wx警官:就是这样的，你看倒下的榔头男也不过170公分而已" , who: "wx"},
       ]),
-      ...utils.interactionRange(7, 7, 27, 28, [
-        { type: "discoverClue", id: "clue_18" },
-        { type: "textMessage", text: "【新线索】卧室-沙发",backgroundImage: "./image in the game/article/我是沙发.png"},
-        { type: "textMessage", text: "zq警官:诶？这个沙发床怎么这么小巧啊，据说榔头男身高八尺有余，就睡在这个沙发上吗" , who: "zq"},
-        { type: "textMessage", text: "wx警官:那都是都市传说啦，实际上没人见过榔头男的真面目，那天的目击者喝醉了酒其实也没看清" , who: "wx"},
-        { type: "textMessage", text: "zq警官:哦？我想起来了，就像尼斯湖水怪是吧，大众根据想象具体化了凶手的形象" , who: "zq"},
-        { type: "textMessage", text: "wx警官:就是这样的，你看倒下的榔头男也不过170公分而已" , who: "wx"},
-      ]),
       ...utils.interactionRange(5, 7, 21, 21, [
         { type: "discoverClue", id: "clue_18" },
         { type: "textMessage", text: "【新线索】卧室-沙发",backgroundImage: "./image in the game/article/我是沙发.png"},
@@ -268,11 +250,16 @@ window.OverworldMaps = {
         { type: "textMessage", text: "zq警官:哦？我想起来了，就像尼斯湖水怪是吧，大众根据想象具体化了凶手的形象" , who: "zq"},
         { type: "textMessage", text: "wx警官:就是这样的，你看倒下的榔头男也不过170公分而已" , who: "wx"},
       ]),
+      // 床交互点 - 多格
+      ...utils.interactionRange(8,12, 15, 19, [
+        { type: "textMessage", text: "床：靠墙放置的单人木床，枕头下和被子里都没有藏任何东西。" },
+      ]),
 
   // 新增：卧室尸体九格触发
   ...(() => {
     const spaces = {};
     const firstTimeEvents = [
+      { type: "discoverClue", id: "clue_17" },
       { type: "textMessage", text: "(卧室里，一个高大的男人仰面躺在地上一动不动。他穿着厚重的长袖外套，头上戴着一顶压得很低的帽子，仿佛随时准备出门。穿得异常整齐。)" },
       { type: "textMessage", text: "(在他的手边，倾倒着一个棕色的药瓶，几粒白色药片散落在枕边和地面上。)" },
 
@@ -284,8 +271,6 @@ window.OverworldMaps = {
 
       { type: "textMessage", text: "(两位警官都沉默了，目光从尸体移到散落的药片，再移到死者过于整齐的穿着上。现场看起来像是一场…)" },
       { type: "textMessage", text: "wx警官：\n（语气带着不确定的推测）\n“难道…是畏罪自杀？他穿好衣服戴上帽子…是原本想逃跑，但发现逃不掉后，就选择了自我了断？”" , who: "wx"},
-
-      { type: "textMessage", text: "(凝重的背景音乐响起...)" },
       { type: "showImage", src: "./image in the game/article/big_dead.png" },
 
       {

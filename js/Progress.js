@@ -2,9 +2,12 @@ class Progress {
   constructor(id = -1) {
     let currentUsername = localStorage["Sec-Sight-current-username"];
     this.mapId = "LivingRoom"; // 修改为当前游戏的起始地图
-    this.startingHeroX = 0;
-    this.startingHeroY = 0;
-    this.startingHeroDirection = "down";
+    // 使用地图配置中的默认英雄位置，避免首次加载时的坐标错位
+    const defaultMapConfig = window.OverworldMaps?.[this.mapId];
+    const defaultHero = defaultMapConfig?.configObjects?.hero;
+    this.startingHeroX = defaultHero?.x || 0;
+    this.startingHeroY = defaultHero?.y || 0;
+    this.startingHeroDirection = defaultHero?.direction || "down";
     this.saveFileKey = "Second_Sight_SaveFile_" + currentUsername + "_" + id;
     this.getTime();
   }
