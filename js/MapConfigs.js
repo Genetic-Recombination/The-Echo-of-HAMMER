@@ -252,14 +252,6 @@ window.OverworldMaps = {
         { type: "textMessage", text: "zq警官:哦？我想起来了，就像尼斯湖水怪是吧，大众根据想象具体化了凶手的形象" , who: "zq"},
         { type: "textMessage", text: "wx警官:就是这样的，你看倒下的榔头男也不过170公分而已" , who: "wx"},
       ]),
-      ...utils.interactionRange(7, 7, 27, 28, [
-        { type: "discoverClue", id: "clue_18" },
-        { type: "textMessage", text: "【新线索】卧室-沙发",backgroundImage: "./image in the game/article/我是沙发.png"},
-        { type: "textMessage", text: "zq警官:诶？这个沙发床怎么这么小巧啊，据说榔头男身高八尺有余，就睡在这个沙发上吗" , who: "zq"},
-        { type: "textMessage", text: "wx警官:那都是都市传说啦，实际上没人见过榔头男的真面目，那天的目击者喝醉了酒其实也没看清" , who: "wx"},
-        { type: "textMessage", text: "zq警官:哦？我想起来了，就像尼斯湖水怪是吧，大众根据想象具体化了凶手的形象" , who: "zq"},
-        { type: "textMessage", text: "wx警官:就是这样的，你看倒下的榔头男也不过170公分而已" , who: "wx"},
-      ]),
       ...utils.interactionRange(5, 7, 21, 21, [
         { type: "discoverClue", id: "clue_18" },
         { type: "textMessage", text: "【新线索】卧室-沙发",backgroundImage: "./image in the game/article/我是沙发.png"},
@@ -273,7 +265,7 @@ window.OverworldMaps = {
   ...(() => {
     const spaces = {};
     const firstTimeEvents = [
-      { type: "textMessage", text: "(卧室里，一个高大的男人仰面躺在地上一动不动。他穿着厚重的长袖外套，头上戴着一顶压得很低的帽子，仿佛随时准备出门。穿得异常整齐。)" },
+      { type: "textMessage", text: "(卧室里，一个男人仰面躺在地上一动不动。他穿着厚重的长袖外套，头上戴着一顶压得很低的帽子，仿佛随时准备出门。穿得异常整齐。)" },
       { type: "textMessage", text: "(在他的手边，倾倒着一个棕色的药瓶，几粒白色药片散落在枕边和地面上。)" },
 
       { type: "textMessage", text: "wx&zq：\n（同时惊呼）“喂！？你怎么样？！”" , who: "wx&zq"},
