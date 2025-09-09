@@ -4,11 +4,11 @@
     element: document.querySelector(".game-container")
   });
   
-  // 初始化坐标调试器
-  const coordinateDebugger = new CoordinateDebugger();
-  
-  // 将调试器添加到overworld对象中
-  overworld.coordinateDebugger = coordinateDebugger;
+  // 初始化坐标调试器（如果可用）
+  if (typeof CoordinateDebugger !== 'undefined') {
+    const coordinateDebugger = new CoordinateDebugger();
+    overworld.coordinateDebugger = coordinateDebugger;
+  }
   
   window.overworld = overworld;
   overworld.init();
