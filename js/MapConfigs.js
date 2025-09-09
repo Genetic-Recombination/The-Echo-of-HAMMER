@@ -102,20 +102,14 @@ window.OverworldMaps = {
   // 通往阳台的门 (12..14,14)
   ...utils.portalLine(12, 14, 14, "Balcony", 19, 23, "up"),
   // 麻袋交互点 - 使用interactionRange
-      ...utils.interactionRange(15, 17, 26, 26, [
+      ...utils.interactionRange(15, 19, 26, 29, [
         { type: "discoverClue", id: "clue_16" },
         { type: "textMessage", text: "【新线索】:一个捆得很紧的麻袋",backgroundImage:"./image in the game/article/客厅麻袋.png"},
         { type: "textMessage", text: "zq警官:打开看看吧，这能是什么呢？", who: "zq"},
         { type: "textMessage", text: "一件沾血的风衣，帽子和墨镜", backgroundImage:"./image in the game/article/麻袋里：沾血的风衣.png"},
         { type: "textMessage", text: "zq警官:！！！什么！！！是榔头男作案时的风衣帽子和墨镜，看来这的确就是榔头男的家了", who: "zq" },
       ]),
-      ...utils.interactionRange(19, 19, 27, 28, [
-        { type: "discoverClue", id: "clue_16" },
-        { type: "textMessage", text: "【新线索】:一个捆得很紧的麻袋",backgroundImage:"./image in the game/article/客厅麻袋.png"},
-        { type: "textMessage", text: "zq警官:打开看看吧，这能是什么呢？", who: "zq"},
-        { type: "textMessage", text: "一件沾血的风衣，帽子和墨镜", backgroundImage:"./image in the game/article/麻袋里：沾血的风衣.png"},
-        { type: "textMessage", text: "zq警官:！！！什么！！！是榔头男作案时的风衣帽子和墨镜，看来这的确就是榔头男的家了", who: "zq" },
-      ]),
+     
   // 当玩家走到坐标(15, 25)时显示图片，
   // 快递箱交互点 - 多格
       ...utils.interactionRange(19, 19, 31, 33, [
@@ -127,11 +121,7 @@ window.OverworldMaps = {
         { type: "textMessage", text: "zq警官:大胆假设，小心求证。你有证据吗？",who:"zq"},
       ]),
   // 鞋柜交互点 - 多格
-      ...utils.interactionRange(28, 28, 39, 42, [
-        { type: "discoverClue", id: "clue_15" },
-        { type: "textMessage", text: "【新线索】客厅-鞋柜：一个简陋的木质鞋柜，看起来有些年头了",backgroundImage:"./image in the game/article/客厅鞋柜.png" },
-      ]),
-      ...utils.interactionRange(26, 26, 38, 38, [
+      ...utils.interactionRange(25, 28, 38, 42, [
         { type: "discoverClue", id: "clue_15" },
         { type: "textMessage", text: "【新线索】客厅-鞋柜：一个简陋的木质鞋柜，看起来有些年头了",backgroundImage:"./image in the game/article/客厅鞋柜.png" },
       ]),
