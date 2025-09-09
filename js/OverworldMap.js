@@ -166,28 +166,67 @@ class OverworldMap {
             options: [
               {
                 label: "盘问",
-                description: "对 NPC2 进行盘问",
+                description: "对机车女进行盘问",
                 handler: () => {
-                  const message = new TextMessage({
-                    text: "你选择了：盘问 NPC2。",
-                    onComplete: () => {
-                      playerState.storyFlags["npc2_interrogated"] = true;
+                  // 定义要显示的文本消息序列
+                  const messages = [
+                    "zq警官: 你是第二个进入公寓的，你去305房做什么？也是没有见到里面的房客吗？",
+                    "机车女: 我是来取件的。我进去时门也是虚掩的。纸条上写明了让我取走桌上的这个黑色包裹，还特意用笔圈出了一行字‘离开时请勿关门，保持原状’。我还觉得这要求有点怪，但客户是上帝嘛。我拿了钱也留下了收货单，有我的联系方式在上面。",
+                    "zq警官: 情况我们了解了，还请您也在现场多等一会",
+                  ];
+                  
+                  // 创建一个递归函数来显示消息序列
+                  const showMessageSequence = (index) => {
+                    if (index < messages.length) {
+                      const message = new TextMessage({
+                        text: messages[index],
+                        onComplete: () => {
+                          // 当前消息完成后，显示下一个消息
+                          showMessageSequence(index + 1);
+                        }
+                      });
+                      message.init(document.querySelector(".game-container"));
+                    } else {
+                      // 所有消息显示完毕，设置 story flag
+                      playerState.storyFlags["npc1_interrogated"] = true;
                     }
-                  });
-                  message.init(document.querySelector(".game-container"));
+                  };
+                  
+                  // 开始显示消息序列
+                  showMessageSequence(0);
                 }
               },
               {
                 label: "搜身",
-                description: "搜查 NPC2 的随身物品",
-                handler: () => {
-                  const message = new TextMessage({
-                    text: "你选择了：搜身 NPC2。",
-                    onComplete: () => {
-                      playerState.storyFlags["npc2_searched"] = true;
+                description: "搜查机车女的随身物品",
+               handler: () => {
+                  // 定义要显示的文本消息序列
+                  const messages = [
+                    "你选择了：搜身机车女",
+                    "wx警官: 这就是榔头男要送出去的东西吗，打开我们看看吧",
+                    "zq警官: 可恶的榔头男！！！还是个无耻的内衣大盗！！"
+                  ];
+                  
+                  // 创建一个递归函数来显示消息序列
+                  const showMessageSequence = (index) => {
+                    if (index < messages.length) {
+                      const message = new TextMessage({
+                        text: messages[index],
+                        backgroundImage: index === 0 ? "./image in the game/article/机车女搜身.png" : undefined, // 只在第一个消息添加背景图片
+                        onComplete: () => {
+                          // 当前消息完成后，显示下一个消息
+                          showMessageSequence(index + 1);
+                        }
+                      });
+                      message.init(document.querySelector(".game-container"));
+                    } else {
+                      // 所有消息显示完毕，设置 story flag
+                      playerState.storyFlags["npc1_searched"] = true;
                     }
-                  });
-                  message.init(document.querySelector(".game-container"));
+                  };
+                  
+                  // 开始显示消息序列
+                  showMessageSequence(0);
                 }
               }
             ]
@@ -206,27 +245,46 @@ class OverworldMap {
           { type: "textMessage", text: "立绘显示正常吗？", who: "npc3" },
           {
             type: "interactionMenu",
-            title: "如何处理 NPC3",
+            title: "如何处理外卖员",
             options: [
               {
                 label: "盘问",
-                description: "对 NPC3 进行盘问",
+                description: "对外卖员进行盘问",
                 handler: () => {
-                  const message = new TextMessage({
-                    text: "你选择了：盘问 NPC3。",
-                    onComplete: () => {
-                      playerState.storyFlags["npc3_interrogated"] = true;
+                  // 定义要显示的文本消息序列
+                  const messages = [
+                    "zq警官: 你是最后一个进入公寓的，你去305房做了什么？",
+                    "外卖员: 一样。门没锁，纸条上写着让我把披萨放在桌上，从桌上的信封里自己拿钱，还特别用大字写着‘请勿关门，通风，谢谢’。我拿笔在那句话下面打了个勾，表示我看到了。",
+                    "zq警官: 原来如此，看俩你们都没见到榔头男了",
+                  ];
+                  
+                  // 创建一个递归函数来显示消息序列
+                  const showMessageSequence = (index) => {
+                    if (index < messages.length) {
+                      const message = new TextMessage({
+                        text: messages[index],
+                        onComplete: () => {
+                          // 当前消息完成后，显示下一个消息
+                          showMessageSequence(index + 1);
+                        }
+                      });
+                      message.init(document.querySelector(".game-container"));
+                    } else {
+                      // 所有消息显示完毕，设置 story flag
+                      playerState.storyFlags["npc1_interrogated"] = true;
                     }
-                  });
-                  message.init(document.querySelector(".game-container"));
+                  };
+                  
+                  // 开始显示消息序列
+                  showMessageSequence(0);
                 }
               },
               {
                 label: "搜身",
-                description: "搜查 NPC3 的随身物品",
+                description: "搜查外卖员的随身物品",
                 handler: () => {
                   const message = new TextMessage({
-                    text: "你选择了：搜身 NPC3。",
+                    text: "什么都没有发现",
                     onComplete: () => {
                       playerState.storyFlags["npc3_searched"] = true;
                     }
