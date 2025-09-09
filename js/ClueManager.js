@@ -29,7 +29,7 @@
       .ClueBagButton {
         position: absolute;
         right: 12px;
-        top: 40%;
+        top: 30%;
         transform: translateY(-50%);
         width: 56px;
         height: 56px;
