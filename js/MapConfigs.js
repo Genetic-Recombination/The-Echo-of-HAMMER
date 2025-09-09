@@ -112,7 +112,60 @@ window.OverworldMaps = {
           ]
         }
       ],
+  // 麻袋交互点 - 相邻位置
+  [utils.asGridCoord(16, 26)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】:一个捆得很紧的麻袋",backgroundImage:"./image in the game/article/客厅麻袋.png"},
+            { type: "textMessage", text: "zq警官:打开看看吧，这能是什么呢？", who: "zq"},
+            { type: "textMessage", text: "一件沾血的风衣，帽子和墨镜", backgroundImage:"./image in the game/article/麻袋里：沾血的风衣.png"},
+            { type: "textMessage", text: "zq警官:！！！什么！！！是榔头男作案时的风衣帽子和墨镜，看来这的确就是榔头男的家了", who: "zq" },
+          ]
+        }
+      ],
+  [utils.asGridCoord(17, 26)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】:一个捆得很紧的麻袋",backgroundImage:"./image in the game/article/客厅麻袋.png"},
+            { type: "textMessage", text: "zq警官:打开看看吧，这能是什么呢？", who: "zq"},
+            { type: "textMessage", text: "一件沾血的风衣，帽子和墨镜", backgroundImage:"./image in the game/article/麻袋里：沾血的风衣.png"},
+            { type: "textMessage", text: "zq警官:！！！什么！！！是榔头男作案时的风衣帽子和墨镜，看来这的确就是榔头男的家了", who: "zq" },
+          ]
+        }
+      ],
+  [utils.asGridCoord(19, 27)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】:一个捆得很紧的麻袋",backgroundImage:"./image in the game/article/客厅麻袋.png"},
+            { type: "textMessage", text: "zq警官:打开看看吧，这能是什么呢？", who: "zq"},
+            { type: "textMessage", text: "一件沾血的风衣，帽子和墨镜", backgroundImage:"./image in the game/article/麻袋里：沾血的风衣.png"},
+            { type: "textMessage", text: "zq警官:！！！什么！！！是榔头男作案时的风衣帽子和墨镜，看来这的确就是榔头男的家了", who: "zq" },
+          ]
+        }
+      ],
+  [utils.asGridCoord(19, 28)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】:一个捆得很紧的麻袋",backgroundImage:"./image in the game/article/客厅麻袋.png"},
+            { type: "textMessage", text: "zq警官:打开看看吧，这能是什么呢？", who: "zq"},
+            { type: "textMessage", text: "一件沾血的风衣，帽子和墨镜", backgroundImage:"./image in the game/article/麻袋里：沾血的风衣.png"},
+            { type: "textMessage", text: "zq警官:！！！什么！！！是榔头男作案时的风衣帽子和墨镜，看来这的确就是榔头男的家了", who: "zq" },
+          ]
+        }
+      ],
   // 当玩家走到坐标(15, 25)时显示图片，
+    [utils.asGridCoord(19, 31)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】：这应该是快递员送来的包裹，有几处可能是运输时的碰撞导致的凹陷。箱子有一点重量", backgroundImage:"./image in the game/article/客厅快递箱.png" },
+            { type: "textMessage", text: "zq警官:！！扳手！这大小……确实很像凶器！完全有可能造成死者头部的伤痕！"},
+            { type: "textMessage", text: "zq警官:但是这也太干净了。不像是凶器……不过也有可能被凶手细致的清洗过了"},
+            { type: "textMessage", text: "wx警官:很有可能是取货员用这个扳手杀了人，清洗干净再藏到这个快递箱中，嫁祸给快递员！！"},
+            { type: "textMessage", text: "zq警官:大胆假设，小心求证。你有证据吗？"},
+          ]
+        }
+      ],
+  // 快递箱交互点 - 相邻位置
     [utils.asGridCoord(19, 32)]: [
         {
           events: [
@@ -124,27 +177,158 @@ window.OverworldMaps = {
           ]
         }
       ],
-  [utils.asGridCoord(28, 41)]: [
+    [utils.asGridCoord(19, 33)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】：这应该是快递员送来的包裹，有几处可能是运输时的碰撞导致的凹陷。箱子有一点重量", backgroundImage:"./image in the game/article/客厅快递箱.png" },
+            { type: "textMessage", text: "zq警官:！！扳手！这大小……确实很像凶器！完全有可能造成死者头部的伤痕！"},
+            { type: "textMessage", text: "zq警官:但是这也太干净了。不像是凶器……不过也有可能被凶手细致的清洗过了"},
+            { type: "textMessage", text: "wx警官:很有可能是取货员用这个扳手杀了人，清洗干净再藏到这个快递箱中，嫁祸给快递员！！"},
+            { type: "textMessage", text: "zq警官:大胆假设，小心求证。你有证据吗？"},
+          ]
+        }
+      ],
+  // 鞋柜交互点 - 原始位置
+  [utils.asGridCoord(28, 39)]: [
         {
           events: [
             { type: "textMessage", text: "【新线索】：一个简陋的木质鞋柜，看起来有些年头了",backgroundImage:"./image in the game/article/客厅鞋柜.png" },
           ]
         }
       ],//鞋柜
+  // 鞋柜交互点 - 相邻位置
+  [utils.asGridCoord(28, 40)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】：一个简陋的木质鞋柜，看起来有些年头了",backgroundImage:"./image in the game/article/客厅鞋柜.png" },
+          ]
+        }
+      ],
+  [utils.asGridCoord(28, 41)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】：一个简陋的木质鞋柜，看起来有些年头了",backgroundImage:"./image in the game/article/客厅鞋柜.png" },
+          ]
+        }
+      ],
+  [utils.asGridCoord(28, 42)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】：一个简陋的木质鞋柜，看起来有些年头了",backgroundImage:"./image in the game/article/客厅鞋柜.png" },
+          ]
+        }
+      ],
+  [utils.asGridCoord(26, 38)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】：一个简陋的木质鞋柜，看起来有些年头了",backgroundImage:"./image in the game/article/客厅鞋柜.png" },
+          ]
+        }
+      ],
+  // 垃圾桶交互点 - 原始位置
    [utils.asGridCoord(41, 28)]: [
         {
           events: [
-            { type: "textMessage", text: "【新线索】：很脏很乱的垃圾桶，像是很久没人打理了" ,backgroundImage:"./image in the game/article/客厅的垃圾桶.pnng"},
+            { type: "textMessage", text: "【新线索】：很脏很乱的垃圾桶，像是很久没人打理了" ,backgroundImage:"./image in the game/article/客厅的垃圾桶.png"},
             { type: "textMessage", text: "zq警官:这榔头男也太不讲卫生了，怎么会这么乱啊" , who: "zq"},
           ]
         }
       ],//垃圾桶
+  // 垃圾桶交互点 - 相邻位置
+   [utils.asGridCoord(41, 27)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】：很脏很乱的垃圾桶，像是很久没人打理了" ,backgroundImage:"./image in the game/article/客厅的垃圾桶.png"},
+            { type: "textMessage", text: "zq警官:这榔头男也太不讲卫生了，怎么会这么乱啊" , who: "zq"},
+          ]
+        }
+      ],
+   [utils.asGridCoord(42, 26)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】：很脏很乱的垃圾桶，像是很久没人打理了" ,backgroundImage:"./image in the game/article/客厅的垃圾桶.png"},
+            { type: "textMessage", text: "zq警官:这榔头男也太不讲卫生了，怎么会这么乱啊" , who: "zq"},
+          ]
+        }
+      ],
+   [utils.asGridCoord(43, 26)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】：很脏很乱的垃圾桶，像是很久没人打理了" ,backgroundImage:"./image in the game/article/客厅的垃圾桶.png"},
+            { type: "textMessage", text: "zq警官:这榔头男也太不讲卫生了，怎么会这么乱啊" , who: "zq"},
+          ]
+        }
+      ],
+   [utils.asGridCoord(41, 26)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】：很脏很乱的垃圾桶，像是很久没人打理了" ,backgroundImage:"./image in the game/article/客厅的垃圾桶.png"},
+            { type: "textMessage", text: "zq警官:这榔头男也太不讲卫生了，怎么会这么乱啊" , who: "zq"},
+          ]
+        }
+      ],
+  // 披萨盒交互点 - 原始位置
     [utils.asGridCoord(12, 32)]: [
         {
           events: [
             { type: "textMessage", text: "【新线索】：披萨和收据",backgroundImage:"./image in the game/article/客厅披萨盒.png" },
             { type: "textMessage", text: "wx警官:这张单据是披萨外卖员留下的，上面有他的联系方式以及店铺的联系方式。价格和送到的披萨口味一致。" , who: "wx"},
             { type: "textMessage", text: "zq警官:奇怪？？送货员和机车女的收据怎么不见了呢？" , who: "zq"},
+          ]
+        }
+      ],
+  // 披萨盒交互点 - 相邻位置
+    [utils.asGridCoord(12, 32)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】：披萨和收据",backgroundImage:"./image in the game/article/客厅披萨盒.png" },
+            { type: "textMessage", text: "wx警官:这张单据是披萨外卖员留下的，上面有他的联系方式以及店铺的联系方式。价格和送到的披萨口味一致。" , who: "wx"},
+            { type: "textMessage", text: "zq警官:奇怪？？送货员和机车女的收据怎么不见了呢？" , who: "zq"},
+          ]
+        }
+      ],
+    [utils.asGridCoord(12, 31)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】：披萨和收据",backgroundImage:"./image in the game/article/客厅披萨盒.png" },
+            { type: "textMessage", text: "wx警官:这张单据是披萨外卖员留下的，上面有他的联系方式以及店铺的联系方式。价格和送到的披萨口味一致。" , who: "wx"},
+            { type: "textMessage", text: "zq警官:奇怪？？送货员和机车女的收据怎么不见了呢？" , who: "zq"},
+          ]
+        }
+      ],
+    [utils.asGridCoord(12, 33)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】：披萨和收据",backgroundImage:"./image in the game/article/客厅披萨盒.png" },
+            { type: "textMessage", text: "wx警官:这张单据是披萨外卖员留下的，上面有他的联系方式以及店铺的联系方式。价格和送到的披萨口味一致。" , who: "wx"},
+            { type: "textMessage", text: "zq警官:奇怪？？送货员和机车女的收据怎么不见了呢？" , who: "zq"},
+          ]
+        }
+      ],
+    [utils.asGridCoord(12, 30)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】：披萨和收据",backgroundImage:"./image in the game/article/客厅披萨盒.png" },
+            { type: "textMessage", text: "wx警官:这张单据是披萨外卖员留下的，上面有他的联系方式以及店铺的联系方式。价格和送到的披萨口味一致。" , who: "wx"},
+            { type: "textMessage", text: "zq警官:奇怪？？送货员和机车女的收据怎么不见了呢？" , who: "zq"},
+          ]
+        }
+      ],
+  // 置物箱交互点 - 原始位置
+      [utils.asGridCoord(9, 34)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】：一个置物箱，杂七杂八的东西都堆在一块",backgroundImage:"./image in the game/article/客厅的置物篮.png" },
+            { type: "textMessage", text: "wx警官:这都是些啥啊，好乱啊", who: "wx" },
+          ]
+        }
+      ],
+  // 置物箱交互点 - 相邻位置
+      [utils.asGridCoord(10, 34)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】：一个置物箱，杂七杂八的东西都堆在一块",backgroundImage:"./image in the game/article/客厅的置物篮.png" },
+            { type: "textMessage", text: "wx警官:这都是些啥啊，好乱啊", who: "wx" },
           ]
         }
       ],
@@ -156,13 +340,52 @@ window.OverworldMaps = {
           ]
         }
       ],
-      [utils.asGridCoord(19, 36)]: [
+      [utils.asGridCoord(8, 33)]: [
         {
           events: [
-            { type: "textMessage", text: "【新线索】：一张款式老旧的布艺沙发靠墙摆放。沙发套看起来有些日子没洗了，颜色暗淡。",backgroundImage: "image in the game/article/客厅沙发.png"},
+            { type: "textMessage", text: "【新线索】：一个置物箱，杂七杂八的东西都堆在一块",backgroundImage:"./image in the game/article/客厅的置物篮.png" },
+            { type: "textMessage", text: "wx警官:这都是些啥啊，好乱啊", who: "wx" },
           ]
         }
       ],
+  // 沙发交互点 - 原始位置
+      [utils.asGridCoord(19, 36)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】：一张款式老旧的布艺沙发靠墙摆放。沙发套看起来有些日子没洗了，颜色暗淡。",backgroundImage: "image in the game/article/客厅.png"},
+          ]
+        }
+      ],
+  // 沙发交互点 - 相邻位置
+      [utils.asGridCoord(19, 37)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】：一张款式老旧的布艺沙发靠墙摆放。沙发套看起来有些日子没洗了，颜色暗淡。",backgroundImage: "image in the game/article/客厅.png"},
+          ]
+        }
+      ],
+      [utils.asGridCoord(19, 36)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】：一张款式老旧的布艺沙发靠墙摆放。沙发套看起来有些日子没洗了，颜色暗淡。",backgroundImage: "image in the game/article/客厅.png"},
+          ]
+        }
+      ],
+      [utils.asGridCoord(19, 35)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】：一张款式老旧的布艺沙发靠墙摆放。沙发套看起来有些日子没洗了，颜色暗淡。",backgroundImage: "image in the game/article/客厅.png"},
+          ]
+        }
+      ],
+      [utils.asGridCoord(19, 34)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】：一张款式老旧的布艺沙发靠墙摆放。沙发套看起来有些日子没洗了，颜色暗淡。",backgroundImage: "image in the game/article/客厅.png"},
+          ]
+        }
+      ],
+  // 纸箱交互点 - 原始位置
       [utils.asGridCoord(37, 36)]: [
         {
           events: [
@@ -171,10 +394,111 @@ window.OverworldMaps = {
           ]
         }
       ],
-      [utils.asGridCoord(26, 15)]: [
+  // 纸箱交互点 - 相邻位置
+      [utils.asGridCoord(37, 35)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】：墙边堆着两个扁平的空棕色瓦楞纸箱" ,backgroundImage:"./image in the game/article/客厅箱子.png" },
+            { type: "textMessage", text: "wx警官:看来这榔头男随时准备搬家逃跑啊，辛亏我们接到线报就一直在这监视" , who: "wx"},
+          ]
+        }
+      ],
+      [utils.asGridCoord(37, 34)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】：墙边堆着两个扁平的空棕色瓦楞纸箱" ,backgroundImage:"./image in the game/article/客厅箱子.png" },
+            { type: "textMessage", text: "wx警官:看来这榔头男随时准备搬家逃跑啊，辛亏我们接到线报就一直在这监视" , who: "wx"},
+          ]
+        }
+      ],
+      [utils.asGridCoord(37, 33)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】：墙边堆着两个扁平的空棕色瓦楞纸箱" ,backgroundImage:"./image in the game/article/客厅箱子.png" },
+            { type: "textMessage", text: "wx警官:看来这榔头男随时准备搬家逃跑啊，辛亏我们接到线报就一直在这监视" , who: "wx"},
+          ]
+        }
+      ],
+      [utils.asGridCoord(38, 33)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】：墙边堆着两个扁平的空棕色瓦楞纸箱" ,backgroundImage:"./image in the game/article/客厅箱子.png" },
+            { type: "textMessage", text: "wx警官:看来这榔头男随时准备搬家逃跑啊，辛亏我们接到线报就一直在这监视" , who: "wx"},
+          ]
+        }
+      ],
+      [utils.asGridCoord(39, 33)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】：墙边堆着两个扁平的空棕色瓦楞纸箱" ,backgroundImage:"./image in the game/article/客厅箱子.png" },
+            { type: "textMessage", text: "wx警官:看来这榔头男随时准备搬家逃跑啊，辛亏我们接到线报就一直在这监视" , who: "wx"},
+          ]
+        }
+      ],
+  // 大时钟交互点 - 原始位置
+      [utils.asGridCoord(26, 14)]: [
         {
           events: [
             { type: "textMessage", text: "【新线索】：破旧的大时钟，看来指针已经停摆好久了" },
+          ]
+        }
+      ],
+  // 大时钟交互点 - 相邻位置
+      [utils.asGridCoord(25, 14)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】：破旧的大时钟，看来指针已经停摆好久了" },
+          ]
+        }
+      ],
+      [utils.asGridCoord(27, 14)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】：破旧的大时钟，看来指针已经停摆好久了" },
+          ]
+        }
+      ],
+      [utils.asGridCoord(27, 13)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】：破旧的大时钟，看来指针已经停摆好久了" },
+          ]
+        }
+      ],
+      [utils.asGridCoord(27, 12)]: [
+        {
+          events: [
+            { type: "textMessage", text: "【新线索】：破旧的大时钟，看来指针已经停摆好久了" },
+          ]
+        }
+      ],
+  // 仙人掌交互点 - 原始位置
+      [utils.asGridCoord(37, 15)]: [
+        {
+          events: [
+            { type: "textMessage", text: "一盆普通的仙人掌" },
+          ]
+        }
+      ],
+  // 仙人掌交互点 - 相邻位置
+      [utils.asGridCoord(37, 16)]: [
+        {
+          events: [
+            { type: "textMessage", text: "一盆普通的仙人掌" },
+          ]
+        }
+      ],
+      [utils.asGridCoord(37, 17)]: [
+        {
+          events: [
+            { type: "textMessage", text: "一盆普通的仙人掌" },
+          ]
+        }
+      ],
+      [utils.asGridCoord(38, 17)]: [
+        {
+          events: [
+            { type: "textMessage", text: "一盆普通的仙人掌" },
           ]
         }
       ],
@@ -185,6 +509,29 @@ window.OverworldMaps = {
           ]
         }
       ],
+  // 卧室绿植交互点 - 原始位置
+      [utils.asGridCoord(45, 16)]: [
+        {
+          events: [
+            { type: "textMessage", text: "不算名贵的绿植" },
+          ]
+        }
+      ],
+  // 卧室绿植交互点 - 相邻位置
+      [utils.asGridCoord(45, 15)]: [
+        {
+          events: [
+            { type: "textMessage", text: "不算名贵的绿植" },
+          ]
+        }
+      ],
+      [utils.asGridCoord(46, 17)]: [
+        {
+          events: [
+            { type: "textMessage", text: "不算名贵的绿植" },
+          ]
+        }
+      ],
       [utils.asGridCoord(47, 17)]: [
         {
           events: [
@@ -192,6 +539,13 @@ window.OverworldMaps = {
           ]
         }
       ],
+      [utils.asGridCoord(48, 17)]: [
+        {
+          events: [
+            { type: "textMessage", text: "不算名贵的绿植" },
+          ]
+        }
+      ]
     }
   },
   Bedroom: {
