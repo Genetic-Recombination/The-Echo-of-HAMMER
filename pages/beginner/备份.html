@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>榔头男的传说 · 公寓楼下监视</title>
+<style>
+:root {
+  --bg: #0b0f14;
+  --panel: rgba(20, 24, 30, 0.7);
+  --panel-solid: #151922;
+  --text: #e7ebf3;
+  --muted: #9aa7b3;
+  --accent: #8ab4ff;
+}
+html, body {
+  margin:0; padding:0; height:100%; background: var(--bg); color: var(--text);
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans";
+}
+.stage { position: relative; width:100%; height:100vh; overflow:hidden; background: none; }
+.bg {
+  position:absolute; inset:0; background-size:cover; background-position:center center;
+  filter: brightness(1.15) contrast(1.05); transition: opacity 0.6s ease-in-out; opacity:0;
+  will-change: opacity;
+}
+.vignette { position:absolute; inset:0; pointer-events:none; box-shadow: inset 0 0 160px 40px rgba(0,0,0,.85); pointer-events:none; }
+
+.subtitle {
+  position:absolute; top:50%; left:50%; transform:translate(-50%, -50%);
+  background: rgba(0,0,0,0); color: var(--text);
+  padding: 1.2rem 2.5rem; border-radius:16px;
+  max-width:90%; text-align:center; line-height:1.6;
+  font-size: clamp(28px,5vw,48px); font-weight:800; font-family:"方正大黑体_GBK", "Arial", sans-serif;
+  letter-spacing:1px; opacity:0; transition: opacity 1s ease-in-out; z-index:10;
+}
+.subtitle.show { opacity:1; }
+
+.dialogue {
+  position:absolute; left:50%; bottom:3.5%; transform:translateX(-50%);
+  width:min(1100px,92%); background: var(--panel); backdrop-filter: blur(8px) saturate(110%);
+  border:1px solid rgba(255,255,255,.06); border-radius:16px; box-shadow:0 12px 40px rgba(0,0,0,.35);
+  padding:1.1rem 1.2rem 1rem; cursor:pointer; user-select:none; display:none; transition: opacity 0.5s;
+}
+.name { display:inline-flex; gap:.5rem; align-items:center; font-weight:700; letter-spacing:.03em; color: var(--accent); margin-bottom:.25rem; font-size: clamp(14px,2.3vw,16px);}
+.text { font-size: clamp(15px,2.6vw,19px); line-height:1.8; min-height:3lh; white-space: pre-wrap; }
+.hint { color: var(--muted); font-size:12px; margin-top:.45rem; }
+
+.choices { display:grid; gap:.6rem; margin-top:.8rem; }
+.choice { background: var(--panel-solid); border:1px solid rgba(255,255,255,.07); border-radius:12px; padding:.7rem .9rem; cursor:pointer; transition:160ms ease; }
+.choice:hover { transform:translateY(-1px); box-shadow:0 6px 18px rgba(0,0,0,.25); }
+
+#target-popup {
+  position: fixed; top:20%; right:-400px; width:300px; background: var(--panel-solid);
+  color: var(--text); padding:1rem 1.2rem; border-radius:16px;
+  box-shadow: 0 8px 28px rgba(0,0,0,.4); font-size:16px; font-weight:700; z-index:20;
+  transition: right 0.5s ease, opacity 0.5s ease; opacity:0;
+}
+#target-popup.show { right: 20px; opacity:1; }
+#target-popup .btn { margin-top:1rem; padding:.6rem .9rem; border-radius:12px; background: var(--accent); color:#fff; cursor:pointer; text-align:center; }
+
+.topbar { position:absolute; inset-inline:2%; top:2%; display:flex; gap:.5rem; align-items:center; z-index:20; }
+.btn { background: rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.09); color: var(--text); padding:.45rem .7rem; border-radius:10px; font-size:12px; cursor:pointer; transition:160ms ease; backdrop-filter: blur(6px); }
+.btn:hover { transform: translateY(-1px); box-shadow:0 6px 18px rgba(0,0,0,.25); }
+
+.muted { color: var(--muted); position: absolute; bottom: 1%; left:50%; transform: translateX(-50%); font-size: 14px; opacity:0; transition: opacity 0.5s; z-index:10; }
+.muted.show { opacity:1; }
+
+@media (min-width:900px){ .dialogue{bottom:4.5%;} }
+</style>
+</head>
+<body>
+<div class="stage" id="stage">
+  <div class="bg" id="bg1" style="opacity:1"></div>
+  <div class="bg" id="bg2"></div>
+
+  <div class="vignette"></div>
+
+  <div class="topbar">
+    <button class="btn" id="btnSkip">跳过文字动画</button>
+    <button class="btn" id="btnAuto">自动播放：关</button>
+  </div>
+
+  <div class="subtitle" id="subtitle"></div>
+
+  <div class="dialogue" id="dialogue" role="button" aria-label="下一句">
+    <div class="name" id="name">&nbsp;</div>
+    <div class="text" id="text"></div>
+    <div class="choices" id="choices" hidden></div>
+    <div class="hint">点击继续 ▸</div>
+  </div>
+
+  <div id="target-popup">
+    <div id="target-text">新目标 - 前往红砖公寓调查</div>
+    <div class="btn" id="target-btn">前往</div>
+  </div>
+
+  <div class="muted" id="muted">（点击任意位置或空格键以继续）</div>
+</div>
+
+<script>
+const el=id=>document.getElementById(id);
+const nameEl=el('name'), textEl=el('text'), subtitleEl=el('subtitle');
+const dialogueEl=el('dialogue'), choicesEl=el('choices'), mutedEl=el('muted');
+const targetPopup=el('target-popup'), targetBtn=el('target-btn');
+const btnSkip=el('btnSkip'), btnAuto=el('btnAuto');
+const bgEls=[el('bg1'), el('bg2')];
+let activeBg=0;
+
+function extractUrl(imageString){
+  if(!imageString) return '';
+  const m = imageString.match(/url\((['"]?)(.+?)\1\)/);
+  return m ? m[2] : imageString;
+}
+
+const _bgCache = {};
+function preloadUrl(url){
+  if(!url) return Promise.reject('empty url');
+  if(_bgCache[url]) return _bgCache[url];
+  const p = new Promise((res, rej)=>{
+    const img = new Image();
+    img.onload = ()=> res(url);
+    img.onerror = ()=> rej(url);
+    img.src = url;
+  });
+  _bgCache[url] = p;
+  return p;
+}
+
+let _lastBgRequestId = 0;
+function setBg(image){
+  const nextBg=(activeBg+1)%2;
+  const url = extractUrl(image);
+  if(!url) return;
+  const curA = bgEls[activeBg].style.backgroundImage || '';
+  const curB = bgEls[(activeBg+1)%2].style.backgroundImage || '';
+  if(curA.indexOf(url)!==-1) return;
+  if(curB.indexOf(url)!==-1){
+    bgEls[nextBg].style.opacity = '1';
+    bgEls[activeBg].style.opacity = '0';
+    activeBg = nextBg;
+    return;
+  }
+  const requestId = ++_lastBgRequestId;
+  bgEls[nextBg].style.opacity = '0';
+  preloadUrl(url).then(()=>{
+    if(requestId !== _lastBgRequestId) return;
+    bgEls[nextBg].style.backgroundImage = `url("${url}")`;
+    requestAnimationFrame(()=>{
+      bgEls[nextBg].style.opacity = '1';
+      bgEls[activeBg].style.opacity = '0';
+      activeBg = nextBg;
+    });
+  }).catch(()=>{
+    console.warn('背景图加载失败：', url);
+    bgEls[nextBg].style.backgroundImage = `url("${url}")`;
+    bgEls[nextBg].style.opacity = '1';
+    bgEls[activeBg].style.opacity = '0';
+    activeBg = nextBg;
+  });
+}
+
+let idx=0, typing=false, skipType=false, waitingChoice=false, autoPlay=false;
+const script=[
+  { t:'subtitle', text:'第二天清晨' },
+  { t:'say', name:'', text:'你在你的的卧室醒来了，昨晚的咖啡好像没什么作用，你睡得很香。\n阳光透过百叶窗照进来。', bg:'url(images/8.jpg)' },
+  { t:'say', name:'', text:'（床头柜上的手机突然响了）', bg:'url(images/8.jpg)' },
+  { t:'interact', text:'点击接听' },
+  { t:'say', name:'', text:'一个熟悉的声音传来——是你之前在队里的朋友。他现在还在警局继续工作，算是你的线人。', bg:'url(images/9.jpg)' },
+  { t:'say', name:'来电者', text:'喂？醒了吗？侦探大人。' , bg:'url(images/9.jpg)'},
+  { t:'say', name:'来电者', text:'你知道最近那个‘榔头男’吗？昨夜西区的老公寓楼那边出事了，又一个女孩……手法一样。' , bg:'url(images/9.jpg)'},
+  { t:'say', name:'来电者', text:'有目击者！虽然喝多了，但提供了信息：说看见榔头男慌忙跑进那栋‘红砖公寓’里。', bg:'url(images/9.jpg)' },
+  { t:'say', name:'来电者', text:'死者又是长头发，伤口和之前也对的上。' , bg:'url(images/9.jpg)'},
+  { t:'say', name:'来电者', text:'队里派人秘密围住了那栋楼。我想你肯定有兴趣。\n要不要来碰碰运气？说不定能比我们这帮穿制服的先找到点线索。', bg:'url(images/9.jpg)' },
+  { t:'say', name:'你', text:'（你揉了揉眼睛，坐起来）\n嗯，我马上到。' , bg:'url(images/9.jpg)'},
+  { t:'say', name:'来电者', text:'好，我把位置发你手机上。' , bg:'url(images/9.jpg)'},
+  { t:'target'},
+  { t:'say', name:'', text:'你来到了这栋红砖公寓楼下，是那种老旧的楼房，楼门临街。', bg:'url(images/10.jpg)' },
+  { t:'say', name:'', text:'你看了看四周，心想：这种地方确实没有摄像头。', bg:'url(images/10.jpg)' },
+  { t:'say', name:'', text:'很快，你注意到一辆不起眼的黑色私家车停在街对面，车窗贴了深色膜。' , bg:'url(images/11.jpg)'},
+  { t:'say', name:'', text:'当你靠近时，车厢门轻轻滑开一条缝。一个男人对你快速招了下手。' , bg:'url(images/12.jpg)'},
+  { t:'interact', text:'进入私家车' },
+  { t:'say', name:'', text:'你拉开车门钻了进去。两个穿着便衣的警官正透过车的前挡风玻璃，盯着公寓楼上的动静。\n其中一位转过头，是你的熟人——Zq警官。另一位年轻些的，警惕地看了你一眼。' , bg:'url(images/13.jpg)'},
+  { t:'say', name:'Zq警官', text:'刚才透过车窗看到个鬼鬼祟祟的家伙在附近转悠，我就猜是你。' , bg:'url(images/13.jpg)'},
+  { t:'say', name:'Zq警官', text:'（他对着旁边的年轻警官摆了摆手） \nWx，自己人。以前刑侦队的王牌，现在单干了，脑子比我们好几个加起来都好使。', bg:'url(images/13.jpg)' },
+  { t:'say', name:'Wx警官', text:'（她稍微放松警惕，点了点头，冲你打招呼）前辈。', bg:'url(images/13.jpg)' },
+  { t:'say', name:'你', text:'（你笑着回应了Wx，把手搭在Zq肩上）\n少来这套。情况怎么样？人还在里面？' , bg:'url(images/13.jpg)'},
+  { t:'say', name:'Zq警官', text:'嗯。我们和物业配合，挨家挨户以‘管道检修’的名义摸了一遍底。', bg:'url(images/13.jpg)'},
+  { t:'say', name:'Zq警官', text:'忙活了一早上，现在基本确定了。' , bg:'url(images/13.jpg)'},
+  { t:'say', name:'Zq警官', text:'305房。一个租客，登记名字很模糊，几乎没留下什么信息。重点是问询邻居的结果。', bg:'url(images/13.jpg)'},
+  { t:'say', name:'Zq警官', text:'第一，几乎没人见过他的正脸。\n第二，他作息极其反常，都是昼伏夜出。\n第三，无论天气多热，出门永远裹得严严实实，帽子、口罩、长袖外套，一个不落。', bg:'url(images/14.jpg)' },
+  { t:'say', name:'Wx警官', text:'这家伙，九成九就是‘榔头男’。' , bg:'url(images/14.jpg)'},
+  { t:'say', name:'Zq警官', text:'现在，我们其他三个队员就在楼门口的马路对面。不过是暗中蹲守，不能询问进进出出的人。' , bg:'url(images/13.jpg)'},
+  { t:'say', name:'Zq警官', text:'只等305里面的人一出来，下了楼，就立刻动手抓人。', bg:'url(images/13.jpg)' },
+  { t:'say', name:'你', text:'（你点了点头）\n我觉得这事没这么简单。', bg:'url(images/13.jpg)' },
+  { t:'say', name:'Wx警官', text:'您放心吧。虽然我们没法在门口守着，但是这栋楼所有的住户门外都有室外走廊。\n有人进出房间我们都看得到，门口的同事也会拦下来询问。', bg:'url(images/13.jpg)' },
+  { t:'say', name:'', text:'这时，突然有人急切地拍打车窗。', bg:'url(images/13.jpg)' },
+  { t:'say', name:'', text:'窗户摇了下来 是新面孔。', bg:'url(images/15.jpg)' },
+  { t:'say', name:'Ljw警官', text:'（上气不接下气）\n这会已经是第三个人了……', bg:'url(images/15.jpg)' },
+  { t:'say', name:'Ljw警官', text:'10分钟的时间，这个榔头男前前后后叫了三个送货员。', bg:'url(images/15.jpg)' },
+  { t:'say', name:'Ljw警官', text:'这三个人离开后我们并未直接拦住，而是在他们离开一段路之后再追回来了，应该没引起榔头男的注意。', bg:'url(images/15.jpg)' },
+  { t:'say', name:'你', text:'奇怪，这样准备逃跑的人，为何一下子见了这么多人？', bg:'url(images/15.jpg)' },
+  { t:'choice', name:'', choices:[
+    { text:'先去询问见过榔头男的人', goto:'branch-ask' },
+    { text:'立刻上楼调查', goto:'branch-up' }
+  ]},
+  { t:'label', id:'branch-ask' },
+  { t:'say', name:'', text:'（你决定去询问送货员们，说不定他们能提供什么信息……）' },
+  { t:'end' },
+  { t:'label', id:'branch-up' },
+  { t:'say', name:'', text:'（说不定他这会已经趁着警方去追这三个人的空挡跑掉了！必须上楼查看！！！）' },
+  { t:'end' }
+];
+
+const labelIndex={};
+script.forEach((s,i)=>{ if(s.t==='label') labelIndex[s.id]=i; });
+
+async function typeText(str){
+  typing=true; textEl.innerHTML='';
+  const speed=22;
+  for(let i=0;i<str.length;i++){
+    if(skipType){ textEl.innerHTML=str.replace(/\n/g,'<br>'); break; }
+    textEl.innerHTML += (str[i]==='\n'?'<br>':str[i]);
+    await new Promise(r=>setTimeout(r,speed));
+  }
+  typing=false;
+  if(autoPlay && !waitingChoice) setTimeout(next,600);
+}
+
+function renderChoice(step){
+  waitingChoice=true; choicesEl.innerHTML=''; choicesEl.hidden=false;
+  nameEl.textContent=step.name||''; textEl.textContent='请选择：';
+  step.choices.forEach(ch=>{
+    const btn=document.createElement('div'); btn.className='choice'; btn.textContent=ch.text;
+    btn.addEventListener('click', e=>{
+      e.stopPropagation();
+      if(waitingChoice){  // 防止多次触发
+        waitingChoice=false;
+        choicesEl.hidden=true;
+        choicesEl.innerHTML='';
+        if(ch.goto && labelIndex[ch.goto]!==undefined) idx=labelIndex[ch.goto];
+        next();
+      }
+    });
+    choicesEl.appendChild(btn);
+  });
+  updateMuted();
+}
+
+function renderInteract(step){
+  waitingChoice=true;
+  choicesEl.innerHTML=''; choicesEl.hidden=false;
+  const btn=document.createElement('div'); btn.className='choice'; btn.textContent=step.text;
+  btn.addEventListener('click', e=>{
+    e.stopPropagation();
+    if(waitingChoice){
+      waitingChoice=false;
+      choicesEl.hidden=true;
+      choicesEl.innerHTML='';
+      next();
+    }
+  });
+  choicesEl.appendChild(btn);
+  updateMuted();
+}
+
+function renderTarget(){
+  waitingChoice=true; targetPopup.classList.add('show');
+  targetBtn.onclick=()=>{ 
+    if(waitingChoice){
+      waitingChoice=false; 
+      targetPopup.classList.remove('show'); 
+      next(); 
+    }
+  }
+}
+
+async function next(){
+  if(waitingChoice) return;
+  if(typing){ skipType=true; return; }
+  skipType=false;
+  let step=script[idx++];
+  if(!step) return;
+  if(step.bg) setBg(step.bg);
+
+  switch(step.t){
+    case 'subtitle':
+      subtitleEl.textContent=step.text; dialogueEl.style.display='none'; 
+      setTimeout(()=>subtitleEl.classList.add('show'),50); updateMuted(); 
+      break;
+    case 'say':
+      dialogueEl.style.display='block'; nameEl.textContent=step.name||''; 
+      await typeText(step.text); updateMuted(); 
+      break;
+    case 'interact':
+      renderInteract(step); 
+      break;
+    case 'target':
+      renderTarget(); 
+      break;
+    case 'choice':
+      renderChoice(step); 
+      break;
+    case 'label':
+      break;
+    case 'goto':
+      if(labelIndex[step.target]!==undefined){ idx=labelIndex[step.target]; } 
+      next(); 
+      break;
+    case 'end':
+      dialogueEl.style.display='none'; nameEl.textContent=''; textEl.textContent=''; 
+      updateMuted(); 
+      break;
+  }
+}
+
+function advance(){
+  if(waitingChoice) return;
+  if(typing){ skipType=true; return; }
+  skipType=false;
+  if(subtitleEl.classList.contains('show')){ subtitleEl.classList.remove('show'); updateMuted(); }
+  else next();
+}
+
+function updateMuted(){
+  if(dialogueEl.style.display==='none' && !waitingChoice && !targetPopup.classList.contains('show') && choicesEl.hidden) mutedEl.classList.add('show');
+  else mutedEl.classList.remove('show');
+}
+
+document.addEventListener('keydown', e=>{ if(e.code==='Space'){ e.preventDefault(); advance(); } });
+document.addEventListener('click', advance);
+btnSkip.addEventListener('click', ()=>{ skipType=true; });
+btnAuto.addEventListener('click', ()=>{ autoPlay=!autoPlay; btnAuto.textContent=`自动播放：${autoPlay?'开':'关'}`; });
+
+next();
+</script>
+</body>
+</html>
