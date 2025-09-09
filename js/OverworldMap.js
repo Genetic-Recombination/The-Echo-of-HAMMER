@@ -74,14 +74,13 @@ class OverworldMap {
       talking: [
         { events: [
           { type: "textMessage", text: "警官，我是快递送货员！", faceHero: "npc1", who: "npc1" },
-          { type: "textMessage", text: "立绘系统测试中...", who: "npc1" },
           {
             type: "interactionMenu",
-            title: "如何处理 NPC1",
+            title: "如何处理送货员",
             options: [
               {
                 label: "盘问",
-                description: "对 NPC1 进行盘问",
+                description: "对快递员进行盘问",
                 handler: () => {
                   // 定义要显示的文本消息序列
                   const messages = [
@@ -159,10 +158,10 @@ class OverworldMap {
       src: "./image in the game/character/2walking.png",
       talking: [
         { events: [
-          { type: "textMessage", text: "嗨！我是角色2！", faceHero: "npc2", who: "npc2" },
+          { type: "textMessage", text: "警官，我是机车收货员，里面发生什么事了吗", faceHero: "npc2", who: "npc2" },
           {
             type: "interactionMenu",
-            title: "如何处理 NPC2",
+            title: "如何处理 机车女",
             options: [
               {
                 label: "盘问",
@@ -241,8 +240,7 @@ class OverworldMap {
       src: "./image in the game/character/3walking.png",
       talking: [
         { events: [
-          { type: "textMessage", text: "你好，我是角色3！", faceHero: "npc3", who: "npc3" },
-          { type: "textMessage", text: "立绘显示正常吗？", who: "npc3" },
+          { type: "textMessage", text: "警官，我是外卖员，我可什么都没干啊", faceHero: "npc3", who: "npc3" },
           {
             type: "interactionMenu",
             title: "如何处理外卖员",
