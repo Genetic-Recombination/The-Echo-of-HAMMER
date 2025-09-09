@@ -159,30 +159,52 @@ class OverworldEvent {
     img.classList.add("popup-image");
     document.querySelector(".game-container").appendChild(img);
 
-    // 按空格键后关闭
+    // 创建一个标志，防止多次触发closeImage
+    let isClosed = false;
+
     const closeImage = () => {
-      img.remove();
+      if (isClosed) return; // 防止重复调用
+      isClosed = true;
+
+      // 先移除事件监听器，再移除元素
+      img.removeEventListener("click", closeImage);
       document.removeEventListener("keydown", this.closeImageFunction);
-      this.imageClosed = true;
+      img.remove();
       
-      // 检查是否有待处理的textMessage
+      this.imageClosed = true;
+      this.closeImageFunction = null; // 清空引用
+
       if (this.textMessageResolved && this.textMessageResolve) {
         this.textMessageResolve();
         this.textMessageResolved = false;
         this.textMessageResolve = null;
       }
-      
-      resolve();
+
+      // 延迟resolve，确保事件处理完全结束
+      setTimeout(() => {
+        resolve();
+      }, 100); // 增加延迟时间
     };
-    
-    // 创建一个标志，用于跟踪图片是否已关闭
+
     this.imageClosed = false;
-    
+
+    // 允许点击图片关闭，作为兜底
+    img.addEventListener("click", closeImage);
+
     this.closeImageFunction = (e) => {
-      if (e.key === " ") {
+      // 阻止事件冒泡，避免触发其他监听器
+      e.stopPropagation();
+      
+      const isSpace = e.code === "Space" || e.key === " " || e.key === "Spacebar";
+      const isEnter = e.code === "Enter" || e.key === "Enter";
+      const isEscape = e.code === "Escape" || e.key === "Escape";
+      
+      if (isSpace || isEnter || isEscape) {
+        e.preventDefault();
         closeImage();
       }
     };
+    
     document.addEventListener("keydown", this.closeImageFunction);
   }
   interactionMenu(resolve) {

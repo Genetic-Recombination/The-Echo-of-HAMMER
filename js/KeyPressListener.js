@@ -3,7 +3,13 @@ class KeyPressListener {
   constructor(keyCode, callback) {
     let keySafe = true;
     this.keydownFunction = function(event) {
-      if (event.code === keyCode) {
+      // 支持多种键盘事件属性检查
+      const isMatch = 
+        event.code === keyCode || 
+        event.key === keyCode || 
+        (keyCode === "Space" && (event.key === " " || event.key === "Spacebar"));
+      
+      if (isMatch) {
         if (keySafe) {
           keySafe = false;
           callback();
@@ -11,7 +17,13 @@ class KeyPressListener {
       }
     };
     this.keyupFunction = function(event) {
-      if (event.code === keyCode) {
+      // 支持多种键盘事件属性检查
+      const isMatch = 
+        event.code === keyCode || 
+        event.key === keyCode || 
+        (keyCode === "Space" && (event.key === " " || event.key === "Spacebar"));
+      
+      if (isMatch) {
         keySafe = true;
       }
     };
