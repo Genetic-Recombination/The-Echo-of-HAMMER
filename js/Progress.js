@@ -16,7 +16,8 @@ class Progress {
       startingHeroY: this.startingHeroY,
       startingHeroDirection: this.startingHeroDirection,
       playerState: {
-        storyFlags: playerState.storyFlags
+        storyFlags: playerState.storyFlags,
+        clues: playerState.clues || {}
       },
       time: this.time,
     }))
@@ -29,7 +30,8 @@ class Progress {
       startingHeroY: this.startingHeroY,
       startingHeroDirection: this.startingHeroDirection,
       playerState: {
-        storyFlags: playerState.storyFlags
+        storyFlags: playerState.storyFlags,
+        clues: playerState.clues || {}
       },
       time: this.time,
     });
@@ -73,7 +75,8 @@ class Progress {
       startingHeroY: this.startingHeroY,
       startingHeroDirection: this.startingHeroDirection,
       playerState: {
-        storyFlags: playerState.storyFlags
+        storyFlags: playerState.storyFlags,
+        clues: playerState.clues || {}
       },
       time: this.time,
     }))
