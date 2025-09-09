@@ -71,5 +71,26 @@ const utils = {
       ];
     }
     return result;
+  },
+
+  // 生成矩形范围的交互触发点
+  interactionRange(xStart, xEnd, yStart, yEnd, eventsOrText, backgroundImage) {
+    const result = {};
+
+    const isEventsArray = Array.isArray(eventsOrText);
+    const text = isEventsArray ? null : eventsOrText;
+
+    for (let x = xStart; x <= xEnd; x++) {
+      for (let y = yStart; y <= yEnd; y++) {
+        result[this.asGridCoord(x, y)] = [
+          {
+            events: isEventsArray ? eventsOrText : [
+              { type: "textMessage", text, backgroundImage }
+            ]
+          }
+        ];
+      }
+    }
+    return result;
   }
 };
