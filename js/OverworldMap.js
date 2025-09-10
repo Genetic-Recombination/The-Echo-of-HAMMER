@@ -578,7 +578,10 @@ function checkAllInterrogated(mapInstance) {
     const hero = this.gameObjects["hero"];
     const nextCoords = utils.nextPosition(hero.x, hero.y, hero.direction);
     // 先检查面向格子是否有 cutsceneSpaces（用于像垃圾桶这种无法站上去的交互）
-    const faceKey = `${nextCoords.x},${nextCoords.y}`;
+    // 修复：将像素坐标转换为网格坐标后再生成键
+    const faceGridX = Math.floor(nextCoords.x / 16);
+    const faceGridY = Math.floor(nextCoords.y / 16);
+    const faceKey = utils.asGridCoord(faceGridX, faceGridY);
     const spaceMatch = this.cutsceneSpaces[faceKey];
     if (!this.isCutscenePlaying && spaceMatch) {
       const scenario = spaceMatch.find(s => (s.required || []).every(f => playerState.storyFlags[f])) || spaceMatch[0];
@@ -601,13 +604,13 @@ function checkAllInterrogated(mapInstance) {
 
   checkForFootstepCutscene() {
     const hero = this.gameObjects["hero"];
-      // === 新增：检查是否在卧室范围，解锁搜身 ===
-    const heroGridX = hero.x / 16;
-    const heroGridY = hero.y / 16;
+    // === 新增：检查是否在卧室范围，解锁搜身 ===
+    const currentGridX = Math.floor(hero.x / 16);
+    const currentGridY = Math.floor(hero.y / 16);
 
     const inBedroom =
-      heroGridX >= bedroomRange.xStart && heroGridX <= bedroomRange.xEnd &&
-      heroGridY >= bedroomRange.yStart && heroGridY <= bedroomRange.yEnd;
+      currentGridX >= bedroomRange.xStart && currentGridX <= bedroomRange.xEnd &&
+      currentGridY >= bedroomRange.yStart && currentGridY <= bedroomRange.yEnd;
 
     if (inBedroom) {
       playerState.storyFlags["npc1_search_unlocked"] = true;
@@ -617,7 +620,8 @@ function checkAllInterrogated(mapInstance) {
     // console.log("调试: npc1_search_unlocked =", playerState.storyFlags["npc1_search_unlocked"]);
     // console.log("调试: npc2_search_unlocked =", playerState.storyFlags["npc2_search_unlocked"]);
     // console.log("调试: npc3_search_unlocked =", playerState.storyFlags["npc3_search_unlocked"]);
-    const match = this.cutsceneSpaces[`${hero.x},${hero.y}`];
+    // 修复：使用正确的坐标键格式查找cutsceneSpaces
+    const match = this.cutsceneSpaces[utils.asGridCoord(currentGridX, currentGridY)];
     if (!this.isCutscenePlaying && match) {
       const scenario = match.find(s => (s.required || []).every(f => playerState.storyFlags[f])) || match[0];
       // 修复：不要使用 JSON 深拷贝，改为浅拷贝保留函数（如 interactionMenu 的 handler）
