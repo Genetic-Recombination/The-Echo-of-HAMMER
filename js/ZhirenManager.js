@@ -264,11 +264,6 @@
           result.textContent = "⚠️ 还有题目未作答！";
           return;
         }
-        // 只有点击第二个 tile 才可能抓住榔头男
-        if(this.currentTileIndex !== 1){
-          result.textContent = "❌ 指认失败，榔头男跑掉了。";
-          return;
-        }
 
         let allCorrect = true;
         questions.forEach((q,i)=>{
@@ -339,7 +334,7 @@
           font-weight: bold;
         `;
         
-        // 根据图片ID设置按钮文本
+        // 根据图片ID和答题结果设置按钮文本
         let button1Text = "强行抓捕，结案下班";
         let button2Text = "继续调查，解释疑点";
         
@@ -347,12 +342,14 @@
           button1Text = "强行抓捕，结案下班";
           button2Text = "继续调查，解释疑点";
         } else if (imageId === "zhiren_2") {
-          // 图2根据答题是否完全正确设置不同的按钮文本
+          // 图片二根据答题结果区分不同情况
           if (allCorrect) {
             button1Text = "你抓捕了榔头男破解了真相，通往结局吧";
+            button2Text = "再回望一下走过的现场";
           } else {
-            button1Text = "强行结案，结束调查";
-            button2Text = "返回游戏，继续调查";
+            // 答题错误时不显示弹窗，直接返回
+            result.textContent = "❌ 指认失败，榔头男跑掉了。";
+            return;
           }
         } else if (imageId === "zhiren_3") {
           button1Text = "强行抓捕，结案下班";
@@ -365,7 +362,7 @@
         button1.textContent = button1Text;
         button2.textContent = button2Text;
         
-        // 根据图片ID决定跳转链接和文本内容
+        // 根据图片ID和答题结果决定跳转链接和文本内容
         let redirectUrl = "./指认系统/外卖员.html"; // 默认跳转到游戏结束页面
         let popupText = "你确定要指认这个人吗？";
         
@@ -373,13 +370,11 @@
           redirectUrl = "./指认系统/送货员.html"; // 图1跳转到结局页面
           popupText = "可是......<br>似乎仍有许多疑点在你脑中挥之不去<br>如果真的是送货员,那他又是怎么做到能销毁机车女的收据？？<br>如果是临时的复仇又怎么确定自己杀人时机车女不会来到这里？？<br>这杂乱的客厅，空旷的抽屉柜，洁净的卫生间又该怎么解释？？";
         } else if (imageId === "zhiren_2") {
-          // 图2根据答题是否完全正确跳转到不同页面
+          // 图片二根据答题结果区分不同情况
           if (allCorrect) {
-            redirectUrl = "./pages/ending/ending.html"; // 答题完全正确跳转到机车女结局
-          } else {
-            redirectUrl = "./指认系统/机车女.html"; // 答题不完全正确跳转到游戏结束页面2
-          }
-          popupText = "好像还是有很多疑点，再仔细思索一下吧<br>她为什么要清扫卫生间，为什么要清理抽屉柜，为什么要清理浴缸？？<br>鞋柜的疑点又怎么解释？？";
+            redirectUrl = "./pages/ending/ending.html"; // 图2答对跳转到结局页面
+            popupText = "你成功破解了真相！";
+          } 
         } else if (imageId === "zhiren_3") {
           redirectUrl = "./指认系统/外卖员.html"; // 图3跳转到游戏结束页面3
           popupText = "终于结束了...你这样想着<br>但你忽然注意到角落里的某人，嘴角掠过一抹不易察觉的微笑，像是在嘲笑你这个大侦探<br>几个疑点闪过你的脑海，最后一个来的外卖员在房间里也就不过3分钟时间，怎么会有这么长的时间来布置现场？<br>他又到底出于什么目的，把卫生间清理的那样干净，浴缸排水口又这么会一点使用痕迹都没有？？";
@@ -436,7 +431,7 @@
         // 点击 tile 打开对应的卷子
         tile.addEventListener("click",()=>{
           this.currentTileIndex = index; // 保存当前点击的 tile
-          this.toggleExam(true, c.questions, c.answers);
+          this.toggleExam(true, c.questions, c.answers, c.id);
         });
       });
     }
