@@ -80,7 +80,7 @@ class OverworldMap {
   npc1: {
     type: "Person",
     x: utils.withGrid(35),
-    y: utils.withGrid(20),
+    y: utils.withGrid(30),
     src: "./image in the game/character/1walking.png",
     talking: [
       {
@@ -167,7 +167,7 @@ class OverworldMap {
   npc2: {
     type: "Person",
     x: utils.withGrid(30),
-    y: utils.withGrid(20),
+    y: utils.withGrid(30),
     src: "./image in the game/character/2walking.png",
     talking: [
       {
@@ -249,7 +249,7 @@ class OverworldMap {
   npc3: {
     type: "Person",
     x: utils.withGrid(25),
-    y: utils.withGrid(20),
+    y: utils.withGrid(30),
     src: "./image in the game/character/3walking.png",
     talking: [
       {
