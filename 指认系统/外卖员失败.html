@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>指认结果</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html,body { height: 100%; }
+
+    /* 背景容器 */
+    .bg {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      background: url("外卖员.png") no-repeat center center;
+      background-size: contain;
+      background-color: #000;
+      font-family: "Segoe UI", Roboto, "Helvetica Neue", "PingFang SC", "Microsoft Yahei", sans-serif;
+    }
+
+    /* 遮罩：覆盖右下角四分之一 */
+    .mask {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      width: 25%;
+      height: 25%;
+      background: linear-gradient(
+        135deg,
+        rgba(0,0,0,0.65) 0%,
+        rgba(0,0,0,0.35) 50%,
+        rgba(0,0,0,0) 100%
+      );
+      pointer-events: none;
+    }
+
+    /* 文本框：固定在右下角 1/4 区域 */
+    .note {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      width: 40%;
+      height: 40%;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;   /* 靠左 */
+      justify-content: flex-start; /* 靠上 */
+      color: #fff;
+      text-shadow: 0 3px 10px rgba(0,0,0,0.7);
+      z-index: 2;
+      background: rgba(0,0,0,0.4);
+      border-radius: 10px 0 0 0;
+      padding: 16px 18px; /* 保持内边距 */
+      backdrop-filter: blur(3px);
+      animation: fadeUp 1s ease-out forwards;
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    .note .eyebrow {
+      font-size: 12px;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 6px;
+      letter-spacing: 0.6px;
+    }
+
+    .note .message {
+      font-size: 16px;
+      line-height: 1.4;
+      font-weight: 600;
+      text-align: left; /* 强制靠左对齐 */
+    }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg">
+    <!-- 遮罩层 -->
+    <div class="mask"></div>
+
+    <!-- 文字层 -->
+    <div class="note">
+      <span class="eyebrow">指认记录</span>
+      <div class="message">
+        死者并不是榔头男，在将送货员抓捕归案的三天后，又有受害者被相同的手段杀死。
+      </div>
+    </div>
+  </div>
+</body>
+</html>
