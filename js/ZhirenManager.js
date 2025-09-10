@@ -104,16 +104,16 @@
         "image%20in%20the%20game/character/picture/4.png"
       ];
       const questionsSet = [
-        ["图1中的人物在逃跑。", "图1中有人拿着武器。", "图1发生在晚上。", "图1的场景在室内。", "图1的人物很紧张。"],
-        ["图2展示的是公园。", "图2里有两个人物。", "图2发生在白天。", "图2有人拿着手机。", "图2的人物在交谈。"],
-        ["图3的人物戴着帽子。", "图3背景有一辆车。", "图3发生在街道。", "图3的人物是嫌疑人。", "图3里没有其他人。"],
-        ["图4里有桌子。", "图4发生在办公室。", "图4的人物在看文件。", "图4场景光线很暗。", "图4的人物很镇定。"]
+        ["送货员杀害了死者。", "门口的卡片是送货员放的。", "前两人的送货单是死者销毁的。", "扳手是送货员杀掉死者的工具。", "送货员用自带的降压药毒倒了死者。"],
+        ["机车女杀害了死者。", "榔头男在屋内叫了三个人混淆警方，后被其中一人杀害。", "前两人的送货单被机车女烧毁。", "门口的卡片是死者放的。", "榔头男收拾卫生间是为了掩盖证据逃跑。"],
+        ["外卖员是杀害死者的凶手。", "外卖员烧毁了两张送货单。", "外卖员把卫生间清理干净之后离开。", "外卖员用送货员的扳手打死了死者。", "榔头男收拾卫生间是为了掩盖证据逃跑。"],
+        ["榔头男是自杀。", "榔头男为了死的体面打扫了卫生间。", "榔头男是内衣大盗。", "榔头男的都市传说是真实的。", "榔头男烧毁了两张纸条。"]
       ];
       const answersSet = [
-        [true, false, true, false, true],   // 图1答案
-        [true, true, true, false, true],    // 图2答案
-        [true, false, true, true, true],    // 图3答案
-        [true, true, false, true, true]     // 图4答案
+        [false, false, false, false, false],   // 图1答案
+        [true, false, true, false, true],    // 图2答案
+        [false, false, false, false, true],    // 图3答案
+        [false, false, false, false, true]     // 图4答案
       ];
 
       const arr = [];
@@ -147,7 +147,7 @@
       // 按钮
       const btn = document.createElement("button");
       btn.className = "ZhirenButton";
-      btn.title = "Zhiren 按钮";
+      btn.title = "指认嫌疑人(Identify)";
       btn.addEventListener("click",()=>this.togglePanel());
       root.appendChild(btn);
       this.elements.btn = btn;
@@ -172,7 +172,7 @@
       exam.className = "ExamPanel";
       exam.innerHTML = `
         <div class="exam-header">
-          <h3 class="exam-title">卷子</h3>
+          <h3 class="exam-title">证据链</h3>
           <button class="exam-close">关闭</button>
         </div>
         <div class="exam-content"></div>
