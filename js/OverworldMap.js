@@ -80,7 +80,7 @@ class OverworldMap {
   npc1: {
     type: "Person",
     x: utils.withGrid(35),
-    y: utils.withGrid(20),
+    y: utils.withGrid(30),
     src: "./image in the game/character/1walking.png",
     talking: [
       {
@@ -123,6 +123,10 @@ class OverworldMap {
                 label: "搜身",
                 description: "搜查快递员的随身物品",
                 handler: () => {
+                  window.overworld.map.startCutscene([
+                    { type: "discoverClue", id: "clue_12" }
+                  ]);
+
                   const runOriginalSearch = () => {
                     const messages = [
                       "你选择了：搜身快递员",
@@ -163,7 +167,7 @@ class OverworldMap {
   npc2: {
     type: "Person",
     x: utils.withGrid(30),
-    y: utils.withGrid(20),
+    y: utils.withGrid(30),
     src: "./image in the game/character/2walking.png",
     talking: [
       {
@@ -245,7 +249,7 @@ class OverworldMap {
   npc3: {
     type: "Person",
     x: utils.withGrid(25),
-    y: utils.withGrid(20),
+    y: utils.withGrid(30),
     src: "./image in the game/character/3walking.png",
     talking: [
       {
@@ -364,14 +368,16 @@ function checkAllInterrogated(mapInstance) {
     if (this.id === "Kitchen") {
   const interactions = [
     {
-      text: "新线索【厨房-垃圾桶】\n桶内底层有一些灰白色的纸灰和少量未完全烧尽的碎纸片，纸片边缘卷曲焦黑，已经看不清了。",
-        backgroundImage: "./image in the game/article/厨房的垃圾桶.png",
-      range: { xStart: 35, xEnd: 37, yStart: 21, yEnd: 24 },
-      handler: () => {
-        window.overworld.map.startCutscene([
-          { type: "discoverClue", id: "clue_07" }
-        ]);
-      }
+      // 修复：将原先未被使用的 handler 改为事件列表，确保发现线索被触发
+      events: [
+        {
+          type: "textMessage",
+          text: "新线索【厨房-垃圾桶】\n桶内底层有一些灰白色的纸灰和少量未完全烧尽的碎纸片，纸片边缘卷曲焦黑，已经看不清了。",
+          backgroundImage: "./image in the game/article/厨房的垃圾桶.png"
+        },
+        { type: "discoverClue", id: "clue_07" }
+      ],
+      range: { xStart: 35, xEnd: 37, yStart: 21, yEnd: 24 }
     },
     {
       text: "新线索【厨房-冰箱】\n一台嗡嗡作响的老旧冰箱。",

@@ -92,6 +92,10 @@ window.OverworldMaps = {
   ...utils.verticalWall(42, 35, 40),
   ...utils.horizontalWall(35, 42, 44),
   ...utils.horizontalWall(33, 37, 40),
+  ...utils.horizontalWall(43, 33, 36),
+  ...utils.horizontalWall(46,33,36),
+  ...utils.verticalWall(33, 43,46),
+  ...utils.verticalWall(36,43, 46),
 },
 
     cutsceneSpaces: {
