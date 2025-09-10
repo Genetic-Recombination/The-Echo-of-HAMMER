@@ -122,6 +122,10 @@ const btnSkip=el('btnSkip'), btnAuto=el('btnAuto');
 const bgEls=[el('bg1'), el('bg2')];
 let activeBg=0;
 
+let bgmAudio = new Audio();
+bgmAudio.loop = true;
+bgmAudio.volume = 0.6;
+
 function extractUrl(imageString){
   if(!imageString) return '';
   const m = imageString.match(/url\((['"]?)(.+?)\1\)/);
@@ -301,10 +305,12 @@ async function next(){
   switch(step.t){
     case 'subtitle':
       subtitleEl.textContent=step.text; dialogueEl.style.display='none'; 
+      if(step.bgm){ bgmAudio.src = step.bgm; bgmAudio.play(); } 
       setTimeout(()=>subtitleEl.classList.add('show'),50); updateMuted(); 
       break;
     case 'say':
       dialogueEl.style.display='block'; nameEl.textContent=step.name||''; 
+      if(step.bgm){ bgmAudio.src = step.bgm; bgmAudio.play(); }
       await typeText(step.text); updateMuted(); 
       break;
     case 'interact':
@@ -325,6 +331,10 @@ async function next(){
     case 'end':
       dialogueEl.style.display='none'; nameEl.textContent=''; textEl.textContent=''; 
       updateMuted(); 
+      break;
+    case 'bgm':
+      if(step.url){ bgmAudio.src = step.url; bgmAudio.play(); }
+      next();
       break;
   }
 }
