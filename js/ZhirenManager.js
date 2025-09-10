@@ -348,7 +348,7 @@
             button2Text = "再回望一下走过的现场";
           } else {
             // 答题错误时不显示弹窗，直接返回
-            result.textContent = "❌ 指认失败，榔头男跑掉了。";
+            result.textContent = "❌ 指认失败，有答案出错。";
             return;
           }
         } else if (imageId === "zhiren_3") {

@@ -261,8 +261,20 @@ h1{
     </div>
   </div>
 
-  <!-- 最后一页：背面改为 end.png -->
+  <!-- 第5页：清汤大老爷 -->
   <div class="page" data-index="4">
+    <div class="front" style="background:url('in.png') no-repeat center/cover;"></div>
+    <div class="back">
+      <div class="mirror" style="background:url('in.png') no-repeat center/cover; transform:scaleX(-1);"></div>
+      <!-- 插入的成就图片 -->
+      <img src="../成就系统照片/清汤大老爷.png" alt="清汤大老爷" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s;">
+      <!-- 成就名称 -->
+      <div style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); background: rgba(255, 215, 0, 0.8); padding: 10px 20px; border-radius: 10px; font-size: 24px; font-weight: bold; color: #000; text-shadow: 0 0 2px #fff; box-shadow: 0 0 10px rgba(255, 215, 0, 0.8); opacity: 0; transition: opacity 0.3s;">清汤大老爷</div>
+    </div>
+  </div>
+
+  <!-- 最后一页：背面改为 end.png -->
+  <div class="page" data-index="5">
     <div class="front" style="background:url('in.png') no-repeat center/cover;"></div>
     <div class="back" style="background:url('end.png') no-repeat center/cover; background-size:cover;"></div>
   </div>
@@ -331,11 +343,29 @@ book.addEventListener('contextmenu', (e)=>{
 });
 
 // 缩略图生成
-pages.forEach((page, i) => {
+const achievementImages = [
+  "../成就系统照片/糊涂侦探.png",
+  "../成就系统照片/明察秋毫.png",
+  "../成就系统照片/蛛丝已成罗网.png",
+  "../成就系统照片/乐不思蜀.png",
+  "../成就系统照片/清汤大老爷.png"
+];
+
+// 只为成就页面生成缩略图（不包括封面和封底）
+for (let i = 0; i < achievementImages.length; i++) {
   const thumb = document.createElement("div");
   thumb.className = "thumbnail";
+  
+  const thumbImg = document.createElement("img");
+  thumbImg.src = achievementImages[i];
+  thumbImg.style.width = "100%";
+  thumbImg.style.height = "100%";
+  thumbImg.style.objectFit = "cover";
+  thumbImg.style.borderRadius = "6px";
+  thumb.appendChild(thumbImg);
+  
   thumbnailsDiv.appendChild(thumb);
-});
+}
 
 function toggleThumbnails(){
   if(thumbnailsDiv.style.display === "grid"){
