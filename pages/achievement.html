@@ -364,6 +364,31 @@ for (let i = 0; i < achievementImages.length; i++) {
   thumbImg.style.borderRadius = "6px";
   thumb.appendChild(thumbImg);
   
+  // 添加点击事件来模拟解锁成就
+  thumb.addEventListener('click', () => {
+    // 获取当前用户名
+    const currentUsername = window.localStorage.getItem("Sec-Sight-current-username") || "default";
+    // 获取成就数据
+    const file = window.localStorage.getItem("second_sight_achievements_" + currentUsername);
+    let achievements = file ? JSON.parse(file) : {};
+    
+    // 成就ID与图片索引对应
+    const achievementIds = [
+      "糊涂侦探",
+      "明察秋毫",
+      "蛛丝已成罗网",
+      "乐不思蜀",
+      "清汤大老爷"
+    ];
+    
+    // 解锁成就
+    achievements[achievementIds[i]] = true;
+    window.localStorage.setItem("second_sight_achievements_" + currentUsername, JSON.stringify(achievements));
+    
+    // 显示提示
+    alert(`成就 "${achievementIds[i]}" 已解锁！`);
+  });
+  
   thumbnailsDiv.appendChild(thumb);
 }
 

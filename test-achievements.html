@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>成就系统测试页面</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #1a1a1a;
+            color: #fff;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            color: #FFD700;
+            text-align: center;
+        }
+        
+        .controls {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            background: #45a049;
+        }
+        
+        #resetBtn {
+            background: #f44336;
+        }
+        
+        #resetBtn:hover {
+            background: #da190b;
+        }
+        
+        .game-container {
+            position: relative;
+            background: #222;
+            min-height: 500px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .instructions {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>成就系统测试</h1>
+        
+        <div class="controls">
+            <button onclick="setTestUser()">设置测试用户</button>
+            <button onclick="unlockTestAchievements()">解锁测试成就</button>
+            <button id="resetBtn" onclick="resetAchievements()">重置成就</button>
+        </div>
+        
+        <div class="game-container" id="gameContainer">
+            <!-- 成就系统将在此处初始化 -->
+        </div>
+        
+        <div class="instructions">
+            <h3>测试说明:</h3>
+            <p>1. 点击"设置测试用户"按钮设置当前用户为"testuser"</p>
+            <p>2. 点击"解锁测试成就"按钮解锁前两个成就</p>
+            <p>3. 点击右上角的🏆按钮打开成就面板</p>
+            <p>4. 在成就面板中，点击未解锁的成就格子可以解锁它们</p>
+            <p>5. 使用"重置成就"按钮可以清除所有成就进度</p>
+        </div>
+    </div>
+
+    <script src="./js/AchievementManager.js"></script>
+    <script>
+        // 设置测试用户
+        function setTestUser() {
+            localStorage.setItem("Sec-Sight-current-username", "testuser");
+            alert("测试用户已设置: testuser");
+        }
+        
+        // 解锁测试成就
+        function unlockTestAchievements() {
+            const currentUsername = localStorage.getItem("Sec-Sight-current-username");
+            if (!currentUsername) {
+                alert("请先设置测试用户");
+                return;
+            }
+            
+            const file = localStorage.getItem("second_sight_achievements_" + currentUsername);
+            let achievements = file ? JSON.parse(file) : {};
+            
+            // 解锁前两个成就
+            achievements["糊涂侦探"] = true;
+            achievements["明察秋毫"] = true;
+            
+            localStorage.setItem("second_sight_achievements_" + currentUsername, JSON.stringify(achievements));
+            alert("已解锁前两个成就");
+            
+            // 如果成就管理器已初始化，重新渲染网格
+            if (window.achievementManager) {
+                window.achievementManager.renderGrid();
+            }
+        }
+        
+        // 重置成就
+        function resetAchievements() {
+            const currentUsername = localStorage.getItem("Sec-Sight-current-username");
+            if (currentUsername) {
+                localStorage.setItem("second_sight_achievements_" + currentUsername, JSON.stringify({}));
+                alert("成就已重置");
+                
+                // 如果成就管理器已初始化，重新渲染网格
+                if (window.achievementManager) {
+                    window.achievementManager.renderGrid();
+                }
+            }
+        }
+        
+        // 初始化测试环境
+        function initTestEnvironment() {
+            // 设置测试用户
+            localStorage.setItem("Sec-Sight-current-username", "testuser");
+            
+            // 创建全局overworld对象（模拟游戏环境）
+            window.overworld = {
+                progress: {
+                    save: function() {
+                        console.log("进度已保存");
+                    }
+                }
+            };
+            
+            // 初始化成就管理器
+            const container = document.getElementById('gameContainer');
+            if (!window.achievementManager) {
+                const am = new AchievementManager({ container });
+                am.init();
+            }
+        }
+        
+        // 页面加载完成后初始化
+        window.addEventListener('DOMContentLoaded', function() {
+            initTestEnvironment();
+        });
+    </script>
+</body>
+</html>

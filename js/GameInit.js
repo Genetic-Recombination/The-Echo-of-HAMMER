@@ -22,7 +22,7 @@ window.CLUE_CONFIG = [
   { id: "clue_04", title: "卫生间-垃圾桶", image: "./image%20in%20the%20game/article/卫生间垃圾桶.png", desc: "一个小的不锈钢脚踏式垃圾桶，里面套着干净的垃圾袋，桶内空空如也。\nzq警官:刚倒的垃圾吗，里面一点垃圾都没有\nwx警官:奇怪，为什么客厅的垃圾就没倒呢" },
   { id: "clue_05", title: "卫生间-收纳盒", image: "./image%20in%20the%20game/article/卫生间收纳盒.png", desc: "装洗浴用品的篮子" },
   { id: "clue_06", title: "卫生间-洗手台", image: "./image%20in%20the%20game/article/厕所洗手台.png", desc: "台面上放置的物品少得可怜：一支瘪掉的牙膏，还有一个打开的空漱口杯。镜柜的玻璃门一尘不染。" },
-  { id: "clue_07", title: "厨房-垃圾桶", image: "./image%20in%20the%20game/article/厨房的垃圾桶.png", desc: "桶内底层有一些灰白色的纸灰和少量未完全烧尽的碎纸片，纸片边缘卷曲焦黑，已经看不清了。" },
+  { id: "clue_07", title: "厨房-垃圾桶", image: "./image%20in%20the%20game/article/厨房的垃圾桶.png", desc: "桶内底层有一些灰白色的纸灰和少量未完全烧净的碎纸片，纸片边缘卷曲焦黑，已经看不清了。" },
   { id: "clue_08", title: "搜身-机车女", image: "./image%20in%20the%20game/article/机车女搜身.png", desc: "wx警官: 这就是榔头男要送出去的东西吗，打开我们看看吧\nzq警官: 可恶的榔头男！！！还是个无耻的内衣大盗！！" },
   { id: "clue_09", title: "客厅-门口纸条", image: "./image%20in%20the%20game/article/客厅门口纸条.png", desc: "纸条上面写着：我发烧了，请不要打扰我。\n亲爱的快递员：包裹在桌上。费用在1号信封中，请自取。无需关门，通风。\n亲爱的取件员：取走桌上的黑色背包。费用在2号信封中，请自取。无需关门，通风。\n亲爱的外卖员：披萨放桌上。费用在3号信封中，请自取。无需关门，通风。" },
   { id: "clue_10", title: "客厅-快递箱", image: "./image%20in%20the%20game/article/客厅快递箱.png", desc: "这应该是快递员送来的包裹，有几处可能是运输时的碰撞导致的凹陷。箱子有一点重量\nzq警官:！！扳手！这大小……确实很像凶器！完全有可能造成死者头部的伤痕！\nzq警官:但是这也太干净了。不像是凶器……不过也有可能被凶手细致的清洗过了！\nwx警官:很有可能是取货员用这个扳手杀了人，清洗干净再藏到这个快递箱中，嫁祸给快递员！！\nzq警官:大胆假设，小心求证。你有证据吗？" },
@@ -47,6 +47,21 @@ window.CLUE_CONFIG = [
   function tryApply(){
     if (window.clueManager && typeof window.clueManager.setConfig === 'function' && Array.isArray(window.CLUE_CONFIG)) {
       window.clueManager.setConfig(window.CLUE_CONFIG);
+      return true;
+    }
+    return false;
+  }
+  if (!tryApply()) {
+    const timer = setInterval(() => { if (tryApply()) clearInterval(timer); }, 200);
+  }
+})();
+
+// 等待 AchievementManager 完成初始化后进行配置
+(function applyAchievementConfig(){
+  function tryApply(){
+    if (window.achievementManager && typeof window.achievementManager.init === 'function') {
+      console.log("成就管理器已找到，正在初始化...");
+      window.achievementManager.init();
       return true;
     }
     return false;
