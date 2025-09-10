@@ -29,7 +29,7 @@
     .achievement-btn {
       position: absolute;
       top: 20px;
-      left: 70px; /* 调整位置，避免与音乐控制按钮重叠 */
+      left: 70px;
       width: 40px;
       height: 40px;
       border-radius: 50%;
@@ -207,6 +207,15 @@
   </div>
 
   <script>
+    // 成就图片路径数组
+    const achievementImages = [
+      "ap/1.png",
+      "ap/2.png",
+      "ap/3.png",
+      "ap/4.png",
+      "ap/5.png"
+    ];
+
     // 模拟成就管理器
     window.achievementManager = {
       togglePanel: function(force) {
@@ -220,26 +229,28 @@
         const grid = document.getElementById('achievement-grid');
         grid.innerHTML = '';
         
-        // 模拟5个成就
-        for (let i = 0; i < 5; i++) {
+        // 根据图片数组生成格子
+        for (let i = 0; i < achievementImages.length; i++) {
           const tile = document.createElement('div');
           tile.className = 'AchievementTile locked';
           tile.title = '未解锁';
           tile.dataset.index = i;
           
-          // 添加点击事件
           tile.addEventListener('click', function() {
             if (tile.classList.contains('locked')) {
               tile.classList.remove('locked');
               tile.title = `成就 ${i + 1}`;
               
-              // 添加成就图片（模拟）
+              // 添加对应图片
               const thumb = document.createElement('div');
               thumb.className = 'thumb';
-              thumb.style.backgroundColor = '#FFD700';
+              thumb.style.backgroundImage = `url("${achievementImages[i]}")`;
               tile.appendChild(thumb);
-              
-              alert(`成就已解锁: 成就 ${i + 1}`);
+              if(i == 0)alert(`成就已解锁: 糊涂侦探`);
+              if(i == 1)alert(`成就已解锁: 乐不思蜀`);
+              if(i == 2)alert(`成就已解锁: 明察秋毫`);
+              if(i == 3)alert(`成就已解锁: 清汤大老爷`);
+              if(i == 4)alert(`成就已解锁: 蛛丝已成落网`);
             }
           });
           
