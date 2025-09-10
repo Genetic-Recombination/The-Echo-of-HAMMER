@@ -56,6 +56,11 @@ class Overworld {
       if (hasOverlay) {
         return;
       }
+      // 防抖：角色移动途中不允许触发交互，避免坐标未对齐导致误判
+      const hero = this.map?.gameObjects?.hero;
+      if (!hero || hero.movingProgressRemaining > 0) {
+        return;
+      }
       this.map.checkForActionCutscene();
     });
     new KeyPressListener("Escape", () => {
