@@ -70,13 +70,14 @@ html, body {
 </head>
 <body>
 <div class="stage" id="stage">
-  <!-- 双层背景 -->
   <div class="bg" id="bg1" style="opacity:1"></div>
   <div class="bg" id="bg2"></div>
 
   <div class="vignette"></div>
 
   <div class="topbar">
+    <button class="btn" id="btnSkipScene">跳过剧情</button>
+    <button class="btn" id="btnSkip">跳过文字动画</button>
     <button class="btn" id="btnAuto">自动播放：关</button>
   </div>
 
@@ -102,20 +103,17 @@ const el=id=>document.getElementById(id);
 const nameEl=el('name'), textEl=el('text'), subtitleEl=el('subtitle');
 const dialogueEl=el('dialogue'), choicesEl=el('choices'), mutedEl=el('muted');
 const targetPopup=el('target-popup'), targetBtn=el('target-btn');
-const btnAuto=el('btnAuto');
+const btnSkip=el('btnSkip'), btnAuto=el('btnAuto');
 const bgEls=[el('bg1'), el('bg2')];
 let activeBg=0;
 
-// helper: extract url from css url(...) string
 function extractUrl(imageString){
   if(!imageString) return '';
   const m = imageString.match(/url\((['"]?)(.+?)\1\)/);
   return m ? m[2] : imageString;
 }
 
-// preload cache (promise map) - optional reuse
 const _bgCache = {};
-
 function preloadUrl(url){
   if(!url) return Promise.reject('empty url');
   if(_bgCache[url]) return _bgCache[url];
@@ -129,48 +127,31 @@ function preloadUrl(url){
   return p;
 }
 
-// setBg: only fade in after image loaded to avoid "暗闪"
 let _lastBgRequestId = 0;
 function setBg(image){
   const nextBg=(activeBg+1)%2;
   const url = extractUrl(image);
-  if(!url) {
-    // no url provided - do nothing
-    return;
-  }
-  // if the requested url is already shown on either bg, switch without reloading
+  if(!url) return;
   const curA = bgEls[activeBg].style.backgroundImage || '';
   const curB = bgEls[(activeBg+1)%2].style.backgroundImage || '';
-  if(curA.indexOf(url)!==-1) {
-    // already active, nothing to do
-    return;
-  }
+  if(curA.indexOf(url)!==-1) return;
   if(curB.indexOf(url)!==-1){
-    // the next bg already has it loaded, just fade
     bgEls[nextBg].style.opacity = '1';
     bgEls[activeBg].style.opacity = '0';
     activeBg = nextBg;
     return;
   }
-
-  // start preload
   const requestId = ++_lastBgRequestId;
-  // ensure nextBg is hidden until loaded
   bgEls[nextBg].style.opacity = '0';
-  // begin preloading
   preloadUrl(url).then(()=>{
-    // if another setBg was requested later, discard this result
     if(requestId !== _lastBgRequestId) return;
-    // set background image (now it's loaded from cache)
     bgEls[nextBg].style.backgroundImage = `url("${url}")`;
-    // Use rAF to ensure the browser registers the change and transition runs smoothly
     requestAnimationFrame(()=>{
       bgEls[nextBg].style.opacity = '1';
       bgEls[activeBg].style.opacity = '0';
       activeBg = nextBg;
     });
   }).catch(()=>{
-    // failed to load - fallback: still try to set (browser may show broken image) and switch
     console.warn('背景图加载失败：', url);
     bgEls[nextBg].style.backgroundImage = `url("${url}")`;
     bgEls[nextBg].style.opacity = '1';
@@ -180,9 +161,6 @@ function setBg(image){
 }
 
 let idx=0, typing=false, skipType=false, waitingChoice=false, autoPlay=false;
-let choiceLock = false; // 防止选择按钮重复触发
-let ended = false; // 新增
-
 const script=[
   { t:'subtitle', text:'第二天清晨' },
   { t:'say', name:'', text:'你在你的的卧室醒来了，昨晚的咖啡好像没什么作用，你睡得很香。\n阳光透过百叶窗照进来。', bg:'url(images/8.jpg)' },
@@ -191,9 +169,9 @@ const script=[
   { t:'say', name:'', text:'一个熟悉的声音传来——是你之前在队里的朋友。他现在还在警局继续工作，算是你的线人。', bg:'url(images/9.jpg)' },
   { t:'say', name:'来电者', text:'喂？醒了吗？侦探大人。' , bg:'url(images/9.jpg)'},
   { t:'say', name:'来电者', text:'你知道最近那个‘榔头男’吗？昨夜西区的老公寓楼那边出事了，又一个女孩……手法一样。' , bg:'url(images/9.jpg)'},
-  { t:'say', name:'来电者', text:'有目击者！虽然喝多了，但提供了信息：说看见榔头男慌忙跑进那栋‘红砖公寓’里。', bg:'url(images/9.jpg)'},
+  { t:'say', name:'来电者', text:'有目击者！虽然喝多了，但提供了信息：说看见榔头男慌忙跑进那栋‘红砖公寓’里。', bg:'url(images/9.jpg)' },
   { t:'say', name:'来电者', text:'死者又是长头发，伤口和之前也对的上。' , bg:'url(images/9.jpg)'},
-  { t:'say', name:'来电者', text:'队里派人秘密围住了那栋楼。我想你肯定有兴趣。\n要不要来碰碰运气？说不定能比我们这帮穿制服的先找到点线索。', bg:'url(images/9.jpg)'},
+  { t:'say', name:'来电者', text:'队里派人秘密围住了那栋楼。我想你肯定有兴趣。\n要不要来碰碰运气？说不定能比我们这帮穿制服的先找到点线索。', bg:'url(images/9.jpg)' },
   { t:'say', name:'你', text:'（你揉了揉眼睛，坐起来）\n嗯，我马上到。' , bg:'url(images/9.jpg)'},
   { t:'say', name:'来电者', text:'好，我把位置发你手机上。' , bg:'url(images/9.jpg)'},
   { t:'target'},
@@ -209,14 +187,14 @@ const script=[
   { t:'say', name:'你', text:'（你笑着回应了Wx，把手搭在Zq肩上）\n少来这套。情况怎么样？人还在里面？' , bg:'url(images/13.jpg)'},
   { t:'say', name:'Zq警官', text:'嗯。我们和物业配合，挨家挨户以‘管道检修’的名义摸了一遍底。', bg:'url(images/13.jpg)'},
   { t:'say', name:'Zq警官', text:'忙活了一早上，现在基本确定了。' , bg:'url(images/13.jpg)'},
-  { t:'say', name:'Zq警官', text:'305房。一个租客，登记名字很模糊，几乎没留下什么信息。重点是问询邻居的结果。', bg:'url(images/13.jpg)' },
+  { t:'say', name:'Zq警官', text:'305房。一个租客，登记名字很模糊，几乎没留下什么信息。重点是问询邻居的结果。', bg:'url(images/13.jpg)'},
   { t:'say', name:'Zq警官', text:'第一，几乎没人见过他的正脸。\n第二，他作息极其反常，都是昼伏夜出。\n第三，无论天气多热，出门永远裹得严严实实，帽子、口罩、长袖外套，一个不落。', bg:'url(images/14.jpg)' },
   { t:'say', name:'Wx警官', text:'这家伙，九成九就是‘榔头男’。' , bg:'url(images/14.jpg)'},
   { t:'say', name:'Zq警官', text:'现在，我们其他三个队员就在楼门口的马路对面。不过是暗中蹲守，不能询问进进出出的人。' , bg:'url(images/13.jpg)'},
-  { t:'say', name:'Zq警官', text:'只等305里面的人一出来，下了楼，就立刻动手抓人。', bg:'url(images/13.jpg)'},
-  { t:'say', name:'你', text:'（你点了点头）\n我觉得这事没这么简单。', bg:'url(images/13.jpg)'},
-  { t:'say', name:'Wx警官', text:'您放心吧。虽然我们没法在门口守着，但是这栋楼所有的住户门外都有室外走廊。\n有人进出房间我们都看得到，门口的同事也会拦下来询问。', bg:'url(images/13.jpg)'},
-  { t:'say', name:'', text:'这时，突然有人急切地拍打车窗。', bg:'url(images/13.jpg)'},
+  { t:'say', name:'Zq警官', text:'只等305里面的人一出来，下了楼，就立刻动手抓人。', bg:'url(images/13.jpg)' },
+  { t:'say', name:'你', text:'（你点了点头）\n我觉得这事没这么简单。', bg:'url(images/13.jpg)' },
+  { t:'say', name:'Wx警官', text:'您放心吧。虽然我们没法在门口守着，但是这栋楼所有的住户门外都有室外走廊。\n有人进出房间我们都看得到，门口的同事也会拦下来询问。', bg:'url(images/13.jpg)' },
+  { t:'say', name:'', text:'这时，突然有人急切地拍打车窗。', bg:'url(images/13.jpg)' },
   { t:'say', name:'', text:'窗户摇了下来 是新面孔。', bg:'url(images/15.jpg)' },
   { t:'say', name:'Ljw警官', text:'（上气不接下气）\n这会已经是第三个人了……', bg:'url(images/15.jpg)' },
   { t:'say', name:'Ljw警官', text:'10分钟的时间，这个榔头男前前后后叫了三个送货员。', bg:'url(images/15.jpg)' },
@@ -250,113 +228,93 @@ async function typeText(str){
 }
 
 function renderChoice(step){
-  waitingChoice = true;
-  choicesEl.hidden = false;
-  choicesEl.innerHTML = '';
-  nameEl.textContent = step.name||''; 
-  textEl.textContent = '请选择：';
-
+  waitingChoice=true; choicesEl.innerHTML=''; choicesEl.hidden=false;
+  nameEl.textContent=step.name||''; textEl.textContent='请选择：';
   step.choices.forEach(ch=>{
-    const btn = document.createElement('div');
-    btn.className = 'choice';
-    btn.textContent = ch.text;
-
+    const btn=document.createElement('div'); btn.className='choice'; btn.textContent=ch.text;
     btn.addEventListener('click', e=>{
       e.stopPropagation();
-      if(choiceLock) return;
-      choiceLock = true;
-
-      // 隐藏选择框
-      choicesEl.hidden = true;
-      choicesEl.innerHTML = '';
-      waitingChoice = false;
-
-      // 设置 idx
-      if(ch.goto && labelIndex[ch.goto] !== undefined){
-        idx = labelIndex[ch.goto];
+      if(waitingChoice){  // 防止多次触发
+        waitingChoice=false;
+        choicesEl.hidden=true;
+        choicesEl.innerHTML='';
+        if(ch.goto && labelIndex[ch.goto]!==undefined) idx=labelIndex[ch.goto];
+        next();
       }
-
-      // ⚠️ 直接同步调用 next()，不要 setTimeout
-      next();
-      choiceLock = false;
     });
-
     choicesEl.appendChild(btn);
   });
-
   updateMuted();
 }
-
-
 
 function renderInteract(step){
   waitingChoice=true;
   choicesEl.innerHTML=''; choicesEl.hidden=false;
   const btn=document.createElement('div'); btn.className='choice'; btn.textContent=step.text;
   btn.addEventListener('click', e=>{
-  e.stopPropagation();
-  if(choiceLock) return;
-  choiceLock = true;
-
-  choicesEl.hidden=true; 
-  choicesEl.innerHTML=''; 
-  waitingChoice=false;
-
-  next();
-
-  setTimeout(()=>{ choiceLock=false; },50);
-});
-
+    e.stopPropagation();
+    if(waitingChoice){
+      waitingChoice=false;
+      choicesEl.hidden=true;
+      choicesEl.innerHTML='';
+      next();
+    }
+  });
   choicesEl.appendChild(btn);
   updateMuted();
 }
 
 function renderTarget(){
-  waitingChoice = true; 
-  targetPopup.classList.add('show');
-
-  const handler = e => {
-    e.preventDefault();   // 阻止默认
-    e.stopPropagation();  // 阻止冒泡
-    targetPopup.classList.remove('show');
-    waitingChoice = false;
-    next();
+  waitingChoice=true; targetPopup.classList.add('show');
+  targetBtn.onclick=()=>{ 
+    if(waitingChoice){
+      waitingChoice=false; 
+      targetPopup.classList.remove('show'); 
+      next(); 
+    }
   }
-
-  targetBtn.addEventListener('click', handler, { once:true });  // once:true 自动解绑
-  targetPopup.addEventListener('click', e => e.stopPropagation()); // 点击弹窗内部其他地方也阻止冒泡
 }
 
-
 async function next(){
-  if(ended) return; // 新增
   if(waitingChoice) return;
   if(typing){ skipType=true; return; }
   skipType=false;
-  const step=script[idx++]; if(!step) return;
-
+  let step=script[idx++];
+  if(!step) return;
   if(step.bg) setBg(step.bg);
 
   switch(step.t){
-    case 'subtitle': subtitleEl.textContent=step.text; dialogueEl.style.display='none'; setTimeout(()=>subtitleEl.classList.add('show'),50); updateMuted(); break;
-    case 'say': dialogueEl.style.display='block'; nameEl.textContent=step.name||''; await typeText(step.text); updateMuted(); break;
-    case 'interact': renderInteract(step); break;
-    case 'target': renderTarget(); break;
-    case 'choice': renderChoice(step); return;
-
-    case 'label': next(); break;
-    case 'goto': idx=labelIndex[step.target]; next(); break;
+    case 'subtitle':
+      subtitleEl.textContent=step.text; dialogueEl.style.display='none'; 
+      setTimeout(()=>subtitleEl.classList.add('show'),50); updateMuted(); 
+      break;
+    case 'say':
+      dialogueEl.style.display='block'; nameEl.textContent=step.name||''; 
+      await typeText(step.text); updateMuted(); 
+      break;
+    case 'interact':
+      renderInteract(step); 
+      break;
+    case 'target':
+      renderTarget(); 
+      break;
+    case 'choice':
+      renderChoice(step); 
+      break;
+    case 'label':
+      break;
+    case 'goto':
+      if(labelIndex[step.target]!==undefined){ idx=labelIndex[step.target]; } 
+      next(); 
+      break;
     case 'end':
-      dialogueEl.style.display='none'; nameEl.textContent=''; textEl.textContent='';
-      waitingChoice = false;
-      ended = true; // 新增：设置结束标志
-      updateMuted();
+      dialogueEl.style.display='none'; nameEl.textContent=''; textEl.textContent=''; 
+      updateMuted(); 
       break;
   }
 }
 
 function advance(){
-  if(ended) return; // 新增
   if(waitingChoice) return;
   if(typing){ skipType=true; return; }
   skipType=false;
@@ -369,16 +327,18 @@ function updateMuted(){
   else mutedEl.classList.remove('show');
 }
 
-document.addEventListener('keydown', e=>{ if(e.code==='Space'){ e.preventDefault(); advance(); } });
-// avoid triggering advance when clicking interactive choices (they stopPropagation)
-document.addEventListener('click', e=>{
-  if(waitingChoice || targetPopup.classList.contains('show')) return; // 阻止在选择/弹窗时触发
-  advance();
+const btnSkipScene = el('btnSkipScene');
+
+// 跳过整个剧情，直接跳转
+btnSkipScene.addEventListener('click', ()=>{
+  window.location.href = "next.html";  // 这里换成你要跳转的网页路径
 });
 
+document.addEventListener('keydown', e=>{ if(e.code==='Space'){ e.preventDefault(); advance(); } });
+document.addEventListener('click', advance);
+btnSkip.addEventListener('click', ()=>{ skipType=true; });
 btnAuto.addEventListener('click', ()=>{ autoPlay=!autoPlay; btnAuto.textContent=`自动播放：${autoPlay?'开':'关'}`; });
 
-// start
 next();
 </script>
 </body>

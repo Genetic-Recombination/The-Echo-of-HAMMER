@@ -76,6 +76,7 @@ html, body {
   <div class="vignette"></div>
 
   <div class="topbar">
+    <button class="btn" id="btnSkipScene">跳过剧情</button>
     <button class="btn" id="btnSkip">跳过文字动画</button>
     <button class="btn" id="btnAuto">自动播放：关</button>
   </div>
@@ -325,6 +326,13 @@ function updateMuted(){
   if(dialogueEl.style.display==='none' && !waitingChoice && !targetPopup.classList.contains('show') && choicesEl.hidden) mutedEl.classList.add('show');
   else mutedEl.classList.remove('show');
 }
+
+const btnSkipScene = el('btnSkipScene');
+
+// 跳过整个剧情，直接跳转
+btnSkipScene.addEventListener('click', ()=>{
+  window.location.href = "next.html";  // 这里换成你要跳转的网页路径
+});
 
 document.addEventListener('keydown', e=>{ if(e.code==='Space'){ e.preventDefault(); advance(); } });
 document.addEventListener('click', advance);
