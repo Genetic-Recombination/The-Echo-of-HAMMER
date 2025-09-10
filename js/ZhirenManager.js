@@ -9,7 +9,8 @@
       this.config = []; // [{id, title, image, questions, answers}]
       this.elements = {};
       this.initialized = false;
-      this.answers = {}; // 记录玩家的答案 {题号: "对/错"}
+      this.answers = {}; // 记录玩家的答案 {题号: true/false}
+      this.currentTileIndex = -1; // 当前点击的 tile 索引
     }
 
     injectStyles() {
@@ -76,7 +77,11 @@
         cursor: pointer; 
         background: #fff;
       }
-      .ExamPanel .options button.selected { background: #90EE90; } /* 已选择高亮 */
+      /* 修改选中高亮为深灰色 */
+      .ExamPanel .options button.selected { 
+        background: #555555; 
+        color: #fff; 
+      }
 
       .ExamPanel .submit-btn {
         margin-top: 12px;
@@ -147,7 +152,7 @@
       // 按钮
       const btn = document.createElement("button");
       btn.className = "ZhirenButton";
-      btn.title = "指认嫌疑人(Identify)";
+      btn.title = "指认凶手(Identify)";
       btn.addEventListener("click",()=>this.togglePanel());
       root.appendChild(btn);
       this.elements.btn = btn;
@@ -157,7 +162,7 @@
       panel.className = "ZhirenPanel";
       panel.innerHTML = `
         <div class="zp-header">
-          <h3 class="zp-title">指认嫌疑人</h3>
+          <h3 class="zp-title">指认凶手</h3>
           <button class="zp-close">关闭</button>
         </div>
         <div class="ZhirenGrid"></div>
@@ -259,6 +264,12 @@
           result.textContent = "⚠️ 还有题目未作答！";
           return;
         }
+        // 只有点击第二个 tile 才可能抓住榔头男
+        if(this.currentTileIndex !== 1){
+          result.textContent = "❌ 指认失败，榔头男跑掉了。";
+          return;
+        }
+
         let allCorrect = true;
         questions.forEach((q,i)=>{
           if(this.answers[i] !== answers[i]) allCorrect = false;
@@ -277,10 +288,11 @@
     renderGrid() {
       if(!this.elements.grid || !this.config.length) return;
       this.elements.grid.innerHTML = "";
-      this.config.forEach((c)=>{
+      this.config.forEach((c,index)=>{
         const tile = document.createElement("div");
         tile.className = "ZhirenTile";
         tile.title = c.title || c.id;
+        tile.dataset.index = index;
 
         const thumb = document.createElement("div");
         thumb.className = "thumb";
@@ -290,6 +302,7 @@
 
         // 点击 tile 打开对应的卷子
         tile.addEventListener("click",()=>{
+          this.currentTileIndex = index; // 保存当前点击的 tile
           this.toggleExam(true, c.questions, c.answers);
         });
       });
