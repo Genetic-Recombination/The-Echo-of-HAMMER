@@ -163,7 +163,7 @@ const script=[
   {t:'bg',url:'images/14.png'},
   {t:'say',name:'',text:'我布置现场，伪装成一场自杀：安眠药散落在床边，扣着的帽子遮住了头上的伤口。'},
   {t:'bg',url:'images/5.png'},
-  {t:'say',name:'',text:'而真正的细节，是我将房间里所有女士内衣裤一股脑打包进大包裹，拿走两张送货单，清洗厕所，把长头发冲入下水道。'},
+  {t:'say',name:'',text:'而真正的细节，是我将房间里所有女士内衣裤一股脑打包进大包裹，烧毁两张送货单，清洗厕所，把长头发冲入下水道。'},
   {t:'bg',url:'images/6.png'},
   {t:'say',name:'',text:'再用新的剃须刀伪装自己是男性'},
   {t:'bg',url:'images/8.png'},
@@ -318,6 +318,11 @@ function showCredits(){
 
 document.addEventListener('keydown',e=>{ if(e.code==='Space') next(); });
 dialogueEl.addEventListener('click',next);
+
+document.addEventListener('click', ()=>{
+  tryPlayMain();
+  next();
+});
 
 next();
 </script>
