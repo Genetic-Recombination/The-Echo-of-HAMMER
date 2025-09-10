@@ -418,6 +418,13 @@
       bgm.volume = parseFloat(e.target.value);
       console.log("[BGM] 当前音量:", bgm.volume.toFixed(2));
     });
+
+    // 禁用空格键对音乐播放的默认控制，避免与游戏交互冲突
+    document.addEventListener("keydown", (e) => {
+      if (e.code === "Space" && e.target === document.body) {
+        e.preventDefault(); // 阻止空格键的默认行为
+      }
+    });
   </script>
 
   <!-- 地图配置 -->

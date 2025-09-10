@@ -45,9 +45,24 @@ html, body {
 .text { font-size: clamp(15px,2.6vw,19px); line-height:1.8; min-height:3lh; white-space: pre-wrap; }
 .hint { color: var(--muted); font-size:12px; margin-top:.45rem; }
 
-.choices { display:grid; gap:.6rem; margin-top:.8rem; }
-.choice { background: var(--panel-solid); border:1px solid rgba(255,255,255,.07); border-radius:12px; padding:.7rem .9rem; cursor:pointer; transition:160ms ease; }
-.choice:hover { transform:translateY(-1px); box-shadow:0 6px 18px rgba(0,0,0,.25); }
+.choices { display:grid; gap:.8rem; margin-top:.8rem; }
+.choice { 
+  background: rgba(30, 58, 138, 0.8); 
+  border:2px solid rgba(59, 130, 246, 0.3); 
+  border-radius:12px; 
+  padding:1rem 1.2rem; 
+  cursor:pointer; 
+  transition:160ms ease; 
+  font-size: clamp(16px,3vw,20px);
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(0,0,0,.2);
+}
+.choice:hover { 
+  transform:translateY(-2px); 
+  box-shadow:0 8px 24px rgba(0,0,0,.35);
+  border-color: rgba(59, 130, 246, 0.5);
+  background: rgba(37, 99, 235, 0.9);
+}
 
 #target-popup {
   position: fixed; top:20%; right:-400px; width:300px; background: var(--panel-solid);
