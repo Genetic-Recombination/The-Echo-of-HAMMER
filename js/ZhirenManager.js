@@ -266,9 +266,23 @@
         }
 
         let allCorrect = true;
+
+        if(imageId !== "zhiren_2"){
+          if(window.unlockFifthAchievement){
+            window.unlockFifthAchievement();  // 调用第五个成就解锁函数
+          }
+        }
+
         questions.forEach((q,i)=>{
           if(this.answers[i] !== answers[i]) allCorrect = false;
         });
+
+        if(allCorrect == true && imageId === "zhiren_2"){
+          window.zhirenBikeGirlAllCorrect = allCorrect;
+          if (window.unlockThirdAchievement) {
+              window.unlockThirdAchievement();
+          }
+        }
         
         // 创建弹窗
         const modal = document.createElement("div");

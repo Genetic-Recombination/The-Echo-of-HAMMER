@@ -11,10 +11,10 @@
       // 成就图片路径数组
       this.achievementImages = [
         "../ap/1.png",
-        "../ap/2.png",
         "../ap/3.png",
-        "../ap/4.png",
-        "../ap/5.png"
+        "../ap/5.png",
+        "../ap/2.png",
+        "../ap/4.png"
       ];
     }
 
@@ -200,14 +200,10 @@
       `;
       panel.querySelector(".ap-close").addEventListener("click", () => this.togglePanel(false));
       panel.querySelector(".ap-unlock-all").addEventListener("click", () => {
-        if (window.achievementManager) {
-          window.achievementManager.unlockAllAchievements();
-        }
+        this.unlockAllAchievements();
       });
       panel.querySelector(".ap-reset-all").addEventListener("click", () => {
-        if (window.achievementManager) {
-          window.achievementManager.resetAllAchievements();
-        }
+        this.resetAllAchievements();
       });
       root.appendChild(panel);
       this.elements.panel = panel;
@@ -223,14 +219,12 @@
       if (!this.elements.grid) return;
       this.elements.grid.innerHTML = "";
       
-      // 为每个成就图片创建一个格子
       this.achievementImages.forEach((imgSrc, index) => {
         const discovered = this.isAchievementUnlocked(index);
         const tile = document.createElement("div");
         tile.className = "AchievementTile" + (discovered ? "" : " locked");
         tile.title = discovered ? this.getAchievementName(index) : "未解锁";
         
-        // 添加点击事件处理
         tile.addEventListener('click', () => {
           if (!discovered) {
             this.unlockAchievement(index, tile);
@@ -240,7 +234,6 @@
         if (discovered) {
           const thumb = document.createElement("div");
           thumb.className = "thumb";
-          // 确保图片路径正确
           thumb.style.backgroundImage = `url(${imgSrc})`;
           thumb.style.backgroundSize = "cover";
           thumb.style.backgroundPosition = "center";
@@ -251,7 +244,6 @@
       });
     }
     
-    // 获取成就名称
     getAchievementName(index) {
       const achievementNames = [
         "糊涂侦探",
@@ -263,15 +255,10 @@
       return achievementNames[index] || `成就 ${index + 1}`;
     }
 
-    // 检查成就是否已解锁
     isAchievementUnlocked(index) {
-      // 这里需要根据实际的成就系统逻辑来判断
-      // 目前我们使用localStorage来存储成就状态
       const currentUsername = window.localStorage.getItem("Sec-Sight-current-username");
       const file = window.localStorage.getItem("second_sight_achievements_" + currentUsername);
       let achievements = file ? JSON.parse(file) : {};
-      
-      // 假设成就ID与图片索引对应
       const achievementIds = [
         "糊涂侦探",
         "明察秋毫",
@@ -279,18 +266,14 @@
         "乐不思蜀",
         "清汤大老爷"
       ];
-      
       return !!achievements[achievementIds[index]];
     }
 
-    // 解锁成就
     unlockAchievement(index, tileElement) {
       if (!this.isAchievementUnlocked(index)) {
         const currentUsername = window.localStorage.getItem("Sec-Sight-current-username");
         const file = window.localStorage.getItem("second_sight_achievements_" + currentUsername);
         let achievements = file ? JSON.parse(file) : {};
-        
-        // 假设成就ID与图片索引对应
         const achievementIds = [
           "糊涂侦探",
           "明察秋毫",
@@ -298,41 +281,33 @@
           "乐不思蜀",
           "清汤大老爷"
         ];
-        
         achievements[achievementIds[index]] = true;
         window.localStorage.setItem("second_sight_achievements_" + currentUsername, JSON.stringify(achievements));
-        
-        // 添加解锁动画效果
+
         if (tileElement) {
           tileElement.classList.add("unlocking");
           setTimeout(() => {
             tileElement.classList.remove("unlocking");
-            // 重新渲染网格以显示解锁的成就
             this.renderGrid();
           }, 500);
         } else {
-          // 重新渲染网格
           this.renderGrid();
         }
-        
-        // 保存进度
+
         try { 
           window.overworld && window.overworld.progress && window.overworld.progress.save && window.overworld.progress.save(); 
         } catch(e) {}
-        
-        // 显示解锁提示
+
         alert(`成就已解锁: ${this.getAchievementName(index)}`);
       }
     }
 
-    // 添加一个测试方法来手动解锁所有成就
     unlockAllAchievements() {
       for (let i = 0; i < this.achievementImages.length; i++) {
         this.unlockAchievement(i);
       }
     }
 
-    // 添加一个测试方法来重置所有成就
     resetAllAchievements() {
       const currentUsername = window.localStorage.getItem("Sec-Sight-current-username");
       window.localStorage.setItem("second_sight_achievements_" + currentUsername, JSON.stringify({}));
@@ -347,42 +322,50 @@
       this.renderGrid();
       this.initialized = true;
       window.achievementManager = this;
+
+      window.unlockFirstAchievement = () => {
+        if (window.achievementManager) {
+          window.achievementManager.unlockAchievement(0);
+        }
+      };
+
+      window.unlockSecondAchievement = () => {
+        if (window.achievementManager) {
+          window.achievementManager.unlockAchievement(1);
+        }
+      };
+
+      window.unlockThirdAchievement = () => {
+        if (window.achievementManager) {
+            window.achievementManager.unlockAchievement(2);
+        }
+      };
+
+      window.unlockFifthAchievement = () => {
+        if (window.achievementManager) {
+            window.achievementManager.unlockAchievement(4);
+        }
+      };
+
     }
   }
 
-  // 暴露接口
   window.AchievementManager = AchievementManager;
 
-  // 自动初始化
   const bootstrap = () => {
-    console.log("AchievementManager bootstrap called");
     const container = document.querySelector('.game-container');
-    if (!container) {
-      console.log("No .game-container found");
-      return false;
-    }
-    console.log(".game-container found:", container);
-    
+    if (!container) return false;
     if (!window.achievementManager) {
-      console.log("Creating new AchievementManager instance");
       const am = new AchievementManager({ container });
       am.init();
-      console.log("AchievementManager initialized");
-    } else {
-      console.log("AchievementManager already exists");
     }
     return true;
   };
   
-  // 等待DOM加载完成后再初始化
   document.addEventListener('DOMContentLoaded', () => {
-    console.log("DOM loaded, starting AchievementManager bootstrap");
     const timer = setInterval(() => {
       if (bootstrap()) {
-        console.log("AchievementManager bootstrap successful, clearing timer");
         clearInterval(timer);
-      } else {
-        console.log("AchievementManager bootstrap failed, will retry");
       }
     }, 250);
   });

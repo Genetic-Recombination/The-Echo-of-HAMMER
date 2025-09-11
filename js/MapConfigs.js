@@ -284,6 +284,9 @@ window.OverworldMaps = {
             label: "A：【得出结论】",
             description: "看来就是这样了。",
             handler: () => {
+              window.clickedA = true;
+              window.clickedB = false;
+              window.unlockFirstAchievement();
               const message = new TextMessage({
                 text: "你选择了：得出结论。\n调查暂时结束。",
                 onComplete: () => {
@@ -297,6 +300,9 @@ window.OverworldMaps = {
             label: "B：【提出质疑】",
             description: "不对！这太不合常理了。我们再仔细看看！",
             handler: () => {
+              window.clickedA = false;
+              window.clickedB = true;
+              window.unlockSecondAchievement();
               const message = new TextMessage({
                 text: "你选择了：提出质疑。\n继续仔细搜查现场……",
                 onComplete: () => {
