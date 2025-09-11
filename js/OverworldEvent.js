@@ -196,6 +196,13 @@ class OverworldEvent {
     menu.init(document.querySelector(".game-container"));
   }
 
+  // 新增：打开网址事件
+  openUrl(resolve) {
+    // 在新窗口中打开指定网址
+    window.open(this.event.url, this.event.target || "_blank");
+    resolve();
+  }
+
   init() {
     return new Promise(resolve => {
       this[this.event.type](resolve);

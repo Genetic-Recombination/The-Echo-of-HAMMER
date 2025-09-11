@@ -96,6 +96,9 @@ window.OverworldMaps = {
   ...utils.horizontalWall(46,33,36),
   ...utils.verticalWall(33, 43,46),
   ...utils.verticalWall(36,43, 46),
+  ...utils.verticalWall(42,31, 33),
+  ...utils.horizontalWall(33, 42, 46),
+  ...utils.horizontalWall(31, 42, 46),
 },
 
     cutsceneSpaces: {
@@ -179,7 +182,19 @@ window.OverworldMaps = {
       ]),
        ...utils.interactionRange(46, 48, 15, 17, [
         { type: "textMessage", text: "一株略显老态的盆栽。" },
-      ])
+      ]),
+      ...utils.interactionRange(42, 46, 31, 33, [
+        { 
+          type: "openUrl", 
+          url: "./跑酷/game.html" // 使用相对于当前目录的路径
+        }
+      ]),
+      ...utils.interactionRange(12, 13, 27, 29, [
+        { 
+          type: "openUrl", 
+          url: "./minigame-Trex/Trex.html" // 使用相对于当前目录的路径
+        }
+      ]),
     }
   },
   Bedroom: {
