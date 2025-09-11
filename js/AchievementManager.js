@@ -341,6 +341,12 @@
         }
       };
 
+      window.unlockFourthAchievement = () => {
+        if (window.achievementManager) {
+            window.achievementManager.unlockAchievement(3);
+        }
+      };
+
       window.unlockFifthAchievement = () => {
         if (window.achievementManager) {
             window.achievementManager.unlockAchievement(4);
