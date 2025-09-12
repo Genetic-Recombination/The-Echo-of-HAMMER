@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>存档管理 - The Echo of Hammer</title>
+  <style>
+    :root { --bg:#0b0b0d; --panel:#121217; --line:#23232b; --text:#e6e6e6; --muted:#9a9aaa; --red:#b30017; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Arial, Helvetica, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+    header { display: flex; align-items: center; gap: 12px; padding: 16px 18px; border-bottom: 1px solid var(--line); position: sticky; top: 0; background: rgba(11,11,13,.92); backdrop-filter: blur(4px); }
+    header h1 { font-size: 18px; letter-spacing: .2em; text-transform: uppercase; }
+    header .back { appearance: none; border: 1px solid var(--line); background: #16161c; color: var(--text); border-radius: 8px; padding: 8px 12px; cursor: pointer; }
+    main { max-width: 880px; margin: 0 auto; padding: 18px; }
+    .actions { display: flex; gap: 10px; margin-bottom: 16px; }
+    .btn { appearance: none; border: 1px solid var(--line); background: #16161c; color: var(--text); border-radius: 10px; padding: 10px 14px; cursor: pointer; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+    .btn.red { border-color: rgba(255,0,0,.25); background: linear-gradient(180deg, rgba(179,0,23,.9), rgba(122,0,16,.95)); }
+    .list { display: grid; gap: 12px; }
+    .slot { display: grid; grid-template-columns: 1fr auto; gap: 8px; padding: 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); }
+    .meta { font-size: 13px; color: var(--muted); }
+    .row { display: flex; align-items: center; gap: 8px; }
+    .tag { font-size: 12px; color: #bbb; background: #1b1b22; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--line); }
+    .empty { color: var(--muted); padding: 20px; text-align: center; border: 1px dashed var(--line); border-radius: 12px; }
+    .danger { color: #ff7b7b; }
+    .muted { color: var(--muted); }
+  </style>
+</head>
+<body>
+  <header>
+    <button class="back" onclick="goBack()">← 返回菜单</button>
+    <h1>存档管理</h1>
+  </header>
+  <main>
+    <div class="actions">
+      <button class="btn" onclick="createNewSlot()">新建存档</button>
+      <span id="userInfo" class="muted"></span>
+    </div>
+    <div id="list" class="list"></div>
+  </main>
+
+  <script>
+    const USER_KEY = 'Sec-Sight-current-username';
+    const SAVE_PREFIX = 'Second_Sight_SaveFile_';
+
+    function goBack() { window.location.href = '../menu.html'; }
+
+    function getUsername() {
+      try { return localStorage.getItem(USER_KEY) || ''; } catch (e) { return ''; }
+    }
+
+    function getSaveEntries() {
+      const username = getUsername();
+      const entries = [];
+      if (!username) return entries;
+      try {
+        for (let i = 0; i < localStorage.length; i++) {
+          const key = localStorage.key(i);
+          if (!key || !key.startsWith(SAVE_PREFIX + username + '_')) continue;
+          const slotId = key.substring((SAVE_PREFIX + username + '_').length);
+          let data = null;
+          try { data = JSON.parse(localStorage.getItem(key)); } catch(e) {}
+          entries.push({ key, slotId, data });
+        }
+      } catch(e) {}
+      return entries.sort((a, b) => {
+        // 排序：有时间的按时间倒序，无时间的放后面
+        const ta = a?.data?.time ? new Date(a.data.time).getTime() : -Infinity;
+        const tb = b?.data?.time ? new Date(b.data.time).getTime() : -Infinity;
+        return tb - ta;
+      });
+    }
+
+    function fmtTime(t) {
+      try {
+        const d = new Date(t);
+        const pad = n => String(n).padStart(2, '0');
+        return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+      } catch(e) { return ''; }
+    }
+
+    function render() {
+      const username = getUsername();
+      document.getElementById('userInfo').textContent = username ? `当前用户：${username}` : '未登录用户';
+      const list = document.getElementById('list');
+      const saves = getSaveEntries();
+      list.innerHTML = '';
+
+      if (!username) {
+        list.innerHTML = `<div class="empty">未检测到已登录用户，请返回菜单并先登录。</div>`;
+        return;
+      }
+
+      if (!saves.length) {
+        list.innerHTML = `<div class="empty">暂无任何存档。点击“新建存档”开始新的冒险！</div>`;
+        return;
+      }
+
+      for (const s of saves) {
+        const m = s.data || {};
+        const time = m.time ? fmtTime(m.time) : '—';
+        const mapId = m.mapId || '未知地图';
+        const flags = m.playerState?.storyFlags || {};
+        const clues = m.playerState?.clues || {};
+        const usedClues = Object.keys(clues).length;
+        const flagsCount = Object.keys(flags).filter(k => flags[k]).length;
+
+        const div = document.createElement('div');
+        div.className = 'slot';
+        div.innerHTML = `
+          <div>
+            <div class="row" style="gap:10px; margin-bottom:6px;">
+              <strong>槽位 #${s.slotId}</strong>
+              <span class="tag">${mapId}</span>
+              <span class="tag">线索 ${usedClues}</span>
+              <span class="tag">标记 ${flagsCount}</span>
+            </div>
+            <div class="meta">最近时间：${time}</div>
+          </div>
+          <div class="row">
+            <button class="btn" title="加载该存档" onclick="loadSlot('${s.slotId}')">加载</button>
+            <button class="btn red" title="删除该存档" onclick="deleteSlot('${s.key}')">删除</button>
+          </div>
+        `;
+        list.appendChild(div);
+      }
+    }
+
+    function nextSlotId() {
+      const entries = getSaveEntries();
+      const nums = entries
+        .map(e => e.slotId)
+        .filter(id => /^-?\d+$/.test(id))
+        .map(id => parseInt(id, 10));
+      // 从 1 开始增长
+      const positives = nums.filter(n => n >= 1);
+      if (!positives.length) return 1;
+      return Math.max(...positives) + 1;
+    }
+
+    function createNewSlot() {
+      const id = nextSlotId();
+      if (!confirm(`将在槽位 #${id} 开始新游戏，确认继续？`)) return;
+      // 直接进入游戏，不预写空存档；游戏内保存时会写入
+      window.location.href = `../game.html?slot=${id}`;
+    }
+
+    function loadSlot(id) {
+      window.location.href = `../game.html?load=1&slot=${encodeURIComponent(id)}`;
+    }
+
+    function deleteSlot(key) {
+      if (!confirm('确认删除该存档？此操作不可撤销！')) return;
+      try { localStorage.removeItem(key); } catch(e) {}
+      render();
+    }
+
+    // 启动
+    render();
+
+    // 快捷键：N 新建，Esc 返回
+    document.addEventListener('keydown', (e) => {
+      const k = e.key.toLowerCase();
+      if (k === 'n') createNewSlot();
+      if (e.key === 'Escape') goBack();
+    });
+  </script>
+</body>
+</html>

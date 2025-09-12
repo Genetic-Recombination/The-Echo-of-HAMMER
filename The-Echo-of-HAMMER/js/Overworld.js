@@ -193,21 +193,39 @@ class Overworld {
   async init() {
     const container = document.querySelector(".game-container");
 
-    this.progress = new Progress();
+    // 解析 URL 参数（slot、load）
+    const params = new URLSearchParams(window.location.search);
+    const rawSlot = params.get("slot");
+    const parsed = parseInt(rawSlot, 10);
+    const slot = Number.isFinite(parsed) ? parsed : 1; // 默认 1 槽位
+
+    this.progress = new Progress(slot);
+
+    // 检测URL参数是否强制读档（来自菜单或存档管理页）
+    const forceLoad = ["1", "true", "yes"].includes((params.get("load") || "").toLowerCase());
 
     this.titleScreen = new TitleScreen({
       progress: this.progress
     });
-    const useSaveFile = await this.titleScreen.init(container);
+    const titleResult = await this.titleScreen.init(container);
+
+    // 与标题画面选择结果合并
+    let useSaveFile = !!titleResult || forceLoad;
 
     let initialHeroState = null;
     if (useSaveFile) {
-      this.progress.load();
-      initialHeroState = {
-        x: this.progress.startingHeroX,
-        y: this.progress.startingHeroY,
-        direction: this.progress.startingHeroDirection,
-      };
+      const file = this.progress.getSaveFile();
+      if (file) {
+        this.progress.load();
+        initialHeroState = {
+          x: this.progress.startingHeroX,
+          y: this.progress.startingHeroY,
+          direction: this.progress.startingHeroDirection,
+        };
+      } else {
+        // 未找到有效存档，则回退为新游戏
+        useSaveFile = false;
+      }
     }
 
     this.hud = new Hud();

@@ -1,5 +1,5 @@
 class Progress {
-  constructor(id = -1) {
+  constructor(id = 1) {
     let currentUsername = localStorage["Sec-Sight-current-username"];
     this.mapId = "LivingRoom"; // 修改为当前游戏的起始地图
     // 使用地图配置中的默认英雄位置，避免首次加载时的坐标错位
@@ -13,6 +13,19 @@ class Progress {
   }
 
   save() {
+    try {
+      const hero = window.overworld?.map?.gameObjects?.hero;
+      if (hero) {
+        this.startingHeroX = hero.x;
+        this.startingHeroY = hero.y;
+        this.startingHeroDirection = hero.direction;
+      }
+      // 同步当前地图ID（若可用）并更新时间戳
+      this.mapId = window.overworld?.map?.id || this.mapId;
+      this.getTime();
+    } catch (e) {
+      // 忽略同步失败，继续使用上次记录的位置信息
+    }
     window.localStorage.setItem(this.saveFileKey, JSON.stringify({
       mapId: this.mapId,
       startingHeroX: this.startingHeroX,
@@ -60,6 +73,13 @@ class Progress {
       Object.keys(file.playerState).forEach(key => {
         playerState[key] = file.playerState[key];
       })
+      
+      // 刷新线索UI显示
+      setTimeout(() => {
+        if (window.clueManager && window.clueManager.renderGrid) {
+          window.clueManager.renderGrid();
+        }
+      }, 100);
     }
   }
 

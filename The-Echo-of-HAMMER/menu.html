@@ -244,26 +244,26 @@
 
             <nav class="menu" aria-label="主菜单">
                 <button class="btn" id="newGameBtn" aria-label="开始新游戏">
-                    New Game
+                    开始游戏
                     <i class="drip" aria-hidden="true"></i>
                     <i class="drip" aria-hidden="true"></i>
                     <i class="drip" aria-hidden="true"></i>
                 </button>
                 <button class="btn" id="saveBtn" aria-label="打开存档">
-                    Load Game
+                    打开存档
                     <i class="drip" aria-hidden="true"></i>
                     <i class="drip" aria-hidden="true"></i>
                     <i class="drip" aria-hidden="true"></i>
                 </button>
                 <button class="btn" id="achieveBtn" aria-label="查看成就">
-                    Achievements
+                    成就
                     <i class="drip" aria-hidden="true"></i>
                     <i class="drip" aria-hidden="true"></i>
                     <i class="drip" aria-hidden="true"></i>
                 </button>
             </nav>
 
-            <p class="hint">Enter = New Game · S = Load Game · A = Achievements</p>
+            <p class="hint">回车 = 开始游戏 · S = 打开存档 · A = 成就</p>
         </section>
     </main>
 
@@ -291,30 +291,58 @@
             window.location.href = 'start.html';
         }
 
-        // 页面加载完成后的初始化
-        window.addEventListener('load', function() {
+        // 读取当前用户名与存档键
+        function getSaveKey(username, id) {
+          return `Second_Sight_SaveFile_${username}_${id}`;
+        }
+        
+        function hasSave() {
+          const username = (localStorage.getItem('Sec-Sight-current-username') || '').trim();
+          if (!username) return false;
+          // 检测任意一个槽位是否存在（包括默认 1）
+          for (let i = 1; i < 50; i++) {
+            const key = getSaveKey(username, i);
+            if (localStorage.getItem(key)) return true;
+          }
+          return false;
+        }
+        
+        function goLoadGame() {
+          // 直接进入管理页；如需快速读档，可在管理页进行
+          window.location.href = './pages/save-manager.html';
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const loadBtn = document.getElementById('saveBtn');
+
             // 游戏菜单按钮事件
             document.getElementById('newGameBtn').addEventListener('click', () => {
-                toast('▶ Start Game…');
-                // 这里可以添加跳转到游戏页面的逻辑
+                toast('▶ 开始游戏…');
                 setTimeout(() => {
                     window.location.href = 'game.html';
-                }, 1500);
+                }, 800);
             });
             
-            document.getElementById('saveBtn').addEventListener('click', () => {
-                toast('💾 Start loading…');
-                // 这里可以添加加载存档的逻辑
+            loadBtn.addEventListener('click', () => {
+                goLoadGame();
             });
             
             document.getElementById('achieveBtn').addEventListener('click', () => {
                 window.location.href = "pages/achievement.html";
             });
 
+            // 首次进入时做一次提示
+            if (!hasSave()) {
+                // 非强提示，避免打扰
+                console.log('[Menu] 未检测到存档，可先开始新游戏');
+            }
+
             // 键盘事件
             document.addEventListener('keydown', function(event) {
                 if (event.key === 'Enter') document.getElementById('newGameBtn').click();
-                if (event.key.toLowerCase() === 's') document.getElementById('saveBtn').click();
+                if (event.key.toLowerCase() === 's') {
+                    goLoadGame();
+                }
                 if (event.key.toLowerCase() === 'a') document.getElementById('achieveBtn').click();
                 if (event.key === 'Escape') goBack();
             });
