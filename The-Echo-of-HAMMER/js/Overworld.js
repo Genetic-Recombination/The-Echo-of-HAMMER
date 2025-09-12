@@ -242,6 +242,16 @@ class Overworld {
 
     this.startGameLoop();
 
+    // 立即保存一次存档，确保即使玩家不进行任何操作，存档也会被保留
+    setTimeout(() => {
+      try {
+        this.progress.save();
+        console.log('[Overworld] 初始存档已保存');
+      } catch(e) {
+        console.warn('[Overworld] 初始存档保存失败:', e);
+      }
+    }, 1000); // 延迟1秒确保游戏完全初始化
+
     // this.map.startCutscene([
     //   { type: "changeMap", map: "DemoRoom"}
     //   // { type: "battle", enemyId: "beth" }
