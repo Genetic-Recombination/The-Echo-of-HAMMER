@@ -64,10 +64,22 @@ class Overworld {
       this.map.checkForActionCutscene();
     });
     new KeyPressListener("Escape", () => {
-      if (!this.map.isCutscenePlaying) {
-        this.map.startCutscene([
-          { type: "pause" }
-        ]);
+      // ESC 优先级最高：无论是否处于过场/对话，都可以打开暂停菜单
+      if (!this.map) return;
+      if (this.map.isPaused || document.querySelector('.PauseMenu')) {
+        // 已经在暂停菜单由其自身 ESC 处理关闭，这里避免重复触发
+        return;
+      }
+      // 直接触发暂停事件，不经过 startCutscene（避免被 isCutscenePlaying 拦截）
+      try {
+        new OverworldEvent({ map: this.map, event: { type: "pause" } }).init();
+      } catch (e) {
+        // 兜底：若发生异常，仍尝试旧路径
+        try {
+          this.map.startCutscene([{ type: "pause" }]);
+        } catch (e2) {
+          console.warn('[ESC] 打开暂停菜单失败:', e2);
+        }
       }
     });
   }

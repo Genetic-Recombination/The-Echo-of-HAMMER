@@ -261,7 +261,13 @@ async function next(){
     case 'choice': renderChoice(step); break;
     case 'goto': idx=labelIndex[step.target]; next(); break;
     case 'montage': inMontage=true; setBackground(step.img); dialogueEl.style.display='none'; updateMuted(); break;
-    case 'end': nameEl.textContent=''; textEl.textContent=''; subtitleEl.classList.remove('show'); bgEl.style.background=`#000`; updateMuted(); break;
+    case 'end': 
+      nameEl.textContent=''; textEl.textContent=''; subtitleEl.classList.remove('show'); bgEl.style.background=`#000`; updateMuted();
+      // 剧情结束后自动跳转到第二个开场动画
+      setTimeout(() => {
+        window.location.href = 'begin2.html';
+      }, 2000);
+      break;
     case 'label': next(); break;
     case 'bg': 
       setBackground(step.url); 
@@ -294,7 +300,7 @@ function advance(){
 
 const btnSkipAll = el('btnSkipAll');
 btnSkipAll.addEventListener('click', ()=> {
-  window.location.href = 'https://example.com'; // 这里改成你要跳转的网页
+  window.location.href = 'begin2.html'; // 跳转到第二个开场动画
 });
 
 

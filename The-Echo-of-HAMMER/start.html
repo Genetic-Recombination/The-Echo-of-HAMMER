@@ -480,6 +480,8 @@
 
             if (username === storedUsername && password === storedPassword) {
                 alert("登录成功");
+                // 同步当前用户名到统一键，供存档与首次剧情判断使用
+                localStorage.setItem("Sec-Sight-current-username", username);
                 window.location.href = 'menu.html';
             } else {
                 alert("登录失败");
@@ -505,6 +507,8 @@
 
             localStorage.setItem("username", username);
             localStorage.setItem("password", password);
+            // 同步当前用户名到统一键，供存档与首次剧情判断使用
+            localStorage.setItem("Sec-Sight-current-username", username);
 
             alert("注册成功");
             window.location.href = 'menu.html';

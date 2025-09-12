@@ -349,11 +349,10 @@
 
             // 游戏菜单按钮事件
             document.getElementById('newGameBtn').addEventListener('click', () => {
-                // 自动创建新存档
-                const newSlotId = getNextSlotId();
-                toast(`▶ 已创建存档点 ${newSlotId}，开始游戏…`);
+                // 总是先播放两段开场
+                toast(`▶ 开始新的冒险…`);
                 setTimeout(() => {
-                    window.location.href = `game.html?slot=${newSlotId}`;
+                    window.location.href = 'pages/beginner/begin.html';
                 }, 1200);
             });
             

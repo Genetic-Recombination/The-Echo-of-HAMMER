@@ -8,39 +8,14 @@ class PauseMenu {
   getOptions() {
     return [
       {
-        label: "继续游戏",
-        description: "返回游戏",
+        label: "返回游戏",
+        description: "继续当前游戏",
         handler: () => {
           this.close();
         }
       },
       {
-        label: "保存游戏",
-        description: "保存当前进度",
-        handler: () => {
-          this.progress.save();
-          // 显示保存成功提示
-          const toast = document.createElement('div');
-          toast.textContent = '游戏已保存';
-          toast.style.cssText = `
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 5px;
-            z-index: 9999;
-            font-size: 14px;
-          `;
-          document.body.appendChild(toast);
-          setTimeout(() => {
-            document.body.removeChild(toast);
-          }, 2000);
-        }
-      },
-      {
-        label: "返回菜单",
+        label: "返回游戏菜单",
         description: "返回主菜单",
         handler: () => {
           // 确认返回菜单
@@ -53,34 +28,95 @@ class PauseMenu {
   }
 
   createElement() {
+    const options = this.getOptions();
     this.element = document.createElement("div");
     this.element.classList.add("PauseMenu");
     this.element.classList.add("overlayMenu");
     this.element.innerHTML = (`
       <h2>暂停菜单</h2>
+      <div class="menu-options">
+        ${options.map((option, index) => `
+          <div class="option">
+            <button data-button="${index}" data-description="${option.description}">${option.label}</button>
+          </div>
+        `).join('')}
+      </div>
+      <div class="DescriptionBox">
+        <p>${options[0]?.description || '选择你的操作'}</p>
+      </div>
     `);
   }
 
   close() {
-    this.esc?.unbind();
-    this.keyboardMenu.end();
+    if (this.esc) this.esc.unbind();
+    if (this.up) this.up.unbind();
+    if (this.down) this.down.unbind();
+    if (this.confirm) this.confirm.unbind();
     this.element.remove();
     this.onComplete();
   }
 
   async init(container) {
     this.createElement();
-    this.keyboardMenu = new KeyboardMenu({
-      descriptionContainer: container
-    });
-    this.keyboardMenu.init(this.element);
-    this.keyboardMenu.setOptions(this.getOptions());
-
     container.appendChild(this.element);
 
-    utils.wait(200);
+    const options = this.getOptions();
+    const buttons = this.element.querySelectorAll("button[data-button]");
+
+    // 绑定按钮事件
+    buttons.forEach((button, index) => {
+      button.addEventListener("click", (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        const option = options[index];
+        if (option && typeof option.handler === 'function') {
+          option.handler();
+        } else {
+          this.close();
+        }
+      });
+
+      button.addEventListener("mouseenter", () => {
+        button.focus();
+      });
+
+      button.addEventListener("focus", () => {
+        const description = this.element.querySelector(".DescriptionBox p");
+        if (description) {
+          description.textContent = button.dataset.description || '';
+        }
+      });
+    });
+
+    // 键盘导航（上下选择，空格确认）
+    this.up = new KeyPressListener("ArrowUp", () => {
+      const current = Number(document.activeElement && document.activeElement.getAttribute && document.activeElement.getAttribute("data-button"));
+      const prevButton = Array.from(buttons).reverse().find(el => Number(el.dataset.button) < current);
+      (prevButton || buttons[buttons.length - 1])?.focus();
+    });
+
+    this.down = new KeyPressListener("ArrowDown", () => {
+      const current = Number(document.activeElement && document.activeElement.getAttribute && document.activeElement.getAttribute("data-button"));
+      const nextButton = Array.from(buttons).find(el => Number(el.dataset.button) > current);
+      (nextButton || buttons[0])?.focus();
+    });
+
+    this.confirm = new KeyPressListener("Space", (event) => {
+      const current = document.activeElement;
+      if (current && current.matches && current.matches('button[data-button]')) {
+        event?.stopPropagation();
+        current.click();
+      }
+    });
+
+    // ESC 关闭菜单，返回游戏
     this.esc = new KeyPressListener("Escape", () => {
       this.close();
     });
+
+    // 初始聚焦第一个按钮
+    setTimeout(() => {
+      buttons[0]?.focus();
+    }, 10);
   }
 }
