@@ -84,8 +84,8 @@
     * 准备最终的项目展示材料和交付版本。
 
 * **会议照片 **:
-    * ![此处是截图说明](image%20for%20logs/17.png)
-    * ![此处是截图说明](image%20for%20logs/18.png)
+    * ![此处是截图说明](image%20for%20logs/a.png)
+    * ![此处是截图说明](image%20for%20logs/b.png)
 
 ---
 
