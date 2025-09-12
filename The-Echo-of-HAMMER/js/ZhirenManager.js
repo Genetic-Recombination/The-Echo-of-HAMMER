@@ -401,6 +401,34 @@
         
         // 添加跳转逻辑
         button1.onclick = () => {
+          // 结局标记写入当前存档（如果存在进行中的存档）
+          try {
+            const progress = window.overworld && window.overworld.progress;
+            if (progress && progress.saveFileKey) {
+              const key = progress.saveFileKey;
+              const raw = localStorage.getItem(key);
+              let data = {};
+              try { data = raw ? JSON.parse(raw) : {}; } catch (e) { data = {}; }
+
+              // 判断是否真结局或假结局，以及假结局类型
+              const isTrueEnding = (imageId === "zhiren_2" && allCorrect === true);
+              let falseType = "";
+              if (!isTrueEnding) {
+                if (imageId === "zhiren_1") falseType = "送货员";
+                else if (imageId === "zhiren_3") falseType = "外卖员";
+                else if (imageId === "zhiren_4") falseType = "自杀";
+              }
+
+              data.endingReached = true;
+              data.endingTrue = !!isTrueEnding;
+              data.endingLabel = isTrueEnding ? "真结局" : "假结局";
+              if (!isTrueEnding) data.endingFalseType = falseType;
+              data.endingAt = new Date();
+
+              localStorage.setItem(key, JSON.stringify(data));
+            }
+          } catch (e) { /* 忽略异常，继续跳转 */ }
+
           window.location.href = redirectUrl;
         };
         button2.onclick = () => {
