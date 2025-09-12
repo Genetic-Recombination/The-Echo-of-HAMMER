@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Achievements - The Echo of Hammer</title>
+<style>
+:root{
+  --bg:#0b0b0d;
+  --fg:#e6e6e6;
+  --accent:#b30017;
+}
+
+body{
+  margin:0;
+  font-family: ui-serif, "Noto Serif CJK SC", Georgia, serif;
+  background:
+    url('https://www.transparenttextures.com/patterns/asfalt-dark.png') repeat,
+    radial-gradient(1200px 700px at 70% -10%, #1a1a22 0%, transparent 60%),
+    radial-gradient(600px 400px at 30% 110%, #111116 0%, transparent 60%),
+    linear-gradient(#0a0a0c, #0b0b0d 40%, #060607 100%);
+  color: var(--fg);
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  perspective:2000px;
+  position: relative;
+  overflow: hidden;
+}
+
+h1{
+  font-size: clamp(28px,5vw,42px);
+  margin:0;
+  position: absolute;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(180deg,#fff 0%,#ccc 40%,#555 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow:0 0 10px rgba(179,0,23,.5),0 0 20px rgba(255,0,0,.3),2px 2px 4px rgba(0,0,0,.7);
+  letter-spacing:.15em;
+}
+
+.tips{
+  font-size:16px;
+  color:#fff;
+  text-align:center;
+  line-height:1.4em;
+  background: linear-gradient(90deg, #b30017, #7a0010);
+  padding:6px 12px;
+  border-radius:8px;
+  text-shadow: 1px 1px 2px rgba(0,0,0,.7);
+  font-family: "Georgia", serif;
+  position: absolute;
+  top: 150px;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: opacity .4s;
+}
+
+.book {
+  width: 300px;
+  height: 300px;
+  position: absolute;
+  top: 230px;
+  left: 50%;
+  transform: translateX(-50%);
+  transform-style: preserve-3d;
+  perspective: 1500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform .5s, opacity .5s;
+}
+
+.page {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top:0; left:50%;
+  transform-style: preserve-3d;
+  transform-origin:left center;
+  transition: transform 0.9s cubic-bezier(.68,-0.55,.27,1.55), box-shadow 0.5s;
+  cursor:pointer;
+  backface-visibility: hidden;
+}
+
+.front, .back {
+  position:absolute;
+  width:100%;
+  height:100%;
+  border-radius:16px;   /* 圆角矩形 */
+  overflow:hidden;      /* 裁剪 */
+  box-shadow: 0 8px 30px rgba(0,0,0,.6), inset 0 -2px 0 rgba(0,0,0,.6), 0 0 12px rgba(255,0,0,.2);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:2.5em;
+  color:#fff;
+  backface-visibility:hidden;
+  text-shadow: 0 0 8px rgba(0,0,0,.9);
+  border:2px solid rgba(255,0,0,.3);
+  background: linear-gradient(180deg, #2b0b0b 0%, #7a0010 100%);
+}
+
+.back {
+  transform: rotateY(180deg);
+}
+
+/* 修复闪动：镜像初始透明，翻页后显示 */
+.back .mirror {
+  width:100%;
+  height:100%;
+  border-radius:16px;   /* 镜像也裁剪成圆角 */
+  overflow:hidden;
+  background: url('in.png') no-repeat center/cover;
+  transform: scaleX(-1);
+  opacity: 0;
+  backface-visibility: hidden;
+  transition: opacity 0.3s;
+}
+.page.flipped .back .mirror {
+  opacity: 1;
+}
+
+/* 仅封面：翻页前隐藏背面，避免闪烁 */
+.page[data-index="0"] .back .mirror {
+  opacity: 0 !important;
+  pointer-events: none;
+}
+.page[data-index="0"].flipped .back .mirror {
+  opacity: 1 !important;
+}
+
+.page.flipped {
+  transform: rotateY(-180deg) scale(1.02);
+  box-shadow: 0 12px 30px rgba(0,0,0,.8), inset 0 -2px 0 rgba(0,0,0,.6);
+}
+
+.back-btn{
+  padding:12px 20px;
+  border:none;
+  border-radius:10px;
+  font-size:14px;
+  letter-spacing:.2em;
+  background: linear-gradient(180deg, rgba(179,0,23,.9), rgba(122,0,16,.95));
+  color:#fff;
+  cursor:pointer;
+  box-shadow: inset 0 -2px 0 rgba(0,0,0,.5), 0 6px 14px rgba(179,0,23,.25);
+  transition:.2s;
+}
+.back-btn:hover{
+  filter:brightness(1.15) saturate(120%);
+  box-shadow:0 0 12px rgba(255,0,0,.6)
+}
+
+.thumb-btn {
+  position: absolute;
+  top: 580px;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: all .5s;
+}
+
+.back-nav {
+  position: absolute;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.thumbnails {
+  display: none; 
+  position: absolute;
+  top: 300px;
+  left: 50%;
+  transform: translateX(-50%) scale(0.8);
+  width: 80%;
+  max-width: 600px;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 15px;
+  justify-items: center;
+  transition: all .5s;
+  opacity: 0;
+}
+
+.thumbnail {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(180deg, #2b0b0b 0%, #7a0010 100%);
+  border: 2px solid rgba(255,0,0,.3);
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5em;
+  color: #fff;
+  text-shadow: 0 0 5px rgba(0,0,0,.9);
+  cursor: pointer;
+  transition: transform .2s;
+}
+.thumbnail:hover {
+  transform: scale(1.1);
+}
+</style>
+</head>
+<body>
+<!-- 下面 HTML 部分和你给的一样，我没动 -->
+<h1>成就</h1>
+<div class="tips" id="tips">
+  左键 → 下一页   右键 → 上一页
+</div>
+
+<button class="back-btn thumb-btn" id="toggleBtn" onclick="toggleThumbnails()">📚 看看缩略图</button>
+
+<div class="book" id="book">
+  <!-- 第1页封面 -->
+  <div class="page" data-index="0">
+    <div class="front" style="background:url('first.png') no-repeat center/cover;"></div>
+    <div class="back">
+      <div class="mirror" style="background:url('in.png') no-repeat center/cover; transform:scaleX(-1);"></div>
+      <!-- 插入的成就图片 -->
+      <img src="../成就系统照片/糊涂侦探.png" alt="糊涂侦探" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s;">
+      <!-- 成就名称 -->
+      <div style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); background: rgba(255, 215, 0, 0.8); padding: 10px 20px; border-radius: 10px; font-size: 24px; font-weight: bold; color: #000; text-shadow: 0 0 2px #fff; box-shadow: 0 0 10px rgba(255, 215, 0, 0.8); opacity: 0; transition: opacity 0.3s;">糊涂侦探</div>
+    </div>
+  </div>
+
+  <!-- 第2~3页 -->
+  <div class="page" data-index="1">
+    <div class="front" style="background:url('in.png') no-repeat center/cover;"></div>
+    <div class="back">
+      <div class="mirror" style="background:url('in.png') no-repeat center/cover; transform:scaleX(-1);"></div>
+      <!-- 插入的成就图片 -->
+      <img src="../成就系统照片/明察秋毫.png" alt="明察秋毫" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s;">
+      <!-- 成就名称 -->
+      <div style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); background: rgba(255, 215, 0, 0.8); padding: 10px 20px; border-radius: 10px; font-size: 24px; font-weight: bold; color: #000; text-shadow: 0 0 2px #fff; box-shadow: 0 0 10px rgba(255, 215, 0, 0.8); opacity: 0; transition: opacity 0.3s;">明察秋毫</div>
+    </div>
+  </div>
+  <div class="page" data-index="2">
+    <div class="front" style="background:url('in.png') no-repeat center/cover;"></div>
+    <div class="back">
+      <div class="mirror" style="background:url('in.png') no-repeat center/cover; transform:scaleX(-1);"></div>
+      <!-- 插入的成就图片 -->
+      <img src="../成就系统照片/蛛丝已成罗网.png" alt="蛛丝已成罗网" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s;">
+      <!-- 成就名称 -->
+      <div style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); background: rgba(255, 215, 0, 0.8); padding: 10px 20px; border-radius: 10px; font-size: 24px; font-weight: bold; color: #000; text-shadow: 0 0 2px #fff; box-shadow: 0 0 10px rgba(255, 215, 0, 0.8); opacity: 0; transition: opacity 0.3s;">蛛丝已成罗网</div>
+    </div>
+  </div>
+  <div class="page" data-index="3">
+    <div class="front" style="background:url('in.png') no-repeat center/cover;"></div>
+    <div class="back">
+      <div class="mirror" style="background:url('in.png') no-repeat center/cover; transform:scaleX(-1);"></div>
+      <!-- 插入的成就图片 -->
+      <img src="../成就系统照片/乐不思蜀.png" alt="乐不思蜀" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s;">
+      <!-- 成就名称 -->
+      <div style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); background: rgba(255, 215, 0, 0.8); padding: 10px 20px; border-radius: 10px; font-size: 24px; font-weight: bold; color: #000; text-shadow: 0 0 2px #fff; box-shadow: 0 0 10px rgba(255, 215, 0, 0.8); opacity: 0; transition: opacity 0.3s;">乐不思蜀</div>
+    </div>
+  </div>
+
+  <!-- 第5页：清汤大老爷 -->
+  <div class="page" data-index="4">
+    <div class="front" style="background:url('in.png') no-repeat center/cover;"></div>
+    <div class="back">
+      <div class="mirror" style="background:url('in.png') no-repeat center/cover; transform:scaleX(-1);"></div>
+      <!-- 插入的成就图片 -->
+      <img src="../成就系统照片/清汤大老爷.png" alt="清汤大老爷" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s;">
+      <!-- 成就名称 -->
+      <div style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); background: rgba(255, 215, 0, 0.8); padding: 10px 20px; border-radius: 10px; font-size: 24px; font-weight: bold; color: #000; text-shadow: 0 0 2px #fff; box-shadow: 0 0 10px rgba(255, 215, 0, 0.8); opacity: 0; transition: opacity 0.3s;">清汤大老爷</div>
+    </div>
+  </div>
+
+  <!-- 最后一页：背面改为 end.png -->
+  <div class="page" data-index="5">
+    <div class="front" style="background:url('in.png') no-repeat center/cover;"></div>
+    <div class="back" style="background:url('end.png') no-repeat center/cover; background-size:cover;"></div>
+  </div>
+</div>
+
+<div class="thumbnails" id="thumbnails"></div>
+
+<button class="back-btn back-nav" onclick="window.location.href='../start.html'">← 返回</button>
+
+<script>
+const pages = Array.from(document.querySelectorAll('.page'));
+const totalPages = pages.length;
+const book = document.getElementById('book');
+const thumbnailsDiv = document.getElementById("thumbnails");
+const toggleBtn = document.getElementById("toggleBtn");
+const tipsDiv = document.getElementById("tips");
+
+pages.forEach((p,i)=>{
+  p.style.zIndex = totalPages - i;
+});
+
+let currentPage = 0;
+
+book.addEventListener('click', ()=>{
+  if(currentPage < totalPages){
+    // 在翻到下一页之前，隐藏当前页的图片和名称
+    if (currentPage > 0) {
+      const currentPageElement = pages[currentPage - 1];
+      const currentImg = currentPageElement.querySelector('.back img');
+      const currentName = currentPageElement.querySelector('.back div[style*="position: absolute; bottom: 20px;"]');
+      if (currentImg) currentImg.style.opacity = '0';
+      if (currentName) currentName.style.opacity = '0';
+    }
+    
+    const page = pages[currentPage];
+    page.classList.add('flipped');
+    page.style.zIndex = currentPage;
+    
+    // 在翻页动画结束后显示图片和名称
+    setTimeout(() => {
+      const img = page.querySelector('.back img');
+      const name = page.querySelector('.back div[style*="position: absolute; bottom: 20px;"]');
+      if (img) img.style.opacity = '1';
+      if (name) name.style.opacity = '1';
+    }, 900); // 与CSS过渡时间匹配
+    
+    currentPage++;
+  }
+});
+
+book.addEventListener('contextmenu', (e)=>{
+  e.preventDefault();
+  if(currentPage > 0){
+    currentPage--;
+    const page = pages[currentPage];
+    
+    // 在翻页前隐藏图片和名称
+    const img = page.querySelector('.back img');
+    const name = page.querySelector('.back div[style*="position: absolute; bottom: 20px;"]');
+    if (img) img.style.opacity = '0';
+    if (name) name.style.opacity = '0';
+    
+    page.classList.remove('flipped');
+    page.style.zIndex = totalPages - currentPage;
+  }
+});
+
+// 缩略图生成
+const achievementImages = [
+  "../成就系统照片/糊涂侦探.png",
+  "../成就系统照片/明察秋毫.png",
+  "../成就系统照片/蛛丝已成罗网.png",
+  "../成就系统照片/乐不思蜀.png",
+  "../成就系统照片/清汤大老爷.png"
+];
+
+// 只为成就页面生成缩略图（不包括封面和封底）
+for (let i = 0; i < achievementImages.length; i++) {
+  const thumb = document.createElement("div");
+  thumb.className = "thumbnail";
+  
+  const thumbImg = document.createElement("img");
+  thumbImg.src = achievementImages[i];
+  thumbImg.style.width = "100%";
+  thumbImg.style.height = "100%";
+  thumbImg.style.objectFit = "cover";
+  thumbImg.style.borderRadius = "6px";
+  thumb.appendChild(thumbImg);
+  
+  // 添加点击事件来模拟解锁成就
+  thumb.addEventListener('click', () => {
+    // 获取当前用户名
+    const currentUsername = window.localStorage.getItem("Sec-Sight-current-username") || "default";
+    // 获取成就数据
+    const file = window.localStorage.getItem("second_sight_achievements_" + currentUsername);
+    let achievements = file ? JSON.parse(file) : {};
+    
+    // 成就ID与图片索引对应
+    const achievementIds = [
+      "糊涂侦探",
+      "明察秋毫",
+      "蛛丝已成罗网",
+      "乐不思蜀",
+      "清汤大老爷"
+    ];
+    
+    // 解锁成就
+    achievements[achievementIds[i]] = true;
+    window.localStorage.setItem("second_sight_achievements_" + currentUsername, JSON.stringify(achievements));
+    
+    // 显示提示
+    alert(`成就 "${achievementIds[i]}" 已解锁！`);
+  });
+  
+  thumbnailsDiv.appendChild(thumb);
+}
+
+function toggleThumbnails(){
+  if(thumbnailsDiv.style.display === "grid"){
+    thumbnailsDiv.style.transform = "translateX(-50%) scale(0.8)";
+    thumbnailsDiv.style.opacity = "0";
+    setTimeout(()=>{
+      thumbnailsDiv.style.display = "none";
+      book.style.opacity = "1";
+      book.style.transform = "translateX(-50%) scale(1)";
+      tipsDiv.style.opacity = "1";
+      toggleBtn.textContent = "📚 看看缩略图";
+    },500);
+  } else {
+    thumbnailsDiv.style.display = "grid";
+    setTimeout(()=>{
+      thumbnailsDiv.style.transform = "translateX(-50%) scale(1)";
+      thumbnailsDiv.style.opacity = "1";
+    },50);
+    book.style.opacity = "0";
+    book.style.transform = "translateX(-50%) scale(0.8)";
+    tipsDiv.style.opacity = "0";
+    toggleBtn.textContent = "📖 看看侦探手册";
+  }
+}
+</script>
+</body>
+</html>

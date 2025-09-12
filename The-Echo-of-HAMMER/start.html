@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Echo of Hammer - 完整版</title>
+    <style>
+        /* 通用样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* 页面容器 */
+        .page {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+        }
+
+        .page.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* 开始页面样式 */
+        #start-page {
+            background: linear-gradient(135deg, rgba(26,26,26,0.8) 0%, rgba(45,45,45,0.8) 50%, rgba(26,26,26,0.8) 100%), url('./image in the game/black man background.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #start-page::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.7) 100%);
+            pointer-events: none;
+        }
+
+        .logo-container {
+            position: static;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 0px;
+            animation: hammerLetterReveal 4s ease-out forwards;
+            opacity: 0;
+            z-index: 10;
+        }
+
+        .game-logo {
+            width: 400px;
+            height: auto;
+            filter: drop-shadow(0 0 20px rgba(139, 0, 0, 0.8)) drop-shadow(0 0 40px rgba(139, 0, 0, 0.6));
+            animation: hammerLetterReveal 4s ease-out forwards;
+            opacity: 0;
+        }
+
+        .blood-particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: radial-gradient(circle, #ff0000, #8b0000);
+            border-radius: 50%;
+            animation: bloodFlow 3s infinite;
+            box-shadow: 0 0 6px rgba(255, 0, 0, 0.8);
+        }
+
+        .blood-particle:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
+        .blood-particle:nth-child(2) { top: 40%; left: 15%; animation-delay: 0.5s; }
+        .blood-particle:nth-child(3) { top: 60%; left: 5%; animation-delay: 1s; }
+        .blood-particle:nth-child(4) { top: 30%; left: 20%; animation-delay: 1.5s; }
+        .blood-particle:nth-child(5) { top: 70%; left: 12%; animation-delay: 2s; }
+
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            animation: buttonsWaterRise 3s ease-out 4s forwards;
+            opacity: 0;
+            transform: translateY(100px);
+        }
+
+        .start-button {
+            background: linear-gradient(145deg, #4a0000, #8b0000);
+            color: #ffffff;
+            border: 3px solid #660000;
+            padding: 20px 60px;
+            font-size: 1.8rem;
+            font-family: 'Creepster', cursive, serif;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.6), inset 0 2px 4px rgba(255,255,255,0.1), inset 0 -2px 4px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8), 0 0 10px rgba(255, 0, 0, 0.6);
+        }
+
+        .start-button:hover {
+            background: linear-gradient(145deg, #660000, #a00000);
+            border-color: #800000;
+            box-shadow: 0 12px 24px rgba(0,0,0,0.8), inset 0 2px 4px rgba(255,255,255,0.2), inset 0 -2px 4px rgba(0,0,0,0.4), 0 0 20px rgba(139,0,0,0.6);
+            transform: translateY(-2px);
+        }
+
+        .about-button {
+            background: linear-gradient(145deg, #2a2a2a, #404040);
+            color: #cccccc;
+            border: 2px solid #555555;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+        }
+
+        .about-button:hover {
+            background: linear-gradient(145deg, #404040, #555555);
+            color: #ffffff;
+            border-color: #777777;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.6);
+            transform: translateY(-1px);
+        }
+
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(139,0,0,0.3);
+            animation: float 6s infinite linear;
+        }
+
+        /* 登录页面样式 */
+        #login-page {
+            background: url("./image in the game/black man background.png") no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background: #fafafa;
+            border-radius: 10px;
+            box-shadow: 0 14px 28px rgba(0,0,0,.25),0 10px 10px rgba(0,0,0,.22);
+            position: absolute;
+            top: 50%;
+            left: 50px;
+            transform: translateY(-50%);
+            width: 600px;
+            min-height: 400px;
+            overflow: hidden;
+        }
+
+        .form-container {
+            position: absolute;
+            top: 0;
+            height: 100%;
+            transition: all 0.6s ease-in-out;
+        }
+
+        .sign-in-container { left: 0; width: 50%; z-index: 2; }
+        .sign-up-container { left: 0; width: 50%; z-index: 1; opacity: 0; }
+
+        form { background: #fff; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 0 50px; height: 100%; text-align: center; }
+
+        .txtb { position: relative; margin: 10px 0; border-bottom: 2px solid #adadad; }
+        .txtb input { width: 100%; border: none; outline: none; background: none; font-size: 15px; padding: 0 3px; height: 35px; }
+        .txtb span::before { content: attr(data-placeholder); position: absolute; top: 50%; left: 5px; color: #adadad; transform: translateY(-50%); transition: 0.5s; }
+        .txtb span::after { content: ''; position: absolute; left: 0; bottom: 0; width: 0; height: 2px; background-image: linear-gradient(120deg,#fddd83,#7f3205); transition: 0.5s; }
+        .txtb input.focus + span::before { top: -5px; }
+        .txtb input.focus + span::after { width: 100%; }
+
+        .login-button {
+            border-radius: 20px;
+            border: none;
+            background: linear-gradient(120deg,#000000,#595756);
+            color: #fff;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 12px 45px;
+            cursor: pointer;
+            transition: transform 80ms ease-in;
+        }
+        .login-button:active { transform: scale(0.95); }
+        .login-button.ghost { background: transparent; border-color: #fff; }
+
+        .overlay-container {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 50%;
+            height: 100%;
+            overflow: hidden;
+            transition: transform 0.6s ease-in-out;
+            z-index: 100;
+        }
+        .overlay {
+            background-image: linear-gradient(135deg, #d7d7d7, #a9a9a9, #f5f5f5);
+            color: #fff;
+            position: relative;
+            left: -100%;
+            height: 100%;
+            width: 200%;
+            transition: transform 0.6s ease-in-out;
+        }
+
+        .overlay-panel {
+            position: absolute;
+            top: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 0 40px;
+            height: 100%;
+            width: 50%;
+            text-align: center;
+            transition: transform 0.6s ease-in-out;
+        }
+        .overlay-left { transform: translateY(-20%); }
+        .overlay-right { right: 0; transform: translateY(0); }
+
+        .container.right-panel-active .sign-in-container { transform: translateX(100%); }
+        .container.right-panel-active .sign-up-container { transform: translateX(100%); opacity: 1; z-index: 5; }
+        .container.right-panel-active .overlay-container { transform: translateX(-100%); }
+        .container.right-panel-active .overlay { transform: translateX(50%); }
+        .container.right-panel-active .overlay-left { transform: translateY(0); }
+        .container.right-panel-active .overlay-right { transform: translateY(20%); }
+
+        /* 游戏菜单页面样式已移除 - 现在使用独立的 menu.html 文件 */
+
+        /* 动画 */
+        @keyframes hammerLetterReveal {
+            0% {
+                opacity: 0;
+                filter: brightness(0.2) blur(5px) drop-shadow(0 0 20px rgba(139, 0, 0, 0.8)) drop-shadow(0 0 40px rgba(139, 0, 0, 0.6));
+                letter-spacing: -20px;
+            }
+            100% {
+                opacity: 1;
+                filter: brightness(1) blur(0px) drop-shadow(0 0 20px rgba(139, 0, 0, 0.8)) drop-shadow(0 0 40px rgba(139, 0, 0, 0.6));
+                letter-spacing: 0px;
+            }
+        }
+
+        @keyframes bloodFlow {
+            0% { transform: translateX(-50px) translateY(0px); opacity: 0; }
+            20% { opacity: 0.8; }
+            80% { opacity: 0.8; }
+            100% { transform: translateX(200px) translateY(-10px); opacity: 0; }
+        }
+
+        @keyframes buttonsWaterRise {
+            0% {
+                opacity: 0;
+                transform: translateY(100px) scale(0.8);
+                filter: blur(3px) brightness(0.6);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+                filter: blur(0px) brightness(1);
+            }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* 游戏菜单相关动画已移除 - 现在在 menu.html 中 */
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <!-- 开始页面 -->
+    <div id="start-page" class="page active">
+        <div class="particles" id="particles"></div>
+        
+        <div class="logo-container">
+            <div style="position: relative; display: inline-block;">
+                <img src="image in the game/logo透明.png" alt="游戏Logo" class="game-logo">
+                <div class="blood-particle"></div>
+                <div class="blood-particle"></div>
+                <div class="blood-particle"></div>
+                <div class="blood-particle"></div>
+                <div class="blood-particle"></div>
+            </div>
+        </div>
+        
+        <div class="button-container">
+            <button class="start-button" onclick="showLoginPage()">开始游戏</button>
+            <button class="about-button" onclick="showAbout()">关于我们</button>
+        </div>
+    </div>
+
+    <!-- 登录页面 -->
+    <div id="login-page" class="page">
+        <div class="container" id="login-box">
+            <!-- 注册表单 -->
+            <div class="form-container sign-up-container">
+                <form name="registerForm" onsubmit="return registerUser();">
+                    <h1>注册</h1>           
+                    <div class="txtb">
+                        <input type="text" id="regUsername" required
+                        oninvalid="this.setCustomValidity('请输入用户名')" 
+                        oninput="this.setCustomValidity('')">
+                        <span data-placeholder="username"></span>
+                    </div>
+                    <div class="txtb">
+                        <input type="password" id="regPassword" required
+                        oninvalid="this.setCustomValidity('请输入密码')" 
+                        oninput="this.setCustomValidity('')">
+                        <span data-placeholder="password"></span>
+                    </div>
+                    <div class="txtb">
+                        <input type="password" id="confirmPassword" required
+                        oninvalid="this.setCustomValidity('请再次输入密码')" 
+                        oninput="this.setCustomValidity('')">
+                        <span data-placeholder="Confirm Password"></span>
+                    </div>            
+                    <button type="submit" class="login-button">注册</button>
+                </form>
+            </div>
+
+            <!-- 登录表单 -->
+            <div class="form-container sign-in-container">
+                <form name="loginForm" onsubmit="return validateForm();">
+                    <h1>登录</h1>
+                    <div class="txtb">
+                        <input type="text" id="username" required
+                        oninvalid="this.setCustomValidity('请输入用户名')" 
+                        oninput="this.setCustomValidity('')">
+                        <span data-placeholder="username"></span>
+                    </div>
+                    <div class="txtb">
+                        <input type="password" id="password" required
+                        oninvalid="this.setCustomValidity('请输入密码')" 
+                        oninput="this.setCustomValidity('')">
+                        <span data-placeholder="password"></span>
+                    </div>
+                    <button type="submit" class="login-button">登录</button>
+                </form>
+            </div>
+
+            <!-- 滑动覆盖层 -->
+            <div class="overlay-container">
+                <div class="overlay">
+                    <div class="overlay-panel overlay-left">
+                        <h1>已有账号？</h1>
+                        <p>请使用您的账号进行登录</p>
+                        <button class="login-button ghost" id="signIn">登录</button>
+                        <a href="#" onclick="showStartPage()" class="ghost" style="margin-top: 20px; font-family:Pixel Emulator ; display: inline-block; color: white; font-size: 14px; line-height: 20px; margin: 20px 0 30px;">返回首页</a>
+                    </div>
+                    <div class="overlay-panel overlay-right">
+                        <h1>没有账号?</h1>
+                        <p>立即注册，一起开启魔法之旅吧</p>
+                        <button class="login-button ghost" id="signUp">注册</button>
+                        <a href="#" onclick="showStartPage()" class="ghost" style="margin-top: 20px; font-family:Pixel Emulator ; display: inline-block; color: white; font-size: 14px; line-height: 20px; margin: 20px 0 30px;">返回首页</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 游戏菜单页面已移除 - 现在使用独立的 menu.html 文件 -->
+
+    <script>
+        // 页面切换函数
+        function showPage(pageId) {
+            // 隐藏所有页面
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // 显示指定页面
+            document.getElementById(pageId).classList.add('active');
+        }
+
+        function showStartPage() {
+            showPage('start-page');
+        }
+
+        function showLoginPage() {
+            showPage('login-page');
+        }
+
+        // showMenuPage 函数已移除 - 现在直接跳转到 menu.html
+
+        // 开始页面函数
+        function showAbout() {
+            window.location.href = './introduction/intro-index/关于我们.html';
+        }
+
+        // 创建粒子效果
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.animationDuration = (Math.random() * 3 + 4) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // 登录/注册切换
+        $(document).ready(function() {
+            $("#signUp").click(function(){
+                $("#login-box").addClass('right-panel-active');
+            });
+
+            $("#signIn").click(function(){
+                $("#login-box").removeClass('right-panel-active');
+            });
+
+            // 输入框 focus 动画
+            $(".txtb input").on("focus", function(){
+                $(this).addClass("focus");
+            });
+
+            $(".txtb input").on("blur", function(){
+                if($(this).val() == '')
+                    $(this).removeClass("focus");
+            });
+        });
+
+        // 登录函数
+        function validateForm() {
+            var username = $("#username").val();
+            var password = $("#password").val();
+
+            if (!username || !password) {
+                alert("请输入用户名和密码");
+                return false;
+            }
+
+            var storedUsername = localStorage.getItem("username");
+            var storedPassword = localStorage.getItem("password");
+
+            if (username === storedUsername && password === storedPassword) {
+                alert("登录成功");
+                window.location.href = 'menu.html';
+            } else {
+                alert("登录失败");
+            }
+            return false;
+        }
+
+        // 注册函数
+        function registerUser() {
+            var username = $("#regUsername").val();
+            var password = $("#regPassword").val();
+            var confirmPassword = $("#confirmPassword").val();
+
+            if (!username || !password || !confirmPassword) {
+                alert("请输入用户名和密码");
+                return false;
+            }
+
+            if (password !== confirmPassword) {
+                alert("确认密码不匹配");
+                return false;
+            }
+
+            localStorage.setItem("username", username);
+            localStorage.setItem("password", password);
+
+            alert("注册成功");
+            window.location.href = 'menu.html';
+            return false;
+        }
+
+        // 游戏菜单相关函数已移除 - 现在在 menu.html 中
+
+        // 页面加载完成后的初始化
+        window.addEventListener('load', function() {
+            createParticles();
+            
+            // 键盘事件
+            document.addEventListener('keydown', function(event) {
+                const currentPage = document.querySelector('.page.active').id;
+                
+                if (currentPage === 'start-page') {
+                    if (event.key === 'Enter') {
+                        showLoginPage();
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

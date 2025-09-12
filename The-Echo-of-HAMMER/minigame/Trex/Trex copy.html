@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>小恐龙的跑酷游戏</title>
+  <style>
+    :root{--bg:#f7f7f7;--ground:#7f8c8d;--cactus:#2ecc71;--cloud:#ecf0f1}
+    html,body{height:100%;margin:0;font-family:Inter, "Segoe UI", Roboto, "Helvetica Neue", Arial;color:#222}
+    .wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(#ffffff, #e9eef2)}
+    .game{width:920px;max-width:95vw;background:var(--bg);border-radius:8px;box-shadow:0 8px 30px rgba(0,0,0,.12);padding:18px;}
+    .bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+    .score{font-weight:700}
+    canvas{display:block;background:linear-gradient(#f7f7f7,#eaf2f5);width:100%;height:280px;border-radius:6px}
+    #dinoGif{position:absolute;z-index:2;width:80px;height:80px;pointer-events:none;}
+    .controls{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap}
+    .btn{padding:6px 10px;border-radius:6px;border:1px solid #d0d7dc;background:#fff;cursor:pointer}
+    .hint{font-size:13px;color:#666}
+    .touch-area{display:none}
+    @media (max-width:720px){.touch-area{display:flex;gap:8px;margin-top:10px}.controls{display:none}}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="game">
+    <div class="bar">
+      <div>
+        <div style="font-size:18px;font-weight:600">小恐龙的跑酷游戏</div>
+        <div class="hint">按 空格 / ↑ 跳跃避开仙人掌，按 ↓ 下蹲躲避低飞鸟，河流可连续跳跃。</div>
+      </div>
+      <div class="score">分数: <span id="score">0</span></div>
+    </div>
+    <div style="position:relative">
+      <canvas id="c" width="900" height="280"></canvas>
+      <img id="dinoGif" src="minigame-Trex/images/trex_normal.gif" style="left:80px;top:200px;">
+    </div>
+    <div class="controls">
+      <button id="startBtn" class="btn">开始 / 重置</button>
+      <button id="pauseBtn" class="btn">暂停</button>
+      <label style="display:flex;align-items:center;gap:8px"><input id="soundToggle" type="checkbox" checked/> 声音</label>
+    </div>
+    <div class="touch-area">
+      <button id="touchJump" class="btn">跳</button>
+      <button id="touchDuck" class="btn">蹲</button>
+    </div>
+    <audio id="jumpSound" src="jump.mp3"></audio>
+    <audio id="scoreSound" src="drop-coin.mp3"></audio>
+    <audio id="dieSound" src="gameover.mp3"></audio>
+    <audio id="fallSound" src="fall-in-water.mp3"></audio>
+  </div>
+</div>
+<script>
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+const scoreEl = document.getElementById('score');
+const soundToggle = document.getElementById('soundToggle');
+const dinoGif = document.getElementById('dinoGif');
+let W = canvas.width, H = canvas.height;
+
+// 加载图片资源
+const cactusImg = new Image(); cactusImg.src = "images/trex_tree.png";
+const birdImg = new Image(); birdImg.src = "images/trex_bird.gif";
+
+function playSound(id){
+  if(soundToggle.checked){
+    const audio = document.getElementById(id);
+    if(audio){ audio.currentTime = 0; audio.play(); }
+  }
+}
+
+function resize(){
+  const rect = canvas.getBoundingClientRect();
+  W = canvas.width = Math.max(600, Math.floor(rect.width));
+  H = canvas.height = 280;
+}
+window.addEventListener('resize', resize);
+resize();
+
+const dinoGifSrcs = {
+  normal: "images/trex_normal.gif",
+  jump: "images/trex_jump.gif",
+  duck: "images/trex_duck.gif",
+  fly: "images/trex_fly.gif"
+};
+
+// 预加载 GIF，确保打开页面就显示
+for(let key in dinoGifSrcs){
+  const img = new Image();
+  img.src = dinoGifSrcs[key];
+}
+
+class Dino {
+  constructor(x,y){
+    this.x=x; this.y=y; this.w=80; this.h=80;
+    this.vy=0; this.onGround=true; this.ducking=false;
+    this.jumpCount=0; this.maxJumps=3;
+    this.groundY=y;
+    this.lastGif="";
+  }
+  update(dt){
+    if(!this.onGround){
+      this.vy += 1200*dt;
+      this.y += this.vy*dt;
+      if(this.y >= this.groundY){
+        this.y = this.groundY;
+        this.vy = 0;
+        this.onGround = true;
+        this.jumpCount = 0;
+      }
+    }
+  }
+  getGif(){
+    if(this.ducking) return dinoGifSrcs.duck;
+    else if(!this.onGround && this.jumpCount>1) return dinoGifSrcs.fly;
+    else if(!this.onGround) return dinoGifSrcs.jump;
+    else return dinoGifSrcs.normal;
+  }
+  updateGif(camX){
+    let newGif = this.getGif();
+    if(newGif !== this.lastGif){
+      dinoGif.src = newGif;
+      this.lastGif = newGif;
+    }
+    dinoGif.style.left = (this.x - camX) + "px";
+    dinoGif.style.top = (this.y + 10) + "px";
+  }
+  jump(){
+    if(this.jumpCount < this.maxJumps && !this.ducking){
+      this.vy = -540;
+      this.onGround = false;
+      this.jumpCount += 1;
+      playSound('jumpSound');
+    }
+  }
+  duck(state){ this.ducking=state; }
+}
+
+class Cactus{
+  constructor(x,y,speed){this.x=x;this.y=y;this.w=100;this.h=100;this.speed=speed;this.passed=false;}
+  update(dt){this.x -= this.speed*dt;}
+  draw(ctx, camX){ ctx.drawImage(cactusImg, this.x-camX, this.y-this.h, this.w, this.h); }
+}
+
+class Ptero{
+  constructor(x,y,speed,phase){this.x=x;this.y=y;this.w=80;this.h=80;this.speed=speed;this.phase=phase;this.passed=false;}
+  update(dt){this.x-=this.speed*dt; this.y += Math.sin((this.x+this.phase)/40)*0.6;}
+  draw(ctx, camX){ ctx.drawImage(birdImg, this.x-camX, this.y-this.h, this.w, this.h); }
+}
+
+class LowPtero{
+  constructor(x,y,speed,phase){this.x=x; this.y=y; this.w=80;this.h=80; this.speed=speed; this.phase=phase; this.passed=false;}
+  update(dt){this.x -= this.speed*dt; this.y += Math.sin((this.x+this.phase)/40)*0.3;}
+  draw(ctx, camX){ ctx.drawImage(birdImg, this.x-camX, this.y-this.h, this.w, this.h); }
+}
+
+class Cloud{
+  constructor(x,y,spd){this.x=x;this.y=y;this.spd=spd;}
+  update(dt){this.x -= this.spd*dt;}
+  draw(ctx, camX){ctx.fillStyle='#ecf0f1'; ctx.beginPath(); ctx.ellipse(this.x-camX,this.y,30,16,0,0,Math.PI*2); ctx.fill();}
+}
+
+class River{
+  constructor(x,y,w,speed){this.x=x;this.y=y;this.w=w;this.h=16; this.speed=speed; this.passed=false;}
+  update(dt){this.x -= this.speed*dt;}
+  draw(ctx, camX){ctx.fillStyle='#3498db'; ctx.fillRect(this.x-camX,this.y-this.h,this.w,this.h);}
+}
+
+function rectIntersect(a,b){
+  return !(a.x+a.w < b.x || a.x > b.x+b.w || a.y+a.h < b.y || a.y > b.y+b.h);
+}
+
+class Game{
+  constructor(){ this.reset(); this.dino.updateGif(0); } // 页面加载立即显示
+  reset(){
+    this.running=false; this.score=0; this.speed=320;
+    this.spawnTimer=0; this.obstacles=[]; this.clouds=[]; this.rivers=[];
+    this.dino=new Dino(80,H-120); this.dino.groundY=H-120;
+    this.last=0; this.day=true; this.nightOverride=false; this.pause=false;
+    this.fallInWater=false; this.camX=0;
+    this.dino.updateGif(this.camX); // 初始化显示小恐龙
+  }
+  start(){this.reset(); this.running=true; this.last=performance.now(); requestAnimationFrame(this.loop.bind(this));}
+  togglePause(){this.pause=!this.pause; if(!this.pause){this.last=performance.now(); requestAnimationFrame(this.loop.bind(this));}}
+  loop(ts){ if(!this.running) return; if(this.pause) return;
+    const dt=Math.min(0.05,(ts-this.last)/1000); this.last=ts;
+    this.update(dt); this.draw(); requestAnimationFrame(this.loop.bind(this));
+  }
+  update(dt){
+    this.camX = this.dino.x-100;
+
+    this.spawnTimer -= dt;
+    if(this.spawnTimer <= 0){
+      let base = 2.0; let min = 0.4; let k = 0.002;
+      this.spawnTimer = Math.max(min, base - this.score * k) + Math.random() * 0.5;
+      const rand = Math.random(); const spawnX = this.dino.x + W;
+      if(rand < 0.15){ this.obstacles.push(new Ptero(spawnX,H-140-Math.random()*40,this.speed,Math.random()*1000)); }
+      else if(rand < 0.3){ this.obstacles.push(new LowPtero(spawnX,H-75,this.speed,Math.random()*1000)); }
+      else if(rand < 0.4){ this.rivers.push(new River(spawnX,H-40,200 + Math.random()*100,this.speed)); }
+      else{ this.obstacles.push(new Cactus(spawnX,H-20,this.speed)); }
+    }
+
+    if(Math.random()<0.02) this.clouds.push(new Cloud(this.dino.x + W,20+Math.random()*60,20+Math.random()*30));
+
+    this.dino.update(dt);
+    this.clouds.forEach(c=>c.update(dt));
+    this.clouds=this.clouds.filter(c=>c.x > this.camX - 200);
+    this.obstacles.forEach(o=>o.update(dt));
+    this.obstacles=this.obstacles.filter(o=>o.x+o.w>this.camX-100);
+    this.rivers.forEach(r=>r.update(dt));
+    this.rivers=this.rivers.filter(r=>r.x+r.w>this.camX-100);
+
+    this.obstacles.forEach(o=>{if(!o.passed && o.x + o.w < this.dino.x){o.passed=true; this.score+=1; playSound('scoreSound');}});
+    this.rivers.forEach(r=>{if(!r.passed && r.x + r.w < this.dino.x){r.passed=true; this.score+=1; playSound('scoreSound');}});
+
+    if(Math.floor(this.score)%1000<50) this.speed+=0.02;
+    if(!this.nightOverride) this.day=(Math.floor(this.score/1000)%2===0);
+
+    for(let o of this.obstacles){
+      const standBox={x:this.dino.x,y:this.dino.y,w:this.dino.w,h:this.dino.h};
+      const duckBox={x:this.dino.x,y:this.dino.y+16,w:this.dino.w,h:this.dino.h-16};
+      let oBox;
+      if(o instanceof Cactus){ let pad = 30; oBox = {x:o.x+pad, y:o.y-o.h+pad, w:o.w-2*pad, h:o.h-2*pad}; }
+      else{ oBox = {x:o.x,y:o.y-(o.h||0),w:o.w,h:o.h}; }
+      if(o instanceof Ptero){ if(rectIntersect(this.dino.ducking?duckBox:standBox,oBox)){this.running=false; this.fallInWater=false; this.showGameOver();} }
+      else if(o instanceof LowPtero){ if(!this.dino.ducking && rectIntersect(standBox,oBox)){this.running=false; this.fallInWater=false; this.showGameOver();} }
+      else{ if(rectIntersect(this.dino.ducking?duckBox:standBox,oBox)){this.running=false; this.fallInWater=false; this.showGameOver();} }
+    }
+
+    for(let r of this.rivers){
+      const dinoBox={x:this.dino.x,y:this.dino.y,w:this.dino.w,h:this.dino.h};
+      const riverBox={x:r.x,y:r.y-r.h,w:r.w,h:r.h};
+      if(this.dino.y+this.dino.h > riverBox.y && this.dino.x + this.dino.w > riverBox.x && this.dino.x < riverBox.x + riverBox.w){
+        this.running=false; this.fallInWater=true; this.showGameOver();
+      }
+    }
+
+    scoreEl.innerText=this.score;
+    this.dino.updateGif(this.camX);
+  }
+  draw(){
+    ctx.clearRect(0,0,W,H);
+    ctx.fillStyle=this.day?'#f7f7f7':'#151628';
+    ctx.fillRect(0,0,W,H);
+    this.clouds.forEach(c=>c.draw(ctx,this.camX));
+    const offset = this.camX % W;
+    ctx.fillStyle='#7f8c8d';
+    ctx.fillRect(-offset,H-40,W,40);
+    ctx.fillRect(W-offset,H-40,W,40);
+    this.obstacles.forEach(o=>o.draw(ctx,this.camX));
+    this.rivers.forEach(r=>r.draw(ctx,this.camX));
+    ctx.fillStyle=this.day?'#222':'#fff'; ctx.font='18px monospace';
+    ctx.fillText('SCORE '+this.score,W-170,30);
+    if(!this.running){
+      ctx.save(); ctx.globalAlpha=0.92; ctx.fillStyle=this.day?'#fff':'#222';
+      ctx.fillRect(W/2-160,H/2-40,320,80);
+      ctx.fillStyle='#e74c3c'; ctx.font='22px sans-serif';
+      ctx.fillText('游戏结束 — 点击开始重试',W/2-140,H/2);
+      ctx.restore();
+    }
+  }
+  showGameOver(){ if(this.fallInWater){ playSound('fallSound'); } else{ playSound('dieSound'); }}
+}
+
+const g=new Game(); game=g;
+document.getElementById('startBtn').addEventListener('click',()=>{g.start();});
+document.getElementById('pauseBtn').addEventListener('click',()=>{g.togglePause(); document.getElementById('pauseBtn').innerText=g.pause?'继续':'暂停';});
+
+// 按键处理
+let jumpKeyPressed = false;
+window.addEventListener('keydown',(e)=>{
+  if(e.code==='Space'||e.code==='ArrowUp'){ e.preventDefault();
+    if(!jumpKeyPressed){ jumpKeyPressed = true; if(!g.running) g.start(); g.dino.jump(); }
+  }
+  if(e.code==='ArrowDown'){ g.dino.duck(true); }
+  if(e.code==='KeyR'){ g.start(); }
+});
+window.addEventListener('keyup',(e)=>{
+  if(e.code==='Space'||e.code==='ArrowUp'){ jumpKeyPressed=false; }
+  if(e.code==='ArrowDown'){ g.dino.duck(false); }
+});
+
+// 移动端按钮
+document.getElementById('touchJump').addEventListener('touchstart',(e)=>{e.preventDefault(); if(!g.running) g.start(); g.dino.jump();});
+document.getElementById('touchDuck').addEventListener('touchstart',(e)=>{e.preventDefault(); g.dino.duck(true);});
+document.getElementById('touchDuck').addEventListener('touchend',(e)=>{e.preventDefault(); g.dino.duck(false);});
+
+document.getElementById('nightToggle').addEventListener('change',(e)=>{g.nightOverride=e.target.checked; g.day=!e.target.checked;});
+
+g.draw();
+</script>
+</body>
+</html>

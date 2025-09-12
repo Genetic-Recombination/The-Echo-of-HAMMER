@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>可爱甜美风网页</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="sakura-left"></div>
+    <div class="sakura-right"></div>
+    <div class="container">
+        <header>
+            <h1>欢迎来到我的可爱甜美小天地！</h1>
+        </header>
+        <main>
+            <img src="甜美照片.jpg" alt="可爱图标" class="cute-img">
+            <p>这里是一个充满爱心和甜美气息的网页，希望你每天都能开心快乐！</p>
+            <section class="profile-section">
+                <div class="photo-frame">
+                    <img src="赵润初.jpg" alt="我的照片" class="my-photo">
+                    <div class="skirt-decoration"></div>
+                </div>
+                <div class="intro-box">
+                    <h2>关于我</h2>
+                    <p>我是赵润初，是数据科学与大数据技术全英班的大二同学，也是基因重组的组员之一，在《The Echo of Hammer》游戏创作中是一个编剧
+                        和程序员的角色，我很享受编程世界带来的美好，就像我的可爱甜美小天地一样！！！！希望你能喜欢我们的游戏，也能喜欢我的可爱甜美
+                        小天地！！！！
+                    </p>
+                </div>
+            </section>
+            <button class="sweet-btn">点我一下</button>
+        </main>
+        <footer>
+            <div class="back-section">
+                <button class="back-btn" onmouseover="showCryTip()" onmouseout="hideCryTip()" onclick="window.location.href='../../intro-index/关于我们.html'">返回团队页面</button>
+                <div class="cry-tip" id="cryTip">
+                    <img src="哭泣萝莉.jpg" alt="哭泣萝莉" class="cry-img">
+                    <span class="cry-text">你要离开甜美的我吗</span>
+                </div>
+            </div>
+            <script>
+            function showCryTip() {
+                document.getElementById('cryTip').style.display = 'flex';
+            }
+            function hideCryTip() {
+                document.getElementById('cryTip').style.display = 'none';
+            }
+            </script>
+            <p>© 2025 可爱甜美 | 由你眼里最可爱的我制作</p>
+        </footer>
+    </div>
+</body>
+</html>
