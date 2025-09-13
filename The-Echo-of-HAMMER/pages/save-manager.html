@@ -3,9 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>存档管理 - The Echo of Hammer</title>
+  <title>The Echo of HAMMER</title>
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
   <style>
-    :root { --bg:#0b0b0d; --panel:#121217; --line:#23232b; --text:#e6e6e6; --muted:#9a9aaa; --red:#b30017; }
+    :root { --bg:#0b0b0d; --panel:#121217; --line:#23232b; --text:#e6e6e6; --muted:#9a9aaa; --red:#b30017; --green:#1e9e5a; }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: Arial, Helvetica, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
     header { display: flex; align-items: center; gap: 12px; padding: 16px 18px; border-bottom: 1px solid var(--line); position: sticky; top: 0; background: rgba(11,11,13,.92); backdrop-filter: blur(4px); }
@@ -15,11 +16,14 @@
     .actions { display: flex; gap: 10px; margin-bottom: 16px; }
     .btn { appearance: none; border: 1px solid var(--line); background: #16161c; color: var(--text); border-radius: 10px; padding: 10px 14px; cursor: pointer; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
     .btn.red { border-color: rgba(255,0,0,.25); background: linear-gradient(180deg, rgba(179,0,23,.9), rgba(122,0,16,.95)); }
+    .btn.disabled { opacity: .55; cursor: not-allowed; }
     .list { display: grid; gap: 12px; }
     .slot { display: grid; grid-template-columns: 1fr auto; gap: 8px; padding: 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); }
     .meta { font-size: 13px; color: var(--muted); }
-    .row { display: flex; align-items: center; gap: 8px; }
+    .row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
     .tag { font-size: 12px; color: #bbb; background: #1b1b22; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--line); }
+    .tag.green { color: #d7ffe9; background: rgba(30,158,90,.18); border-color: rgba(30,158,90,.4); }
+    .tag.red { color: #ffd8d8; background: rgba(179,0,23,.18); border-color: rgba(179,0,23,.4); }
     .empty { color: var(--muted); padding: 20px; text-align: center; border: 1px dashed var(--line); border-radius: 12px; }
     .danger { color: #ff7b7b; }
     .muted { color: var(--muted); }
@@ -98,26 +102,23 @@
       for (const s of saves) {
         const m = s.data || {};
         const time = m.time ? fmtTime(m.time) : '—';
-        const mapId = m.mapId || '未知地图';
-        const flags = m.playerState?.storyFlags || {};
-        const clues = m.playerState?.clues || {};
-        const usedClues = Object.keys(clues).length;
-        const flagsCount = Object.keys(flags).filter(k => flags[k]).length;
+        const ended = !!m.endingReached;
+        const isTrue = !!m.endingTrue;
+        const endingTag = ended ? (isTrue ? `<span class="tag green">真结局</span>` : `<span class="tag red">假结局${m.endingFalseType?`（${m.endingFalseType}）`:''}</span>`) : '';
+        const endingTime = ended && m.endingAt ? fmtTime(m.endingAt) : '';
 
         const div = document.createElement('div');
         div.className = 'slot';
         div.innerHTML = `
           <div>
             <div class="row" style="gap:10px; margin-bottom:6px;">
-              <strong>槽位 #${s.slotId}</strong>
-              <span class="tag">${mapId}</span>
-              <span class="tag">线索 ${usedClues}</span>
-              <span class="tag">标记 ${flagsCount}</span>
+              <strong>存档点 ${s.slotId}</strong>
+              ${endingTag}
             </div>
-            <div class="meta">最近时间：${time}</div>
+            <div class="meta">最近时间：${time}${ended && endingTime?` ｜ 结局时间：${endingTime}`:''}</div>
           </div>
           <div class="row">
-            <button class="btn" title="加载该存档" onclick="loadSlot('${s.slotId}')">加载</button>
+            ${ended ? `<button class="btn disabled" title="该存档已到达结局，无法继续">已达结局</button>` : `<button class="btn" title="加载该存档" onclick="loadSlot('${s.slotId}')">加载</button>`}
             <button class="btn red" title="删除该存档" onclick="deleteSlot('${s.key}')">删除</button>
           </div>
         `;

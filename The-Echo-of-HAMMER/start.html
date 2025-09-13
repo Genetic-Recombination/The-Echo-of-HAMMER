@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Echo of Hammer - 完整版</title>
+    <title>The Echo of HAMMER</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
     <style>
         /* 通用样式 */
         * {
@@ -426,7 +427,7 @@
 
         // 开始页面函数
         function showAbout() {
-            window.location.href = './introduction/intro-index/关于我们.html';
+            window.location.href = './pages/introduction/intro-index/' + encodeURIComponent('关于我们.html');
         }
 
         // 创建粒子效果
@@ -479,6 +480,8 @@
 
             if (username === storedUsername && password === storedPassword) {
                 alert("登录成功");
+                // 同步当前用户名到统一键，供存档与首次剧情判断使用
+                localStorage.setItem("Sec-Sight-current-username", username);
                 window.location.href = 'menu.html';
             } else {
                 alert("登录失败");
@@ -504,6 +507,8 @@
 
             localStorage.setItem("username", username);
             localStorage.setItem("password", password);
+            // 同步当前用户名到统一键，供存档与首次剧情判断使用
+            localStorage.setItem("Sec-Sight-current-username", username);
 
             alert("注册成功");
             window.location.href = 'menu.html';

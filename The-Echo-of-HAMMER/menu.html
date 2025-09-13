@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Echo of Hammer - 游戏菜单</title>
+    <title>The Echo of HAMMER</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
     <style>
         /* 通用样式 */
         * {
@@ -204,6 +205,7 @@
             cursor: pointer;
             font-size: 14px;
             transition: all 0.3s ease;
+            z-index: 1000;
         }
 
         .back-btn:hover {
@@ -307,6 +309,36 @@
           return false;
         }
         
+        function getSaveEntries() {
+          const username = (localStorage.getItem('Sec-Sight-current-username') || '').trim();
+          const entries = [];
+          if (!username) return entries;
+          const SAVE_PREFIX = 'Second_Sight_SaveFile_';
+          try {
+            for (let i = 0; i < localStorage.length; i++) {
+              const key = localStorage.key(i);
+              if (!key || !key.startsWith(SAVE_PREFIX + username + '_')) continue;
+              const slotId = key.substring((SAVE_PREFIX + username + '_').length);
+              let data = null;
+              try { data = JSON.parse(localStorage.getItem(key)); } catch(e) {}
+              entries.push({ key, slotId, data });
+            }
+          } catch(e) {}
+          return entries;
+        }
+        
+        function getNextSlotId() {
+          const entries = getSaveEntries();
+          const nums = entries
+            .map(e => e.slotId)
+            .filter(id => /^-?\d+$/.test(id))
+            .map(id => parseInt(id, 10));
+          // 从 1 开始增长
+          const positives = nums.filter(n => n >= 1);
+          if (!positives.length) return 1;
+          return Math.max(...positives) + 1;
+        }
+        
         function goLoadGame() {
           // 直接进入管理页；如需快速读档，可在管理页进行
           window.location.href = './pages/save-manager.html';
@@ -317,10 +349,11 @@
 
             // 游戏菜单按钮事件
             document.getElementById('newGameBtn').addEventListener('click', () => {
-                toast('▶ 开始游戏…');
+                // 总是先播放两段开场
+                toast(`▶ 开始新的冒险…`);
                 setTimeout(() => {
-                    window.location.href = 'game.html';
-                }, 800);
+                    window.location.href = 'pages/beginner/begin.html';
+                }, 1200);
             });
             
             loadBtn.addEventListener('click', () => {

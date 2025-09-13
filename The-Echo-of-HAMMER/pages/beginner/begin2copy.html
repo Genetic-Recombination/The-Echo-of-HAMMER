@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>榔头男的传说 · 公寓楼下监视</title>
+<title>The Echo of HAMMER</title>
+<link rel="icon" type="image/x-icon" href="../../favicon.ico">
 <style>
 :root {
   --bg: #0b0f14;
@@ -118,7 +119,7 @@ const el=id=>document.getElementById(id);
 const nameEl=el('name'), textEl=el('text'), subtitleEl=el('subtitle');
 const dialogueEl=el('dialogue'), choicesEl=el('choices'), mutedEl=el('muted');
 const targetPopup=el('target-popup'), targetBtn=el('target-btn');
-const btnSkip=el('btnSkip'), btnAuto=el('btnAuto');
+const btnAuto=el('btnAuto');
 const bgEls=[el('bg1'), el('bg2')];
 let activeBg=0;
 let phoneRinging = false;
@@ -276,7 +277,7 @@ const script=[
   { t:'say', name:'', text:'窗户摇了下来 是新面孔。', bg:'url(images/15.jpg)' },
   { t:'say', name:'Ljw警官', text:'（上气不接下气）\n这会已经是第三个人了……', bg:'url(images/15.jpg)' },
   { t:'say', name:'Ljw警官', text:'10分钟的时间，这个榔头男前前后后叫了三个送货员。', bg:'url(images/15.jpg)' },
-  { t:'say', name:'Ljw警官', text:'这三个人离开后我们并未直接拦住，而是在他们离开一段路之后再追回来了，应该没引起榔头男的注意。', bg:'url(images/15.jpg)' },
+  { t:'say', name:'Ljw警官', text:'这三个人离开后我们并未直接拦住，是在他们离开一段路之后再追回来了，应该没引起榔头男的注意。', bg:'url(images/15.jpg)' },
   { t:'say', name:'你', text:'奇怪，这样准备逃跑的人，为何一下子见了这么多人？', bg:'url(images/15.jpg)' },
   { t:'choice', name:'', choices:[
     { text:'先去询问见过榔头男的人', goto:'branch-ask' },
@@ -286,7 +287,7 @@ const script=[
   { t:'say', name:'', text:'（你决定去询问送货员们，说不定他们能提供什么信息……）' },
   { t:'end' },
   { t:'label', id:'branch-up' },
-  { t:'say', name:'', text:'（说不定他这会已经趁着警方去追这三个人的空挡跑掉了！必须上楼查看！！！）' },
+  { t:'say', name:'', text:'（说不定他这会已经趁机去追这三个人的空挡跑掉了！必须上楼查看！！！）' },
   { t:'end' }
 ];
 
@@ -403,7 +404,15 @@ if(step.action) step.action();
       break;
     case 'end':
       dialogueEl.style.display='none'; nameEl.textContent=''; textEl.textContent=''; 
-      updateMuted(); 
+      updateMuted();
+      // 剧情结束后自动跳转到游戏主界面
+      setTimeout(() => {
+        const newSlotId = getNextSlotId();
+        // 标记该用户已完成首段引导
+        const uname = localStorage.getItem('Sec-Sight-current-username') || localStorage.getItem('username') || 'default';
+        localStorage.setItem(`introPlayed_${uname}`, '1');
+        window.location.href = `../../game.html?slot=${newSlotId}`;
+      }, 2000);
       break;
     case 'bgm':
       if(step.url){ bgmAudio.src = step.url; bgmAudio.play(); }
@@ -427,14 +436,44 @@ function updateMuted(){
 
 const btnSkipScene = el('btnSkipScene');
 
-// 跳过整个剧情，直接跳转
+// 跳过整个剧情，直接跳转到游戏
 btnSkipScene.addEventListener('click', ()=>{
-  window.location.href = "next.html";  // 这里换成你要跳转的网页路径
+  // 创建新存档并进入游戏
+  const newSlotId = getNextSlotId();
+  // 标记该用户已完成首段引导（跳过也视为完成）
+  const uname = localStorage.getItem('Sec-Sight-current-username') || localStorage.getItem('username') || 'default';
+  localStorage.setItem(`introPlayed_${uname}`, '1');
+  window.location.href = `../../game.html?slot=${newSlotId}`;
 });
 
-document.addEventListener('keydown', e=>{ if(e.code==='Space'){ e.preventDefault(); advance(); } });
-document.addEventListener('click', startBgm, { once: true });
-btnSkip.addEventListener('click', ()=>{ skipType=true; });
+// 获取下一个存档槽位ID的函数
+function getNextSlotId() {
+  // 统一使用与游戏存档系统一致的用户名键，必要时回退到旧键或默认
+  const username = localStorage.getItem('Sec-Sight-current-username') || localStorage.getItem('username') || 'default';
+  let slotId = 1;
+  while (localStorage.getItem(`Second_Sight_SaveFile_${username}_${slotId}`)) {
+    slotId++;
+  }
+  return slotId;
+}
+
+// 空格键推进剧情
+document.addEventListener('keydown', e => {
+  if(e.code === 'Space') {
+    e.preventDefault();
+    startBgm();          // 保证首次按空格启动BGM
+    advance();           // 推进剧情
+    startPhoneRingtone(); // 如果当前步骤有铃声，也触发
+  }
+});
+
+// 鼠标点击推进剧情
+document.addEventListener('click', e => {
+  startBgm();            // 首次点击启动BGM
+  advance();             // 推进剧情
+  startPhoneRingtone();  // 如果当前步骤有铃声，也触发
+});
+
 btnAuto.addEventListener('click', ()=>{ autoPlay=!autoPlay; btnAuto.textContent=`自动播放：${autoPlay?'开':'关'}`; });
 
 document.addEventListener('click', startPhoneRingtone, { once: true });

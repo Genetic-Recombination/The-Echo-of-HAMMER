@@ -64,10 +64,22 @@ class Overworld {
       this.map.checkForActionCutscene();
     });
     new KeyPressListener("Escape", () => {
-      if (!this.map.isCutscenePlaying) {
-        this.map.startCutscene([
-          { type: "pause" }
-        ]);
+      // ESC 优先级最高：无论是否处于过场/对话，都可以打开暂停菜单
+      if (!this.map) return;
+      if (this.map.isPaused || document.querySelector('.PauseMenu')) {
+        // 已经在暂停菜单由其自身 ESC 处理关闭，这里避免重复触发
+        return;
+      }
+      // 直接触发暂停事件，不经过 startCutscene（避免被 isCutscenePlaying 拦截）
+      try {
+        new OverworldEvent({ map: this.map, event: { type: "pause" } }).init();
+      } catch (e) {
+        // 兜底：若发生异常，仍尝试旧路径
+        try {
+          this.map.startCutscene([{ type: "pause" }]);
+        } catch (e2) {
+          console.warn('[ESC] 打开暂停菜单失败:', e2);
+        }
       }
     });
   }
@@ -216,6 +228,12 @@ class Overworld {
     if (useSaveFile) {
       const file = this.progress.getSaveFile();
       if (file) {
+        // 如果该存档已达到结局，则禁止加载并返回存档管理页
+        if (file.endingReached) {
+          try { alert('该存档已到达结局，无法继续加载。请在存档管理中新建存档开始新的冒险。'); } catch(e) {}
+          window.location.href = './pages/save-manager.html';
+          return;
+        }
         this.progress.load();
         initialHeroState = {
           x: this.progress.startingHeroX,
@@ -241,6 +259,16 @@ class Overworld {
     this.bindHeroPositionCheck();
 
     this.startGameLoop();
+
+    // 立即保存一次存档，确保即使玩家不进行任何操作，存档也会被保留
+    setTimeout(() => {
+      try {
+        this.progress.save();
+        console.log('[Overworld] 初始存档已保存');
+      } catch(e) {
+        console.warn('[Overworld] 初始存档保存失败:', e);
+      }
+    }, 1000); // 延迟1秒确保游戏完全初始化
 
     // this.map.startCutscene([
     //   { type: "changeMap", map: "DemoRoom"}

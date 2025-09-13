@@ -193,18 +193,10 @@
           <button class="ap-close">关闭</button>
         </div>
         <div class="AchievementGrid"></div>
-        <div class="ap-footer" style="margin-top: 20px; text-align: center;">
-          <button class="ap-unlock-all" style="margin: 0 10px; padding: 8px 16px; background: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer;">解锁所有成就</button>
-          <button class="ap-reset-all" style="margin: 0 10px; padding: 8px 16px; background: #f44336; color: white; border: none; border-radius: 4px; cursor: pointer;">重置所有成就</button>
-        </div>
+
       `;
       panel.querySelector(".ap-close").addEventListener("click", () => this.togglePanel(false));
-      panel.querySelector(".ap-unlock-all").addEventListener("click", () => {
-        this.unlockAllAchievements();
-      });
-      panel.querySelector(".ap-reset-all").addEventListener("click", () => {
-        this.resetAllAchievements();
-      });
+
       root.appendChild(panel);
       this.elements.panel = panel;
       this.elements.grid = panel.querySelector(".AchievementGrid");
@@ -302,17 +294,7 @@
       }
     }
 
-    unlockAllAchievements() {
-      for (let i = 0; i < this.achievementImages.length; i++) {
-        this.unlockAchievement(i);
-      }
-    }
 
-    resetAllAchievements() {
-      const currentUsername = window.localStorage.getItem("Sec-Sight-current-username");
-      window.localStorage.setItem("second_sight_achievements_" + currentUsername, JSON.stringify({}));
-      this.renderGrid();
-    }
 
     init(container) {
       if (this.initialized) return;
