@@ -18,6 +18,19 @@ class Overworld {
 
       // 更新所有对象
       Object.values(this.map.gameObjects).forEach(object => {
+        // 新增逻辑：在更新移动前，先根据按键更新角色朝向
+        // 如果是玩家控制的角色，且有方向键输入，且角色当前不在移动中，且方向与当前不同
+        if (object.isPlayerControlled && 
+            this.directionInput.direction && 
+            object.movingProgressRemaining === 0 &&
+            object.direction !== this.directionInput.direction) {
+          
+          // 立刻更新角色朝向属性
+          object.direction = this.directionInput.direction;
+          // 立刻更新角色精灵图为对应方向的“站立”动画
+          object.sprite.setAnimation("idle-" + object.direction);
+        }
+
         object.update({
           arrow: this.directionInput.direction,
           map: this.map,
