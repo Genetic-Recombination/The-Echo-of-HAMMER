@@ -38,11 +38,13 @@
     <div class="controls">
       <button id="startBtn" class="btn">开始 / 重置</button>
       <button id="pauseBtn" class="btn">暂停</button>
+      <button id="backBtn" class="btn">返回</button>
       <label style="display:flex;align-items:center;gap:8px"><input id="soundToggle" type="checkbox" checked/> 声音</label>
     </div>
     <div class="touch-area">
       <button id="touchJump" class="btn">跳</button>
       <button id="touchDuck" class="btn">蹲</button>
+      <button id="touchBackBtn" class="btn">返回</button>
     </div>
     <audio id="jumpSound" src="jump.mp3"></audio>
     <audio id="scoreSound" src="drop-coin.mp3"></audio>
@@ -56,7 +58,7 @@ const ctx = canvas.getContext('2d');
 const scoreEl = document.getElementById('score');
 const soundToggle = document.getElementById('soundToggle');
 const dinoGif = document.getElementById('dinoGif');
-let W = canvas.width, H = canvas.height;
+let W, H;
 
 // 加载图片资源
 const cactusImg = new Image(); cactusImg.src = "images/trex_tree.png";
@@ -171,7 +173,7 @@ function rectIntersect(a,b){
 }
 
 class Game{
-  constructor(){ this.reset(); this.dino.updateGif(0); } // 页面加载立即显示
+  constructor(){ this.startedOnce = false; this.reset(); this.dino.updateGif(0); } // 页面加载立即显示
   reset(){
     this.running=false; this.score=0; this.speed=320;
     this.spawnTimer=0; this.obstacles=[]; this.clouds=[]; this.rivers=[];
@@ -180,7 +182,7 @@ class Game{
     this.fallInWater=false; this.camX=0;
     this.dino.updateGif(this.camX); // 初始化显示小恐龙
   }
-  start(){this.reset(); this.running=true; this.last=performance.now(); requestAnimationFrame(this.loop.bind(this));}
+  start(){this.reset(); this.running=true; this.startedOnce = true; this.last=performance.now(); requestAnimationFrame(this.loop.bind(this));}
   togglePause(){this.pause=!this.pause; if(!this.pause){this.last=performance.now(); requestAnimationFrame(this.loop.bind(this));}}
   loop(ts){ if(!this.running) return; if(this.pause) return;
     const dt=Math.min(0.05,(ts-this.last)/1000); this.last=ts;
@@ -251,7 +253,7 @@ class Game{
     this.rivers.forEach(r=>r.draw(ctx,this.camX));
     ctx.fillStyle=this.day?'#222':'#fff'; ctx.font='18px monospace';
     ctx.fillText('SCORE '+this.score,W-170,30);
-    if(!this.running){
+    if(!this.running && this.startedOnce){
       ctx.save(); ctx.globalAlpha=0.92; ctx.fillStyle=this.day?'#fff':'#222';
       ctx.fillRect(W/2-160,H/2-40,320,80);
       ctx.fillStyle='#e74c3c'; ctx.font='22px sans-serif';
@@ -265,6 +267,7 @@ class Game{
 const g=new Game(); game=g;
 document.getElementById('startBtn').addEventListener('click',()=>{g.start();});
 document.getElementById('pauseBtn').addEventListener('click',()=>{g.togglePause(); document.getElementById('pauseBtn').innerText=g.pause?'继续':'暂停';});
+document.getElementById('backBtn').addEventListener('click', () => { window.close(); });
 
 // 按键处理
 let jumpKeyPressed = false;
@@ -284,10 +287,14 @@ window.addEventListener('keyup',(e)=>{
 document.getElementById('touchJump').addEventListener('touchstart',(e)=>{e.preventDefault(); if(!g.running) g.start(); g.dino.jump();});
 document.getElementById('touchDuck').addEventListener('touchstart',(e)=>{e.preventDefault(); g.dino.duck(true);});
 document.getElementById('touchDuck').addEventListener('touchend',(e)=>{e.preventDefault(); g.dino.duck(false);});
+document.getElementById('touchBackBtn').addEventListener('click', () => { window.close(); });
 
-document.getElementById('nightToggle').addEventListener('change',(e)=>{g.nightOverride=e.target.checked; g.day=!e.target.checked;});
+// There was a missing 'nightToggle' element in the original HTML which would cause an error.
+// I am commenting out the related line to prevent the error. If you add that element back, you can uncomment this line.
+// document.getElementById('nightToggle').addEventListener('change',(e)=>{g.nightOverride=e.target.checked; g.day=!e.target.checked;});
 
 g.draw();
 </script>
 </body>
 </html>
+

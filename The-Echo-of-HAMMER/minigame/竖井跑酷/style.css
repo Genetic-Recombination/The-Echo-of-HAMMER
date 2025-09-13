@@ -1,10 +1,24 @@
 body {
   margin: 0;
   overflow: hidden;
-  background: #cce7ff; /* 天空色 */
+  background: #eef;
 }
 
 canvas {
   display: block;
-  background: #87ceeb;
+  margin: 0 auto;
+  background: #ddd;
+}
+
+#exitBtn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: 2px solid #555;
+    border-radius: 8px;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    font-family: sans-serif;
 }

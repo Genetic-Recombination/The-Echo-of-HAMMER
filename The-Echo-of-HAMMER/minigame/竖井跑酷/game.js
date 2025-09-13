@@ -343,3 +343,8 @@ function gameLoop(){
 }
 
 gameLoop();
+
+document.getElementById('exitBtn').addEventListener('click', () => {
+    window.close();
+});
+
