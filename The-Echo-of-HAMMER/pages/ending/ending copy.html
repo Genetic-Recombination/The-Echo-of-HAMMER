@@ -304,6 +304,24 @@ function showCredits(){
 
     setTimeout(()=>{ p.style.opacity='1'; }, i*3000);
   });
+
+
+// 所有字幕显示完后再出现按钮
+setTimeout(()=>{
+  const backBtn = document.createElement('div');
+  backBtn.textContent = '点击这里返回首页';
+  backBtn.style.marginTop = '2rem';
+  backBtn.style.fontSize = '10px';
+  backBtn.style.color = '#9aa7b3';
+  backBtn.style.cursor = 'pointer';
+  backBtn.style.textDecoration = 'underline';
+  backBtn.onclick = ()=>{ window.location.href = '../../menu.html'; };
+  container.appendChild(backBtn);
+}, creditsText.length * 2500+5000); // 每行间隔2.5秒，根据你的间隔时间调整
+
+
+  
+
   setTimeout(()=>{
     const hint = document.createElement('div');
     hint.style.marginTop = '18px';

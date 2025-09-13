@@ -457,8 +457,23 @@ function getNextSlotId() {
   return slotId;
 }
 
-document.addEventListener('keydown', e=>{ if(e.code==='Space'){ e.preventDefault(); advance(); } });
-document.addEventListener('click', startBgm, { once: true });
+// 空格键推进剧情
+document.addEventListener('keydown', e => {
+  if(e.code === 'Space') {
+    e.preventDefault();
+    startBgm();          // 保证首次按空格启动BGM
+    advance();           // 推进剧情
+    startPhoneRingtone(); // 如果当前步骤有铃声，也触发
+  }
+});
+
+// 鼠标点击推进剧情
+document.addEventListener('click', e => {
+  startBgm();            // 首次点击启动BGM
+  advance();             // 推进剧情
+  startPhoneRingtone();  // 如果当前步骤有铃声，也触发
+});
+
 btnAuto.addEventListener('click', ()=>{ autoPlay=!autoPlay; btnAuto.textContent=`自动播放：${autoPlay?'开':'关'}`; });
 
 document.addEventListener('click', startPhoneRingtone, { once: true });
