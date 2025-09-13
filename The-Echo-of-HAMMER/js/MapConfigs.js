@@ -99,6 +99,7 @@ window.OverworldMaps = {
   ...utils.verticalWall(42,31, 33),
   ...utils.horizontalWall(33, 42, 46),
   ...utils.horizontalWall(31, 42, 46),
+    ...utils.horizontalWall(21,0,7 ),
 },
 
     cutsceneSpaces: {

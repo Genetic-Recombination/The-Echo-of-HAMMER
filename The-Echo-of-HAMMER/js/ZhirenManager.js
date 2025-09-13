@@ -1,4 +1,3 @@
-// Zhiren Manager Plugin - 1*4 格子显示图片 
 (function(){
   class ZhirenManager {
     constructor(options = {}) {
