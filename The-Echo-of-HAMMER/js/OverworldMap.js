@@ -326,7 +326,7 @@ setTimeout(() => {
                 evt.options.forEach(opt => {
                   if (opt.label === "搜身") {
                     opt.disabled = true;      
-                    opt.label += " (锁定)";  
+                    opt.label += " (你什么都没问，没有理由搜我们的身！)";  
                   }
                 });
               }

@@ -39,6 +39,7 @@ const keys = {};
 
 // 提示信息
 const startMessageLines = [
+  "zq警官被困住了！救救他！",
   "操作：WASD 或 方向键移动",
   "空格跳跃",
   "靠墙时长按按空格并快速左右移动可蹬墙跳"
@@ -48,7 +49,7 @@ let alertColor = "yellow";
 let alertTimer = 0;
 const alertDuration = 180;
 let showStartMessage = true;
-setTimeout(() => { showStartMessage = false; }, 3000);
+setTimeout(() => { showStartMessage = false; }, 5000);
 
 // 游戏结束标志
 let gameOver = false;
@@ -95,7 +96,7 @@ document.addEventListener("keyup", e => keys[e.code] = false);
 
 // 一键抓捕按钮
 const captureBtn = document.createElement("button");
-captureBtn.textContent = "一键抓捕";
+captureBtn.textContent = "一键找到zq警官";
 captureBtn.style.position = "absolute";
 captureBtn.style.top = "20px";
 captureBtn.style.left = "50%";

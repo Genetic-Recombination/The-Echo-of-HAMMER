@@ -418,7 +418,7 @@ window.OverworldMaps = {
               window.clickedB = false;
               window.unlockFirstAchievement();
               const message = new TextMessage({
-                text: "你选择了：得出结论。\n调查暂时结束。",
+                text: "你选择了：得出结论。\n调查暂时结束，或许可以右边第二个图标处指认为自杀了。",
                 onComplete: () => {
                   playerState.storyFlags["bedroom_conclusion"] = true;
                 }
