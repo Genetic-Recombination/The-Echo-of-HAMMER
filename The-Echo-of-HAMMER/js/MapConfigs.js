@@ -184,131 +184,147 @@ window.OverworldMaps = {
        ...utils.interactionRange(46, 48, 15, 17, [
         { type: "textMessage", text: "一株略显老态的盆栽。" },
       ]),
-      ...utils.interactionRange(42, 46, 31, 33, [
-  {
-    type: "interactionMenu",
-    title: "要玩小游戏吗？",
-    options: [
-      {
-        label: "去玩",
-        description: "前往跑酷小游戏",
-        handler: () => {
-          // 防止重复弹出
-          if (document.getElementById('minigame-modal')) return;
-
-          // 创建遮罩 modal（样式参考 ZhirenManager 风格）
-          const modal = document.createElement('div');
-          modal.id = 'minigame-modal';
-          modal.style.cssText = `
-            position: fixed;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(0,0,0,0.6);
-            z-index: 10000;
-          `;
-
-          const box = document.createElement('div');
-          box.style.cssText = `
-            background: #FFE8D2;
-            padding: 20px;
-            border-radius: 10px;
-            border: 3px solid #A48465;
-            text-align: center;
-            max-width: 520px;
-            width: 90%;
-            box-sizing: border-box;
-          `;
-
-          const title = document.createElement('h3');
-          title.style.margin = '0 0 12px';
-          title.textContent = '要去玩小游戏吗？';
-
-          const text = document.createElement('div');
-          text.style.marginBottom = '14px';
-          text.innerHTML = '确认后将解锁相关成就并跳转到跑酷小游戏。';
-
-          const btnYes = document.createElement('button');
-          btnYes.textContent = '确认';
-          btnYes.style.cssText = `
-            margin-right: 10px;
-            padding: 8px 14px;
-            background: #ffd966;
-            border: 2px solid #A48465;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-          `;
-
-          const btnNo = document.createElement('button');
-          btnNo.textContent = '取消';
-          btnNo.style.cssText = `
-            padding: 8px 14px;
-            background: #fff;
-            border: 2px solid #A48465;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-          `;
-
-          // 组装
-          box.appendChild(title);
-          box.appendChild(text);
-          box.appendChild(btnYes);
-          box.appendChild(btnNo);
-          modal.appendChild(box);
-          document.body.appendChild(modal);
-
-          // 点击确认：先触发成就（如果可用），再短延迟跳转（给成就渲染一点时间）
-          btnYes.addEventListener('click', () => {
-            try {
-              if (window.unlockFourthAchievement) {
-                window.unlockFourthAchievement();
+      ...utils.interactionRange(42,46,31,33, [
+        { type: "textMessage", text: "wx警官:这有台电脑，但似乎连不上网络，弹出了trex游戏。", who: "wx" },
+        {
+          type: "interactionMenu",
+          title: "要玩小游戏吗？",
+          options: [
+            {
+              label: "去玩",
+              description: "前往小恐龙游戏",
+              handler: () => {
+                window.open("./minigame-Trex/Trex.html", "_blank");
               }
-            } catch (e) { /* 忽略 */ }
-
-            // 关闭 modal
-            if (document.getElementById('minigame-modal')) {
-              document.body.removeChild(document.getElementById('minigame-modal'));
+            },
+            {
+              label: "取消",
+              description: "不玩了",
+              handler: () => { /* 什么都不做 */ }
             }
-
-            // 延迟 150ms 再跳转，让成就动画/alert 有机会显示
-            setTimeout(() => {
-              window.open("./跑酷/game.html", "_blank");
-            }, 1000);
-          });
-
-          // 点击取消：直接关闭 modal
-          btnNo.addEventListener('click', () => {
-            if (document.getElementById('minigame-modal')) {
-              document.body.removeChild(document.getElementById('minigame-modal'));
-            }
-          });
-
-          // 点击遮罩外部也能关闭（如需要）
-          modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-              if (document.getElementById('minigame-modal')) {
-                document.body.removeChild(document.getElementById('minigame-modal'));
-              }
-            }
-          });
+          ]
         }
-      },
-      {
-        label: "取消",
-        description: "不玩了",
-        handler: () => { /* 什么都不做 */ }
-      }
-    ]
-  }
-]),
+      ]),
 
       ...utils.interactionRange(12, 13, 27, 29, [
-        { 
-          type: "openUrl", 
-          url: "./minigame-Trex/Trex.html" // 使用相对于当前目录的路径
+        { type: "textMessage", text: "zq警官:信封里有一个小型游戏机，没想到榔头男还喜欢玩游戏。", who: "zq" },
+        {
+          type: "interactionMenu",
+          title: "要玩小游戏吗？",
+          options: [
+            {
+              label: "去玩",
+              description: "前往跑酷小游戏",
+              handler: () => {
+                // 防止重复弹出
+                if (document.getElementById('minigame-modal')) return;
+
+                // 创建遮罩 modal（样式参考 ZhirenManager 风格）
+                const modal = document.createElement('div');
+                modal.id = 'minigame-modal';
+                modal.style.cssText = `
+                  position: fixed;
+                  inset: 0;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  background: rgba(0,0,0,0.6);
+                  z-index: 10000;
+                `;
+
+                const box = document.createElement('div');
+                box.style.cssText = `
+                  background: #FFE8D2;
+                  padding: 20px;
+                  border-radius: 10px;
+                  border: 3px solid #A48465;
+                  text-align: center;
+                  max-width: 520px;
+                  width: 90%;
+                  box-sizing: border-box;
+                `;
+
+                const title = document.createElement('h3');
+                title.style.margin = '0 0 12px';
+                title.textContent = '要去玩小游戏吗？';
+
+                const text = document.createElement('div');
+                text.style.marginBottom = '14px';
+                text.innerHTML = '确认后将解锁相关成就并跳转到跑酷小游戏。';
+
+                const btnYes = document.createElement('button');
+                btnYes.textContent = '确认';
+                btnYes.style.cssText = `
+                  margin-right: 10px;
+                  padding: 8px 14px;
+                  background: #ffd966;
+                  border: 2px solid #A48465;
+                  border-radius: 6px;
+                  cursor: pointer;
+                  font-weight: bold;
+                `;
+
+                const btnNo = document.createElement('button');
+                btnNo.textContent = '取消';
+                btnNo.style.cssText = `
+                  padding: 8px 14px;
+                  background: #fff;
+                  border: 2px solid #A48465;
+                  border-radius: 6px;
+                  cursor: pointer;
+                  font-weight: bold;
+                `;
+
+                // 组装
+                box.appendChild(title);
+                box.appendChild(text);
+                box.appendChild(btnYes);
+                box.appendChild(btnNo);
+                modal.appendChild(box);
+                document.body.appendChild(modal);
+
+                // 点击确认：先触发成就（如果可用），再短延迟跳转（给成就渲染一点时间）
+                btnYes.addEventListener('click', () => {
+                  try {
+                    if (window.unlockFourthAchievement) {
+                      window.unlockFourthAchievement();
+                    }
+                  } catch (e) { /* 忽略 */ }
+
+                  // 关闭 modal
+                  if (document.getElementById('minigame-modal')) {
+                    document.body.removeChild(document.getElementById('minigame-modal'));
+                  }
+
+                  // 延迟 150ms 再跳转，让成就动画/alert 有机会显示
+                  setTimeout(() => {
+                    window.open("./跑酷/game.html", "_blank");
+                  }, 1000);
+                });
+
+                // 点击取消：直接关闭 modal
+                btnNo.addEventListener('click', () => {
+                  if (document.getElementById('minigame-modal')) {
+                    document.body.removeChild(document.getElementById('minigame-modal'));
+                  }
+                });
+
+                // 点击遮罩外部也能关闭（如需要）
+                modal.addEventListener('click', (e) => {
+                  if (e.target === modal) {
+                    if (document.getElementById('minigame-modal')) {
+                      document.body.removeChild(document.getElementById('minigame-modal'));
+                    }
+                  }
+                });
+              }
+            },
+            {
+              label: "取消",
+              description: "不玩了",
+              handler: () => { /* 什么都不做 */ }
+            }
+          ]
         }
       ]),
     }
