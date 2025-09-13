@@ -26,7 +26,15 @@ class Progress {
     } catch (e) {
       // 忽略同步失败，继续使用上次记录的位置信息
     }
-    window.localStorage.setItem(this.saveFileKey, JSON.stringify({
+
+    // 读取旧数据，保留结局标记
+    let oldData = {};
+    try {
+      const raw = window.localStorage.getItem(this.saveFileKey);
+      oldData = raw ? JSON.parse(raw) : {};
+    } catch (e) { oldData = {}; }
+
+    const payload = {
       mapId: this.mapId,
       startingHeroX: this.startingHeroX,
       startingHeroY: this.startingHeroY,
@@ -36,7 +44,15 @@ class Progress {
         clues: playerState.clues || {}
       },
       time: this.time,
-    }))
+      // 保留并透传结局相关标记（如果之前存在）
+      ...(typeof oldData.endingReached !== 'undefined' ? { endingReached: oldData.endingReached } : {}),
+      ...(typeof oldData.endingTrue !== 'undefined' ? { endingTrue: oldData.endingTrue } : {}),
+      ...(typeof oldData.endingLabel !== 'undefined' ? { endingLabel: oldData.endingLabel } : {}),
+      ...(typeof oldData.endingFalseType !== 'undefined' ? { endingFalseType: oldData.endingFalseType } : {}),
+      ...(typeof oldData.endingAt !== 'undefined' ? { endingAt: oldData.endingAt } : {}),
+    };
+
+    window.localStorage.setItem(this.saveFileKey, JSON.stringify(payload));
   }
 
   nowProgress() {

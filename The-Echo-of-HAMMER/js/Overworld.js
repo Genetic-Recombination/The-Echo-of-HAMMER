@@ -228,6 +228,12 @@ class Overworld {
     if (useSaveFile) {
       const file = this.progress.getSaveFile();
       if (file) {
+        // 如果该存档已达到结局，则禁止加载并返回存档管理页
+        if (file.endingReached) {
+          try { alert('该存档已到达结局，无法继续加载。请在存档管理中新建存档开始新的冒险。'); } catch(e) {}
+          window.location.href = './pages/save-manager.html';
+          return;
+        }
         this.progress.load();
         initialHeroState = {
           x: this.progress.startingHeroX,
